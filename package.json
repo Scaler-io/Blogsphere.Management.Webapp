@@ -1,5 +1,5 @@
 {
-  "name": "blogsphere-management-webapp",
+  "name": "blogsphere.management.webapp",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
