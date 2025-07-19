@@ -1,0 +1,186 @@
+// ============================================================================
+// ANGULAR MATERIAL THEME CONFIGURATION - AGL INSPIRED
+// ============================================================================
+
+@use "@angular/material" as mat;
+
+// ============================================================================
+// ANGULAR MATERIAL CUSTOM COLOR PALETTES
+// ============================================================================
+
+// Primary Blue Palette (AGL Main Blue #0033cc)
+$custom-primary-palette: (
+  50: #e6eeff,
+  100: #b3ccff,
+  200: #80aaff,
+  300: #4d88ff,
+  400: #1a66ff,
+  500: #0033cc,
+  // Main AGL Blue
+  600: #002eb8,
+  700: #0029a3,
+  800: #00248f,
+  900: #00205b,
+  // Text Dark Blue
+  A100: #b3ccff,
+  A200: #80aaff,
+  A400: #4d88ff,
+  A700: #1a66ff,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: white,
+    A700: white,
+  ),
+);
+
+// Accent Yellow Palette (AGL Accent Yellow #ffe600)
+$custom-accent-palette: (
+  50: #fffde6,
+  100: #fff9b3,
+  200: #fff580,
+  300: #fff14d,
+  400: #ffed1a,
+  500: #ffe600,
+  // Accent Yellow
+  600: #e6cf00,
+  700: #ccb800,
+  800: #b3a100,
+  900: #998a00,
+  A100: #fff9b3,
+  A200: #fff580,
+  A400: #fff14d,
+  A700: #ffed1a,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: rgba(black, 0.87),
+    600: rgba(black, 0.87),
+    700: rgba(black, 0.87),
+    800: rgba(black, 0.87),
+    900: rgba(black, 0.87),
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: rgba(black, 0.87),
+    A700: rgba(black, 0.87),
+  ),
+);
+
+// Success Green Palette (Emerald Green #10b981)
+$custom-success-palette: (
+  50: #e6f7f1,
+  100: #b3e7d1,
+  200: #80d7b1,
+  300: #4dc791,
+  400: #1ab771,
+  500: #10b981,
+  // Emerald Green
+  600: #0ea574,
+  700: #0c9167,
+  800: #0a7d5a,
+  900: #08694d,
+  A100: #b3e7d1,
+  A200: #80d7b1,
+  A400: #4dc791,
+  A700: #1ab771,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: rgba(black, 0.87),
+    A700: white,
+  ),
+);
+
+// Warning/Error Red Orange Palette (#ff5252)
+$custom-warn-palette: (
+  50: #ffebee,
+  100: #ffcdd2,
+  200: #ef9a9a,
+  300: #e57373,
+  400: #ef5350,
+  500: #ff5252,
+  // Red Orange
+  600: #f44336,
+  700: #e53935,
+  800: #d32f2f,
+  900: #c62828,
+  A100: #ffcdd2,
+  A200: #ef9a9a,
+  A400: #e57373,
+  A700: #ef5350,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: rgba(black, 0.87),
+    A700: white,
+  ),
+);
+
+// ============================================================================
+// DEFINE THEME PALETTES
+// ============================================================================
+
+$Blogsphere-primary: mat.define-palette($custom-primary-palette, 500);
+$Blogsphere-accent: mat.define-palette($custom-accent-palette, 500);
+$Blogsphere-success: mat.define-palette($custom-success-palette, 500);
+$Blogsphere-warn: mat.define-palette($custom-warn-palette, 500);
+$Blogsphere-error: mat.define-palette($custom-warn-palette, 500);
+
+// ============================================================================
+// CREATE THEME OBJECT
+// ============================================================================
+
+$Blogsphere-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $Blogsphere-primary,
+      accent: $Blogsphere-accent,
+      warn: $Blogsphere-warn,
+    ),
+  )
+);
+
+// ============================================================================
+// INCLUDE ANGULAR MATERIAL CORE AND THEME STYLES
+// ============================================================================
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Include theme styles for core and each component used in your app
+@include mat.all-component-themes($Blogsphere-theme);

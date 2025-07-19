@@ -1,0 +1,425 @@
+html {
+  font-size: 16px; // Base font size for rem calculations
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-normal;
+  color: $color-text-primary;
+  background-color: $color-background;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+// ============================================================================
+// HEADINGS
+// ============================================================================
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  line-height: $line-height-tight;
+}
+
+h1 {
+  @include heading(1);
+
+  @include respond-to(md) {
+    font-size: $font-size-4xl;
+  }
+
+  @include respond-to(sm) {
+    font-size: $font-size-3xl;
+  }
+}
+
+h2 {
+  @include heading(2);
+
+  @include respond-to(md) {
+    font-size: $font-size-3xl;
+  }
+
+  @include respond-to(sm) {
+    font-size: $font-size-2xl;
+  }
+}
+
+h3 {
+  @include heading(3);
+
+  @include respond-to(md) {
+    font-size: $font-size-2xl;
+  }
+
+  @include respond-to(sm) {
+    font-size: $font-size-xl;
+  }
+}
+
+h4 {
+  @include heading(4);
+
+  @include respond-to(md) {
+    font-size: $font-size-xl;
+  }
+
+  @include respond-to(sm) {
+    font-size: $font-size-lg;
+  }
+}
+
+h5 {
+  @include heading(5);
+
+  @include respond-to(sm) {
+    font-size: $font-size-base;
+  }
+}
+
+h6 {
+  @include heading(6);
+
+  @include respond-to(sm) {
+    font-size: $font-size-sm;
+  }
+}
+
+// ============================================================================
+// PARAGRAPHS & TEXT ELEMENTS
+// ============================================================================
+
+p {
+  margin-bottom: $spacing-md;
+  line-height: $line-height-relaxed;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Lead paragraph
+.lead {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-relaxed;
+  color: $color-text-secondary;
+}
+
+// Small text
+small,
+.small {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+// Mark/highlight
+mark,
+.mark {
+  background-color: tint($color-warning, 80%);
+  padding: 0.1em 0.2em;
+  border-radius: $border-radius-sm;
+}
+
+// ============================================================================
+// LINKS
+// ============================================================================
+
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover,
+  &:focus {
+    color: $color-primary-dark;
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: $color-primary-dark;
+  }
+}
+
+// Link variants
+.link-secondary {
+  color: $color-text-secondary;
+
+  &:hover,
+  &:focus {
+    color: $color-text-primary;
+  }
+}
+
+.link-muted {
+  color: $color-text-disabled;
+
+  &:hover,
+  &:focus {
+    color: $color-text-secondary;
+  }
+}
+
+// ============================================================================
+// LISTS
+// ============================================================================
+
+ul,
+ol {
+  margin-bottom: $spacing-md;
+  padding-left: $spacing-lg;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+ul {
+  list-style-type: disc;
+
+  ul {
+    list-style-type: circle;
+
+    ul {
+      list-style-type: square;
+    }
+  }
+}
+
+ol {
+  list-style-type: decimal;
+
+  ol {
+    list-style-type: lower-alpha;
+
+    ol {
+      list-style-type: lower-roman;
+    }
+  }
+}
+
+li {
+  margin-bottom: $spacing-xs;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Unstyled list
+.list-unstyled {
+  list-style: none;
+  padding-left: 0;
+}
+
+// Inline list
+.list-inline {
+  list-style: none;
+  padding-left: 0;
+
+  li {
+    display: inline-block;
+    margin-right: $spacing-md;
+    margin-bottom: 0;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+// ============================================================================
+// CODE & PREFORMATTED TEXT
+// ============================================================================
+
+code,
+kbd,
+pre,
+samp {
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-size: 0.875em;
+}
+
+code {
+  background-color: $color-background-secondary;
+  border: 1px solid $color-border-light;
+  border-radius: $border-radius-sm;
+  padding: 0.125rem 0.25rem;
+  color: $color-error;
+}
+
+kbd {
+  background-color: $color-text-primary;
+  color: $color-background;
+  border-radius: $border-radius-sm;
+  padding: 0.125rem 0.25rem;
+  font-size: 0.8em;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+pre {
+  background-color: $color-background-secondary;
+  border: 1px solid $color-border-light;
+  border-radius: $border-radius-base;
+  padding: $spacing-md;
+  overflow-x: auto;
+  margin-bottom: $spacing-md;
+  line-height: $line-height-normal;
+
+  code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+  }
+}
+
+// ============================================================================
+// BLOCKQUOTES
+// ============================================================================
+
+blockquote {
+  border-left: 4px solid $color-primary;
+  padding: $spacing-md $spacing-lg;
+  margin: $spacing-lg 0;
+  background-color: $color-background-secondary;
+  font-style: italic;
+
+  p {
+    margin-bottom: $spacing-sm;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  footer,
+  cite {
+    font-style: normal;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+
+    &::before {
+      content: "— ";
+    }
+  }
+}
+
+// ============================================================================
+// HORIZONTAL RULES
+// ============================================================================
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: $color-border;
+  margin: $spacing-xl 0;
+}
+
+// ============================================================================
+// DEFINITION LISTS
+// ============================================================================
+
+dl {
+  margin-bottom: $spacing-md;
+}
+
+dt {
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacing-xs;
+}
+
+dd {
+  margin-left: $spacing-lg;
+  margin-bottom: $spacing-md;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// ============================================================================
+// TEXT UTILITY CLASSES
+// ============================================================================
+
+.text-muted {
+  color: $color-text-secondary !important;
+}
+
+.text-disabled {
+  color: $color-text-disabled !important;
+}
+
+.text-inverse {
+  color: $color-text-inverse !important;
+}
+
+// Font size utilities
+.text-xs {
+  font-size: $font-size-xs !important;
+}
+.text-sm {
+  font-size: $font-size-sm !important;
+}
+.text-base {
+  font-size: $font-size-base !important;
+}
+.text-lg {
+  font-size: $font-size-lg !important;
+}
+.text-xl {
+  font-size: $font-size-xl !important;
+}
+.text-2xl {
+  font-size: $font-size-2xl !important;
+}
+.text-3xl {
+  font-size: $font-size-3xl !important;
+}
+.text-4xl {
+  font-size: $font-size-4xl !important;
+}
+.text-5xl {
+  font-size: $font-size-5xl !important;
+}
+
+// Font weight utilities
+.text-light {
+  font-weight: $font-weight-light !important;
+}
+.text-normal {
+  font-weight: $font-weight-normal !important;
+}
+.text-regular {
+  font-weight: $font-weight-regular !important;
+}
+.text-medium {
+  font-weight: $font-weight-medium !important;
+}
+.text-bold {
+  font-weight: $font-weight-bold !important;
+}
+.text-black {
+  font-weight: $font-weight-black !important;
+}
+
+// Line height utilities
+.leading-tight {
+  line-height: $line-height-tight !important;
+}
+.leading-normal {
+  line-height: $line-height-normal !important;
+}
+.leading-relaxed {
+  line-height: $line-height-relaxed !important;
+}

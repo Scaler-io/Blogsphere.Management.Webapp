@@ -1,0 +1,271 @@
+// ============================================================================
+// SASS VARIABLES - AGL-INSPIRED COLOR PALETTE
+// ============================================================================
+
+// ============================================================================
+// CORE BRAND COLORS
+// ============================================================================
+
+// Primary Blue Palette (Based on AGL Main Blue #0033cc)
+$primary-50: #e6eeff;
+$primary-100: #b3ccff;
+$primary-200: #80aaff;
+$primary-300: #4d88ff;
+$primary-400: #1a66ff;
+$primary-500: #0033cc; // Main AGL Blue
+$primary-600: #002eb8;
+$primary-700: #0029a3;
+$primary-800: #00248f;
+$primary-900: #00205b; // Text Dark Blue
+
+// Background Blue Palette (Based on Light Blue #0076ff for gradients)
+$background-blue-50: #e6f3ff;
+$background-blue-100: #b3ddff;
+$background-blue-200: #80c7ff;
+$background-blue-300: #4db1ff;
+$background-blue-400: #1a9bff;
+$background-blue-500: #0076ff; // Light Blue (gradient start)
+$background-blue-600: #006be6;
+$background-blue-700: #0060cc;
+$background-blue-800: #0055b3;
+$background-blue-900: #004a99;
+
+// Button Blue Palette (Based on Button Blue #0057b8)
+$button-blue-50: #e6efff;
+$button-blue-100: #b3d1ff;
+$button-blue-200: #80b3ff;
+$button-blue-300: #4d95ff;
+$button-blue-400: #1a77ff;
+$button-blue-500: #0057b8; // Button Blue
+$button-blue-600: #004fa6;
+$button-blue-700: #004794;
+$button-blue-800: #003f82;
+$button-blue-900: #003770;
+
+// Accent Yellow Palette (Based on Accent Yellow #ffe600)
+$accent-yellow-50: #fffde6;
+$accent-yellow-100: #fff9b3;
+$accent-yellow-200: #fff580;
+$accent-yellow-300: #fff14d;
+$accent-yellow-400: #ffed1a;
+$accent-yellow-500: #ffe600; // Accent Yellow
+$accent-yellow-600: #e6cf00;
+$accent-yellow-700: #ccb800;
+$accent-yellow-800: #b3a100;
+$accent-yellow-900: #998a00;
+
+// Success Green Palette (Based on Emerald Green #10b981)
+$success-50: #e6f7f1;
+$success-100: #b3e7d1;
+$success-200: #80d7b1;
+$success-300: #4dc791;
+$success-400: #1ab771;
+$success-500: #10b981; // Emerald Green
+$success-600: #0ea574;
+$success-700: #0c9167;
+$success-800: #0a7d5a;
+$success-900: #08694d;
+
+// Warning Amber Palette (Based on Amber #ffc107)
+$warning-50: #fff8e1;
+$warning-100: #ffecb3;
+$warning-200: #ffe082;
+$warning-300: #ffd54f;
+$warning-400: #ffca28;
+$warning-500: #ffc107; // Amber
+$warning-600: #ffb300;
+$warning-700: #ffa000;
+$warning-800: #ff8f00;
+$warning-900: #ff6f00;
+
+// Error Red Orange Palette (Based on Red Orange #ff5252)
+$error-50: #ffebee;
+$error-100: #ffcdd2;
+$error-200: #ef9a9a;
+$error-300: #e57373;
+$error-400: #ef5350;
+$error-500: #ff5252; // Red Orange
+$error-600: #f44336;
+$error-700: #e53935;
+$error-800: #d32f2f;
+$error-900: #c62828;
+
+// Info Sky Blue Palette (Based on Sky Blue #40c4ff)
+$info-50: #e1f5fe;
+$info-100: #b3e5fc;
+$info-200: #81d4fa;
+$info-300: #4fc3f7;
+$info-400: #29b6f6;
+$info-500: #40c4ff; // Sky Blue
+$info-600: #039be5;
+$info-700: #0288d1;
+$info-800: #0277bd;
+$info-900: #01579b;
+
+// Neutral Colors
+$white: #ffffff; // Pure White (Surface)
+$black: #000000;
+$gray-50: #fafafa;
+$gray-100: #f5f5f5;
+$gray-200: #eeeeee;
+$gray-300: #e0e0e0; // Light Silver (Border)
+$gray-400: #bdbdbd;
+$gray-500: #9e9e9e;
+$gray-600: #757575;
+$gray-700: #616161;
+$gray-800: #424242;
+$gray-900: #212121;
+
+// ============================================================================
+// SEMANTIC COLOR ASSIGNMENTS
+// ============================================================================
+
+// Theme Colors
+$color-primary: $primary-500; // #0033cc - Main AGL Blue
+$color-primary-dark: $primary-700; // #0029a3
+$color-primary-light: $primary-300; // #4d88ff
+
+$color-accent: $accent-yellow-500; // #ffe600 - Accent Yellow
+$color-accent-dark: $accent-yellow-700; // #ccb800
+$color-accent-light: $accent-yellow-300; // #fff14d
+
+$color-success: $success-500; // #10b981 - Emerald Green
+$color-success-dark: $success-700; // #0c9167
+$color-success-light: $success-300; // #4dc791
+
+$color-warning: $warning-500; // #ffc107 - Amber
+$color-warning-dark: $warning-700; // #ffa000
+$color-warning-light: $warning-300; // #ffd54f
+
+$color-error: $error-500; // #ff5252 - Red Orange
+$color-error-dark: $error-700; // #e53935
+$color-error-light: $error-300; // #e57373
+
+$color-info: $info-500; // #40c4ff - Sky Blue
+$color-info-dark: $info-700; // #0288d1
+$color-info-light: $info-300; // #4fc3f7
+
+// Button Colors
+$color-button-primary: $button-blue-500; // #0057b8 - Button Blue
+$color-button-secondary: $color-accent; // #ffe600 - Accent Yellow
+
+// Background Colors
+$color-background: $white; // #ffffff - Pure White
+$color-background-secondary: $gray-50; // #fafafa
+$color-background-tertiary: $gray-100; // #f5f5f5
+$color-background-blue: $background-blue-500; // #0076ff - Light Blue (for gradients)
+
+// Surface Colors
+$color-surface: $white; // #ffffff - Pure White
+$color-surface-secondary: $gray-50; // #fafafa
+
+// Text Colors
+$color-text-primary: $primary-900; // #00205b - Text Dark Blue
+$color-text-secondary: $primary-500; // #0033cc - Main Blue (for secondary text)
+$color-text-disabled: $gray-400; // #bdbdbd
+$color-text-inverse: $white; // #ffffff
+
+// Border Colors
+$color-border: $gray-300; // #e0e0e0 - Light Silver
+$color-border-light: $gray-200; // #eeeeee
+$color-border-dark: $gray-400; // #bdbdbd
+
+// Shadow Colors
+$color-shadow: rgba(0, 32, 91, 0.1); // Based on text dark blue
+$color-shadow-dark: rgba(0, 32, 91, 0.2);
+$color-shadow-light: rgba(0, 32, 91, 0.05);
+
+// ============================================================================
+// GRADIENT COLORS
+// ============================================================================
+
+$gradient-primary: linear-gradient(
+  135deg,
+  $background-blue-500 0%,
+  $primary-500 100%
+);
+$gradient-accent: linear-gradient(
+  135deg,
+  $accent-yellow-400 0%,
+  $accent-yellow-600 100%
+);
+$gradient-success: linear-gradient(135deg, $success-400 0%, $success-600 100%);
+
+// ============================================================================
+// TYPOGRAPHY VARIABLES
+// ============================================================================
+
+// Font Families
+$font-family-primary: "Titillium Web", sans-serif;
+$font-family-secondary: "Roboto", "Helvetica Neue", sans-serif;
+
+// Font Weights
+$font-weight-light: 200;
+$font-weight-normal: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 600;
+$font-weight-bold: 700;
+$font-weight-black: 900;
+
+// Font Sizes
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
+$font-size-2xl: 1.5rem; // 24px
+$font-size-3xl: 1.875rem; // 30px
+$font-size-4xl: 2.25rem; // 36px
+$font-size-5xl: 3rem; // 48px
+
+// Line Heights
+$line-height-tight: 1.25;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.75;
+
+// ============================================================================
+// SPACING VARIABLES
+// ============================================================================
+
+$spacing-xs: 0.25rem; // 4px
+$spacing-sm: 0.5rem; // 8px
+$spacing-md: 1rem; // 16px
+$spacing-lg: 1.5rem; // 24px
+$spacing-xl: 2rem; // 32px
+$spacing-2xl: 3rem; // 48px
+$spacing-3xl: 4rem; // 64px
+
+// ============================================================================
+// BREAKPOINTS
+// ============================================================================
+
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-2xl: 1400px;
+
+// ============================================================================
+// BORDER RADIUS
+// ============================================================================
+
+$border-radius-sm: 0.125rem; // 2px
+$border-radius-base: 0.25rem; // 4px
+$border-radius-md: 0.375rem; // 6px
+$border-radius-lg: 0.5rem; // 8px
+$border-radius-xl: 0.75rem; // 12px
+$border-radius-2xl: 1rem; // 16px
+$border-radius-full: 9999px;
+
+// ============================================================================
+// Z-INDEX LAYERS
+// ============================================================================
+
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;

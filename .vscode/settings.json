@@ -1,0 +1,5 @@
+{
+  "liveSassCompile.settings.watchOnLaunch": false,
+  "liveSassCompile.settings.compileOnWatch": false,
+  "liveSassCompile.settings.showOutputWindowOn": "None"
+}

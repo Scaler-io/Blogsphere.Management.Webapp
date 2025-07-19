@@ -1,1 +1,143 @@
-/* You can add global styles to this file, and also import other style files */
+// ============================================================================
+// BLOGSPHERE MANAGEMENT WEBAPP - MAIN STYLES
+// ============================================================================
+
+// Import Titillium Web font first
+@import "./assets/styles/titillium-web";
+
+// ============================================================================
+// SASS ARCHITECTURE STRUCTURE
+// Based on industry best practices for maintainable SCSS
+// ============================================================================
+
+// 1. SASS UTILS (Variables, Functions, Mixins, Helpers)
+//    Import utilities first as they're used by other files
+@import "./assets/styles/sass-utils/sass-utils-dir";
+
+// 2. VENDORS (External libraries - Angular Material in our case)
+@import "./assets/styles/angular-material-theme";
+
+// 3. BASE (Reset, Typography, Base elements)
+@import "./assets/styles/base/base-dir";
+
+// 4. LAYOUT (Future: Header, Footer, Navigation, Grid)
+// @import "./assets/styles/layout/layout-dir";
+
+// 5. COMPONENTS (Future: Buttons, Cards, Forms, etc.)
+// @import "./assets/styles/components/components-dir";
+
+// 6. PAGES (Future: Page-specific styles)
+// @import "./assets/styles/pages/pages-dir";
+
+// ============================================================================
+// CSS CUSTOM PROPERTIES (CSS Variables)
+// ============================================================================
+
+:root {
+  // Primary Colors
+  --color-primary-50: #{$primary-50};
+  --color-primary-100: #{$primary-100};
+  --color-primary-200: #{$primary-200};
+  --color-primary-300: #{$primary-300};
+  --color-primary-400: #{$primary-400};
+  --color-primary-500: #{$primary-500};
+  --color-primary-600: #{$primary-600};
+  --color-primary-700: #{$primary-700};
+  --color-primary-800: #{$primary-800};
+  --color-primary-900: #{$primary-900};
+  --color-primary: var(--color-primary-500);
+  --color-primary-dark: var(--color-primary-700);
+  --color-primary-light: var(--color-primary-300);
+
+  // Accent Colors
+  --color-accent-50: #{$accent-yellow-50};
+  --color-accent-100: #{$accent-yellow-100};
+  --color-accent-200: #{$accent-yellow-200};
+  --color-accent-300: #{$accent-yellow-300};
+  --color-accent-400: #{$accent-yellow-400};
+  --color-accent-500: #{$accent-yellow-500};
+  --color-accent-600: #{$accent-yellow-600};
+  --color-accent-700: #{$accent-yellow-700};
+  --color-accent-800: #{$accent-yellow-800};
+  --color-accent-900: #{$accent-yellow-900};
+  --color-accent: var(--color-accent-500);
+  --color-accent-dark: var(--color-accent-700);
+  --color-accent-light: var(--color-accent-300);
+
+  // Success Colors
+  --color-success-50: #{$success-50};
+  --color-success-100: #{$success-100};
+  --color-success-200: #{$success-200};
+  --color-success-300: #{$success-300};
+  --color-success-400: #{$success-400};
+  --color-success-500: #{$success-500};
+  --color-success-600: #{$success-600};
+  --color-success-700: #{$success-700};
+  --color-success-800: #{$success-800};
+  --color-success-900: #{$success-900};
+  --color-success: var(--color-success-500);
+  --color-success-dark: var(--color-success-700);
+  --color-success-light: var(--color-success-300);
+
+  // Warning Colors
+  --color-warn-50: #{$warning-50};
+  --color-warn-100: #{$warning-100};
+  --color-warn-200: #{$warning-200};
+  --color-warn-300: #{$warning-300};
+  --color-warn-400: #{$warning-400};
+  --color-warn-500: #{$warning-500};
+  --color-warn-600: #{$warning-600};
+  --color-warn-700: #{$warning-700};
+  --color-warn-800: #{$warning-800};
+  --color-warn-900: #{$warning-900};
+  --color-warn: var(--color-warn-500);
+  --color-warn-dark: var(--color-warn-700);
+  --color-warn-light: var(--color-warn-300);
+
+  // Error Colors (Same as warn for consistency)
+  --color-error: var(--color-warn-500);
+  --color-error-dark: var(--color-warn-700);
+  --color-error-light: var(--color-warn-300);
+
+  // Neutral Colors
+  --color-white: #{$white};
+  --color-black: #{$black};
+  --color-gray-50: #{$gray-50};
+  --color-gray-100: #{$gray-100};
+  --color-gray-200: #{$gray-200};
+  --color-gray-300: #{$gray-300};
+  --color-gray-400: #{$gray-400};
+  --color-gray-500: #{$gray-500};
+  --color-gray-600: #{$gray-600};
+  --color-gray-700: #{$gray-700};
+  --color-gray-800: #{$gray-800};
+  --color-gray-900: #{$gray-900};
+
+  // Text Colors
+  --color-text-primary: #{$color-text-primary};
+  --color-text-secondary: #{$color-text-secondary};
+  --color-text-disabled: #{$color-text-disabled};
+  --color-text-inverse: #{$color-text-inverse};
+
+  // Background Colors
+  --color-background: #{$color-background};
+  --color-background-secondary: #{$color-background-secondary};
+  --color-background-tertiary: #{$color-background-tertiary};
+
+  // Border Colors
+  --color-border: #{$color-border};
+  --color-border-light: #{$color-border-light};
+  --color-border-dark: #{$color-border-dark};
+
+  // Shadow Colors
+  --color-shadow: #{$color-shadow};
+  --color-shadow-dark: #{$color-shadow-dark};
+  --color-shadow-light: #{$color-shadow-light};
+}
+
+.my-component {
+  @include flex-center;
+  background-color: $color-primary;
+  padding: spacing(md);
+  border-radius: border-radius(lg);
+}

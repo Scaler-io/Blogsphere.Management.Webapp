@@ -1,0 +1,351 @@
+$grid-columns: 12;
+$grid-gutter: $spacing-lg; // 24px
+$grid-container-padding: $spacing-md; // 16px
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 $grid-container-padding;
+
+  // Responsive max-widths
+  @include respond-to(sm) {
+    max-width: 540px;
+  }
+
+  @include respond-to(md) {
+    max-width: 720px;
+  }
+
+  @include respond-to(lg) {
+    max-width: 960px;
+  }
+
+  @include respond-to(xl) {
+    max-width: 1140px;
+  }
+
+  @include respond-to(2xl) {
+    max-width: 1320px;
+  }
+}
+
+.container-fluid {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 $grid-container-padding;
+}
+
+.row {
+  @include flex-start;
+  flex-wrap: wrap;
+  margin: 0 (-$grid-gutter / 2);
+
+  // No gutters variant
+  &.no-gutters {
+    margin: 0;
+
+    > [class*="col-"] {
+      padding: 0;
+    }
+  }
+
+  // Custom gutter variants
+  &.gutter-sm {
+    margin: 0 (-$spacing-sm / 2);
+
+    > [class*="col-"] {
+      padding: 0 ($spacing-sm / 2);
+    }
+  }
+
+  &.gutter-lg {
+    margin: 0 (-$spacing-xl / 2);
+
+    > [class*="col-"] {
+      padding: 0 ($spacing-xl / 2);
+    }
+  }
+}
+
+[class*="col-"] {
+  position: relative;
+  width: 100%;
+  padding: 0 ($grid-gutter / 2);
+  flex: 0 0 100%; // Default to full width on mobile
+}
+
+@mixin generate-columns($breakpoint: "") {
+  $prefix: if($breakpoint == "", "col", "col-#{$breakpoint}");
+
+  // Base column class for each breakpoint
+  .#{$prefix} {
+    flex: 1 0 0%;
+    max-width: 100%;
+  }
+
+  // Auto-width columns
+  .#{$prefix}-auto {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  // Generate numbered columns (1-12)
+  @for $i from 1 through $grid-columns {
+    .#{$prefix}-#{$i} {
+      flex: 0 0 percentage($i / $grid-columns);
+      max-width: percentage($i / $grid-columns);
+    }
+  }
+
+  // Generate offset classes
+  @for $i from 0 through ($grid-columns - 1) {
+    .#{$prefix}-offset-#{$i} {
+      margin-left: percentage($i / $grid-columns);
+    }
+  }
+
+  // Generate order classes
+  @for $i from 0 through $grid-columns {
+    .#{$prefix}-order-#{$i} {
+      order: $i;
+    }
+  }
+
+  // Special order classes
+  .#{$prefix}-order-first {
+    order: -1;
+  }
+
+  .#{$prefix}-order-last {
+    order: $grid-columns + 1;
+  }
+}
+
+// ============================================================================
+// GENERATE COLUMNS FOR ALL BREAKPOINTS
+// ============================================================================
+
+// Extra small devices (default, no media query needed)
+@include generate-columns();
+
+// Small devices and up
+@include respond-to(sm) {
+  @include generate-columns("sm");
+}
+
+// Medium devices and up
+@include respond-to(md) {
+  @include generate-columns("md");
+}
+
+// Large devices and up
+@include respond-to(lg) {
+  @include generate-columns("lg");
+}
+
+// Extra large devices and up
+@include respond-to(xl) {
+  @include generate-columns("xl");
+}
+
+// Extra extra large devices and up
+@include respond-to(2xl) {
+  @include generate-columns("2xl");
+}
+
+// ============================================================================
+// RESPONSIVE UTILITIES
+// ============================================================================
+
+// Responsive display classes
+@each $breakpoint in (xs, sm, md, lg, xl, 2xl) {
+  @if $breakpoint == xs {
+    .d-block {
+      display: block !important;
+    }
+    .d-inline {
+      display: inline !important;
+    }
+    .d-inline-block {
+      display: inline-block !important;
+    }
+    .d-flex {
+      display: flex !important;
+    }
+    .d-inline-flex {
+      display: inline-flex !important;
+    }
+    .d-grid {
+      display: grid !important;
+    }
+    .d-none {
+      display: none !important;
+    }
+  } @else {
+    @include respond-to($breakpoint) {
+      .d-#{$breakpoint}-block {
+        display: block !important;
+      }
+      .d-#{$breakpoint}-inline {
+        display: inline !important;
+      }
+      .d-#{$breakpoint}-inline-block {
+        display: inline-block !important;
+      }
+      .d-#{$breakpoint}-flex {
+        display: flex !important;
+      }
+      .d-#{$breakpoint}-inline-flex {
+        display: inline-flex !important;
+      }
+      .d-#{$breakpoint}-grid {
+        display: grid !important;
+      }
+      .d-#{$breakpoint}-none {
+        display: none !important;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// FLEXBOX UTILITIES FOR GRID
+// ============================================================================
+
+// Justify content
+.justify-content-start {
+  justify-content: flex-start !important;
+}
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+.justify-content-center {
+  justify-content: center !important;
+}
+.justify-content-between {
+  justify-content: space-between !important;
+}
+.justify-content-around {
+  justify-content: space-around !important;
+}
+.justify-content-evenly {
+  justify-content: space-evenly !important;
+}
+
+// Align items
+.align-items-start {
+  align-items: flex-start !important;
+}
+.align-items-end {
+  align-items: flex-end !important;
+}
+.align-items-center {
+  align-items: center !important;
+}
+.align-items-baseline {
+  align-items: baseline !important;
+}
+.align-items-stretch {
+  align-items: stretch !important;
+}
+
+// Align self
+.align-self-start {
+  align-self: flex-start !important;
+}
+.align-self-end {
+  align-self: flex-end !important;
+}
+.align-self-center {
+  align-self: center !important;
+}
+.align-self-baseline {
+  align-self: baseline !important;
+}
+.align-self-stretch {
+  align-self: stretch !important;
+}
+
+// Flex direction
+.flex-row {
+  flex-direction: row !important;
+}
+.flex-row-reverse {
+  flex-direction: row-reverse !important;
+}
+.flex-column {
+  flex-direction: column !important;
+}
+.flex-column-reverse {
+  flex-direction: column-reverse !important;
+}
+
+// Flex wrap
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+.flex-nowrap {
+  flex-wrap: nowrap !important;
+}
+.flex-wrap-reverse {
+  flex-wrap: wrap-reverse !important;
+}
+
+// ============================================================================
+// RESPONSIVE FLEXBOX UTILITIES
+// ============================================================================
+
+@each $breakpoint in (sm, md, lg, xl, 2xl) {
+  @include respond-to($breakpoint) {
+    // Justify content
+    .justify-content-#{$breakpoint}-start {
+      justify-content: flex-start !important;
+    }
+    .justify-content-#{$breakpoint}-end {
+      justify-content: flex-end !important;
+    }
+    .justify-content-#{$breakpoint}-center {
+      justify-content: center !important;
+    }
+    .justify-content-#{$breakpoint}-between {
+      justify-content: space-between !important;
+    }
+    .justify-content-#{$breakpoint}-around {
+      justify-content: space-around !important;
+    }
+    .justify-content-#{$breakpoint}-evenly {
+      justify-content: space-evenly !important;
+    }
+
+    // Align items
+    .align-items-#{$breakpoint}-start {
+      align-items: flex-start !important;
+    }
+    .align-items-#{$breakpoint}-end {
+      align-items: flex-end !important;
+    }
+    .align-items-#{$breakpoint}-center {
+      align-items: center !important;
+    }
+    .align-items-#{$breakpoint}-baseline {
+      align-items: baseline !important;
+    }
+    .align-items-#{$breakpoint}-stretch {
+      align-items: stretch !important;
+    }
+
+    // Flex direction
+    .flex-#{$breakpoint}-row {
+      flex-direction: row !important;
+    }
+    .flex-#{$breakpoint}-row-reverse {
+      flex-direction: row-reverse !important;
+    }
+    .flex-#{$breakpoint}-column {
+      flex-direction: column !important;
+    }
+    .flex-#{$breakpoint}-column-reverse {
+      flex-direction: column-reverse !important;
+    }
+  }
+}

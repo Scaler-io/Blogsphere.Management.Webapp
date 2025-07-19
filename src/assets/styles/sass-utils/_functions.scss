@@ -1,0 +1,430 @@
+/// Slightly lighten a color
+/// @access public
+/// @param {Color} $color - color to tint
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+/// Slightly darken a color
+/// @access public
+/// @param {Color} $color - color to shade
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}
+
+/// Get color from palette
+/// @access public
+/// @param {String} $color-name - color name (primary, accent, success, etc.)
+/// @param {Number} $tone - color tone (50, 100, 200, etc.)
+/// @return {Color}
+@function get-color($color-name, $tone: 500) {
+  @if $color-name == primary {
+    @if $tone == 50 {
+      @return $primary-50;
+    }
+    @if $tone == 100 {
+      @return $primary-100;
+    }
+    @if $tone == 200 {
+      @return $primary-200;
+    }
+    @if $tone == 300 {
+      @return $primary-300;
+    }
+    @if $tone == 400 {
+      @return $primary-400;
+    }
+    @if $tone == 500 {
+      @return $primary-500;
+    }
+    @if $tone == 600 {
+      @return $primary-600;
+    }
+    @if $tone == 700 {
+      @return $primary-700;
+    }
+    @if $tone == 800 {
+      @return $primary-800;
+    }
+    @if $tone == 900 {
+      @return $primary-900;
+    }
+  }
+
+  @if $color-name == accent {
+    @if $tone == 50 {
+      @return $accent-50;
+    }
+    @if $tone == 100 {
+      @return $accent-100;
+    }
+    @if $tone == 200 {
+      @return $accent-200;
+    }
+    @if $tone == 300 {
+      @return $accent-300;
+    }
+    @if $tone == 400 {
+      @return $accent-400;
+    }
+    @if $tone == 500 {
+      @return $accent-500;
+    }
+    @if $tone == 600 {
+      @return $accent-600;
+    }
+    @if $tone == 700 {
+      @return $accent-700;
+    }
+    @if $tone == 800 {
+      @return $accent-800;
+    }
+    @if $tone == 900 {
+      @return $accent-900;
+    }
+  }
+
+  @if $color-name == success {
+    @if $tone == 50 {
+      @return $success-50;
+    }
+    @if $tone == 100 {
+      @return $success-100;
+    }
+    @if $tone == 200 {
+      @return $success-200;
+    }
+    @if $tone == 300 {
+      @return $success-300;
+    }
+    @if $tone == 400 {
+      @return $success-400;
+    }
+    @if $tone == 500 {
+      @return $success-500;
+    }
+    @if $tone == 600 {
+      @return $success-600;
+    }
+    @if $tone == 700 {
+      @return $success-700;
+    }
+    @if $tone == 800 {
+      @return $success-800;
+    }
+    @if $tone == 900 {
+      @return $success-900;
+    }
+  }
+
+  @if $color-name == error {
+    @if $tone == 50 {
+      @return $error-50;
+    }
+    @if $tone == 100 {
+      @return $error-100;
+    }
+    @if $tone == 200 {
+      @return $error-200;
+    }
+    @if $tone == 300 {
+      @return $error-300;
+    }
+    @if $tone == 400 {
+      @return $error-400;
+    }
+    @if $tone == 500 {
+      @return $error-500;
+    }
+    @if $tone == 600 {
+      @return $error-600;
+    }
+    @if $tone == 700 {
+      @return $error-700;
+    }
+    @if $tone == 800 {
+      @return $error-800;
+    }
+    @if $tone == 900 {
+      @return $error-900;
+    }
+  }
+
+  @if $color-name == gray {
+    @if $tone == 50 {
+      @return $gray-50;
+    }
+    @if $tone == 100 {
+      @return $gray-100;
+    }
+    @if $tone == 200 {
+      @return $gray-200;
+    }
+    @if $tone == 300 {
+      @return $gray-300;
+    }
+    @if $tone == 400 {
+      @return $gray-400;
+    }
+    @if $tone == 500 {
+      @return $gray-500;
+    }
+    @if $tone == 600 {
+      @return $gray-600;
+    }
+    @if $tone == 700 {
+      @return $gray-700;
+    }
+    @if $tone == 800 {
+      @return $gray-800;
+    }
+    @if $tone == 900 {
+      @return $gray-900;
+    }
+  }
+
+  @warn "Unknown color name: #{$color-name} or tone: #{$tone}";
+  @return null;
+}
+
+// ============================================================================
+// UNIT FUNCTIONS
+// ============================================================================
+
+/// Remove the unit of a length
+/// @access public
+/// @param {Number} $number - Number to remove unit from
+/// @return {Number} - Unitless number
+@function strip-unit($number) {
+  @if type-of($number) == "number" and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+  @return $number;
+}
+
+/// Convert px to rem
+/// @access public
+/// @param {Number} $px - Pixel value to convert
+/// @param {Number} $base-font-size - Base font size (default: 16px)
+/// @return {Number} - Rem value
+@function rem($px, $base-font-size: 16px) {
+  @return (strip-unit($px) / strip-unit($base-font-size)) * 1rem;
+}
+
+/// Convert px to em
+/// @access public
+/// @param {Number} $px - Pixel value to convert
+/// @param {Number} $context - Context font size (default: 16px)
+/// @return {Number} - Em value
+@function em($px, $context: 16px) {
+  @return (strip-unit($px) / strip-unit($context)) * 1em;
+}
+
+// ============================================================================
+// SPACING FUNCTIONS
+// ============================================================================
+
+/// Get spacing value
+/// @access public
+/// @param {String} $size - Size key (xs, sm, md, lg, xl, 2xl, 3xl)
+/// @return {Number} - Spacing value
+@function spacing($size) {
+  @if $size == xs {
+    @return $spacing-xs;
+  }
+  @if $size == sm {
+    @return $spacing-sm;
+  }
+  @if $size == md {
+    @return $spacing-md;
+  }
+  @if $size == lg {
+    @return $spacing-lg;
+  }
+  @if $size == xl {
+    @return $spacing-xl;
+  }
+  @if $size == 2xl {
+    @return $spacing-2xl;
+  }
+  @if $size == 3xl {
+    @return $spacing-3xl;
+  }
+
+  @warn "Unknown spacing size: #{$size}";
+  @return $spacing-md;
+}
+
+// ============================================================================
+// Z-INDEX FUNCTIONS
+// ============================================================================
+
+/// Get z-index value
+/// @access public
+/// @param {String} $layer - Layer name
+/// @return {Number} - Z-index value
+@function z-index($layer) {
+  @if $layer == dropdown {
+    @return $z-index-dropdown;
+  }
+  @if $layer == sticky {
+    @return $z-index-sticky;
+  }
+  @if $layer == fixed {
+    @return $z-index-fixed;
+  }
+  @if $layer == modal-backdrop {
+    @return $z-index-modal-backdrop;
+  }
+  @if $layer == modal {
+    @return $z-index-modal;
+  }
+  @if $layer == popover {
+    @return $z-index-popover;
+  }
+  @if $layer == tooltip {
+    @return $z-index-tooltip;
+  }
+
+  @warn "Unknown z-index layer: #{$layer}";
+  @return 1;
+}
+
+// ============================================================================
+// TYPOGRAPHY FUNCTIONS
+// ============================================================================
+
+/// Get font size
+/// @access public
+/// @param {String} $size - Size key (xs, sm, base, lg, xl, 2xl, 3xl, 4xl, 5xl)
+/// @return {Number} - Font size value
+@function font-size($size) {
+  @if $size == xs {
+    @return $font-size-xs;
+  }
+  @if $size == sm {
+    @return $font-size-sm;
+  }
+  @if $size == base {
+    @return $font-size-base;
+  }
+  @if $size == lg {
+    @return $font-size-lg;
+  }
+  @if $size == xl {
+    @return $font-size-xl;
+  }
+  @if $size == 2xl {
+    @return $font-size-2xl;
+  }
+  @if $size == 3xl {
+    @return $font-size-3xl;
+  }
+  @if $size == 4xl {
+    @return $font-size-4xl;
+  }
+  @if $size == 5xl {
+    @return $font-size-5xl;
+  }
+
+  @warn "Unknown font size: #{$size}";
+  @return $font-size-base;
+}
+
+/// Get font weight
+/// @access public
+/// @param {String} $weight - Weight key (light, normal, regular, medium, bold, black)
+/// @return {Number} - Font weight value
+@function font-weight($weight) {
+  @if $weight == light {
+    @return $font-weight-light;
+  }
+  @if $weight == normal {
+    @return $font-weight-normal;
+  }
+  @if $weight == regular {
+    @return $font-weight-regular;
+  }
+  @if $weight == medium {
+    @return $font-weight-medium;
+  }
+  @if $weight == bold {
+    @return $font-weight-bold;
+  }
+  @if $weight == black {
+    @return $font-weight-black;
+  }
+
+  @warn "Unknown font weight: #{$weight}";
+  @return $font-weight-regular;
+}
+
+// ============================================================================
+// BORDER RADIUS FUNCTIONS
+// ============================================================================
+
+/// Get border radius value
+/// @access public
+/// @param {String} $size - Size key (sm, base, md, lg, xl, 2xl, full)
+/// @return {Number} - Border radius value
+@function border-radius($size) {
+  @if $size == sm {
+    @return $border-radius-sm;
+  }
+  @if $size == base {
+    @return $border-radius-base;
+  }
+  @if $size == md {
+    @return $border-radius-md;
+  }
+  @if $size == lg {
+    @return $border-radius-lg;
+  }
+  @if $size == xl {
+    @return $border-radius-xl;
+  }
+  @if $size == 2xl {
+    @return $border-radius-2xl;
+  }
+  @if $size == full {
+    @return $border-radius-full;
+  }
+
+  @warn "Unknown border radius size: #{$size}";
+  @return $border-radius-base;
+}
+
+// ============================================================================
+// UTILITY FUNCTIONS
+// ============================================================================
+
+/// Power function
+/// @access public
+/// @param {Number} $number - Number to raise
+/// @param {Number} $exponent - Exponent
+/// @return {Number} - Result
+@function pow($number, $exponent) {
+  $result: 1;
+  @if $exponent > 0 {
+    @for $i from 1 through $exponent {
+      $result: $result * $number;
+    }
+  }
+  @return $result;
+}
+
+/// Map deep get
+/// @access public
+/// @param {Map} $map - Map to search in
+/// @param {String} $keys - Keys to search for
+/// @return {*} - Found value or null
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+  @return $map;
+}
