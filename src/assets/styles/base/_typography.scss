@@ -1,14 +1,13 @@
 html {
-  font-size: 16px; // Base font size for rem calculations
+  font-size: 10px; // Base font size for rem calculations
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: $font-family-primary;
-  font-size: $font-size-base;
-  font-weight: $font-weight-regular;
-  line-height: $line-height-normal;
-  color: $color-text-primary;
+  font-family: $font-family-primary !important;
+  font-size: $font-size-base !important;
+  font-weight: $font-weight-regular !important;
+  line-height: $line-height-normal !important;
   background-color: $color-background;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -24,11 +23,10 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: $font-family-primary;
-  font-weight: $font-weight-bold;
-  color: $color-text-primary;
-  margin-bottom: $spacing-md;
-  line-height: $line-height-tight;
+  font-family: $font-family-primary !important;
+  font-weight: $font-weight-bold !important;
+  margin-bottom: $spacing-md !important;
+  line-height: $line-height-tight !important;
 }
 
 h1 {

@@ -135,9 +135,15 @@
   --color-shadow-light: #{$color-shadow-light};
 }
 
-.my-component {
-  @include flex-center;
-  background-color: $color-primary;
-  padding: spacing(md);
-  border-radius: border-radius(lg);
+// ============================================================================
+// GLOBAL BEHAVIOR SETTINGS
+// ============================================================================
+
+// Disable text selection globally
+* {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE10+/Edge */
+  user-select: none;         /* Standard */
+  -webkit-touch-callout: none; /* iOS Safari */
 }

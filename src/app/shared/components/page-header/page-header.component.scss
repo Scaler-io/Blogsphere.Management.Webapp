@@ -1,0 +1,9 @@
+@import "../../../../assets/styles/sass-utils/functions";
+@import "../../../../assets/styles/sass-utils/variables";
+
+.page-header {
+  &__page-icon {
+    color: get-color(primary, 600);
+    
+  }
+}

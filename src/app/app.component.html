@@ -1,0 +1,18 @@
+<main class="app__main d-flex flex-column border">
+  <!-- navbar component -->
+  <blogsphere-navbar></blogsphere-navbar>
+  <div class="app__main__container d-flex overflow-auto">
+    <!-- sidebar component -->
+    <blogsphere-sidebar></blogsphere-sidebar>
+    <div
+      class="app__main--content position-relative d-flex flex-column overflow-y-scroll p-md"
+    >
+      <!-- content header component -->
+      <blogsphere-page-header></blogsphere-page-header>
+      <div class="w-100 h-100 pl-3xl text-2xl">
+        <!-- content render component -->
+        <router-outlet></router-outlet>
+      </div> 
+    </div>
+  </div>
+</main>

@@ -184,3 +184,41 @@ $Blogsphere-theme: mat.define-light-theme(
 
 // Include theme styles for core and each component used in your app
 @include mat.all-component-themes($Blogsphere-theme);
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.mat-menu-panel {
+  .mat-menu-content {
+    .mat-menu-item {
+      display: flex !important;
+      align-items: center !important;
+      column-gap: 1.2rem !important;
+      &:hover {
+        background: $color-primary !important;
+        color: $color-accent !important;
+      }
+      span {
+        &:first-child {
+          font-size: $font-size-4xl !important;
+        }
+        &:last-child {
+          font-size: $font-size-lg !important;
+        }
+      }
+    }
+  }
+}
+
+.mat-expansion-panel-body {
+  padding: 0 !important;
+  .mat-expansion-panel {
+    &--list-item {
+      display: flex;
+      align-items: center;
+      column-gap: 1.5rem;
+      padding: 1rem !important;
+    }
+  }
+}

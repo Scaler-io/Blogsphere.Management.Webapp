@@ -1,0 +1,9 @@
+<div class="page-header__container d-flex align-items-center justify-content-between p-3xl" *ngIf="!isSuccessPage">
+    <div class="page-header__page-icon d-flex align-items-center gap-xl">
+        <span class="material-symbols-outlined font-size-5xl mt-xs">{{ pageIcon }}</span>
+        <div *ngIf="!isBusy" class="label text-4xl">{{ pageName }}</div>
+    </div>
+    <div class="page-header__breadcrumb font-size-2xl">
+        <xng-breadcrumb></xng-breadcrumb>
+    </div>
+</div>

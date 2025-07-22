@@ -94,7 +94,6 @@
 @mixin heading($level) {
   font-family: $font-family-primary;
   font-weight: $font-weight-bold;
-  color: $color-text-primary;
   margin: 0;
 
   @if $level == 1 {

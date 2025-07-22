@@ -1,0 +1,305 @@
+@import "../../../../assets/styles/sass-utils/variables";
+@import "../../../../assets/styles/sass-utils/mixins";
+
+.button__layout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: $font-family-primary;
+  font-weight: $font-weight-medium;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  text-transform: capitalize !important;
+
+  // Base sizing - Medium (default)
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 20px;
+  min-width: 120px;
+  min-height: 44px;
+
+  // Size variants
+  &--small {
+    padding: 8px 16px;
+    font-size: 14px;
+    min-width: 100px;
+    min-height: 36px;
+    border-radius: 16px;
+  }
+
+  &--large {
+    padding: 16px 32px;
+    font-size: 18px;
+    min-width: 140px;
+    min-height: 52px;
+    border-radius: 24px;
+  }
+
+  // Elevation
+  &--elevated {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 1px;
+
+    &:hover:not(&--disabled):not(&--loading) {
+      box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 8px 2px;
+      transform: translateY(-1px);
+    }
+  }
+
+  // Rounded variant
+  &--rounded {
+    border-radius: $border-radius-full !important;
+  }
+
+  // Width
+  &--autowidth {
+    width: 100% !important;
+    min-width: unset !important;
+  }
+
+  // Primary button (Yellow - Blogsphere theme)
+  &--primary {
+    background-color: #fddc63;
+    color: $color-text-primary;
+
+    &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
+      background-color: darken(#fddc63, 10%);
+    }
+  }
+
+  // Secondary button (Blue outline)
+  &--secondary {
+    background-color: transparent;
+    color: $color-primary;
+    border: 2px solid $color-primary;
+
+    &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
+      background-color: $color-primary;
+      color: white;
+    }
+  }
+
+  // Gradient button (Blue gradient - Blogsphere theme)
+  &--gradient {
+    background: linear-gradient(
+      135deg,
+      $color-primary 0%,
+      lighten($color-primary, 15%) 100%
+    );
+    color: white;
+
+    &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
+      background: linear-gradient(
+        135deg,
+        darken($color-primary, 5%) 0%,
+        $color-primary 100%
+      );
+    }
+  }
+
+  // Danger button
+  &--danger {
+    background-color: $color-error;
+    color: white;
+
+    &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
+      background-color: darken($color-error, 10%);
+    }
+  }
+
+  // Warning button
+  &--warning {
+    background-color: $color-warning;
+    color: $color-text-primary;
+
+    &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
+      background-color: darken($color-warning, 10%);
+    }
+  }
+
+  // Success button
+  &--success {
+    background-color: $color-success;
+    color: white;
+
+    &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
+      background-color: darken($color-success, 10%);
+    }
+  }
+
+  // Info button
+  &--info {
+    background-color: $color-info;
+    color: white;
+
+    &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
+      background-color: darken($color-info, 10%);
+    }
+  }
+
+  // Text button
+  &--text {
+    background-color: transparent;
+    color: $color-primary;
+    box-shadow: none !important;
+
+    &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
+      background-color: rgba($color-primary, 0.1);
+    }
+  }
+
+  // Link button
+  &--link {
+    background-color: transparent;
+    color: $color-primary;
+    box-shadow: none !important;
+    text-decoration: underline;
+
+    &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
+      color: darken($color-primary, 15%);
+    }
+  }
+
+  // States
+  &--disabled {
+    background-color: $color-primary !important;
+    color: rgba(white, 0.6) !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    transform: none !important;
+
+    &:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  &--loading {
+    cursor: wait;
+
+    .button__layout-label {
+      opacity: 0;
+    }
+  }
+
+  // Active state
+  &:active:not(&--disabled):not(&--loading) {
+    box-shadow: none;
+    transform: translateY(0);
+    transition: all 0.1s ease-out;
+  }
+
+  // Focus state
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
+  // Content styles
+  &-label {
+    transition: opacity 0.2s ease;
+    position: relative;
+    z-index: 1;
+
+    &--hidden {
+      opacity: 0;
+    }
+  }
+
+  // Icon styles
+  &-icon {
+    font-size: 1.2em;
+
+    &--left {
+      margin-right: 4px;
+    }
+
+    &--right {
+      margin-left: 4px;
+    }
+  }
+
+  // Spinner styles
+  &-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+}
+
+// Enhanced CSS Spinner
+.spinner-ring {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.spinner-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: 2px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spinner-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: currentColor transparent transparent transparent;
+}
+
+.spinner-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.spinner-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.spinner-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes spinner-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive adjustments using mixins
+@include respond-to(xs) {
+  .button__layout {
+    &--small {
+      padding: 6px 12px;
+      font-size: 13px;
+      min-width: 80px;
+    }
+
+    &--medium {
+      padding: 10px 20px;
+      font-size: 15px;
+      min-width: 100px;
+    }
+
+    &--large {
+      padding: 14px 28px;
+      font-size: 17px;
+      min-width: 120px;
+    }
+  }
+}
+
+@include respond-to(sm) {
+  .button__layout {
+    // Remove conflicting auto-width override
+    // Auto-width should always be 100% regardless of screen size
+  }
+}

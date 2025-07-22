@@ -1,0 +1,40 @@
+<div class="sidenav shadow-lg"
+[class.sidenav--collapse]="!isMobileView && !isSidenavExpanded"
+[class.sidenav--collapse-full]="isMobileView && isSidenavExpanded"
+>
+    <div class="sidenav__content">
+        <ul class="sidenav__content-list">
+            <li class="sidenav__content-list--item"
+                 matRipple
+                 routerLink="dashboard"
+                 (click)="handleSidenavItemClick()"
+                 [routerLinkActive]="'route-active'"
+            >
+                <div class="main-content">
+                    <span class="material-symbols-outlined item-icon">dashboard</span>
+                    <span class="item-label">Dashboard</span>
+                </div>
+            </li>
+
+            <li class="sidenav__content-list--item" (click)="handleSidenavItemClick('apiManager')" [routerLinkActive]="'route-active'">
+                <div class="main-content">
+                    <span class="material-symbols-outlined item-icon">api</span>
+                    <span class="item-label">Api manager</span>
+                    <span class="material-symbols-outlined item-icon">
+                        {{ subMenuList.apiManager ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+                    </span>
+                </div>
+                <ul class="submenu submenu--active" [class.submenu--active]="subMenuList.apiManager">
+                    <li matRipple routerLink="api-cluster" (click)="hadndleSubmenuClick()">
+                      <span class="material-symbols-outlined text-xl">hub</span>
+                      <span class="text-xl">Api clusters</span>
+                    </li>
+                    <li matRipple routerLink="api-routes" (click)="hadndleSubmenuClick()">
+                      <span class="material-symbols-outlined text-xl">route</span>
+                      <span class="text-xl">Api routes</span>
+                    </li>
+                </ul>
+            </li>           
+        </ul>
+    </div>
+</div>

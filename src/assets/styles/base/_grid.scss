@@ -1,6 +1,23 @@
+// ============================================================================
+// GRID SYSTEM - BOOTSTRAP-LIKE RESPONSIVE GRID
+// ============================================================================
+// Uses responsive mixins from _mixins.scss
+// Supports: xs, sm, md, lg, xl, 2xl breakpoints
+// Classes: row, col-{breakpoint}-{size}, col-offset-{breakpoint}-{size}
+
+@use "sass:math";
+
+// ============================================================================
+// GRID VARIABLES
+// ============================================================================
+
 $grid-columns: 12;
 $grid-gutter: $spacing-lg; // 24px
 $grid-container-padding: $spacing-md; // 16px
+
+// ============================================================================
+// CONTAINER CLASSES
+// ============================================================================
 
 .container {
   width: 100%;
@@ -35,10 +52,14 @@ $grid-container-padding: $spacing-md; // 16px
   padding: 0 $grid-container-padding;
 }
 
+// ============================================================================
+// ROW CLASS
+// ============================================================================
+
 .row {
   @include flex-start;
   flex-wrap: wrap;
-  margin: 0 (-$grid-gutter / 2);
+  margin: 0 math.div(-$grid-gutter, 2);
 
   // No gutters variant
   &.no-gutters {
@@ -51,28 +72,36 @@ $grid-container-padding: $spacing-md; // 16px
 
   // Custom gutter variants
   &.gutter-sm {
-    margin: 0 (-$spacing-sm / 2);
+    margin: 0 math.div(-$spacing-sm, 2);
 
     > [class*="col-"] {
-      padding: 0 ($spacing-sm / 2);
+      padding: 0 math.div($spacing-sm, 2);
     }
   }
 
   &.gutter-lg {
-    margin: 0 (-$spacing-xl / 2);
+    margin: 0 math.div(-$spacing-xl, 2);
 
     > [class*="col-"] {
-      padding: 0 ($spacing-xl / 2);
+      padding: 0 math.div($spacing-xl, 2);
     }
   }
 }
 
+// ============================================================================
+// BASE COLUMN CLASS
+// ============================================================================
+
 [class*="col-"] {
   position: relative;
   width: 100%;
-  padding: 0 ($grid-gutter / 2);
+  padding: 0 math.div($grid-gutter, 2);
   flex: 0 0 100%; // Default to full width on mobile
 }
+
+// ============================================================================
+// COLUMN GENERATOR MIXIN
+// ============================================================================
 
 @mixin generate-columns($breakpoint: "") {
   $prefix: if($breakpoint == "", "col", "col-#{$breakpoint}");
@@ -92,15 +121,15 @@ $grid-container-padding: $spacing-md; // 16px
   // Generate numbered columns (1-12)
   @for $i from 1 through $grid-columns {
     .#{$prefix}-#{$i} {
-      flex: 0 0 percentage($i / $grid-columns);
-      max-width: percentage($i / $grid-columns);
+      flex: 0 0 percentage(math.div($i, $grid-columns));
+      max-width: percentage(math.div($i, $grid-columns));
     }
   }
 
   // Generate offset classes
   @for $i from 0 through ($grid-columns - 1) {
     .#{$prefix}-offset-#{$i} {
-      margin-left: percentage($i / $grid-columns);
+      margin-left: percentage(math.div($i, $grid-columns));
     }
   }
 
@@ -290,7 +319,43 @@ $grid-container-padding: $spacing-md; // 16px
 .flex-wrap-reverse {
   flex-wrap: wrap-reverse !important;
 }
+.flex-grow-0 {
+  flex-grow: 0 !important;
+}
+.flex-grow-1 {
+  flex-grow: 1 !important;
+}
+.flex-shrink-0 {
+  flex-shrink: 0 !important;
+}
+.flex-shrink-1 {
+  flex-shrink: 1 !important;
+}
 
+// add flex gap classes
+.gap-sm {
+  gap: $spacing-sm;
+}
+.gap-md {
+  gap: $spacing-md;
+}
+
+.gap-lg {
+  gap: $spacing-lg;
+}
+
+.gap-xl {
+  gap: $spacing-xl;
+}
+
+.gap-2xl {
+  gap: $spacing-2xl;
+}
+
+.gap-3xl {
+  gap: $spacing-3xl;
+}
+  
 // ============================================================================
 // RESPONSIVE FLEXBOX UTILITIES
 // ============================================================================
