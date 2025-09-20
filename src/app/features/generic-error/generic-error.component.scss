@@ -1,0 +1,231 @@
+@import "../../../assets/styles/sass-utils/variables";
+@import "../../../assets/styles/sass-utils/mixins";
+
+.error-page {
+  min-height: 100%;
+  @include flex-center;
+
+  &__content {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  &__icon {
+    &-wrapper {
+      width: 120px;
+      height: 120px;
+      border-radius: $border-radius-full;
+      background: $gradient-primary;
+      @include flex-center;
+      box-shadow: 0 8px 32px rgba($color-primary, 0.3);
+      margin: 0 auto;
+
+      .material-symbols-outlined {
+        font-size: $font-size-5xl;
+        color: $white;
+        font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
+      }
+    }
+  }
+
+  &__title {
+    @include heading(1);
+    color: $color-text-primary;
+    margin: 0;
+
+    @include respond-to(md) {
+      font-size: $font-size-4xl;
+    }
+  }
+
+  &__message {
+    color: $color-text-secondary;
+    line-height: $line-height-relaxed;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  &__details {
+    text-align: left;
+  }
+
+  &__technical {
+    &-details {
+      @include card;
+      border: 1px solid $color-border-light;
+      background: $color-surface;
+      overflow: hidden;
+
+      &[open] {
+        .error-page__technical-arrow {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    &-summary {
+      @include flex-between;
+      padding: $spacing-lg;
+      cursor: pointer;
+      background: $color-background-secondary;
+      border: none;
+      outline: none;
+      @include transition(background-color);
+
+      &:hover {
+        background: $color-background-tertiary;
+      }
+
+      .material-symbols-outlined {
+        color: $color-primary;
+      }
+
+      > span:nth-child(2) {
+        flex: 1;
+        text-align: left;
+        margin-left: $spacing-md;
+        font-weight: $font-weight-medium;
+        color: $color-text-primary;
+      }
+    }
+
+    &-arrow {
+      @include transition(transform);
+      color: $color-text-secondary !important;
+    }
+
+    &-content {
+      padding: $spacing-lg;
+      border-top: 1px solid $color-border-light;
+      background: $white;
+    }
+
+    &-message,
+    &-stack {
+      strong {
+        color: $color-text-primary;
+        font-weight: $font-weight-medium;
+        display: block;
+        margin-bottom: $spacing-sm;
+      }
+
+      p {
+        color: $color-error;
+        margin: 0;
+        @include font($font-size-sm);
+      }
+
+      pre {
+        background: $color-background-tertiary;
+        padding: $spacing-md;
+        border-radius: $border-radius-base;
+        font-size: $font-size-xs;
+        line-height: $line-height-normal;
+        color: $color-text-primary;
+        overflow-x: auto;
+        max-height: 200px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        word-break: break-all;
+        border: 1px solid $color-border;
+      }
+    }
+  }
+
+  &__actions {
+    margin-top: $spacing-2xl;
+
+    .row {
+      --bs-gutter-x: #{$spacing-md};
+    }
+
+    @include respond-to(sm) {
+      .row {
+        --bs-gutter-x: #{$spacing-lg};
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@include respond-to(xs) {
+  .error-page {
+    padding: $spacing-lg $spacing-md;
+
+    &__icon-wrapper {
+      width: 80px;
+      height: 80px;
+
+      .material-symbols-outlined {
+        font-size: $font-size-4xl;
+      }
+    }
+
+    &__title {
+      font-size: $font-size-3xl;
+    }
+
+    &__actions {
+      .col-12 {
+        margin-bottom: $spacing-md;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+@include respond-to(sm) {
+  .error-page {
+    &__actions {
+      .col-12 {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+// Custom button styling integration
+:host ::ng-deep {
+  blogsphere-button {
+    .button__layout {
+      width: 100%;
+      min-width: 200px;
+
+      @include respond-to(sm) {
+        width: auto;
+      }
+    }
+  }
+}
+
+// Animation for icon
+.error-page__icon-wrapper {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 8px 32px rgba($color-primary, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 12px 40px rgba($color-primary, 0.4);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 8px 32px rgba($color-primary, 0.3);
+  }
+}
+
+// Ensure text colors use theme colors
+.text-primary {
+  color: $color-primary !important;
+}
+
+.text-accent {
+  color: $color-accent !important;
+}

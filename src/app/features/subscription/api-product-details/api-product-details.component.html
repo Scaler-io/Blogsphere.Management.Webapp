@@ -1,0 +1,140 @@
+<div class="container p-lg">
+  <ng-container *ngIf="apiProduct$ | async as apiProduct">
+    <div class="row">
+      <div class="col-12">
+        <div class="product-details-box">
+          <div class="product-name">
+            <h1>{{ apiProduct.productName }}</h1>
+            <blogsphere-badge [isRounded]="true" [type]="apiProduct.isActive ? 'success' : 'error'">
+              {{ apiProduct.isActive ? 'Active' : 'Inactive' }}
+            </blogsphere-badge>
+          </div>
+          <p class="product-description">{{ apiProduct.productDescription }}</p>
+          <div class="product-creation">
+            <span class="material-symbols-outlined">schedule</span>
+            {{ apiProduct.createdAt }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Two Panel Layout -->
+    <div class="api-subscriptions-layout mt-3xl">
+      <!-- Left Panel - Subscribed APIs -->
+      <div class="subscribed-apis-panel">
+        <div class="panel-heading">
+          Subscribed APIs
+          <blogsphere-button
+            size="small"
+            type="secondary"
+            [isDisabled]="isSubscribedApisLoading$ | async"
+            (next)="openCreateSubscribedApiDialog()"
+          >
+            Add api
+          </blogsphere-button>
+        </div>
+
+        <div class="subscribed-apis-list" *ngIf="subscribedApis$ | async as subscribedApis">
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let api of subscribedApis">
+              <mat-expansion-panel-header [ngClass]="{ disabled: isApiDisabled(api.id) }">
+                {{ api.apiName }}
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-body>
+                <div class="disabled-overlay" *ngIf="isApiDisabled(api.id)">
+                  <mat-progress-spinner mode="indeterminate" diameter="30" color="primary"></mat-progress-spinner>
+                </div>
+                <div class="api-item-box-body">
+                  <b>Description</b>
+                  : {{ api.apiDescription }}
+                </div>
+                <div class="api-item-box-body">
+                  <b>Path</b>
+                  : {{ api.apiPath }}
+                </div>
+                <div class="api-item-box-body">
+                  <b>Created At</b>
+                  : {{ api.createdAt }}
+                  <div class="api-item-box-body-action">
+                    <span class="material-symbols-outlined" matRipple (click)="openDeleteSubscribedApiDialog(api)">
+                      delete
+                    </span>
+                  </div>
+                </div>
+              </mat-expansion-panel-body>
+
+              <!-- <mat-expansion-panel-description [ngClass]="{ disabled: isApiDisabled(api.id) }">
+                
+              </mat-expansion-panel-description> -->
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <!-- Empty state -->
+          <div class="empty-message" *ngIf="!subscribedApis || subscribedApis.length === 0">
+            No subscribed APIs found
+          </div>
+        </div>
+
+        <div *ngIf="isSubscribedApisLoading$ | async">Loading...</div>
+      </div>
+
+      <!-- Vertical Divider -->
+      <div class="vertical-divider"></div>
+
+      <!-- Right Panel - Subscriptions -->
+      <div class="subscriptions-panel">
+        <h3 class="panel-heading">
+          Subscriptions
+          <blogsphere-button
+            size="small"
+            type="secondary"
+            (next)="openCreateSubscriptionDialog()"
+            [isDisabled]="isSubscriptionsLoading$ | async"
+          >
+            Add subscription
+          </blogsphere-button>
+        </h3>
+        <div class="subscriptions-list" *ngIf="subscriptions$ | async as subscriptions">
+          <div class="subscription-card" @fadeSlideInOut *ngFor="let subscription of subscriptions" [ngClass]="{ disabled: isSubscriptionDisabled(subscription.id) }">
+            <div class="subscription-card--overlay" *ngIf="isSubscriptionDisabled(subscription.id)">
+              <mat-progress-spinner mode="indeterminate" diameter="30" color="primary"></mat-progress-spinner>
+            </div>
+            <div class="d-flex justify-content-end">
+              <div
+                class="p-sm d-flex justify-content-center align-items-center matRipple border-radius-full"
+                matRipple
+                [matRippleColor]="'rgba(226, 48, 48, 0.1)'"
+              >
+                <span
+                  class="material-symbols-outlined cursor-pointer font-size-3xl"
+                  style="color: rgb(226, 48, 48)"
+                  (click)="openDeleteSubscriptionDialog(subscription)"
+                >
+                  delete
+                </span>
+              </div>
+            </div>
+            <div class="subscription-field">
+              <span class="field-label">Name:</span>
+              <span class="field-value">{{ subscription.subscriptionName }}</span>
+            </div>
+            <div class="subscription-field">
+              <span class="field-label">Description:</span>
+              <span class="field-value">{{ subscription.subscriptionDescription }}</span>
+            </div>
+            <div class="subscription-field">
+              <span class="field-label">Subscription Key:</span>
+              <span (click)="copyToClipboard(subscription.subscriptionKey)" class="field-value cursor-pointer">
+                {{ subscription.subscriptionKey | textMask }}
+              </span>
+            </div>
+          </div>
+          <!-- Empty state -->
+          <div class="empty-message" *ngIf="!subscriptions || subscriptions.length === 0">No subscriptions found</div>
+        </div>
+        <div *ngIf="isSubscriptionsLoading$ | async">Loading...</div>
+      </div>
+    </div>
+  </ng-container>
+  <blogsphere-loader [enabled]="isApiProductLoading$ | async"></blogsphere-loader>
+</div>

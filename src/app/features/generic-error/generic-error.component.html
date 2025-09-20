@@ -1,0 +1,83 @@
+<div class="error-page">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+        <div class="error-page__content">
+          <!-- Error Icon with gradient background -->
+          <div class="error-page__icon mb-2xl">
+            <div class="error-page__icon-wrapper">
+              <span class="material-symbols-outlined">error</span>
+            </div>
+          </div>
+
+          <!-- Error Title -->
+          <h1 class="error-page__title text-center mb-lg">
+            Oops! Something went wrong
+          </h1>
+
+          <!-- Error Message -->
+          <div class="error-page__message text-center mb-xl">
+            <p class="font-size-2xl">
+              We encountered an unexpected error while processing your request.
+              Don't worry, our team has been notified and we're working to fix
+              it.
+            </p>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="error-page__actions">
+            <div class="row justify-content-center gap-md">
+              <div class="col-12 col-sm-auto">
+                <blogsphere-button
+                  [type]="'primary'"
+                  [size]="'small'"
+                  icon="arrow_back"
+                  iconPosition="left"
+                  [elevated]="true"
+                  (next)="goBackToOrigin()"
+                  *ngIf="errorComponentRoute$ | async as route"
+                  class="w-100"
+                >
+                  Go Back to {{ sourcePage }}
+                </blogsphere-button>
+              </div>
+
+              <div class="col-12 col-sm-auto">
+                <blogsphere-button
+                  [type]="'secondary'"
+                  [size]="'small'"
+                  icon="dashboard"
+                  iconPosition="left"
+                  [elevated]="true"
+                  (next)="goToDashboard()"
+                  class="w-100"
+                >
+                  Go to Dashboard
+                </blogsphere-button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Helpful Tips -->
+          <div class="error-page__tips mt-2xl">
+            <blogsphere-info-card
+              variant="tips"
+              size="large"
+              title="What can you do?"
+              icon="lightbulb"
+              [elevated]="false"
+              borderPosition="left"
+            >
+              <ul>
+                <li>Try refreshing the page</li>
+                <li>Check your internet connection</li>
+                <li>Go back to the previous page and try again</li>
+                <li>Contact support if the problem persists</li>
+              </ul>
+            </blogsphere-info-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

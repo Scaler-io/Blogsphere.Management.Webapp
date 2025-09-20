@@ -1,0 +1,97 @@
+<!-- Custom Pagination -->
+<div class="pagination-wrapper" *ngIf="pageMetadata">
+  <nav class="custom-pagination" aria-label="Pagination">
+    <ul class="pagination-list">
+      <!-- Previous Button -->
+      <li class="pagination-item">
+        <button
+          class="pagination-link pagination-control"
+          [disabled]="pageMetadata.pageNumber === 1"
+          (click)="onPageChange(pageMetadata.pageNumber - 1)"
+          aria-label="Previous page"
+        >
+          <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+      </li>
+
+      <!-- First Page -->
+      <li class="pagination-item" *ngIf="pageMetadata.totalPages > 0">
+        <button
+          class="pagination-link"
+          [class.active]="pageMetadata.pageNumber === 1"
+          (click)="onPageChange(1)"
+          aria-label="Page 1"
+        >
+          1
+        </button>
+      </li>
+
+      <!-- Ellipsis if needed before current page range -->
+      <li class="pagination-item" *ngIf="shouldShowStartEllipsis(pageMetadata)">
+        <span class="pagination-ellipsis">...</span>
+      </li>
+
+      <!-- Page numbers around current page -->
+      <li
+        class="pagination-item"
+        *ngFor="let page of getVisiblePages(pageMetadata)"
+      >
+        <button
+          class="pagination-link"
+          [class.active]="pageMetadata.pageNumber === page"
+          (click)="onPageChange(page)"
+          [attr.aria-label]="'Page ' + page"
+        >
+          {{ page }}
+        </button>
+      </li>
+
+      <!-- Ellipsis if needed after current page range -->
+      <li class="pagination-item" *ngIf="shouldShowEndEllipsis(pageMetadata)">
+        <span class="pagination-ellipsis">...</span>
+      </li>
+
+      <!-- Last Page -->
+      <li
+        class="pagination-item"
+        *ngIf="pageMetadata.totalPages > 1 && pageMetadata.totalPages !== 1"
+      >
+        <button
+          class="pagination-link"
+          [class.active]="pageMetadata.pageNumber === pageMetadata.totalPages"
+          (click)="onPageChange(pageMetadata.totalPages)"
+          [attr.aria-label]="'Page ' + pageMetadata.totalPages"
+        >
+          {{ pageMetadata.totalPages }}
+        </button>
+      </li>
+
+      <!-- Next Button -->
+      <li class="pagination-item">
+        <button
+          class="pagination-link pagination-control"
+          [disabled]="pageMetadata.pageNumber === pageMetadata.totalPages"
+          (click)="onPageChange(pageMetadata.pageNumber + 1)"
+          aria-label="Next page"
+        >
+          <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Page Info -->
+  <div class="page-info">
+    <span>
+      Showing
+      {{ (pageMetadata.pageNumber - 1) * pageMetadata.pageSize + 1 }} to
+      {{
+        Math.min(
+          pageMetadata.pageNumber * pageMetadata.pageSize,
+          pageMetadata.totalCount
+        )
+      }}
+      of {{ pageMetadata.totalCount }} results
+    </span>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+@import "../../../assets/styles/sass-utils/variables";
+@import "../../../assets/styles/sass-utils/mixins";
+
+.table-wrapper {
+  // TODO: Add responsive table
+  overflow-x: auto;
+  @include respond-to(md) {
+    overflow-x: auto;
+  }
+  .table {
+    width: 100%;
+  }
+  .table th,
+  .table td {
+    padding: $spacing-lg;
+  }
+  .table th {
+    background-color: $color-primary;
+    color: $color-background;
+    text-align: center;
+  }
+  .table td {
+    padding: $spacing-2xl;
+    text-wrap: wrap;
+    background-color: $color-background;
+    text-align: center;
+    border-bottom: 1px solid $color-border;
+    &:nth-child(1) {
+      color: $color-primary;
+      font-weight: $font-weight-medium;
+    }
+    &:nth-child(2) {
+      width: 30%;
+    }
+  }
+  .empty-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  .empty-state-content {
+    text-align: center;
+    padding: $spacing-lg;
+  }
+  .custom-menu {
+    margin: 0 auto;
+    background-color: $color-background;
+    border-radius: 50%;
+    padding: $spacing-sm;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    align-items: center;
+    &:hover {
+      background-color: $color-background-secondary;
+    }
+  }
+}
+
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.loading-state-content {
+  text-align: center;
+  padding: $spacing-lg;
+} 
+
+.loading-state-content-icon {
+  font-size: $font-size-5xl;
+  color: $color-primary;
+}
+
+.loading-state-content-text {
+  font-size: $font-size-xl;
+  color: $color-text-primary;
+}
+
+.loading-state-content-spinner {
+  margin-top: $spacing-lg;
+}

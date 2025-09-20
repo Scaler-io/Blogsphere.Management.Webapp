@@ -1,0 +1,17 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <span class="material-symbols-outlined">info</span>
+    <h2 class="mt-md">{{ dialogData.title }}</h2>
+  </div>
+  <div class="dialog-content">
+    <p class="dialog-content-message">{{ dialogData.message }}</p>
+  </div>
+  <div class="dialog-actions">
+    <blogsphere-button [type]="ButtonType.warning" [size]="ButtonSize.small" (next)="cancelDelete()">
+      Cancel
+    </blogsphere-button>
+    <blogsphere-button [type]="ButtonType.danger" (next)="deleteItem()" [size]="ButtonSize.small">
+      Delete
+    </blogsphere-button>
+  </div>
+</div>

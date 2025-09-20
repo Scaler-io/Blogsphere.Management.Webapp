@@ -1,4 +1,4 @@
-<div class="sidenav shadow-lg"
+<div class="sidenav border-right shadow shadow-md"
 [class.sidenav--collapse]="!isMobileView && !isSidenavExpanded"
 [class.sidenav--collapse-full]="isMobileView && isSidenavExpanded"
 >
@@ -13,6 +13,17 @@
                 <div class="main-content">
                     <span class="material-symbols-outlined item-icon">dashboard</span>
                     <span class="item-label">Dashboard</span>
+                </div>
+            </li>
+            <li class="sidenav__content-list--item" 
+                matRipple 
+                routerLink="subscription" 
+                (click)="handleSidenavItemClick()" 
+                [routerLinkActive]="'route-active'"
+            >
+                <div class="main-content">
+                    <span class="material-symbols-outlined item-icon">subscriptions</span>
+                    <span class="item-label">Subscription Manager</span>
                 </div>
             </li>
 
