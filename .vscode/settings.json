@@ -1,5 +1,40 @@
 {
   "liveSassCompile.settings.watchOnLaunch": false,
   "liveSassCompile.settings.compileOnWatch": false,
-  "liveSassCompile.settings.showOutputWindowOn": "None"
+  "liveSassCompile.settings.showOutputWindowOn": "None",
+  "workbench.colorTheme": "dfd05a73-c189-4622-87c7-573fbb3a46b9",
+  
+  // Prettier Configuration
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": false,
+  "prettier.requireConfig": true,
+  "prettier.useEditorConfig": false,
+  
+  // File-specific formatting
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  }
 }

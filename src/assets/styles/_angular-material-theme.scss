@@ -221,4 +221,15 @@ $Blogsphere-theme: mat.define-light-theme(
       padding: 1rem !important;
     }
   }
+
+ }
+
+.mat-snack-bar-container {
+  background-color: $color-surface !important;
+  color: $gray-800 !important;
+  font-size: $font-size-lg !important;
+  border-radius: $border-radius-md !important;
+  .mat-simple-snackbar-action button {
+    color: $color-text-secondary !important;
+  }
 }

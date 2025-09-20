@@ -59,8 +59,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   public hadndleSubmenuClick() {
-    console.log('mobile view', this.isMobileView);
-    console.log('sidenav expanded', this.isSidenavExpanded);
     if (this.isMobileView && !this.isSidenavExpanded) {
       this.store.dispatch(new ToggleSideNav());
     }

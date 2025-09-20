@@ -1,0 +1,25 @@
+@import "../../../../assets/styles/sass-utils/variables";
+@import "../../../../assets/styles/sass-utils/mixins";
+
+.dialog-container {
+    height: 100%;
+    padding: $spacing-lg;
+    & .dialog-header {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: $spacing-sm;
+        color: $gray-800;
+    }
+    & .dialog-content {
+        padding: $spacing-xl;
+        @include font(16px, $font-weight-regular, $line-height-normal);
+    }
+    & .dialog-actions {
+        margin-top: $spacing-xl;
+        @include flex-start;
+        justify-content: center;
+        column-gap: $spacing-xl;
+        text-transform: uppercase!important;
+    }
+}

@@ -13,8 +13,8 @@
                 <span>3</span>
             </div>
             <div class="navbar__nav--item avatar">
-                <div class="avatar--name text-medium" [matMenuTriggerFor]="userActionMenu" #userMenuTrigger="matMenuTrigger">
-                    super admin
+                <div class="avatar--name text-medium gap-md" [matMenuTriggerFor]="userActionMenu" #userMenuTrigger="matMenuTrigger">
+                    {{ (authUser$ | async).email  }}
                     <span class="material-symbols-outlined">{{ userMenuTrigger.menuOpen ? "keyboard_arrow_up" : "keyboard_arrow_down" }}</span>
                 </div>
                 <!-- <img src="../../../../assets/images/avatar.png" alt="Avatar" class="avatar--image"> -->
@@ -60,7 +60,7 @@
         <span class="material-symbols-outlined">settings</span>
         <span>Account</span>
       </div>
-      <div mat-button mat-menu-item>
+      <div mat-button mat-menu-item (click)="signout()">
         <span class="material-symbols-outlined">power_settings_new</span>
         <span>Logout</span>
       </div>

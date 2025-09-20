@@ -1,0 +1,36 @@
+@import "../../../../assets/styles/sass-utils/variables";
+@import "../../../../assets/styles/sass-utils/functions";
+
+.badge {
+  display: inline-block;
+  padding: $spacing-xs $spacing-sm;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  &.rounded-pill {
+    border-radius: $border-radius-md;
+  }
+  &--primary {
+    color: $color-primary;
+    background-color: tint($color-primary, 80%);
+  }
+  &--secondary {
+    color: $color-accent;
+    background-color: tint($color-accent, 80%);
+  }
+  &--success {
+    color: $color-success;
+    background-color: tint($color-success, 80%);
+  }
+  &--danger {
+    color: $color-error;
+    background-color: tint($color-error, 80%);
+  }
+  &--warning {
+    color: $color-warning;
+    background-color: tint($color-warning, 80%);
+  }
+}

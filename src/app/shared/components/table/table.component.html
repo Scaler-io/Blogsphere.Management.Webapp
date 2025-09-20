@@ -1,0 +1,34 @@
+<table cdk-table [dataSource]="tableDataSource">
+  <ng-container *ngFor="let col of columns" [cdkColumnDef]="col">
+    <th cdk-header-cell *cdkHeaderCellDef>
+      {{ columnMap ? (getColumnKey(col) | capitalize) : (col | capitalize) }}
+    </th>
+    <td cdk-cell *cdkCellDef="let element; let i = index">
+      <ng-container *ngIf="col !== 'actions'; else actionColumns">
+        <ng-container *ngIf="isStatusField(col); else defaultDisplay">
+          <blogsphere-badge [type]="element[getColumnValue(col)]? BadgeType.success : BadgeType.danger" isRounded="true">
+            {{ element[getColumnValue(col)] | formatStatus }}
+          </blogsphere-badge>
+        </ng-container>
+        <ng-template #defaultDisplay>
+          {{    
+            !columnMap
+              ? element[col]
+              : isDateField(col)
+              ? (element[getColumnValue(col)] | formatDate | formatStatus)
+              : element[getColumnValue(col)]
+          }}
+        </ng-template>
+      </ng-container>
+      <ng-template #actionColumns>
+        <button *ngIf="allowVisit" class="material-symbols-outlined" (click)="onVisit(element)">visibility</button>
+        <ng-container *ngIf="allowEdit">
+            <button *ngIf="allowEdit" class="material-symbols-outlined" (click)="onEdit(element)">edit</button>
+            <button *ngIf="allowDelete" class="material-symbols-outlined" (click)="onDelete(element)">delete</button>
+        </ng-container>
+      </ng-template>
+    </td>
+  </ng-container>
+  <tr cdk-header-row *cdkHeaderRowDef="columns"></tr>
+  <tr cdk-row *cdkRowDef="let row; columns: columns"></tr>
+</table>

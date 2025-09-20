@@ -1,0 +1,86 @@
+<ng-container *ngIf="!(isLoading$ | async) && apiProducts$ | async">
+  <div class="row">
+    <div class="col-12 mb-lg">
+      <div class="d-flex justify-content-between align-items-center">
+        <h3 class="mt-sm">Api products</h3>
+        <blogsphere-button
+          [type]="ButtonType.secondary"
+          [size]="ButtonSize.small"
+          (next)="openCreateApiProductDialog()"
+        >
+          Create Api Product
+        </blogsphere-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="table-wrapper">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Product Description</th>
+              <th>Is Active</th>
+              <th>Subscribed Apis</th>
+              <th>Subscriptions</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of apiProducts$ | async">
+              <td>{{ product.productName }}</td>
+              <td>{{ product.productDescription }}</td>
+              <td>
+                <blogsphere-badge [isRounded]="true" [type]="product.isActive ? BadgeType.success : BadgeType.danger">
+                  {{ product.isActive ? 'Active' : 'Inactive' }}
+                </blogsphere-badge>
+              </td>
+              <td>
+                <span class="cursor-pointer">{{ product.subscribedApiCount }}</span>
+              </td>
+              <td>{{ product.subscriptionCount }}</td>
+              <td>
+                <div class="custom-menu" matRipple [matMenuTriggerFor]="actionMenu">
+                  <span class="material-symbols-outlined">more_horiz</span>
+                  <mat-menu #actionMenu="matMenu" xPosition="before">
+                    <button mat-menu-item (click)="navigateToApiProductDetails(product.productId)">View</button>
+                    <button mat-menu-item>Delete</button>
+                  </mat-menu>
+                </div>
+              </td>
+            </tr>
+
+            <tr *ngIf="(apiProducts$ | async)?.length === 0">
+              <td colspan="6">
+                <!-- TODO: Empty state -->
+                <div class="empty-state d-flex justify-content-center align-items-center">
+                  <div class="empty-state-content text-center">
+                    <h2 class="text-3xl font-bold">No api products found</h2>
+                    <p class="text-2xl">There are no api products available at the moment.</p>
+                    <blogsphere-button
+                      [type]="ButtonType.secondary"
+                      [size]="ButtonSize.small"
+                      (next)="openCreateApiProductDialog()"
+                    >
+                      Create Api Product
+                    </blogsphere-button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <blogsphere-paginator
+        [pageMetadata]="apiProductsPageMetadata$ | async"
+        (pageChange)="onPageChange($event)"
+      ></blogsphere-paginator>
+    </div>
+  </div>
+</ng-container>
+
+<blogsphere-loader [enabled]="isLoading$ | async"></blogsphere-loader>

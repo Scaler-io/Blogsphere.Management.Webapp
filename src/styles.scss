@@ -17,6 +17,7 @@
 // 2. VENDORS (External libraries - Angular Material in our case)
 @import "./assets/styles/angular-material-theme";
 
+
 // 3. BASE (Reset, Typography, Base elements)
 @import "./assets/styles/base/base-dir";
 
@@ -142,8 +143,8 @@
 // Disable text selection globally
 * {
   -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* IE10+/Edge */
-  user-select: none;         /* Standard */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
   -webkit-touch-callout: none; /* iOS Safari */
 }

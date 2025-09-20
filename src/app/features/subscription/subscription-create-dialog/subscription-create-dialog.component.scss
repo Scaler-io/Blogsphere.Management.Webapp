@@ -1,0 +1,9 @@
+@import '../../../../assets/styles/sass-utils/variables';
+
+.close-icon {
+  font-size: 24px;
+  transition: color 0.3s ease;
+  &:hover {
+    color: $color-error;
+  }
+}

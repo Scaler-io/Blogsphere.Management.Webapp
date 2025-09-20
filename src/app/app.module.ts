@@ -14,6 +14,10 @@ import { appReducer } from './store/app.state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { PageHeaderModule } from './shared/components/page-header/page-header.module';
+import { AuthModule } from 'angular-auth-oidc-client';
+import { LoaderModule } from './shared/components/loader/loader.module';
+import { ErrorEffects } from './state/error/error.effect';
+import { GenericErrorModule } from './features/generic-error/generic-error.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,13 +26,15 @@ import { PageHeaderModule } from './shared/components/page-header/page-header.mo
     AppRoutingModule,
     BrowserAnimationsModule,
     AppMaterialModule,
-    CoreModule,
     ButtonModule,
     SidebarModule,
     NavbarModule,
     PageHeaderModule,
+    LoaderModule,
+    GenericErrorModule,
+    CoreModule,
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([ErrorEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
   ],
   providers: [],

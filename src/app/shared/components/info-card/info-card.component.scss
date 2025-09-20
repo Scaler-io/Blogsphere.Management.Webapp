@@ -1,0 +1,316 @@
+@import "../../../../assets/styles/sass-utils/variables";
+@import "../../../../assets/styles/sass-utils/mixins";
+
+.info-card {
+  @include card;
+  background: $color-surface;
+  position: relative;
+  @include transition(all);
+
+  &--elevated {
+    &:hover {
+      @include card-hover;
+    }
+  }
+
+  // Variant styles
+  &--info {
+    .info-card__icon {
+      color: $color-info;
+    }
+
+    &.info-card--border-left {
+      border-left: 4px solid $color-info;
+    }
+    &.info-card--border-top {
+      border-top: 4px solid $color-info;
+    }
+    &.info-card--border-right {
+      border-right: 4px solid $color-info;
+    }
+    &.info-card--border-bottom {
+      border-bottom: 4px solid $color-info;
+    }
+  }
+
+  &--success {
+    .info-card__icon {
+      color: $color-success;
+    }
+
+    &.info-card--border-left {
+      border-left: 4px solid $color-success;
+    }
+    &.info-card--border-top {
+      border-top: 4px solid $color-success;
+    }
+    &.info-card--border-right {
+      border-right: 4px solid $color-success;
+    }
+    &.info-card--border-bottom {
+      border-bottom: 4px solid $color-success;
+    }
+  }
+
+  &--warning {
+    .info-card__icon {
+      color: $color-warning;
+    }
+
+    &.info-card--border-left {
+      border-left: 4px solid $color-warning;
+    }
+    &.info-card--border-top {
+      border-top: 4px solid $color-warning;
+    }
+    &.info-card--border-right {
+      border-right: 4px solid $color-warning;
+    }
+    &.info-card--border-bottom {
+      border-bottom: 4px solid $color-warning;
+    }
+  }
+
+  &--error {
+    .info-card__icon {
+      color: $color-error;
+    }
+
+    &.info-card--border-left {
+      border-left: 4px solid $color-error;
+    }
+    &.info-card--border-top {
+      border-top: 4px solid $color-error;
+    }
+    &.info-card--border-right {
+      border-right: 4px solid $color-error;
+    }
+    &.info-card--border-bottom {
+      border-bottom: 4px solid $color-error;
+    }
+  }
+
+  &--tips {
+    .info-card__icon {
+      color: $color-accent;
+    }
+
+    &.info-card--border-left {
+      border-left: 4px solid $color-accent;
+    }
+    &.info-card--border-top {
+      border-top: 4px solid $color-accent;
+    }
+    &.info-card--border-right {
+      border-right: 4px solid $color-accent;
+    }
+    &.info-card--border-bottom {
+      border-bottom: 4px solid $color-accent;
+    }
+  }
+
+  &--primary {
+    .info-card__icon {
+      color: $color-primary;
+    }
+
+    &.info-card--border-left {
+      border-left: 4px solid $color-primary;
+    }
+    &.info-card--border-top {
+      border-top: 4px solid $color-primary;
+    }
+    &.info-card--border-right {
+      border-right: 4px solid $color-primary;
+    }
+    &.info-card--border-bottom {
+      border-bottom: 4px solid $color-primary;
+    }
+  }
+
+  &--accent {
+    .info-card__icon {
+      color: $color-accent;
+    }
+
+    &.info-card--border-left {
+      border-left: 4px solid $color-accent;
+    }
+    &.info-card--border-top {
+      border-top: 4px solid $color-accent;
+    }
+    &.info-card--border-right {
+      border-right: 4px solid $color-accent;
+    }
+    &.info-card--border-bottom {
+      border-bottom: 4px solid $color-accent;
+    }
+  }
+
+  // Size variants
+  &--small {
+    .info-card__content {
+      padding: $spacing-md;
+    }
+
+    .info-card__icon {
+      font-size: $font-size-xl;
+    }
+
+    .info-card__title {
+      @include font($font-size-base, $font-weight-medium);
+    }
+  }
+
+  &--medium {
+    .info-card__content {
+      padding: $spacing-lg;
+    }
+
+    .info-card__icon {
+      font-size: $font-size-2xl;
+    }
+
+    .info-card__title {
+      @include font($font-size-xl, $font-weight-medium);
+    }
+  }
+
+  &--large {
+    .info-card__content {
+      padding: $spacing-xl;
+    }
+
+    .info-card__icon {
+      font-size: $font-size-3xl;
+    }
+
+    .info-card__title {
+      @include font($font-size-2xl, $font-weight-medium);
+    }
+  }
+
+  &__content {
+    width: 100%;
+  }
+
+  &__header {
+    &-content {
+      @include flex-start;
+      align-items: center;
+      gap: $spacing-md;
+      margin-bottom: $spacing-md;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  &__title {
+    color: $color-text-primary;
+    margin: $spacing-md 0 0 0;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  &__body {
+    color: $gray-800;
+    line-height: $line-height-relaxed;
+    text-align: left;
+    // Style nested content
+    p {
+      margin: 0 0 $spacing-sm 0;
+      @include font($font-size-base);
+      text-align: left;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    ul,
+    ol {
+      margin: 0;
+      text-align: left;
+
+      li {
+        margin-bottom: $spacing-sm;
+        @include font($font-size-sm);
+        text-align: left;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    // Custom list styling for tips
+    .info-card--tips & {
+      text-align: left;
+    }
+
+    // Strong text styling
+    strong {
+      color: $color-text-primary;
+      font-weight: $font-weight-medium;
+    }
+  }
+}
+
+// Special styling when only body content exists (no header)
+.info-card__header:empty + .info-card__body {
+  margin-top: 0;
+}
+
+// Responsive adjustments
+@include respond-to(xs) {
+  .info-card {
+    &--large {
+      .info-card__content {
+        padding: $spacing-lg;
+      }
+
+      .info-card__icon {
+        font-size: $font-size-2xl;
+      }
+
+      .info-card__title {
+        @include font($font-size-lg, $font-weight-medium);
+      }
+    }
+
+    &--medium {
+      .info-card__content {
+        padding: $spacing-md;
+      }
+
+      .info-card__icon {
+        font-size: $font-size-xl;
+      }
+
+      .info-card__title {
+        @include font($font-size-base, $font-weight-medium);
+      }
+    }
+
+    &--small {
+      .info-card__icon {
+        font-size: $font-size-lg;
+      }
+
+      .info-card__title {
+        @include font($font-size-sm, $font-weight-medium);
+      }
+    }
+  }
+}

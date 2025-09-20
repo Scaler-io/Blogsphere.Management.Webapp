@@ -12,11 +12,13 @@ export class PageHeaderComponent implements OnInit {
   public pageName: string;
   public isBusy: boolean;
   public isSuccessPage: boolean;
+  public isGenericErrorPage: boolean;
 
   private pageIconMap = {
     ['Dashboard']: 'dashboard',
     ['Clusters']: 'hub',
-    ['Routes']: 'route'
+    ['Routes']: 'route',
+    ['Subscription manager']: 'subscriptions'
   }
   
   constructor(private breadcrumb: BreadcrumbService, private router: Router) { }
@@ -25,6 +27,7 @@ export class PageHeaderComponent implements OnInit {
     this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd) {
         this.isSuccessPage = this.router.url.includes('/success');
+        this.isGenericErrorPage = this.router.url.includes('/generic-error');
       }
     });
     
