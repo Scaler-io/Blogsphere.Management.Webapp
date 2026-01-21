@@ -13,7 +13,7 @@ export const initialState: AuthState = {
   user: null,
 };
 
-const parseJson = (item) => {
+const parseJson = item => {
   return JSON.parse(item);
 };
 
@@ -27,7 +27,10 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
           name: action.payload.userData.name,
           email: action.payload.userData.email,
           role: action.payload.userData.role,
-          permissions: parseJson(action.payload.userData.permissions),
+          permissions:
+            action.payload.userData.permissions === '*'
+              ? '*'
+              : parseJson(action.payload.userData.permissions),
           employeeId: action.payload.userData.employee_Id,
           department: action.payload.userData.department,
         },

@@ -7,8 +7,15 @@
   box-sizing: border-box;
 }
 
-*:not(input):not(textarea):not([contenteditable]) {
+// Hide caret for non-interactive elements
+* {
   caret-color: transparent;
+}
+
+// Show caret for interactive elements
+input,
+textarea {
+  caret-color: auto;
 }
 
 /* Global Material-style scrollbar */
@@ -41,7 +48,6 @@
   border-radius: 8px;
 }
 
-
 /*
   2. Remove default margin
 */
@@ -57,7 +63,7 @@
 html,
 body {
   height: 100%;
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
 }
 
 /*
@@ -104,7 +110,7 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
-  font-family: "Titillium Web", sans-serif !important;
+  font-family: 'Titillium Web', sans-serif !important;
 }
 
 /*
@@ -171,21 +177,21 @@ button:focus {
 }
 
 // Hide default number input spinners
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
 // Hide default search input decorations
-input[type="search"]::-webkit-search-decoration,
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-results-button,
-input[type="search"]::-webkit-search-results-decoration {
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
   -webkit-appearance: none;
 }
 
@@ -198,8 +204,8 @@ textarea {
 }
 
 // Ensure consistent checkbox and radio styles
-input[type="checkbox"],
-input[type="radio"] {
+input[type='checkbox'],
+input[type='radio'] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -295,4 +301,20 @@ i {
 
 li {
   list-style: none !important;
+}
+
+.content-disabled {
+  opacity: 0.5 !important;
+  cursor: pointer !important;
+  pointer-events: none !important;
+  filter: grayscale(100%) !important;
+}
+
+.tooltip-class {
+  background-color: $color-surface !important;
+  color: $color-text-primary !important;
+  border-radius: $border-radius-base !important;
+  padding: $spacing-md !important;
+  box-shadow: 0 1px 10px $color-shadow;
+  
 }

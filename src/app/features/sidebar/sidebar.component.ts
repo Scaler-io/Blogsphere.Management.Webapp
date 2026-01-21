@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { getSidenavToggleState } from 'src/app/state/sidenav/sidenav.selector';
-import { getMobileViewState } from 'src/app/state/mobile-view/mobile-view.selector';
+import { selectMobileViewState } from 'src/app/state/mobile-view/mobile-view.selector';
 import { ToggleSideNav } from 'src/app/state/sidenav/sidenav.action';
 
 @Component({
@@ -28,7 +28,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.sidenavToggleState = this.store
       .select(getSidenavToggleState)
-      .subscribe((state) => {
+      .subscribe(state => {
         this.isSidenavExpanded = state;
         if (!state) {
           this.subMenuList = {
@@ -39,27 +39,36 @@ export class SidebarComponent implements OnInit, OnDestroy {
       });
 
     this.subscriptions.mobileViewState = this.store
-      .select(getMobileViewState)
-      .subscribe((state) => {
-        if (state) this.isMobileView = state;
+      .select(selectMobileViewState)
+      .subscribe(state => {
+        if (state) {
+          this.isMobileView = state;
+          this.store.dispatch(new ToggleSideNav());
+        }
       });
   }
 
   ngOnDestroy(): void {
-    Object.values(this.subscriptions).forEach((subscription) => {
+    Object.values(this.subscriptions).forEach(subscription => {
       if (subscription) subscription.unsubscribe();
     });
   }
 
   public handleSidenavItemClick(menu?: string) {
     if (menu) this.updateSubmenuActions(menu);
-    if (!this.isMobileView && !this.isSidenavExpanded) {
+    if (this.isMobileView && this.isSidenavExpanded && !menu) {
       this.store.dispatch(new ToggleSideNav());
     }
   }
 
   public hadndleSubmenuClick() {
-    if (this.isMobileView && !this.isSidenavExpanded) {
+    if (this.isMobileView) {
+      this.store.dispatch(new ToggleSideNav());
+    }
+  }
+
+  public handleBackdropClick() {
+    if (this.isMobileView && this.isSidenavExpanded) {
       this.store.dispatch(new ToggleSideNav());
     }
   }

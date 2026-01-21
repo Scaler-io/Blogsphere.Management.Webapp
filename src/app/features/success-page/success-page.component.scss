@@ -1,0 +1,38 @@
+@import '../../../assets/styles/sass-utils/variables.scss';
+@import '../../../assets/styles/sass-utils/mixins.scss';
+
+.success-page__layout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-2xl;
+  padding: $spacing-2xl;
+  &-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-md;
+    &--image{
+      img{
+        height: 65px;
+        width: 65px;
+      }
+    }
+    &--heading{
+      @include font($font-size-4xl, $font-weight-bold, $line-height-tight);
+    }
+    &--subheading{
+      @include font($font-size-2xl, $font-weight-regular, $line-height-normal);
+    }
+  }
+  &-action{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-md;
+  }
+}

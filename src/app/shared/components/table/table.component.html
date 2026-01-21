@@ -1,17 +1,20 @@
-<table cdk-table [dataSource]="tableDataSource">
+<table class="table__layout" cdk-table [dataSource]="tableDataSource">
   <ng-container *ngFor="let col of columns" [cdkColumnDef]="col">
-    <th cdk-header-cell *cdkHeaderCellDef>
+    <th class="table__header-cell" cdk-header-cell *cdkHeaderCellDef>
       {{ columnMap ? (getColumnKey(col) | capitalize) : (col | capitalize) }}
     </th>
-    <td cdk-cell *cdkCellDef="let element; let i = index">
+    <td class="table__cell" cdk-cell *cdkCellDef="let element; let i = index">
       <ng-container *ngIf="col !== 'actions'; else actionColumns">
         <ng-container *ngIf="isStatusField(col); else defaultDisplay">
-          <blogsphere-badge [type]="element[getColumnValue(col)]? BadgeType.success : BadgeType.danger" isRounded="true">
+          <blogsphere-badge
+            [type]="element[getColumnValue(col)] ? BadgeType.success : BadgeType.danger"
+            isRounded="true"
+          >
             {{ element[getColumnValue(col)] | formatStatus }}
           </blogsphere-badge>
         </ng-container>
         <ng-template #defaultDisplay>
-          {{    
+          {{
             !columnMap
               ? element[col]
               : isDateField(col)
@@ -21,14 +24,31 @@
         </ng-template>
       </ng-container>
       <ng-template #actionColumns>
-        <button *ngIf="allowVisit" class="material-symbols-outlined" (click)="onVisit(element)">visibility</button>
-        <ng-container *ngIf="allowEdit">
-            <button *ngIf="allowEdit" class="material-symbols-outlined" (click)="onEdit(element)">edit</button>
-            <button *ngIf="allowDelete" class="material-symbols-outlined" (click)="onDelete(element)">delete</button>
-        </ng-container>
+        <div class="custom-menu" matRipple [matMenuTriggerFor]="actionMenu">
+          <span class="material-symbols-outlined">more_horiz</span>
+          <mat-menu #actionMenu="matMenu">
+            <button *ngIf="allowVisit" mat-menu-item (click)="onVisit(element)">Visit</button>
+            <button *ngIf="allowEdit" mat-menu-item (click)="onEdit(element)">Edit</button>
+            <button *ngIf="allowDelete" mat-menu-item (click)="onDelete(element)">Delete</button>
+          </mat-menu>
+        </div>
       </ng-template>
     </td>
   </ng-container>
-  <tr cdk-header-row *cdkHeaderRowDef="columns"></tr>
-  <tr cdk-row *cdkRowDef="let row; columns: columns"></tr>
+  <tr class="table__header-row" cdk-header-row *cdkHeaderRowDef="columns"></tr>
+  <tr class="table__row" cdk-row *cdkRowDef="let row; columns: columns"></tr>
 </table>
+
+<blogsphere-paginator
+  *ngIf="dataLength > 0"
+  [pageMetadata]="customPageMetadata"
+  (pageChange)="onPageChange($event)"
+></blogsphere-paginator>
+
+<!-- <mat-paginator
+  [length]="dataLength"
+  [pageIndex]="paginationMetadata.currentPage - 1"
+  [pageSize]="paginationMetadata.top"
+  [pageSizeOptions]="[10, 20, 50, 100]"
+  (page)="onPageChange($event)"
+></mat-paginator> -->

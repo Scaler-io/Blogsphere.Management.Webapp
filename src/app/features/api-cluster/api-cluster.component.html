@@ -1,3 +1,46 @@
-<div @fadeSlideInOut>
-    <p>api-cluster works!</p>
+<div @fadeSlideInOut class="cluster-list__container">
+  <blogsphere-search-layout addButtonLabel="Create Api Cluster" filterLabel="API Cluster" [isFileterFormValid]="true">
+    <ng-container>
+      <blogsphere-cluster-filter-form [filterForm]="clusterFilterForm"></blogsphere-cluster-filter-form>
+    </ng-container>
+  </blogsphere-search-layout>
+
+  <ng-container *ngIf="!(isApiClustersLoading$ | async) && !(isApiClusterCountLoading$ | async)">
+    <div class="row" *ngIf="!(isMobileView$ | async)">
+      <div class="col-sm-12">
+        <blogsphere-table
+          *ngIf="(totalApiClusters$ | async) > 0"
+          [dataSource]="apiCusterDataSource"
+          [columns]="displayedColumns"
+          [paginationMetadata]="apiClustersPageMetadata$ | async"
+          [dataLength]="totalApiClusters$ | async"
+          [columnMap]="columnNameMap"
+          [actionEnabled]="true"
+          (visit)="onView($event)"
+          (edit)="onEdit($event)" 
+          (pageChange)="onPageChange($event)"
+          [allowEdit]="allowEditOption$ | async"
+          [allowDelete]="false"
+        ></blogsphere-table>
+
+        <blogsphere-no-content-layout
+          *ngIf="(totalApiClusters$ | async) === 0"
+          [title]="'No API Clusters'"
+          [subtitle]="'There are no API clusters to display.'"
+          [buttonLabel]="'Add API Cluster'"
+          [showButton]="!isFilterApplied && !isSearchApplied"
+          [iconType]="'empty'"
+        ></blogsphere-no-content-layout>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="w-100 d-flex justify-content-center">
+    <mat-progress-spinner
+      mode="indeterminate"
+      diameter="50"
+      color="primary"
+      *ngIf="(isApiClustersLoading$ | async) || (isApiClusterCountLoading$ | async)"
+    ></mat-progress-spinner>
+  </div>
 </div>

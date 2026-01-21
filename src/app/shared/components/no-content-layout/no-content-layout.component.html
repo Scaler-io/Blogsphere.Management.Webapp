@@ -1,0 +1,56 @@
+<div class="no-content-layout">
+  <div class="no-content-layout__content">
+    <!-- Icon -->
+    <div class="no-content-layout__icon" [ngSwitch]="iconType">
+      <!-- Data Icon -->
+      <svg *ngSwitchCase="'data'" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="40" cy="25" rx="18" ry="5" fill="none" stroke="#0033cc" stroke-width="2.5" />
+        <path d="M22 25 L22 35 Q22 40 40 40 Q58 40 58 35 L58 25" fill="none" stroke="#0033cc" stroke-width="2.5" />
+        <path d="M22 35 L22 45 Q22 50 40 50 Q58 50 58 45 L58 35" fill="none" stroke="#1a66ff" stroke-width="2.5" />
+        <path d="M22 45 L22 55 Q22 60 40 60 Q58 60 58 55 L58 45" fill="none" stroke="#4d88ff" stroke-width="2.5" />
+        <circle cx="40" cy="35" r="2" fill="#9e9e9e" />
+        <circle cx="40" cy="45" r="2" fill="#9e9e9e" />
+        <circle cx="40" cy="55" r="2" fill="#9e9e9e" />
+      </svg>
+
+      <!-- Search Icon -->
+      <svg *ngSwitchCase="'search'" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="35" cy="35" r="15" fill="none" stroke="#0033cc" stroke-width="3" />
+        <line x1="47" y1="47" x2="60" y2="60" stroke="#0033cc" stroke-width="3" stroke-linecap="round" />
+        <circle cx="35" cy="35" r="6" fill="none" stroke="#9e9e9e" stroke-width="2" />
+        <line x1="32" y1="38" x2="38" y2="32" stroke="#9e9e9e" stroke-width="2" />
+      </svg>
+
+      <!-- Empty Icon -->
+      <svg *ngSwitchCase="'empty'" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 30 L25 20 L65 20 L65 60 L15 60 Z" fill="none" stroke="#0033cc" stroke-width="2.5" />
+        <path d="M15 30 L30 30 L35 25 L65 25 L65 30" fill="none" stroke="#1a66ff" stroke-width="2.5" />
+        <line x1="25" y1="40" x2="55" y2="40" stroke="#9e9e9e" stroke-width="2" />
+        <line x1="25" y1="45" x2="50" y2="45" stroke="#9e9e9e" stroke-width="2" />
+        <line x1="25" y1="50" x2="45" y2="50" stroke="#9e9e9e" stroke-width="2" />
+      </svg>
+
+      <!-- Custom Icon -->
+      <div *ngSwitchCase="'custom'" [innerHTML]="customIconSvg"></div>
+    </div>
+
+    <!-- Title -->
+    <h2 class="no-content-layout__title">{{ title }}</h2>
+
+    <!-- Subtitle -->
+    <p class="no-content-layout__subtitle">{{ subtitle }}</p>
+
+    <!-- Action Button -->
+    <div class="no-content-layout__action" *ngIf="showButton">
+      <blogsphere-button
+        [type]="ButtonType.primary"
+        [size]="ButtonSize.medium"
+        [elevated]="false"
+        [rounded]="false"
+        (next)="onButtonClick()"
+      >
+        {{ buttonLabel }}
+      </blogsphere-button>
+    </div>
+  </div>
+</div>

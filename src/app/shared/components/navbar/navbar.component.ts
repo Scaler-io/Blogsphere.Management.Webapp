@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { Store } from '@ngrx/store';
-import { getMobileViewState } from 'src/app/state/mobile-view/mobile-view.selector';
+import { selectMobileViewState } from 'src/app/state/mobile-view/mobile-view.selector';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { ToggleSideNav } from 'src/app/state/sidenav/sidenav.action';
 import { AuthService } from 'src/app/core/auth/auth.service';
@@ -17,18 +17,12 @@ import { getAuthState } from 'src/app/state/auth/auth.selector';
 export class NavbarComponent implements OnInit {
   @ViewChild(MatExpansionPanel) panel: MatExpansionPanel;
 
-  public isMobileView$: Observable<boolean>;
-  public authUser$: Observable<AuthUser>;
+  public isMobileView$ = this.store.select(selectMobileViewState);
+  public authUser$ = this.store.select(getAuthState);
 
-  constructor(
-    private store: Store<AppState>,
-    private authService: AuthService
-  ) {}
+  constructor(private store: Store<AppState>, private authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.isMobileView$ = this.store.select(getMobileViewState);
-    this.authUser$ = this.store.select(getAuthState);
-  }
+  ngOnInit(): void {}
 
   public toggleAccordion(): void {
     if (this.panel.expanded) this.panel.close();

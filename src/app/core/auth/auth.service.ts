@@ -1,27 +1,28 @@
 import { Injectable } from '@angular/core';
-import {
-  OidcConfigService,
-  OidcSecurityService,
-  LoginResponse,
-} from 'angular-auth-oidc-client';
-import { Observable, map } from 'rxjs';
+import { OidcSecurityService, LoginResponse } from 'angular-auth-oidc-client';
+import { Observable, map, catchError, of, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(
-    private oidcConfigService: OidcConfigService,
-    private oidcSecurityService: OidcSecurityService
-  ) {
-    // Configuration is now handled in app.module.ts
-  }
+  constructor(private oidcSecurityService: OidcSecurityService) {}
 
   /**
-   * Initialize authentication and trigger login if not authenticated
+   * Initialize authentication check
    */
-  public initAuth(): Observable<LoginResponse> {
-    return this.oidcSecurityService.checkAuth();
+  public checkAuth(): Observable<LoginResponse> {
+    return this.oidcSecurityService.checkAuth().pipe(
+      catchError(error => {
+        return of({
+          isAuthenticated: false,
+          errorMessage: 'Authentication check failed',
+          accessToken: '',
+          idToken: '',
+          userData: null,
+        } as LoginResponse);
+      })
+    );
   }
 
   /**
@@ -39,24 +40,20 @@ export class AuthService {
   }
 
   /**
-   * Check if user is authenticated (returns AuthenticatedResult observable)
+   * Check if user is authenticated (observable)
    */
-  public isAuthenticated(): Observable<any> {
-    return this.oidcSecurityService.isAuthenticated$;
+  public isAuthenticated(): Observable<boolean> {
+    return this.oidcSecurityService.isAuthenticated$.pipe(
+      map(result => result.isAuthenticated),
+      catchError(() => of(false))
+    );
   }
 
   /**
-   * Get the current access token (synchronous)
+   * Get the current access token
    */
   public getAccessToken(): string {
     return this.oidcSecurityService.getAccessToken();
-  }
-
-  /**
-   * Get the current ID token (synchronous)
-   */
-  public getIdToken(): string {
-    return this.oidcSecurityService.getIdToken();
   }
 
   /**
@@ -69,45 +66,51 @@ export class AuthService {
   /**
    * Refresh the access token
    */
-  public refreshToken(): Observable<any> {
-    return this.oidcSecurityService.forceRefreshSession();
+  public refreshToken(): Observable<LoginResponse> {
+    return this.oidcSecurityService.forceRefreshSession().pipe(
+      catchError(error => {
+        return of({
+          isAuthenticated: false,
+          errorMessage: 'Token refresh failed',
+          accessToken: '',
+          idToken: '',
+          userData: null,
+        } as LoginResponse);
+      })
+    );
   }
 
   /**
-   * Check if the current token is expired
+   * Check if we have a valid refresh token stored
    */
-  public isTokenExpired(): boolean {
-    // Get token expiration from the service
-    const token = this.oidcSecurityService.getAccessToken();
-    if (!token) return true;
-
-    // You can implement more sophisticated token expiry check here
-    // For now, rely on the service's internal checks
-    return false;
+  public hasValidRefreshToken(): boolean {
+    try {
+      const refreshToken =
+        localStorage.getItem('angular-auth-oidc-client_refresh_token') ||
+        sessionStorage.getItem('angular-auth-oidc-client_refresh_token');
+      return !!refreshToken;
+    } catch (error) {
+      return false;
+    }
   }
 
-  /**
-   * Get authentication result including server check
-   */
-  public getAuthenticationResult(): Observable<LoginResponse> {
-    return this.oidcSecurityService.checkAuthIncludingServer();
-  }
-
-  /**
-   * Manually trigger authentication check
-   */
-  public checkAuth(): Observable<LoginResponse> {
-    return this.oidcSecurityService.checkAuth();
-  }
-
-  /**
-   * Get if authentication is authenticated (boolean helper)
-   */
-  public checkIsAuthenticated(): Observable<boolean> {
-    return this.oidcSecurityService
-      .checkAuth()
-      .pipe(
-        map((loginResponse: LoginResponse) => loginResponse.isAuthenticated)
+  public isSuperAdmin(): Observable<boolean> {
+    if (!this.isAuthenticated()) {
+      return of(false);
+    } else {
+      return this.getUserData().pipe(
+        map(res => {
+          return res.userData.role === 'SuperAdmin';
+        })
       );
+    }
+  }
+
+  public isAdmin(): Observable<boolean> {
+    if (!this.isAuthenticated()) {
+      return of(false);
+    } else {
+      return this.getUserData().pipe(map(res => res.role === 'Admin'));
+    }
   }
 }

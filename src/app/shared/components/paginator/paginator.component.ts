@@ -18,7 +18,7 @@ export class PaginatorComponent implements OnInit {
   }
 
   public getVisiblePages(pageMetadata: any): number[] {
-    const { currentPage, totalPages } = pageMetadata;
+    const { pageNumber, totalPages } = pageMetadata;
     const visiblePages: number[] = [];
 
     // If total pages is small, show all pages
@@ -30,19 +30,19 @@ export class PaginatorComponent implements OnInit {
     }
 
     // Logic for showing pages around current page
-    if (currentPage <= 4) {
+    if (pageNumber <= 4) {
       // Show pages 2, 3, 4 if we're near the beginning
       for (let i = 2; i <= Math.min(4, totalPages - 1); i++) {
         visiblePages.push(i);
       }
-    } else if (currentPage >= totalPages - 3) {
+    } else if (pageNumber >= totalPages - 3) {
       // Show last few pages if we're near the end
       for (let i = Math.max(totalPages - 3, 2); i < totalPages; i++) {
         visiblePages.push(i);
       }
     } else {
       // Show pages around current page
-      for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+      for (let i = pageNumber - 1; i <= pageNumber + 1; i++) {
         if (i > 1 && i < totalPages) {
           visiblePages.push(i);
         }
@@ -53,13 +53,13 @@ export class PaginatorComponent implements OnInit {
   }
 
   public shouldShowStartEllipsis(pageMetadata: any): boolean {
-    const { currentPage, totalPages } = pageMetadata;
-    return totalPages > 7 && currentPage > 4;
+    const { pageNumber, totalPages } = pageMetadata;
+    return totalPages > 7 && pageNumber > 4;
   }
 
   public shouldShowEndEllipsis(pageMetadata: any): boolean {
-    const { currentPage, totalPages } = pageMetadata;
-    return totalPages > 7 && currentPage < totalPages - 3;
+    const { pageNumber, totalPages } = pageMetadata;
+    return totalPages > 7 && pageNumber < totalPages - 3;
   }
 
   public Math = Math;

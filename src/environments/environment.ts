@@ -5,6 +5,12 @@
 export const environment = {
   production: false,
   blogShereApiGatewayBaseUrl: 'http://localhost:8000/api/v1',
+  blogsphereSearchApiBaseUrl: 'http://localhost:8000/search',
+
+  blogsphereSearchApiSubscriptionKey: 'efc2253f-6d87-40bb-9623-88c0e2bbaa4b',
+
+  // Development feature flags
+  useMockService: false, // Set to true to use mock service, false for real service
 };
 
 /*

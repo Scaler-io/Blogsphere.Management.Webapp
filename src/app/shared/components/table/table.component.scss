@@ -1,0 +1,203 @@
+@import '../../../../assets/styles/sass-utils/variables';
+@import '../../../../assets/styles/sass-utils/mixins';
+
+// ============================================================================
+// TABLE COMPONENT - BLOGSPHERE THEME
+// ============================================================================
+
+.table__layout {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: $color-surface;
+  overflow: hidden;
+  border: 1px solid $color-border-light;
+  // Header styling
+  .table__header-row {
+    background: $color-primary;
+
+    .table__header-cell {
+      @include font($font-size-2xl, $font-weight-medium, $line-height-normal);
+      color: $color-text-inverse;
+      text-align: left;
+      padding: $spacing-lg $spacing-md;
+      border: none;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 60%;
+        background-color: rgba($color-text-inverse, 0.2);
+      }
+
+      &:last-child::after {
+        display: none;
+      }
+
+      // Responsive header styling
+      @include respond-to(md) {
+        @include font($font-size-2xl, $font-weight-medium, $line-height-normal);
+        padding: $spacing-xl $spacing-lg;
+      }
+
+      @include respond-to(lg) {
+        text-align: center;
+        padding: $spacing-xl $spacing-xl;
+      }
+    }
+  }
+
+  // Data row styling
+  .table__row {
+    @include transition(background-color);
+    border-bottom: 1px solid $color-border-light;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .table__cell {
+      &:first-child {
+        color: $color-primary;
+        font-weight: $font-weight-medium;
+      }
+
+      @include font($font-size-sm, $font-weight-regular, $line-height-normal);
+      padding: $spacing-md;
+      border: none;
+      vertical-align: middle;
+
+      // Responsive cell styling
+      @include respond-to(md) {
+        @include font($font-size-2xl, $font-weight-regular, $line-height-normal);
+        padding: $spacing-lg;
+      }
+
+      @include respond-to(lg) {
+        text-align: center;
+        padding: $spacing-lg $spacing-xl;
+      }
+    }
+  }
+
+  // Empty state styling
+  &.table--empty {
+    .table__cell {
+      text-align: center;
+      padding: $spacing-3xl $spacing-md;
+      color: $color-text-disabled;
+      @include font($font-size-lg, $font-weight-regular, $line-height-relaxed);
+    }
+  }
+}
+
+.custom-menu {
+  margin: 0 auto;
+  background-color: $color-background;
+  border-radius: 50%;
+  padding: $spacing-sm;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  align-items: center;
+  &:hover {
+    background-color: $color-background-secondary;
+  }
+}
+
+// ============================================================================
+// PAGINATION STYLING
+// ============================================================================
+
+::ng-deep .mat-mdc-paginator {
+  background-color: $color-background-secondary;
+  border-top: 1px solid $color-border-light;
+  border-radius: 0 0 $border-radius-lg $border-radius-lg;
+  margin-top: 0;
+
+  .mat-mdc-paginator-container {
+    padding: $spacing-md $spacing-lg;
+    min-height: 56px;
+
+    @include respond-to(md) {
+      padding: $spacing-lg $spacing-xl;
+    }
+  }
+
+  .mat-mdc-paginator-page-size,
+  .mat-mdc-paginator-range-label {
+    @include font($font-size-sm, $font-weight-regular, $line-height-normal);
+    color: $color-text-primary;
+
+    @include respond-to(md) {
+      @include font($font-size-base, $font-weight-regular, $line-height-normal);
+    }
+  }
+
+  .mat-mdc-paginator-navigation-previous,
+  .mat-mdc-paginator-navigation-next {
+    .mat-mdc-icon-button {
+      @include button-base;
+      background-color: $color-button-primary;
+      color: $color-text-inverse;
+
+      &:hover:not([disabled]) {
+        background-color: $button-blue-600;
+        transform: translateY(-1px);
+      }
+
+      &[disabled] {
+        background-color: $color-border;
+        color: $color-text-disabled;
+      }
+    }
+  }
+
+  .mat-mdc-select {
+    .mat-mdc-select-trigger {
+      @include font($font-size-sm, $font-weight-regular, $line-height-normal);
+      color: $color-text-primary;
+
+      @include respond-to(md) {
+        @include font($font-size-base, $font-weight-regular, $line-height-normal);
+      }
+    }
+  }
+}
+
+// ============================================================================
+// RESPONSIVE ADJUSTMENTS
+// ============================================================================
+
+// Large screens and up
+@include respond-to(lg) {
+  .table__layout {
+    .table__header-row .table__header-cell {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30%;
+        height: 2px;
+        background-color: $color-accent;
+        opacity: 0;
+        @include transition(opacity);
+      }
+
+      &:hover::before {
+        opacity: 1;
+      }
+    }
+  }
+}

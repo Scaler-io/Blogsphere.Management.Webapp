@@ -10,19 +10,17 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     CommonModule,
     AuthModule.forRoot({
       config: {
-        authority: 'http://localhost:5000', // Replace with your identity server URL
+        authority: 'http://localhost:5000',
         redirectUrl: window.location.origin,
         postLogoutRedirectUri: window.location.origin,
-        clientId: 'blogsphere-management', // Replace with your client ID
-        scope: 'openid profile email apigateway:read apigateway:write apigateway:delete', // Define your required scopes
+        clientId: 'blogsphere-management',
+        scope:
+          'openid profile email apigateway:read apigateway:write apigateway:delete offline_access',
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,
-        logLevel: 0, // Set to 1 for debug logging
-        refreshTokenRetryInSeconds: 3600 * 24,
-        silentRenewTimeoutInSeconds: 3600 * 24,
-        tokenRefreshInSeconds: 3600 * 24,
         autoUserInfo: true,
+        logLevel: 0,
       },
     }),
   ],

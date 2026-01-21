@@ -362,6 +362,25 @@ dd {
   color: $color-text-inverse !important;
 }
 
+.text-primary {
+  color: $color-primary !important;
+}
+.text-secondary {
+  color: $color-text-secondary !important;
+}
+.text-success {
+  color: $color-success !important;
+}
+.text-warning {
+  color: $color-warning !important;
+}
+.text-error {
+  color: $color-error !important;
+}
+.text-info {
+  color: $color-info !important;
+}
+
 // Font size utilities
 .text-xs {
   font-size: $font-size-xs !important;

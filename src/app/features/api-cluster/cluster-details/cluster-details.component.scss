@@ -1,0 +1,71 @@
+@import '../../../../assets/styles/sass-utils/variables';
+@import '../../../../assets/styles/sass-utils/mixins';
+
+.destination__table {
+  width: 100%;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  tr {
+    border-bottom: 1px solid $color-border;
+    th,
+    td {
+      padding: $spacing-lg;
+    }
+
+    th {
+      text-align: center;
+    }
+    td {
+      text-align: center;
+      font-size: $font-size-xl;
+      &:first-child {
+        color: $color-primary;
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+}
+
+.badge {
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-surface;
+  background-color: $color-background-secondary;
+
+  &:not(:last-child) {
+    margin-right: $spacing-sm;
+  }
+
+  &.badge-green {
+    background-color: $color-success;
+    color: $color-surface;
+  }
+  &.badge-yellow {
+    background-color: $color-warning;
+    color: $color-surface;
+  }
+  &.badge-blue {
+    background-color: $color-info;
+    color: $color-surface;
+  }
+  &.badge-red {
+    background-color: $color-error;
+    color: $color-surface;
+  }
+}
+
+.json-container {
+  max-height: 450px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  color: $color-warning;
+  background-color: black;
+  border-radius: $border-radius-md;
+  pre {
+    padding: $spacing-md;
+    background-color: transparent;
+    border: none;
+  }
+}

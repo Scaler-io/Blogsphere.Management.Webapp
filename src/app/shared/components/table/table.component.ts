@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableColumnMap, TableDataSource } from 'src/app/core/model/table-source';
@@ -8,7 +16,7 @@ import { BadgeType } from 'src/app/core/model/core';
 @Component({
   selector: 'blogsphere-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit, OnChanges {
   @Input('dataSource') tableDataSource: MatTableDataSource<TableDataSource>;
@@ -19,23 +27,33 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() dataLength: number;
   @Input() allowVisit: boolean = true;
   @Input() allowEdit: boolean = true;
+  @Input() allowDelete: boolean = true;
 
   @Output() pageChange: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
   @Output() visit: EventEmitter<TableDataSource> = new EventEmitter<TableDataSource>();
   @Output() edit: EventEmitter<TableDataSource> = new EventEmitter<TableDataSource>();
   @Output() delete: EventEmitter<TableDataSource> = new EventEmitter<TableDataSource>();
 
+  public customPageMetadata;
+
   BadgeType = BadgeType;
 
   constructor() {}
 
   ngOnChanges(): void {
-    if(this.actionEnabled && !this.columns.includes('actions')) {
+    this.customPageMetadata = {
+      totalPages: Math.ceil(this.dataLength / this.paginationMetadata.top),
+      pageNumber: this.paginationMetadata.currentPage,
+      pageSize: this.paginationMetadata.top,
+      totalCount: this.dataLength,
+    };
+
+    if (this.actionEnabled && !this.columns.includes('actions')) {
       this.columns.push('actions');
       this.columnMap = this.addActionsColumn(this.columnMap, 'actions');
-    }else if(!this.actionEnabled && this.columns.includes('actions')) {
+    } else if (!this.actionEnabled && this.columns.includes('actions')) {
       this.columns = this.columns.filter(c => c !== 'actions');
-    }else{
+    } else {
       this.columnMap = this.addActionsColumn(this.columnMap, 'actions');
     }
   }
@@ -84,8 +102,8 @@ export class TableComponent implements OnInit, OnChanges {
       actions: {
         value: value,
         isDateField: false,
-        isStatusField: false
-      }
-    }
+        isStatusField: false,
+      },
+    };
   }
 }

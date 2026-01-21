@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
 import { selectError } from 'src/app/state/error/error.selector';
@@ -14,13 +20,9 @@ export class CanActivateErrorPageGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.store.select(selectError).pipe(
-      map((error) => {
+      map(error => {
         if (error) {
           return true; // Allow access to error page when there's an error
         }

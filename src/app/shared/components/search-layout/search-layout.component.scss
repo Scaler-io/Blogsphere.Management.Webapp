@@ -1,0 +1,236 @@
+@import '../../../../assets/styles/sass-utils/variables';
+@import '../../../../assets/styles/sass-utils/mixins';
+
+.search-layout__action-box {
+  padding: 1.5rem;
+  .search-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .input-wrapper {
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .icon {
+        position: absolute;
+        left: 0;
+        font-size: $font-size-3xl;
+        color: #aaa;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 10px 10px 10px 30px; // Adjust padding to accommodate the icon
+        border: none;
+        border-bottom: 2px solid #ccc;
+        outline: none;
+        font-size: 16px;
+        transition: border-color 0.3s ease-in-out;
+        background-color: transparent;
+        &:focus {
+          border-bottom-color: $color-primary;
+        }
+      }
+    }
+  }
+
+  .sort-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+    cursor: pointer;
+    .label {
+      @include font($font-size-2xl, $font-weight-regular, $line-height-normal);
+    }
+    .heading,
+    .value {
+      @include font($font-size-2xl, $font-weight-bold, $line-height-normal);
+    }
+  }
+
+  .filter-container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    column-gap: $spacing-lg;
+    justify-content: space-evenly;
+    .filter-action {
+      cursor: pointer;
+      font-size: $font-size-xl;
+      text-transform: uppercase;
+      &.filter-applied {
+        font-weight: $font-weight-bold;
+      }
+      &.disabled {
+        color: $gray-500;
+      }
+    }
+    .filter-options-panel {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      z-index: 3;
+      top: 90%;
+      left: -80%;
+      transform: translate(-65%, 2%);
+      transform-origin: top right;
+      width: 650px;
+      height: 450px;
+      background: #fff;
+      //   border: 1px solid $color-blue-gray;
+      border-radius: 3px;
+      box-shadow: -3px -1px 20px 5px rgba(116, 116, 116, 0.15);
+      transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+
+      &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid $gray-300;
+        padding: $spacing-lg !important;
+        &-heading {
+          font-size: $font-size-2xl;
+          font-weight: $font-weight-bold;
+        }
+        &-closebtn > span {
+          cursor: pointer;
+          font-size: $font-size-2xl;
+        }
+      }
+      &__body {
+        flex-grow: 1;
+      }
+      &__header,
+      &__body,
+      &__footer {
+        padding: 10px;
+      }
+      &--hidden {
+        height: 0;
+        width: 0;
+        opacity: 0;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  // Mobile filter panel (full-screen overlay)
+  .filter-options-panel__mobile {
+    position: fixed;
+    top: $spacing-md;
+    left: $spacing-md;
+    right: $spacing-md;
+    bottom: $spacing-md;
+    width: calc(100vw - #{$spacing-md * 2});
+    height: calc(100vh - #{$spacing-md * 2});
+    background-color: $color-surface;
+    border-radius: $border-radius-lg;
+    z-index: $z-index-modal;
+    @include flex-column;
+    @include transition(opacity, transform);
+    @include card;
+    transform: translateY(0);
+    overflow: hidden;
+
+    &__header {
+      @include flex-between;
+      padding: $spacing-lg $spacing-md;
+      background: $color-primary;
+      color: $color-text-inverse;
+      border-radius: $border-radius-lg $border-radius-lg 0 0;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      min-height: 64px; // Touch-friendly header
+
+      &-heading {
+        @include font($font-size-2xl, $font-weight-bold, $line-height-normal);
+        color: $color-text-inverse;
+      }
+
+      &-closebtn {
+        @include button-base;
+        @include button-size(sm);
+        background-color: rgba($color-text-inverse, 0.1);
+        color: $color-text-inverse;
+        border-radius: $border-radius-full;
+        width: 40px;
+        height: 40px;
+
+        &:hover {
+          background-color: rgba($color-text-inverse, 0.2);
+        }
+      }
+    }
+
+    &__body {
+      flex: 1;
+      padding: $spacing-lg $spacing-md;
+      overflow-y: auto;
+    }
+
+    &__footer {
+      padding: $spacing-lg $spacing-md;
+      background-color: $color-background-secondary;
+      border-top: 1px solid $color-border-light;
+      border-radius: 0 0 $border-radius-lg $border-radius-lg;
+      position: sticky;
+      bottom: 0;
+      text-align: center;
+
+      // Make button full-width on mobile
+      blogsphere-button {
+        width: 100%;
+
+        button {
+          width: 100%;
+          min-height: 48px; // Touch-friendly
+        }
+      }
+    }
+
+    &--hidden {
+      opacity: 0;
+      transform: translateY(100%);
+      visibility: hidden;
+    }
+  }
+
+  .add-button {
+    font-size: $font-size-lg;
+    // use mobile view mixin
+  }
+}
+
+@include respond-to(xs) {
+  .sort-container {
+    padding: $spacing-md !important;
+    .value {
+      margin-top: $spacing-xs !important;
+    }
+  }
+  .add-button {
+    width: 100%;
+    margin-top: $spacing-md;
+  }
+}
+
+@include respond-to(sm) {
+  .add-button {
+    margin-top: $spacing-md;
+  }
+}
+
+@include respond-to(md) {
+  .add-button {
+    margin: auto;
+  }
+}

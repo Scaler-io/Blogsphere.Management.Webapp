@@ -1,17 +1,16 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { AppState } from './store/app.state';
 import { Store } from '@ngrx/store';
 import { SetMobileView } from './state/mobile-view/mobile-view.action';
-import { AuthService } from './core/auth/auth.service';
+import { AuthManagerService } from './core/auth/auth-manager.service';
 import { NavigationStart, Router } from '@angular/router';
-import { SetAuthState } from './state/auth/auth.action';
 
 @Component({
   selector: 'blogsphere-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = '13';
   public isMobileView: boolean = false;
   public isAuthenticated: boolean = false;
@@ -19,7 +18,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private authService: AuthService,
+    private authManager: AuthManagerService,
     private router: Router
   ) {
     this.router.events.subscribe(event => {
@@ -61,13 +60,18 @@ export class AppComponent implements OnInit {
   }
 
   private initializeAuthentication(): void {
-    this.authService.checkAuth().subscribe((res) => {
-      this.isAuthenticated = res.isAuthenticated;
-      if (!this.isAuthenticated) this.authService.login();
-      else {
-        console.log('user is authenticated');
-        this.store.dispatch(new SetAuthState(res));
-      }
+    this.authManager.initializeAuthentication().subscribe({
+      next: isAuthenticated => {
+        this.isAuthenticated = isAuthenticated;
+      },
+      error: error => {
+        this.isAuthenticated = false;
+      },
     });
+  }
+
+  ngOnDestroy(): void {
+    // Clean up authentication manager
+    this.authManager.cleanup();
   }
 }

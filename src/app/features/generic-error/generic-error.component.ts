@@ -25,7 +25,7 @@ export class GenericErrorComponent implements OnInit {
 
   public goBackToOrigin(): void {
     this.errorComponentRoute$
-      .subscribe((route) => {
+      .subscribe(route => {
         if (route) {
           this.router.navigate([route]);
         } else {
@@ -41,13 +41,15 @@ export class GenericErrorComponent implements OnInit {
 
   public get sourcePage(): string {
     let page = '';
-    this.errorComponentRoute$.subscribe((route) => {
-      if (route) {
-        page = route.substring(1);
-      } else {
-        page = 'Dashboard';
-      }
-    }).unsubscribe();
+    this.errorSource$
+      .subscribe(source => {
+        if (source) {
+          page = source;
+        } else {
+          page = 'Dashboard';
+        }
+      })
+      .unsubscribe();
     return page;
   }
 }

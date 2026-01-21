@@ -1,0 +1,90 @@
+@import '../../../../assets/styles/sass-utils/variables';
+@import '../../../../assets/styles/sass-utils/mixins';
+
+.no-content-layout {
+  @include flex-center;
+  width: 100%;
+  padding: $spacing-3xl 0;
+
+  @include respond-to(xs) {
+    padding: $spacing-2xl 0;
+  }
+
+  &__content {
+    @include flex-column-center;
+    text-align: center;
+    gap: $spacing-xs;
+    max-width: 500px;
+    width: 100%;
+
+    @include respond-to(xs) {
+      gap: $spacing-md;
+      padding: 0 $spacing-lg;
+      max-width: 100%;
+    }
+  }
+
+  &__icon {
+    width: 80px;
+    height: 80px;
+    @include flex-center;
+    margin-bottom: $spacing-lg;
+
+    @include respond-to(xs) {
+      width: 70px;
+      height: 70px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    div {
+      width: 100%;
+      height: 100%;
+      @include flex-center;
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  &__title {
+    @include heading(2);
+    color: $color-text-primary;
+    font-weight: $font-weight-bold;
+    margin: 0;
+
+    @include respond-to(xs) {
+      @include heading(3);
+    }
+  }
+
+  &__subtitle {
+    @include font($font-size-xl, $font-weight-regular, $line-height-relaxed);
+    color: $color-text-secondary;
+    margin: 0;
+    opacity: 0.8;
+
+    @include respond-to(xs) {
+      @include font($font-size-lg, $font-weight-regular, $line-height-normal);
+    }
+  }
+
+  &__action {
+    margin-top: $spacing-lg;
+
+    @include respond-to(xs) {
+      margin-top: $spacing-md;
+    }
+  }
+}

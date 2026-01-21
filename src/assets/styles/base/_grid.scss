@@ -5,7 +5,7 @@
 // Supports: xs, sm, md, lg, xl, 2xl breakpoints
 // Classes: row, col-{breakpoint}-{size}, col-offset-{breakpoint}-{size}
 
-@use "sass:math";
+@use 'sass:math';
 
 // ============================================================================
 // GRID VARIABLES
@@ -65,7 +65,7 @@ $grid-container-padding: $spacing-md; // 16px
   &.no-gutters {
     margin: 0;
 
-    > [class*="col-"] {
+    > [class*='col-'] {
       padding: 0;
     }
   }
@@ -74,7 +74,7 @@ $grid-container-padding: $spacing-md; // 16px
   &.gutter-sm {
     margin: 0 math.div(-$spacing-sm, 2);
 
-    > [class*="col-"] {
+    > [class*='col-'] {
       padding: 0 math.div($spacing-sm, 2);
     }
   }
@@ -82,7 +82,7 @@ $grid-container-padding: $spacing-md; // 16px
   &.gutter-lg {
     margin: 0 math.div(-$spacing-xl, 2);
 
-    > [class*="col-"] {
+    > [class*='col-'] {
       padding: 0 math.div($spacing-xl, 2);
     }
   }
@@ -92,7 +92,7 @@ $grid-container-padding: $spacing-md; // 16px
 // BASE COLUMN CLASS
 // ============================================================================
 
-[class*="col-"] {
+[class*='col-'] {
   position: relative;
   width: 100%;
   padding: 0 math.div($grid-gutter, 2);
@@ -103,8 +103,8 @@ $grid-container-padding: $spacing-md; // 16px
 // COLUMN GENERATOR MIXIN
 // ============================================================================
 
-@mixin generate-columns($breakpoint: "") {
-  $prefix: if($breakpoint == "", "col", "col-#{$breakpoint}");
+@mixin generate-columns($breakpoint: '') {
+  $prefix: if($breakpoint == '', 'col', 'col-#{$breakpoint}');
 
   // Base column class for each breakpoint
   .#{$prefix} {
@@ -156,30 +156,31 @@ $grid-container-padding: $spacing-md; // 16px
 
 // Extra small devices (default, no media query needed)
 @include generate-columns();
+@include generate-columns('xs');
 
 // Small devices and up
 @include respond-to(sm) {
-  @include generate-columns("sm");
+  @include generate-columns('sm');
 }
 
 // Medium devices and up
 @include respond-to(md) {
-  @include generate-columns("md");
+  @include generate-columns('md');
 }
 
 // Large devices and up
 @include respond-to(lg) {
-  @include generate-columns("lg");
+  @include generate-columns('lg');
 }
 
 // Extra large devices and up
 @include respond-to(xl) {
-  @include generate-columns("xl");
+  @include generate-columns('xl');
 }
 
 // Extra extra large devices and up
 @include respond-to(2xl) {
-  @include generate-columns("2xl");
+  @include generate-columns('2xl');
 }
 
 // ============================================================================
@@ -355,7 +356,7 @@ $grid-container-padding: $spacing-md; // 16px
 .gap-3xl {
   gap: $spacing-3xl;
 }
-  
+
 // ============================================================================
 // RESPONSIVE FLEXBOX UTILITIES
 // ============================================================================

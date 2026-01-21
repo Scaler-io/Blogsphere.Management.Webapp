@@ -2,39 +2,38 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GenericErrorComponent } from './features/generic-error/generic-error.component';
 import { CanActivateErrorPageGuard } from './core/guards/can-activate-error-page.guard';
+import { CanActivateSuccessPageGuard } from './core/guards/can-activate-success-page.guard';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () =>
-      import('./features/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
-      ),
+      import('./features/dashboard/dashboard.module').then(m => m.DashboardModule),
     data: { breadcrumb: { label: 'Dashboard' } },
   },
   {
     path: 'api-cluster',
     loadChildren: () =>
-      import('./features/api-cluster/api-cluster.module').then(
-        (m) => m.ApiClusterModule
-      ),
+      import('./features/api-cluster/api-cluster.module').then(m => m.ApiClusterModule),
     data: { breadcrumb: { label: 'Clusters' } },
   },
   {
     path: 'api-routes',
     loadChildren: () =>
-      import('./features/api-routes/api-routes.module').then(
-        (m) => m.ApiRoutesModule
-      ),
+      import('./features/api-routes/api-routes.module').then(m => m.ApiRoutesModule),
     data: { breadcrumb: { label: 'Routes' } },
   },
   {
     path: 'subscription',
     loadChildren: () =>
-      import('./features/subscription/subscription.module').then(
-        (m) => m.SubscriptionModule
-      ),
+      import('./features/subscription/subscription.module').then(m => m.SubscriptionModule),
     data: { breadcrumb: { label: 'Subscription manager' } },
+  },
+  {
+    path: 'success',
+    loadChildren: () =>
+      import('./features/success-page/success-page.module').then(m => m.SuccessPageModule),
+    canActivate: [CanActivateSuccessPageGuard],
   },
   {
     path: 'generic-error',

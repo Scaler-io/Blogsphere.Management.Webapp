@@ -7,7 +7,11 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/mat
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
   MAT_RIPPLE_GLOBAL_OPTIONS,
   MatRippleModule,
   RippleGlobalOptions,
@@ -20,6 +24,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { ApprovedDateFormats } from './core/model/date-format.model';
+import { MatDividerModule } from '@angular/material/divider';
 
 const MATERIAL_MODULES = [
   MatButtonModule,
@@ -37,6 +46,10 @@ const MATERIAL_MODULES = [
   MatSnackBarModule,
   CdkAccordionModule,
   MatProgressSpinnerModule,
+  MatSlideToggleModule,
+  MatTooltipModule,
+  MatDatepickerModule,
+  MatDividerModule,
 ];
 
 const globalRippleConfig: RippleGlobalOptions = {
@@ -62,6 +75,12 @@ const globalRippleConfig: RippleGlobalOptions = {
         appearance: 'outline',
       },
     },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: ApprovedDateFormats.dateMonthYear },
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
       useValue: {

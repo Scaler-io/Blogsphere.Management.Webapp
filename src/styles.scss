@@ -3,7 +3,7 @@
 // ============================================================================
 
 // Import Titillium Web font first
-@import "./assets/styles/titillium-web";
+@import './assets/styles/titillium-web';
 
 // ============================================================================
 // SASS ARCHITECTURE STRUCTURE
@@ -12,14 +12,13 @@
 
 // 1. SASS UTILS (Variables, Functions, Mixins, Helpers)
 //    Import utilities first as they're used by other files
-@import "./assets/styles/sass-utils/sass-utils-dir";
+@import './assets/styles/sass-utils/sass-utils-dir';
 
 // 2. VENDORS (External libraries - Angular Material in our case)
-@import "./assets/styles/angular-material-theme";
-
+@import './assets/styles/angular-material-theme';
 
 // 3. BASE (Reset, Typography, Base elements)
-@import "./assets/styles/base/base-dir";
+@import './assets/styles/base/base-dir';
 
 // 4. LAYOUT (Future: Header, Footer, Navigation, Grid)
 // @import "./assets/styles/layout/layout-dir";
@@ -141,10 +140,10 @@
 // ============================================================================
 
 // Disable text selection globally
-* {
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+/Edge */
-  user-select: none; /* Standard */
-  -webkit-touch-callout: none; /* iOS Safari */
-}
+// * {
+//   -webkit-user-select: none; /* Safari */
+//   -moz-user-select: none; /* Firefox */
+//   -ms-user-select: none; /* IE10+/Edge */
+//   user-select: none; /* Standard */
+//   -webkit-touch-callout: none; /* iOS Safari */
+// }
