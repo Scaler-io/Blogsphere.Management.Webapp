@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 services:
   webapp:
@@ -6,16 +6,19 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        BLOGSPHERE_API_GATEWAY_BASE_URL: "http://localhost:8000/api/v1"
-        BLOGSPHERE_SEARCH_API_BASE_URL: "http://localhost:8000/search"
-        BLOGSPHERE_SEARCH_API_SUBSCRIPTION_KEY: "efc2253f-6d87-40bb-9623-88c0e2bbaa4b"
-        USE_MOCK_SERVICE: "false"
+    image: blogsphere-management-webapp:local
+    environment:
+      BLOGSPHERE_API_GATEWAY_BASE_URL: 'http://host.docker.internal:8000/api/v1'
+      BLOGSPHERE_SEARCH_API_BASE_URL: 'http://host.docker.internal:8000/search'
+      BLOGSPHERE_SEARCH_API_SUBSCRIPTION_KEY: 'efc2253f-6d87-40bb-9623-88c0e2bbaa4b'
+      BLOGSPHERE_BFF_BASE_URL: 'http://host.docker.internal:8000/bff'
+      BLOGSPHERE_BFF_SUBSCRIPTION_KEY: '5fd27de1-4fb8-4651-898e-933a35be3b5e'
+      USE_MOCK_SERVICE: 'false'
+      DASHBOARD_REFRESH_INTERVAL_SECONDS: '120'
     ports:
-      - "4200:80"
+      - '4200:80'
     networks:
       - blogsphere_dev_net
-
 
 networks:
   blogsphere_dev_net:

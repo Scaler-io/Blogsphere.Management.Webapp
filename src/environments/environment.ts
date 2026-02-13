@@ -6,11 +6,14 @@ export const environment = {
   production: false,
   blogShereApiGatewayBaseUrl: 'http://localhost:8000/api/v1',
   blogsphereSearchApiBaseUrl: 'http://localhost:8000/search',
+  blogsphereBffBaseUrl: 'http://localhost:8000/bff',
 
   blogsphereSearchApiSubscriptionKey: 'efc2253f-6d87-40bb-9623-88c0e2bbaa4b',
+  blogsphereBffSubscriptionKey: '5fd27de1-4fb8-4651-898e-933a35be3b5e',
 
   // Development feature flags
   useMockService: false, // Set to true to use mock service, false for real service
+  dashboardRefreshIntervalSeconds: 120,
 };
 
 /*

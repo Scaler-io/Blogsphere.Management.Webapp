@@ -71,12 +71,6 @@ export class ApiClusterMockService extends BaseService implements IApiClusterSer
           destinationId: '1',
           address: 'https://www.google.com',
           isActive: true,
-          metaData: {
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            createdBy: 'test',
-            updatedBy: 'test',
-          },
         },
       ],
       routes: [
@@ -90,8 +84,18 @@ export class ApiClusterMockService extends BaseService implements IApiClusterSer
       metaData: {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        createdBy: 'test',
-        updatedBy: 'test',
+        createdBy: {
+          fullName: 'test',
+          email: 'test@test.com',
+          employeeId: '1234567890',
+          jobTitle: 'test',
+        },
+        updatedBy: {
+          fullName: 'test',
+          email: 'test@test.com',
+          employeeId: '1234567890',
+          jobTitle: 'test',
+        },
       },
     });
   }

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject, takeUntil } from 'rxjs';
+import { filter, Subject, takeUntil } from 'rxjs';
 import {
   selectApiCluster,
   selectApiClusterCommandResponse,
@@ -17,6 +17,7 @@ import { ItemDeleteDialogComponent } from 'src/app/shared/components/item-delete
 import { DateHelper } from 'src/app/shared/helpers/date.helper';
 import * as ApiClusterActions from 'src/app/state/api-cluster/api-custer.action';
 import * as RequestPageActions from 'src/app/state/request-page/request-page.action';
+import { ApiClusterCommandType } from 'src/app/core/model/api-cluster.model';
 
 @Component({
   selector: 'blogsphere-cluster-details',
@@ -57,11 +58,12 @@ export class ClusterDetailsComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.isClusterDeleted$.pipe(takeUntil(this.destroy$)).subscribe(res => {
-      if (res) {
+    this.isClusterDeleted$
+      .pipe(takeUntil(this.destroy$))
+      .pipe(filter(res => res && res.commandtType === ApiClusterCommandType.Delete))
+      .subscribe(_ => {
         this.handleClusterResponse();
-      }
-    });
+      });
   }
 
   ngOnDestroy(): void {
@@ -74,7 +76,7 @@ export class ClusterDetailsComponent implements OnInit, OnDestroy {
   }
 
   public goToEdit(): void {
-    this.router.navigate(['api-cluster', 'cluster-setup', this.clusterId]); 
+    this.router.navigate(['api-cluster', 'cluster-setup', this.clusterId]);
   }
 
   public openDeleteDialog(): void {
@@ -93,7 +95,7 @@ export class ClusterDetailsComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.store.dispatch(new ApiClusterActions.DeleteApiCluster({ id: this.clusterId }));
-      } 
+      }
     });
   }
 

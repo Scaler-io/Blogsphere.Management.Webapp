@@ -1,0 +1,277 @@
+<div class="cluster-form__layout p-xl">
+  <div class="cluster-form__header mb-md">
+    <span class="cluster-form__title font-weight-bold">Fill route details</span>
+    <span
+      class="material-symbols-outlined font-size-2xl cursor-pointer"
+      [matTooltip]="ToolTipText.RouteDetails"
+      matTooltipClass="tooltip-class"
+      matTooltipPosition="right"
+    >
+      info
+    </span>
+  </div>
+
+  <div class="cluster-form__content">
+    <div class="cluster-form__form">
+      <form [formGroup]="routeForm">
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <mat-form-field class="w-100 font-size-xl">
+              <mat-label>Route Id</mat-label>
+              <input matInput type="text" formControlName="routeId" />
+              <mat-error>{{ getErrorMessages('routeId') }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4">
+            <mat-form-field class="w-100 font-size-xl">
+              <mat-label>Path</mat-label>
+              <input matInput type="text" formControlName="path" placeholder="/bff/{**catch-all}" />
+              <mat-error>{{ getErrorMessages('path') }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <mat-form-field class="w-100 font-size-xl">
+              <mat-label>Methods</mat-label>
+              <mat-select formControlName="methods" multiple>
+                <mat-option *ngFor="let method of httpMethods" [value]="method">
+                  {{ method }}
+                </mat-option>
+              </mat-select>
+              <mat-error>{{ getErrorMessages('methods') }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4">
+            <mat-form-field class="w-100 font-size-xl">
+              <mat-label>Rate limiter policy</mat-label>
+              <input matInput type="text" formControlName="rateLimiterPolicy" />
+              <mat-error>{{ getErrorMessages('rateLimiterPolicy') }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <mat-form-field class="w-100 font-size-xl">
+              <mat-label>Cluster Id</mat-label>
+              <mat-select formControlName="clusterId">
+                <mat-option *ngFor="let cluster of clusterIds" [value]="cluster.id">{{ cluster.name }}</mat-option>
+              </mat-select>
+              <mat-error>{{ getErrorMessages('clusterId') }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-6 col-md-3">
+            <mat-checkbox color="primary" class="font-size-xl mb-lg" formControlName="isActive">Enable</mat-checkbox>
+          </div>
+        </div>
+
+        <div class="row mt-lg">
+          <div class="col-12 col-md-8">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center gap-sm">
+                <span class="font-weight-bold">Headers</span>
+                <span
+                  class="material-symbols-outlined font-size-2xl cursor-pointer"
+                  [matTooltip]="ToolTipText.Headers"
+                  matTooltipClass="tooltip-class"
+                  matTooltipPosition="right"
+                >
+                  info
+                </span>
+              </div>
+              <span
+                class="material-symbols-outlined mr-lg cursor-pointer p-xs border-radius-full"
+                matRipple
+                (click)="addHeader()"
+              >
+                add
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-8">
+            <div class="cluster-form__destinations">
+              <table class="destinations__table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Values</th>
+                    <th>Mode</th>
+                    <th>Status</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody formArrayName="headers">
+                  <tr
+                    @fadeSlideInOut
+                    *ngFor="let header of headers.controls; let headerFormGroup = index"
+                    [ngClass]="{
+                      'bg-error': isHeaderFormDirty(headerFormGroup) && !isHeaderFormValid(headerFormGroup)
+                    }"
+                  >
+                    <ng-container [formGroupName]="headerFormGroup">
+                      <td>
+                        <span
+                          *ngIf="isHeaderFormDirty(headerFormGroup)"
+                          class="material-symbols-outlined font-size-3xl"
+                          [ngClass]="{
+                            'text-error': !isHeaderFormValid(headerFormGroup),
+                            'text-success': isHeaderFormValid(headerFormGroup)
+                          }"
+                        >
+                          {{ isHeaderFormValid(headerFormGroup) ? 'check_circle' : 'cancel' }}
+                        </span>
+                      </td>
+                      <td>
+                        <div class="form-field">
+                          <input type="text" formControlName="name" placeholder="api-version" />
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-field">
+                          <input type="text" formControlName="values" placeholder="v2,v3 (comma-separated)" />
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-field">
+                          <mat-select formControlName="mode">
+                            <mat-option *ngFor="let mode of headerModeOptions" [value]="mode">{{ mode }}</mat-option>
+                          </mat-select>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-field">
+                          <mat-slide-toggle formControlName="isActive" color="primary"></mat-slide-toggle>
+                        </div>
+                      </td>
+                      <td>
+                        <span
+                          class="material-symbols-outlined font-size-3xl text-error cursor-pointer"
+                          (click)="removeHeader(headerFormGroup)"
+                        >
+                          delete
+                        </span>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="mt-md" *ngIf="headers.length === 0">
+                <p class="text-muted font-size-lg">No headers configured. Click add to add header rules.</p>
+              </div>
+              <div class="mt-md" *ngIf="shouldShowHeaderFormErrors()">
+                <p class="text-error font-size-lg">Please fill all the headers with valid values</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-lg">
+          <div class="col-12 col-md-8">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center gap-sm">
+                <span class="font-weight-bold">Transforms</span>
+                <span
+                  class="material-symbols-outlined font-size-2xl cursor-pointer"
+                  [matTooltip]="ToolTipText.Transforms"
+                  matTooltipClass="tooltip-class"
+                  matTooltipPosition="right"
+                >
+                  info
+                </span>
+              </div>
+              <span
+                class="material-symbols-outlined mr-lg cursor-pointer p-xs border-radius-full"
+                matRipple
+                (click)="addTransform()"
+              >
+                add
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-8">
+            <div class="cluster-form__destinations">
+              <table class="destinations__table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Path Pattern</th>
+                    <th>Status</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody formArrayName="transforms">
+                  <tr
+                    @fadeSlideInOut
+                    *ngFor="let transform of transforms.controls; let transformFormGroup = index"
+                    [ngClass]="{
+                      'bg-error': isTransformFormDirty(transformFormGroup) && !isTransformFormValid(transformFormGroup)
+                    }"
+                  >
+                    <ng-container [formGroupName]="transformFormGroup">
+                      <td>
+                        <span
+                          *ngIf="isTransformFormDirty(transformFormGroup)"
+                          class="material-symbols-outlined font-size-3xl"
+                          [ngClass]="{
+                            'text-error': !isTransformFormValid(transformFormGroup),
+                            'text-success': isTransformFormValid(transformFormGroup)
+                          }"
+                        >
+                          {{ isTransformFormValid(transformFormGroup) ? 'check_circle' : 'cancel' }}
+                        </span>
+                      </td>
+                      <td>
+                        <div class="form-field">
+                          <input type="text" formControlName="pathPattern" placeholder="/api/v2/{**catch-all}" />
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-field">
+                          <mat-slide-toggle formControlName="isActive" color="primary"></mat-slide-toggle>
+                        </div>
+                      </td>
+                      <td>
+                        <span
+                          class="material-symbols-outlined font-size-3xl text-error cursor-pointer"
+                          (click)="removeTransform(transformFormGroup)"
+                        >
+                          delete
+                        </span>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="mt-md" *ngIf="isAnyTransformProvided && transforms.length === 0">
+                <p class="text-muted font-size-lg">No transforms configured. Click add to add transform rules.</p>
+              </div>
+              <div class="mt-md" *ngIf="!isAnyTransformProvided">
+                <p class="text-error font-size-lg">Please select at least one transform</p>
+              </div>
+              <div class="mt-md" *ngIf="shouldShowTransformFormErrors()">
+                <p class="text-error font-size-lg">Please fill all the transforms with valid values</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="cluster-form__footer">
+      <blogsphere-button
+        [isLoading]="(isCreatingRoute$ | async) || (isUpdatingRoute$ | async)"
+        [type]="ButtonType.secondary"
+        [size]="ButtonSize.small"
+        (next)="onSubmit()"
+      >
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </blogsphere-button>
+    </div>
+  </div>
+</div>

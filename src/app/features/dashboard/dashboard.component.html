@@ -1,12 +1,171 @@
-<div @fadeSlideInOut>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem unde, nam natus debitis rem architecto ducimus cumque illo officiis ipsa asperiores distinctio recusandae tempora culpa deleniti, magni accusamus voluptates quaerat?
-        Blanditiis dolores excepturi aut atque eligendi voluptatibus et, facilis, quibusdam quae, aliquam commodi similique. Fuga unde atque quod asperiores non? Beatae nobis odit saepe aut alias tenetur consequatur, quidem vitae.
-        Ea, ipsa. Doloribus tenetur numquam amet sunt. At repudiandae saepe culpa eius dolor quaerat vitae corrupti deserunt. Incidunt, accusantium? Totam sint laboriosam fugiat aperiam quod eos quisquam. Iure, delectus enim!
-        Molestiae eius iste, ipsam quod, illum, consequatur facilis quasi sed consequuntur animi fugiat obcaecati velit laborum distinctio nesciunt suscipit itaque sunt sint quaerat tempora? Accusantium neque et illo recusandae necessitatibus!
-        Animi velit reprehenderit quo repellendus voluptatum soluta consectetur a accusamus, architecto tempore, voluptates atque assumenda consequuntur veniam? Ab quo rem incidunt amet, repellendus sit praesentium architecto provident accusamus sunt fugiat.
-        Delectus, quaerat quibusdam dolore expedita cupiditate est assumenda quia ad dolores praesentium quos ipsa consequatur deleniti tempore suscipit reprehenderit quae. Deserunt quis perferendis vitae dolorem ipsam, blanditiis beatae recusandae a!
-        Magnam ratione impedit in numquam voluptate placeat quas, nulla repellat eaque laboriosam. Tempora quidem iure, omnis molestiae ullam neque ab consequatur impedit necessitatibus enim, eum debitis? Veritatis minima explicabo quam!
-        Unde, eius. Tempora a enim expedita incidunt est, modi, magni velit error nihil officiis tempore eos libero repellendus deleniti nisi impedit cum culpa quas magnam vero. Perferendis perspiciatis dignissimos sint!
-        Consectetur, eius maxime asperiores facere veniam quod quia minus distinctio nemo quasi tempore perspiciatis, magni alias possimus quaerat! Tenetur provident fuga quibusdam laudantium consequatur perspiciatis modi ex tempora laborum a.
-        Numquam ipsa totam ad alias amet cum consectetur non dolor fuga, asperiores laudantium enim deserunt porro nihil unde, ipsum minus et ab inventore pariatur! Inventore distinctio beatae illum error? Impedit.</p>
+<div @fadeSlideInOut class="dashboard">
+  <section class="dashboard__section">
+    <h2 class="dashboard__section-title">API Gateway</h2>
+    <div class="row">
+      <div class="col-12 col-lg-6 col-xl-4 mb-lg">
+        <blogsphere-info-card
+          variant="primary"
+          size="medium"
+          title="API Clusters"
+          icon="hub"
+          [showIcon]="true"
+          borderPosition="left"
+        >
+          <div class="dashboard__card-body">
+            <p class="dashboard__stat" *ngIf="!(dashboardLoading$ | async)">
+              {{ totalClusters }}
+            </p>
+            <mat-progress-spinner
+              *ngIf="dashboardLoading$ | async"
+              mode="indeterminate"
+              diameter="32"
+              color="primary"
+            ></mat-progress-spinner>
+            <p class="dashboard__hint">Clusters configured in the API gateway</p>
+            <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="navigateToClusters()">
+              View clusters
+            </blogsphere-button>
+          </div>
+        </blogsphere-info-card>
+      </div>
+      <div class="col-12 col-lg-6 col-xl-4 mb-lg">
+        <blogsphere-info-card
+          variant="info"
+          size="medium"
+          title="API Routes"
+          icon="route"
+          [showIcon]="true"
+          borderPosition="left"
+        >
+          <div class="dashboard__card-body">
+            <p class="dashboard__stat" *ngIf="!(dashboardLoading$ | async)">
+              {{ totalRoutes }}
+            </p>
+            <mat-progress-spinner
+              *ngIf="dashboardLoading$ | async"
+              mode="indeterminate"
+              diameter="32"
+              color="primary"
+            ></mat-progress-spinner>
+            <p class="dashboard__hint">Routes configured in the API gateway</p>
+            <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="navigateToRoutes()">
+              View routes
+            </blogsphere-button>
+          </div>
+        </blogsphere-info-card>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 mb-lg">
+        <blogsphere-info-card
+          variant="info"
+          size="medium"
+          title="Growth Trend"
+          icon="trending_up"
+          [showIcon]="true"
+          borderPosition="none"
+        >
+          <div class="dashboard__chart-container dashboard__chart-container--line">
+            <div *ngIf="!chartsDataLoaded" class="dashboard__chart-loading">
+              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+              <p>Loading chart data...</p>
+            </div>
+            <canvas
+              *ngIf="chartsDataLoaded"
+              baseChart
+              [data]="growthChartData"
+              [options]="growthChartOptions"
+              [type]="lineChartType"
+            ></canvas>
+          </div>
+        </blogsphere-info-card>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-lg-6 mb-lg">
+        <blogsphere-info-card
+          variant="success"
+          size="medium"
+          title="Cluster Status Distribution"
+          icon="pie_chart"
+          [showIcon]="true"
+          borderPosition="none"
+        >
+          <div class="dashboard__chart-container dashboard__chart-container--doughnut">
+            <div *ngIf="!chartsDataLoaded" class="dashboard__chart-loading">
+              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+              <p>Loading chart data...</p>
+            </div>
+            <canvas
+              *ngIf="chartsDataLoaded"
+              baseChart
+              [data]="statusChartData"
+              [options]="statusChartOptions"
+              [type]="doughnutChartType"
+            ></canvas>
+          </div>
+        </blogsphere-info-card>
+      </div>
+      <div class="col-12 col-lg-6 mb-lg">
+        <blogsphere-info-card
+          variant="warning"
+          size="medium"
+          title="Monthly Route Activity"
+          icon="bar_chart"
+          [showIcon]="true"
+          borderPosition="none"
+        >
+          <div class="dashboard__chart-container dashboard__chart-container--bar">
+            <div *ngIf="!chartsDataLoaded" class="dashboard__chart-loading">
+              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+              <p>Loading chart data...</p>
+            </div>
+            <canvas
+              *ngIf="chartsDataLoaded"
+              baseChart
+              [data]="activityChartData"
+              [options]="activityChartOptions"
+              [type]="barChartType"
+            ></canvas>
+          </div>
+        </blogsphere-info-card>
+      </div>
+    </div>
+  </section>
+
+  <section class="dashboard__section">
+    <h2 class="dashboard__section-title">Subscription manager</h2>
+    <div class="row">
+      <div class="col-12 col-lg-6 col-xl-4 mb-lg">
+        <blogsphere-info-card
+          variant="success"
+          size="medium"
+          title="API Products"
+          icon="subscriptions"
+          [showIcon]="true"
+          borderPosition="left"
+        >
+          <div class="dashboard__card-body">
+            <p class="dashboard__stat" *ngIf="!(dashboardLoading$ | async)">
+              {{ totalProducts }}
+            </p>
+            <mat-progress-spinner
+              *ngIf="dashboardLoading$ | async"
+              mode="indeterminate"
+              diameter="32"
+              color="primary"
+            ></mat-progress-spinner>
+            <p class="dashboard__hint">API products available for subscription</p>
+            <blogsphere-button
+              [type]="ButtonType.secondary"
+              [size]="ButtonSize.small"
+              (next)="navigateToSubscription()"
+            >
+              View subscription manager
+            </blogsphere-button>
+          </div>
+        </blogsphere-info-card>
+      </div>
+    </div>
+  </section>
 </div>

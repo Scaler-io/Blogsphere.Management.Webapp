@@ -1,3 +1,47 @@
-<div @fadeSlideInOut>
-    <p>api-routes works!</p>
+<div @fadeSlideInOut class="route-list__container">
+    <blogsphere-search-layout addButtonLabel="Create Api Route" filterLabel="API Route" [isFileterFormValid]="true">
+        <ng-container>
+            <!-- <blogsphere-route-filter-form [filterForm]="routeFilterForm"></blogsphere-route-filter-form> -->
+            <p>Filter form will be added here</p>
+        </ng-container>
+    </blogsphere-search-layout>
+
+    <ng-container *ngIf="!(isApiRoutesLoading$ | async) && !(isApiRouteCountLoading$ | async)">
+        <div class="row" *ngIf="!(isMobileView$ | async)">
+            <div class="col-sm-12">
+                <blogsphere-table
+                    *ngIf="(totalApiRoutes$ | async) > 0"
+                    [dataSource]="apiRouteDataSource"
+                    [columns]="displayedColumns"
+                    [paginationMetadata]="apiRoutesPageMetadata$ | async"
+                    [dataLength]="totalApiRoutes$ | async"
+                    [columnMap]="columnNameMap"
+                    [actionEnabled]="true"
+                    (visit)="onView($event)"
+                    (edit)="onEdit($event)"
+                    (pageChange)="onPageChange($event)"
+                    [allowEdit]="allowEditOption$ | async"
+                    [allowDelete]="false"
+                ></blogsphere-table>
+                
+                <blogsphere-no-content-layout
+                    *ngIf="(totalApiRoutes$ | async) === 0"
+                    [title]="'No API Routes'"
+                    [subtitle]="'There are no API routes to display.'"
+                    [buttonLabel]="'Add API Route'"
+                    [showButton]="!isFilterApplied && !isSearchApplied"
+                    [iconType]="'empty'"
+                ></blogsphere-no-content-layout>
+            </div>
+        </div>
+    </ng-container> 
+
+    <div class="w-100 d-flex justify-content-center">
+        <mat-progress-spinner
+            mode="indeterminate"
+            diameter="50"
+            color="primary"
+            *ngIf="(isApiRoutesLoading$ | async) || (isApiRouteCountLoading$ | async)"
+        ></mat-progress-spinner>
+    </div>
 </div>

@@ -1,4 +1,4 @@
-import { CommandResponse } from './core';
+import { CommandResponse, MetaData } from './core';
 import { PaginatedResult } from './pagination';
 import { SearchRequestBase } from './search-request.model';
 import { TableDataSource } from './table-source';
@@ -41,19 +41,11 @@ export interface ApiCluster {
   metaData: MetaData;
 }
 
-export interface MetaData {
-  createdAt: Date | string;
-  updatedAt: Date | string;
-  createdBy: string;
-  updatedBy: string;
-}
-
 export interface Destination {
   id: string;
   destinationId: string;
   address: string;
   isActive: boolean;
-  metaData: MetaData;
 }
 
 export interface ClusterRouteDetails {

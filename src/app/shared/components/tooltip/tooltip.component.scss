@@ -1,0 +1,54 @@
+@import '../../../../assets/styles/sass-utils/variables';
+
+:host {
+  display: contents; /* host takes no space; panel is position:fixed */
+}
+
+.tooltip-panel {
+  position: fixed;
+  z-index: $z-index-tooltip;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+  width: 25rem;
+  
+  &--visible {
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  &--below {
+    transform: translateY(0);
+  }
+
+  &--above {
+    transform: translateY(-100%) translateY(-8px);
+  }
+
+  &--left {
+    transform: translateX(-100%) translateX(-8px);
+  }
+
+  &--right {
+    transform: none;
+  }
+}
+
+.tooltip-outer-template {
+  background-color: $color-surface;
+  color: $color-text-primary;
+  border-radius: $border-radius-base;
+  padding: $spacing-md;
+  box-shadow: 0 1px 10px $color-shadow;
+  text-align: left;
+  p {
+    text-align: left;
+    margin: 0 0 $spacing-sm 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

@@ -15,7 +15,7 @@
       <li
         class="sidenav__content-list--item"
         matRipple
-        routerLink="dashboard"
+        routerLink="/dashboard"
         (click)="handleSidenavItemClick()"
         [routerLinkActive]="'route-active'"
       >
@@ -27,13 +27,13 @@
       <li
         class="sidenav__content-list--item"
         matRipple
-        routerLink="subscription"
+        routerLink="/subscription"
         (click)="handleSidenavItemClick()"
         [routerLinkActive]="'route-active'"
       >
         <div class="main-content">
           <span class="material-symbols-outlined item-icon">subscriptions</span>
-          <span class="item-label">Subscription Manager</span>
+          <span class="item-label">Subscription manager</span>
         </div>
       </li>
 
@@ -50,11 +50,11 @@
           </span>
         </div>
         <ul class="submenu submenu--active" [class.submenu--active]="subMenuList.apiManager">
-          <li matRipple routerLink="api-cluster" (click)="hadndleSubmenuClick()">
+          <li matRipple routerLink="/api-cluster" (click)="hadndleSubmenuClick()">
             <span class="material-symbols-outlined text-xl">hub</span>
             <span class="text-xl">Api clusters</span>
           </li>
-          <li matRipple routerLink="api-routes" (click)="hadndleSubmenuClick()">
+          <li matRipple routerLink="/api-route" (click)="hadndleSubmenuClick()">
             <span class="material-symbols-outlined text-xl">route</span>
             <span class="text-xl">Api routes</span>
           </li>

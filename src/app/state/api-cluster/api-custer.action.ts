@@ -9,6 +9,7 @@ import {
 
 export const GET_ALL_API_CLUSTERS = 'GET_ALL_API_CLUSTERS';
 export const GET_ALL_API_CLUSTERS_SUCCESS = 'GET_ALL_API_CLUSTERS_SUCCESS';
+export const GET_ALL_API_CLUSTERS_FAILED = 'GET_ALL_API_CLUSTERS_FAILED';
 
 export const GET_API_CLUSTER_COUNT = 'GET_API_CLUSTER_COUNT';
 export const GET_API_CLUSTER_COUNT_SUCCESS = 'GET_API_CLUSTER_COUNT_SUCCESS';
@@ -40,6 +41,11 @@ export class GetAllApiClusters implements Action {
 export class GetAllApiClustersSuccess implements Action {
   readonly type = GET_ALL_API_CLUSTERS_SUCCESS;
   constructor(public payload: PaginatedApiClusterList) {}
+}
+
+export class GetAllApiClustersFailed implements Action {
+  readonly type = GET_ALL_API_CLUSTERS_FAILED;
+  constructor() {}
 }
 
 export class GetApiClusterCount implements Action {
@@ -122,6 +128,7 @@ export class ResetDeleteSuccess implements Action {
 export type ApiClusterActions =
   | GetAllApiClusters
   | GetAllApiClustersSuccess
+  | GetAllApiClustersFailed
   | GetApiClusterCount
   | GetApiClusterCountSuccess
   | GetApiClusterById

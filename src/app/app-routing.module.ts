@@ -18,7 +18,7 @@ const routes: Routes = [
     data: { breadcrumb: { label: 'Clusters' } },
   },
   {
-    path: 'api-routes',
+    path: 'api-route',
     loadChildren: () =>
       import('./features/api-routes/api-routes.module').then(m => m.ApiRoutesModule),
     data: { breadcrumb: { label: 'Routes' } },

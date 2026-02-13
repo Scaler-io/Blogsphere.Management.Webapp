@@ -44,7 +44,11 @@ export class ApiClusterService extends BaseService implements IApiClusterService
 
   public getApiClusterById(id: string): Observable<ApiCluster> {
     return this.http
-      .get<ApiCluster>(`${environment.blogShereApiGatewayBaseUrl}/proxycluster/${id}`)
+      .get<ApiCluster>(`${environment.blogsphereBffBaseUrl}/apigateway/cluster/${id}`,
+        {
+          headers: this.getHttpHeaders(environment.blogsphereBffSubscriptionKey, 'v2'),
+        }
+      )
       .pipe(
         map(res => {
           return this.toApiClusterModel(res);
@@ -83,7 +87,7 @@ export class ApiClusterService extends BaseService implements IApiClusterService
         routeId: r.routeId,
         methods: r.methods,
         isActive: r.isActive,
-        path: r.path
+        path: r.path,
       })),
     };
   }

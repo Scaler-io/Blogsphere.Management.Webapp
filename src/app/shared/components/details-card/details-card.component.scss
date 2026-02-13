@@ -1,0 +1,170 @@
+@import '../../../../assets/styles/sass-utils/variables';
+@import '../../../../assets/styles/sass-utils/mixins';
+
+.details-card {
+  @include card;
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-lg $spacing-xl;
+    border-bottom: 1px solid $color-border-light;
+    background: $color-background-secondary;
+  }
+
+  &__header-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    flex-shrink: 0;
+    color: $color-primary;
+    font-size: 22px;
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+
+  &__header-title {
+    @include font($font-size-2xl, $font-weight-medium);
+    color: $color-text-primary;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    line-height: 1.2 !important;
+    align-self: center;
+  }
+
+  &__header-count {
+    @include font($font-size-base, $font-weight-medium);
+    color: $color-primary;
+    background: rgba($color-primary, 0.08);
+    border-radius: $border-radius-full;
+    padding: 2px $spacing-sm;
+    line-height: 1.4;
+  }
+
+  &__body {
+    padding: $spacing-xl;
+
+    &--flush {
+      padding: 0;
+    }
+  }
+}
+
+// Compact table layout (Headers / Transforms)
+.details-table-wrap {
+  overflow-x: auto;
+}
+
+.details-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+
+  &--compact {
+    min-width: 0;
+
+    thead th {
+      padding: $spacing-sm $spacing-lg;
+      font-size: $font-size-lg;
+    }
+
+    tbody td {
+      padding: $spacing-sm $spacing-lg;
+      font-size: $font-size-lg;
+    }
+  }
+
+  thead {
+    background: $color-background-tertiary;
+
+    th {
+      @include font($font-size-lg, $font-weight-medium);
+      color: rgba($color-text-primary, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: $spacing-md $spacing-xl;
+      text-align: left;
+      border-bottom: 1px solid $color-border-light;
+      white-space: nowrap;
+    }
+  }
+
+  tbody {
+    tr {
+      @include transition(background-color);
+
+      &:not(:last-child) td {
+        border-bottom: 1px solid rgba($color-border, 0.25);
+      }
+
+      &:hover {
+        background: rgba($color-primary, 0.025);
+      }
+    }
+
+    td {
+      @include font($font-size-xl, $font-weight-regular);
+      color: $color-text-primary;
+      padding: $spacing-md $spacing-xl;
+      vertical-align: middle;
+    }
+  }
+
+  &__center {
+    text-align: center !important;
+  }
+
+  &__emphasis {
+    color: $color-primary;
+    font-weight: $font-weight-medium;
+  }
+
+  &__mono {
+    font-family: $font-family-secondary;
+    font-size: $font-size-lg;
+    color: rgba($color-text-primary, 0.8);
+    word-break: break-all;
+  }
+
+  &__chip {
+    display: inline-block;
+    @include font($font-size-base, $font-weight-medium);
+    text-transform: lowercase;
+    color: rgba($color-text-primary, 0.7);
+    background: rgba($color-primary, 0.06);
+    border: 1px solid rgba($color-primary, 0.12);
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-full;
+    letter-spacing: 0.3px;
+  }
+
+  .material-symbols-rounded {
+    font-size: 24px;
+    line-height: 1;
+    vertical-align: middle;
+  }
+}
+
+// JSON view (raw json card)
+.details-json {
+  max-height: 560px;
+  overflow: auto;
+  background: #0c1525;
+  border-radius: 0 0 $border-radius-lg $border-radius-lg;
+
+  &__pre {
+    padding: $spacing-xl;
+    margin: 0;
+    color: rgba($accent-yellow-300, 0.92);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+}
+

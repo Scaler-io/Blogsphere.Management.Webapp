@@ -1,7 +1,7 @@
 node_modules
 dist
+.angular
+coverage
 .git
 .gitignore
 npm-debug.log
-Dockerfile
-docker-compose.yml

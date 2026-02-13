@@ -112,19 +112,17 @@ export class ApiClusterEffects {
     this.actions$.pipe(
       ofType(ApiClusterActions.DELETE_API_CLUSTER),
       switchMap((action: ApiClusterActions.DeleteApiCluster) => {
-        return this.apiClusterService
-          .deleteApiCluster(action.payload.id)
-          .pipe(
-            map(() => {
-              const commandResponse: ApiClusterCommandResponse = {
-                id: action.payload.id,
-                commandtType: ApiClusterCommandType.Delete,
-                status: CommandResultStatus.Success,
-              };
-              return new ApiClusterActions.DeleteApiClusterSuccess(commandResponse);
-            }),
-            catchError(error => this.handleError(error, 'ApiCluster', 'api-cluster'))
-          );
+        return this.apiClusterService.deleteApiCluster(action.payload.id).pipe(
+          map(() => {
+            const commandResponse: ApiClusterCommandResponse = {
+              id: action.payload.id,
+              commandtType: ApiClusterCommandType.Delete,
+              status: CommandResultStatus.Success,
+            };
+            return new ApiClusterActions.DeleteApiClusterSuccess(commandResponse);
+          }),
+          catchError(error => this.handleError(error, 'ApiCluster', 'api-cluster'))
+        );
       })
     )
   );

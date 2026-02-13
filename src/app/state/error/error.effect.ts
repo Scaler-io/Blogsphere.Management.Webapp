@@ -8,11 +8,7 @@ import { AppState } from 'src/app/store/app.state';
 
 @Injectable({ providedIn: 'root' })
 export class ErrorEffects {
-  constructor(
-    private actions$: Actions,
-    private router: Router,
-    private store: Store<AppState>
-  ) {}
+  constructor(private actions$: Actions, private router: Router, private store: Store<AppState>) {}
 
   navigateToErrorPage$ = createEffect(
     () =>
@@ -20,7 +16,7 @@ export class ErrorEffects {
         ofType(SET_ERROR),
         tap(() => {
           console.log('navigateToErrorPage$');
-          this.router.navigate(['/generic-error']);
+          this.router.navigate(['/error']);
         })
       ),
     { dispatch: false }

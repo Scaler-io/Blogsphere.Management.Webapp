@@ -6,6 +6,9 @@ import { AppMaterialModule } from 'src/app/app-material.module';
 import { LoaderModule } from 'src/app/shared/components/loader/loader.module';
 import { InfoCardModule } from 'src/app/shared/components/info-card';
 import { BadgeModule } from 'src/app/shared/components/badge/badge.module';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
+import { TooltipModule } from 'src/app/shared/components/tooltip/tooltip.module';
+import { HeroHeaderModule } from 'src/app/shared/components/hero-header/hero-header.module';
 
 @NgModule({
   declarations: [ClusterDetailsComponent],
@@ -16,6 +19,9 @@ import { BadgeModule } from 'src/app/shared/components/badge/badge.module';
     LoaderModule,
     InfoCardModule,
     BadgeModule,
+    PipesModule,
+    TooltipModule,
+    HeroHeaderModule
   ],
   exports: [ClusterDetailsComponent],
 })

@@ -1,0 +1,239 @@
+openapi: 3.0.3
+info:
+  title: Dashboard BFF API
+  version: 1.0.0
+  description: Single endpoint to fetch dashboard cards and charts.
+servers:
+  - url: /
+
+paths:
+  /bff/dashboard/summary:
+    get:
+      summary: Get dashboard summary
+      operationId: getDashboardSummary
+      responses:
+        "200":
+          description: Dashboard summary payload
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummaryResponse"
+              examples:
+                default:
+                  summary: Example dashboard summary
+                  value:
+                    summary:
+                      clusters: 12
+                      routes: 34
+                      products: 5
+                    charts:
+                      growthTrend:
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
+                        datasets:
+                          - label: "Clusters"
+                            data: [3, 4, 5, 6, 8, 12]
+                          - label: "Routes"
+                            data: [10, 12, 14, 18, 25, 34]
+                      clusterStatusDistribution:
+                        labels: ["Healthy", "Degraded", "Offline"]
+                        counts: [8, 3, 1]
+                      monthlyRouteActivity:
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
+                        counts: [120, 98, 143, 160, 175, 210]
+                    timestamp: "2026-02-03T09:41:00Z"
+                    refreshAfterSeconds: 120
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+components:
+  schemas:
+    DashboardSummaryResponse:
+      type: object
+      required: [summary, charts, timestamp, refreshAfterSeconds]
+      properties:
+        summary:
+          $ref: "#/components/schemas/DashboardSummaryCounts"
+        charts:
+          type: object
+          required: [growthTrend, clusterStatusDistribution, monthlyRouteActivity]
+          properties:
+            growthTrend:
+              $ref: "#/components/schemas/ChartGrowthTrend"
+            clusterStatusDistribution:
+              $ref: "#/components/schemas/ChartDistribution"
+            monthlyRouteActivity:
+              $ref: "#/components/schemas/ChartSeries"
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO-8601 timestamp for when the data was generated.
+        refreshAfterSeconds:
+          type: integer
+          minimum: 0
+          description: Suggested client refresh interval in seconds.
+    DashboardSummaryCounts:
+      type: object
+      required: [clusters, routes, products]
+      properties:
+        clusters:
+          type: integer
+          minimum: 0
+        routes:
+          type: integer
+          minimum: 0
+        products:
+          type: integer
+          minimum: 0
+    ChartGrowthTrend:
+      type: object
+      required: [labels, datasets]
+      properties:
+        labels:
+          type: array
+          description: X-axis labels for the growth trend chart.
+          items:
+            type: string
+        datasets:
+          type: array
+          description: Series data aligned to the labels array.
+          items:
+            $ref: "#/components/schemas/ChartDataset"
+    ChartDataset:
+      type: object
+      required: [label, data]
+      properties:
+        label:
+          type: string
+        data:
+          type: array
+          items:
+            type: integer
+            minimum: 0
+    ChartDistribution:
+      type: object
+      required: [labels, counts]
+      properties:
+        labels:
+          type: array
+          items:
+            type: string
+        counts:
+          type: array
+          items:
+            type: integer
+            minimum: 0
+    ChartSeries:
+      type: object
+      required: [labels, counts]
+      properties:
+        labels:
+          type: array
+          items:
+            type: string
+        counts:
+          type: array
+          items:
+            type: integer
+            minimum: 0
+    ErrorResponse:
+      type: object
+      required: [error, timestamp]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+              description: Stable error code for client handling.
+            message:
+              type: string
+            details:
+              type: array
+              items:
+                $ref: "#/components/schemas/ErrorDetail"
+        timestamp:
+          type: string
+          format: date-time
+        requestId:
+          type: string
+          description: Correlation id for server logs.
+    ErrorDetail:
+      type: object
+      required: [field, issue]
+      properties:
+        field:
+          type: string
+        issue:
+          type: string
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            validation:
+              summary: Validation error example
+              value:
+                error:
+                  code: "VALIDATION_ERROR"
+                  message: "Invalid request parameters."
+                  details:
+                    - field: "tenantId"
+                      issue: "Required."
+                timestamp: "2026-02-03T09:41:00Z"
+                requestId: "bff-2f9a6b6c"
+    Unauthorized:
+      description: Missing or invalid authentication.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            auth:
+              summary: Unauthorized error example
+              value:
+                error:
+                  code: "UNAUTHORIZED"
+                  message: "Missing or invalid access token."
+                timestamp: "2026-02-03T09:41:00Z"
+                requestId: "bff-2f9a6b6d"
+    Forbidden:
+      description: Insufficient permissions for the requested resource.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            permission:
+              summary: Forbidden error example
+              value:
+                error:
+                  code: "FORBIDDEN"
+                  message: "You do not have permission to access this resource."
+                timestamp: "2026-02-03T09:41:00Z"
+                requestId: "bff-2f9a6b6e"
+    InternalServerError:
+      description: Unexpected server error.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            server:
+              summary: Internal server error example
+              value:
+                error:
+                  code: "INTERNAL_SERVER_ERROR"
+                  message: "Unexpected error occurred."
+                timestamp: "2026-02-03T09:41:00Z"
+                requestId: "bff-2f9a6b6f"

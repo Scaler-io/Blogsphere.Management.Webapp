@@ -195,7 +195,6 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
             this.searchTerm = text;
             this.isSearchApplied =
               text.length > 3 || (text.length > 0 && text.length <= 3) ? true : false;
-            console.log(this.isSearchApplied);
           })
         )
         .subscribe((text: string) => {

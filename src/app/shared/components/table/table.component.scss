@@ -11,7 +11,7 @@
   border-spacing: 0;
   background-color: $color-surface;
   overflow: hidden;
-  border: 1px solid $color-border-light;
+  // border: 1px solid $color-border-light;
   // Header styling
   .table__header-row {
     background: $color-primary;
@@ -55,7 +55,7 @@
   // Data row styling
   .table__row {
     @include transition(background-color);
-    border-bottom: 1px solid $color-border-light;
+    border-bottom: 1px solid $color-border-light!important;
     
     &:last-child {
       border-bottom: none;
@@ -65,11 +65,13 @@
       &:first-child {
         color: $color-primary;
         font-weight: $font-weight-medium;
+        font-size: $font-size-2xl;
       }
 
       @include font($font-size-sm, $font-weight-regular, $line-height-normal);
-      padding: $spacing-md;
-      border: none;
+      padding: $spacing-2xl!important;
+      // border: none;
+      border-bottom: 1px solid $color-border-light!important;
       vertical-align: middle;
 
       // Responsive cell styling

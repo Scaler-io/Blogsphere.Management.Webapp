@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GenericErrorComponent } from './generic-error.component';
+import { GenericErrorComponent } from './error.component';
 
 describe('GenericErrorComponent', () => {
   let component: GenericErrorComponent;
@@ -8,9 +8,8 @@ describe('GenericErrorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GenericErrorComponent ]
-    })
-    .compileComponents();
+      declarations: [GenericErrorComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

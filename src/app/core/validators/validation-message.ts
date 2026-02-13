@@ -23,6 +23,15 @@ export const validationMessages: ValidationMessage[] = [
     {error: 'required', formControlName: ['healthCheckPath'], message: 'Please enter a valid health check path'},
     {error: 'required', formControlName: ['healthCheckInterval'], message: 'Please enter a valid health check interval'},
     {error: 'required', formControlName: ['healthCheckTimeout'], message: 'Please enter a valid health check timeout'},
+    {error: 'required', formControlName: ['routeId'], message: 'Please enter a valid route id'},
+    {error: 'required', formControlName: ['path'], message: 'Please enter a valid path'},
+    {error: 'required', formControlName: ['methods'], message: 'Please select at least one method'},
+    {error: 'required', formControlName: ['rateLimiterPolicy'], message: 'Please enter a valid rate limiter policy'},
+    {error: 'required', formControlName: ['clusterId'], message: 'Please enter a valid cluster id'},
+    {error: 'required', formControlName: ['name'], message: 'Please enter a valid header name'},
+    {error: 'required', formControlName: ['values'], message: 'Please enter header values (comma-separated)'},
+    {error: 'required', formControlName: ['mode'], message: 'Please select a valid header mode'},
+    {error: 'required', formControlName: ['pathPattern'], message: 'Please enter a valid path pattern'},
 ]
 
 export function validationMessage(

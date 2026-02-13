@@ -1,0 +1,58 @@
+@import '../../../../../assets/styles/sass-utils/variables';
+@import '../../../../../assets/styles/sass-utils/mixins';
+
+.details-kv__row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  align-items: center;
+  gap: $spacing-lg;
+  padding: $spacing-md 0;
+  border-bottom: 1px solid rgba($color-border, 0.3);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @include respond-to(xs) {
+    grid-template-columns: 120px 1fr;
+    gap: $spacing-md;
+  }
+}
+
+.details-kv__key {
+  @include font($font-size-2xl, $font-weight-medium);
+  color: rgba($color-text-primary, 0.6);
+}
+
+.details-kv__val {
+  @include font($font-size-xl, $font-weight-regular);
+  color: $color-text-primary;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &--mono {
+    font-family: $font-family-secondary;
+    font-size: $font-size-xl;
+    color: rgba($color-text-primary, 0.85);
+    background: rgba($color-primary, 0.04);
+    padding: 2px $spacing-sm;
+    border-radius: $border-radius-base;
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &--link {
+    color: $color-primary;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+  }
+
+  .material-symbols-rounded {
+    font-size: 24px;
+    vertical-align: middle;
+  }
+}

@@ -10,12 +10,12 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     CommonModule,
     AuthModule.forRoot({
       config: {
-        authority: 'http://localhost:5000',
+        authority: 'http://secure-identity.blogsphere.in',
         redirectUrl: window.location.origin,
         postLogoutRedirectUri: window.location.origin,
         clientId: 'blogsphere-management',
         scope:
-          'openid profile email apigateway:read apigateway:write apigateway:delete offline_access',
+          'openid profile email apigateway:read apigateway:write apigateway:delete offline_access bffapi:manage',
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,

@@ -1,5 +1,7 @@
 import { API_CLUSTER_STATE_NAME, ApiClusterState } from '../state/api-cluster/api-cluster.reducer';
+import { API_ROUTE_STATE_NAME, ApiRouteState } from '../state/api-route/api-route.reducer';
 import { API_PRODUCT_STATE_NAME, ApiProductState } from '../state/api-product/api-product.reducer';
+import { DASHBOARD_STATE_NAME, DashboardState } from '../state/dashboard/dashboard.reducer';
 import { AUTH_STATE_NAME, authReducer, AuthState } from '../state/auth/auth.reducer';
 import { ERROR_STATE_NAME, errorReducer, ErrorState } from '../state/error/error.reducer';
 import {
@@ -35,7 +37,9 @@ export interface AppState {
   [API_PRODUCT_STATE_NAME]: ApiProductState;
   [ERROR_STATE_NAME]: ErrorState;
   [API_CLUSTER_STATE_NAME]: ApiClusterState;
+  [API_ROUTE_STATE_NAME]: ApiRouteState;
   [REQUEST_PAGE_STATE_NAME]: RequestPageState;
+  [DASHBOARD_STATE_NAME]: DashboardState;
 }
 
 export const appReducer = {

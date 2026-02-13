@@ -1,0 +1,98 @@
+<div class="rd" *ngIf="!(isRouteLoading$ | async) && routeDetails$ | async as r">
+  <blogsphere-hero-header
+    icon="route"
+    [title]="r.routeId | capitalize"
+    subtitle="Manage routing configuration, headers and path transforms for this API route."
+    [isJsonView]="isJsonView"
+    (edit)="goToEdit()"
+    (toggleView)="toggleJsonView()"
+    (delete)="openDeleteDialog()"
+  ></blogsphere-hero-header>
+
+  <section class="rd-stats">
+    <div class="rd-stat">
+      <div class="rd-stat__label">Status</div>
+      <div class="rd-stat__value">
+        <blogsphere-badge [type]="r.isActive ? BadgeType.success : BadgeType.danger" [isRounded]="true">
+          {{ r.isActive ? 'Active' : 'Inactive' }}
+        </blogsphere-badge>
+      </div>
+    </div>
+    <div class="rd-stat">
+      <div class="rd-stat__label">Cluster</div>
+      <div class="rd-stat__value rd-stat__value--primary cursor-pointer"><span [routerLink]="['/api-cluster', 'details', r.clusterDetails.id]"> {{ r.clusterDetails.clusterId }}</span></div>
+    </div>
+    <div class="rd-stat">
+      <div class="rd-stat__label">Methods</div>
+      <div class="rd-stat__value rd-stat__badges">
+        <span
+          *ngFor="let m of r.methods || []"
+          class="method-pill"
+          [class.method-pill--get]="m === 'GET'"
+          [class.method-pill--post]="m === 'POST'"
+          [class.method-pill--put]="m === 'PUT'"
+          [class.method-pill--delete]="m === 'DELETE'"
+          [class.method-pill--patch]="m === 'PATCH'"
+        >
+          {{ m }}
+        </span>
+      </div>
+    </div>
+    <div class="rd-stat">
+      <div class="rd-stat__label">Rate limiter</div>
+      <div class="rd-stat__value">{{ r.rateLimiterPolicy || 'None' }}</div>
+    </div>
+  </section>
+
+  <ng-container *ngIf="!isJsonView">
+    <blogsphere-details-card mode="keyValue" icon="settings" title="Core configuration">
+      <blogsphere-kv-row label="Route id">{{ r.routeId }}</blogsphere-kv-row>
+      <blogsphere-kv-row label="Unique id" variant="mono">{{ r.id }}</blogsphere-kv-row>
+      <blogsphere-kv-row label="Path" variant="mono">{{ r.path }}</blogsphere-kv-row>
+      <blogsphere-kv-row label="Cluster" variant="link"><span [routerLink]="['/api-cluster', 'details', r.clusterDetails.id]">{{ r.clusterDetails.clusterId }}</span></blogsphere-kv-row>
+      <blogsphere-kv-row label="Active">
+        <span *ngIf="r.isActive" class="material-symbols-rounded text-success">check_circle</span>
+        <span *ngIf="!r.isActive" class="material-symbols-rounded text-error">cancel</span>
+      </blogsphere-kv-row>
+      <blogsphere-kv-row label="Rate limiter policy">{{ r.rateLimiterPolicy || 'N/A' }}</blogsphere-kv-row>
+    </blogsphere-details-card>
+
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <blogsphere-details-card
+          mode="table"
+          icon="view_list"
+          title="Headers"
+          [count]="(r.headers || []).length"
+          [flushBody]="true"
+          [tableHeaders]="headersTableHeaders"
+          [tableRows]="headersTableRows"
+          [compactTable]="true"
+        ></blogsphere-details-card>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <blogsphere-details-card
+          mode="table"
+          icon="swap_horiz"
+          title="Transforms"
+          [count]="(r.transforms || []).length"
+          [flushBody]="true"
+          [tableHeaders]="transformsTableHeaders"
+          [tableRows]="transformsTableRows"
+          [compactTable]="true"
+        ></blogsphere-details-card>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isJsonView">
+    <blogsphere-details-card mode="keyValue" icon="data_object" title="Raw JSON" [flushBody]="true">
+      <div class="details-json">
+        <pre class="details-json__pre">{{ r | json }}</pre>
+      </div>
+    </blogsphere-details-card>
+  </ng-container>
+</div>
+
+<blogsphere-loader [enabled]="isRouteLoading$ | async"></blogsphere-loader>

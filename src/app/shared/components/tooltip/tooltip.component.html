@@ -1,0 +1,18 @@
+<div
+  #panel
+  class="tooltip-panel"
+  [class.tooltip-panel--visible]="visible"
+  [class.tooltip-panel--above]="position === 'above'"
+  [class.tooltip-panel--below]="position === 'below' || position === 'bottom'"
+  [class.tooltip-panel--left]="position === 'left'"
+  [class.tooltip-panel--right]="position === 'right'"
+  [attr.role]="'tooltip'"
+  [style.top.px]="panelTop"
+  [style.left.px]="panelLeft"
+  (mouseenter)="onPanelEnter()"
+  (mouseleave)="onPanelLeave()"
+>
+  <div class="tooltip-outer-template">
+    <ng-content></ng-content>
+  </div>
+</div>

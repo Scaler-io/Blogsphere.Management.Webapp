@@ -1,0 +1,58 @@
+<section class="details-card">
+  <div class="details-card__header">
+    <span class="material-symbols-outlined details-card__header-icon">{{ icon }}</span>
+    <h2 class="details-card__header-title">
+      {{ title }}
+      <span class="details-card__header-count" *ngIf="count !== null">{{ count }}</span>
+    </h2>
+  </div>
+
+  <div class="details-card__body" [class.details-card__body--flush]="flushBody">
+    <ng-container *ngIf="mode === 'keyValue'">
+      <div class="details-kv">
+        <ng-content select="blogsphere-kv-row"></ng-content>
+        <ng-content></ng-content>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="mode === 'table'">
+      <ng-container *ngIf="tableRows?.length > 0; else emptyState">
+        <div class="details-table-wrap">
+          <table class="details-table" [class.details-table--compact]="compactTable">
+            <thead *ngIf="tableHeaders?.length">
+              <tr>
+                <th *ngFor="let h of tableHeaders">{{ h }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of tableRows">
+                <td
+                  *ngFor="let cell of row"
+                  [ngClass]="cellClasses(cell)"
+                >
+                  <ng-container *ngIf="isCellObject(cell) && cell.status !== undefined; else textCell">
+                    <span *ngIf="cell.status" class="material-symbols-rounded text-success">check_circle</span>
+                    <span *ngIf="!cell.status" class="material-symbols-rounded text-error">cancel</span>
+                  </ng-container>
+                  <ng-template #textCell>
+                    <ng-container *ngIf="isChipCell(cell); else plainText">
+                      <span class="details-table__chip">{{ cellText(cell) }}</span>
+                    </ng-container>
+                    <ng-template #plainText>
+                      {{ cellText(cell) }}
+                    </ng-template>
+                  </ng-template>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+
+      <ng-template #emptyState>
+        <ng-content select="[empty]"></ng-content>
+      </ng-template>
+    </ng-container>
+  </div>
+</section>
+

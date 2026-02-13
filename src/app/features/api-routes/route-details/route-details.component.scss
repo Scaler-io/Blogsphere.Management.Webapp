@@ -1,0 +1,144 @@
+@import '../../../../assets/styles/sass-utils/variables';
+@import '../../../../assets/styles/sass-utils/mixins';
+
+.rd {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-xl $spacing-3xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+
+  @include respond-to(xs) {
+    padding: $spacing-md $spacing-md $spacing-2xl;
+    gap: $spacing-lg;
+  }
+}
+
+.rd-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-md;
+
+  @include respond-to(xs) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.rd-stat {
+  @include card;
+  padding: $spacing-lg $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  border-left: 3px solid $color-primary;
+  @include transition(all);
+
+  &:hover {
+    box-shadow: 0 4px 12px $color-shadow;
+    transform: translateY(-1px);
+  }
+
+  &__label {
+    @include font($font-size-base, $font-weight-medium);
+    color: rgba($color-text-primary, 0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  &__value {
+    @include font($font-size-xl, $font-weight-medium);
+    color: $color-text-primary;
+    word-break: break-word;
+
+    &--primary {
+      color: $color-primary;
+    }
+  }
+
+  &__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// DUO GRID (headers + transforms side-by-side)
+// ════════════════════════════════════════════════════════════════════════════
+.rd-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-xl;
+
+  @include respond-to(xs) {
+    grid-template-columns: 1fr;
+  }
+
+  @include respond-between($breakpoint-sm, $breakpoint-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// EMPTY STATE
+// ════════════════════════════════════════════════════════════════════════════
+.rd-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: $spacing-xl $spacing-lg;
+  text-align: center;
+
+  &__icon {
+    font-size: 36px;
+    color: rgba($color-text-primary, 0.15);
+  }
+
+  &__text {
+    @include font($font-size-lg, $font-weight-regular);
+    color: rgba($color-text-primary, 0.45);
+    margin: 0;
+    max-width: 32ch;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// METHOD PILLS
+// ════════════════════════════════════════════════════════════════════════════
+.method-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-base;
+  font-family: $font-family-secondary;
+  @include font($font-size-sm, $font-weight-medium);
+  letter-spacing: 0.5px;
+  color: $color-surface;
+  background: $gray-400;
+
+  &--get {
+    background: $color-success;
+  }
+  &--post {
+    background: $color-warning;
+    color: $gray-900;
+  }
+  &--put {
+    background: $color-info;
+  }
+  &--delete {
+    background: $color-error;
+  }
+  &--patch {
+    background: $primary-300;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// MODE CHIP (header mode column)
+// ════════════════════════════════════════════════════════════════════════════
