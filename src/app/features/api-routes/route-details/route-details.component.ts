@@ -17,7 +17,11 @@ import { ItemDeleteDialogComponent } from 'src/app/shared/components/item-delete
 import * as ApiRouteActions from 'src/app/state/api-route/api-route.action';
 import * as RequestPageActions from 'src/app/state/request-page/request-page.action';
 import { ApiRouteCommandType } from 'src/app/core/model/api-route.model';
-import { DetailsCardTableCell, DetailsCardTableRow } from 'src/app/shared/components/details-card/details-card.model';
+import {
+  DetailsCardTableCell,
+  DetailsCardTableRow,
+} from 'src/app/shared/components/details-card/details-card.model';
+import { DateHelper } from 'src/app/shared/helpers/date.helper';
 
 @Component({
   selector: 'blogsphere-route-details',
@@ -117,6 +121,11 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  public formatDate(date: string | null | undefined): string {
+    if (!date) return 'N/A';
+    return DateHelper.formatDateToTimeAgo(date);
+  }
+
   private handleRouteResponse(): void {
     this.store.dispatch(
       new RequestPageActions.RequestPageSet({
@@ -134,7 +143,10 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
     return (headers || []).map(h => {
       const nameCell: DetailsCardTableCell = { text: h?.name ?? '', variant: 'emphasis' };
       const modeCell: DetailsCardTableCell = { text: h?.mode ?? '', variant: 'chip' };
-      const valuesCell: DetailsCardTableCell = { text: (h?.values || []).join(', '), variant: 'mono' };
+      const valuesCell: DetailsCardTableCell = {
+        text: (h?.values || []).join(', '),
+        variant: 'mono',
+      };
       const statusCell: DetailsCardTableCell = { status: !!h?.isActive, align: 'center' };
       return [nameCell, modeCell, valuesCell, statusCell];
     });

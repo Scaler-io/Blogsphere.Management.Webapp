@@ -71,7 +71,7 @@ export interface ApiRoute {
   clusterDetails: BasicClusterDetails;
   headers: RouteHeaderDetails[];
   transforms: RouteTransformDetails[];
-  metaData: MetaData;
+  metadata: MetaData;
 }
 
 export interface RouteHeaderDetails {

@@ -57,6 +57,27 @@
       <blogsphere-kv-row label="Rate limiter policy">{{ r.rateLimiterPolicy || 'N/A' }}</blogsphere-kv-row>
     </blogsphere-details-card>
 
+    <blogsphere-details-card mode="keyValue" icon="history" title="Audit">
+      <blogsphere-kv-row label="Created">{{ formatDate(r.metadata?.createdAt) }}</blogsphere-kv-row>
+      <blogsphere-kv-row label="Updated">{{ formatDate(r.metadata?.updatedAt) }}</blogsphere-kv-row>
+      <blogsphere-kv-row label="Created by">
+        <span #triggerRefCreatedBy class="cursor-pointer">{{ r.metadata?.createdBy?.fullName || 'N/A' }}</span>
+        <blogsphere-tooltip *ngIf="r.metadata?.createdBy" [trigger]="triggerRefCreatedBy" position="below">
+          <p><strong>Email:</strong> {{ r.metadata.createdBy.email }}</p>
+          <p><strong>Role:</strong> {{ r.metadata.createdBy.jobTitle }}</p>
+          <p><strong>Employee Id:</strong> {{ r.metadata.createdBy.employeeId }}</p>
+        </blogsphere-tooltip>
+      </blogsphere-kv-row>
+      <blogsphere-kv-row label="Updated by">
+        <span #triggerRefUpdatedBy class="cursor-pointer">{{ r.metadata?.updatedBy?.fullName || 'N/A' }}</span>
+        <blogsphere-tooltip *ngIf="r.metadata?.updatedBy" [trigger]="triggerRefUpdatedBy" position="below">
+          <p><strong>Email:</strong> {{ r.metadata.updatedBy.email }}</p>
+          <p><strong>Role:</strong> {{ r.metadata.updatedBy.jobTitle }}</p>
+          <p><strong>Employee Id:</strong> {{ r.metadata.updatedBy.employeeId }}</p>
+        </blogsphere-tooltip>
+      </blogsphere-kv-row>
+    </blogsphere-details-card>
+
     <div class="row">
       <div class="col-12 col-md-6">
         <blogsphere-details-card

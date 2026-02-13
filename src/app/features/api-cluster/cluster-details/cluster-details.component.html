@@ -1,244 +1,125 @@
-<div
-  class="cluster-details pl-xl pr-xl pb-xl"
-  *ngIf="!(isClusterLoading$ | async) && clusterDetails$ | async as clusterDetails"
->
-
+<div class="cd" *ngIf="!(isClusterLoading$ | async) && clusterDetails$ | async as c">
   <blogsphere-hero-header
     icon="route"
-    [title]="(clusterDetails.clusterId | capitalize)"
-    subtitle="Manage configuration, destinations and routes for {{ clusterDetails.clusterId }}"
+    [title]="c.clusterId | capitalize"
+    subtitle="Manage configuration, destinations and routes for this API cluster."
     [isJsonView]="isJsonView"
     (edit)="goToEdit()"
     (toggleView)="toggleJsonView()"
     (delete)="openDeleteDialog()"
   ></blogsphere-hero-header>
 
+  <section class="cd-stats">
+    <div class="cd-stat">
+      <div class="cd-stat__label">Status</div>
+      <div class="cd-stat__value">
+        <blogsphere-badge [type]="c.isActive ? BadgeType.success : BadgeType.danger" [isRounded]="true">
+          {{ c.isActive ? 'Active' : 'Inactive' }}
+        </blogsphere-badge>
+      </div>
+    </div>
+
+    <div class="cd-stat">
+      <div class="cd-stat__label">Load balancing</div>
+      <div class="cd-stat__value">{{ c.loadBalancingPolicy || 'N/A' }}</div>
+    </div>
+
+    <div class="cd-stat">
+      <div class="cd-stat__label">Health check</div>
+      <div class="cd-stat__value">
+        <blogsphere-badge [type]="c.healthCheckEnabled ? BadgeType.success : BadgeType.danger" [isRounded]="true">
+          {{ c.healthCheckEnabled ? 'Enabled' : 'Disabled' }}
+        </blogsphere-badge>
+      </div>
+    </div>
+
+    <div class="cd-stat">
+      <div class="cd-stat__label">Destinations</div>
+      <div class="cd-stat__value">{{ (c.destinations || []).length }}</div>
+    </div>
+
+    <div class="cd-stat">
+      <div class="cd-stat__label">Routes</div>
+      <div class="cd-stat__value">{{ (c.routes || []).length }}</div>
+    </div>
+  </section>
 
   <ng-container *ngIf="!isJsonView">
-    <div class="row mb-xl mt-xl">
-      <div class="col-12">
-        <blogsphere-info-card
-          [variant]="InfoCardVariant.primary"
-          [size]="InfoCardSize.large"
-          [showIcon]="true"
-          [elevated]="false"
-          icon="settings"
-          title="Core cluster details"
-        >
-          <div class="row g-4 cluster-details__sections">
-            <div class="col-12 col-lg-6 col-xl-4">
-              <div class="cluster-details__section">
-                <div class="cluster-details__section-title">Identity</div>
-                <dl class="cluster-details__dl">
-                  <div class="cluster-details__dl-row">
-                    <dt>Cluster id</dt>
-                    <dd>{{ clusterDetails.clusterId }}</dd>
-                  </div>
-                  <div class="cluster-details__dl-row">
-                    <dt>Unique id</dt>
-                    <dd class="cluster-details__mono">{{ clusterDetails.id }}</dd>
-                  </div>
-                  <div class="cluster-details__dl-row">
-                    <dt>Load balancing</dt>
-                    <dd>{{ clusterDetails.loadBalancingPolicy }}</dd>
-                  </div>
-                </dl>
-              </div>
-            </div>
+    <blogsphere-details-card mode="keyValue" icon="settings" title="Core configuration">
+      <blogsphere-kv-row label="Cluster id">{{ c.clusterId }}</blogsphere-kv-row>
+      <blogsphere-kv-row label="Unique id" variant="mono">{{ c.id }}</blogsphere-kv-row>
+      <blogsphere-kv-row label="Active">
+        <span *ngIf="c.isActive" class="material-symbols-rounded text-success">check_circle</span>
+        <span *ngIf="!c.isActive" class="material-symbols-rounded text-error">cancel</span>
+      </blogsphere-kv-row>
+      <blogsphere-kv-row label="Load balancing policy">{{ c.loadBalancingPolicy || 'N/A' }}</blogsphere-kv-row>
+      <blogsphere-kv-row label="Health check enabled">
+        <span *ngIf="c.healthCheckEnabled" class="material-symbols-rounded text-success">check_circle</span>
+        <span *ngIf="!c.healthCheckEnabled" class="material-symbols-rounded text-error">cancel</span>
+      </blogsphere-kv-row>
+      <blogsphere-kv-row label="Health check path" variant="mono">{{ c.healthCheckPath || 'N/A' }}</blogsphere-kv-row>
+      <blogsphere-kv-row label="Health check interval">{{ c.healthCheckInterval ?? 'N/A' }}</blogsphere-kv-row>
+      <blogsphere-kv-row label="Health check timeout">{{ c.healthCheckTimeout ?? 'N/A' }}</blogsphere-kv-row>
+    </blogsphere-details-card>
 
-            <div class="col-12 col-lg-6 col-xl-4">
-              <div class="cluster-details__section">
-                <div class="cluster-details__section-title">Health check</div>
-                <dl class="cluster-details__dl">
-                  <div class="cluster-details__dl-row">
-                    <dt>Status</dt>
-                    <dd>
-                      <blogsphere-badge [type]="BadgeType.success" [isRounded]="true">Active</blogsphere-badge>
-                    </dd>
-                  </div>
-                  <div class="cluster-details__dl-row">
-                    <dt>Path</dt>
-                    <dd class="cluster-details__mono">{{ clusterDetails.healthCheckPath }}</dd>
-                  </div>
-                  <div class="cluster-details__dl-row">
-                    <dt>Interval</dt>
-                    <dd>{{ clusterDetails.healthCheckInterval }}</dd>
-                  </div>
-                  <div class="cluster-details__dl-row">
-                    <dt>Timeout</dt>
-                    <dd>{{ clusterDetails.healthCheckTimeout }}</dd>
-                  </div>
-                </dl>
-              </div>
-            </div>
+    <blogsphere-details-card mode="keyValue" icon="history" title="Audit">
+      <blogsphere-kv-row label="Created">{{ formatDate(c.metaData?.createdAt) }}</blogsphere-kv-row>
+      <blogsphere-kv-row label="Updated">{{ formatDate(c.metaData?.updatedAt) }}</blogsphere-kv-row>
+      <blogsphere-kv-row label="Created by">
+        <span #triggerRefCreatedBy class="cursor-pointer">{{ c.metaData?.createdBy?.fullName || 'N/A' }}</span>
+        <blogsphere-tooltip *ngIf="c.metaData?.createdBy" [trigger]="triggerRefCreatedBy" position="below">
+          <p><strong>Email:</strong> {{ c.metaData.createdBy.email }}</p>
+          <p><strong>Role:</strong> {{ c.metaData.createdBy.jobTitle }}</p>
+          <p><strong>Employee Id:</strong> {{ c.metaData.createdBy.employeeId }}</p>
+        </blogsphere-tooltip>
+      </blogsphere-kv-row>
+      <blogsphere-kv-row label="Updated by">
+        <span #triggerRefUpdatedBy class="cursor-pointer">{{ c.metaData?.updatedBy?.fullName || 'N/A' }}</span>
+        <blogsphere-tooltip *ngIf="c.metaData?.updatedBy" [trigger]="triggerRefUpdatedBy" position="below">
+          <p><strong>Email:</strong> {{ c.metaData.updatedBy.email }}</p>
+          <p><strong>Role:</strong> {{ c.metaData.updatedBy.jobTitle }}</p>
+          <p><strong>Employee Id:</strong> {{ c.metaData.updatedBy.employeeId }}</p>
+        </blogsphere-tooltip>
+      </blogsphere-kv-row>
+    </blogsphere-details-card>
 
-            <div class="col-12 col-lg-12 col-xl-4">
-              <div class="cluster-details__section">
-                <div class="cluster-details__section-title">Audit</div>
-                <dl class="cluster-details__dl">
-                  <div class="cluster-details__dl-row">
-                    <dt>Created</dt>
-                    <dd>{{ formatDate(clusterDetails.metaData.createdAt) }}</dd>
-                  </div>
-                  <div class="cluster-details__dl-row">
-                    <dt>Updated</dt>
-                    <dd>{{ formatDate(clusterDetails.metaData.updatedAt) }}</dd>
-                  </div>
-                  <div class="cluster-details__dl-row">
-                    <dt>Created by</dt>
-                    <dd>
-                      <span #triggerRefCreatedBy class="cursor-pointer">{{ clusterDetails.metaData.createdBy.fullName }}</span>
-                      <blogsphere-tooltip [trigger]="triggerRefCreatedBy" position="below">
-                        <p><strong>Email:</strong> {{ clusterDetails.metaData.createdBy.email }}</p>
-                        <p><strong>Role:</strong> {{ clusterDetails.metaData.createdBy.jobTitle }}</p>
-                        <p><strong>Employee Id:</strong> {{ clusterDetails.metaData.createdBy.employeeId }}</p>
-                      </blogsphere-tooltip>
-                  </div>
-                  <div class="cluster-details__dl-row">
-                    <dt>Updated by</dt>
-                    <dd>
-                      <span #triggerRefUpdatedBy class="cursor-pointer">{{ clusterDetails.metaData.updatedBy.fullName }}</span>
-                      <blogsphere-tooltip [trigger]="triggerRefUpdatedBy" position="below">
-                        <p><strong>Email:</strong> {{ clusterDetails.metaData.updatedBy.email }}</p>
-                        <p><strong>Role:</strong> {{ clusterDetails.metaData.updatedBy.jobTitle }}</p>
-                        <p><strong>Employee Id:</strong> {{ clusterDetails.metaData.updatedBy.employeeId }}</p>
-                      </blogsphere-tooltip>
-                    </dd>
-                  </div>
-                </dl>
-              </div>
-            </div>
-          </div>
-        </blogsphere-info-card>
+    <blogsphere-details-card
+      mode="table"
+      icon="directions_run"
+      title="Destinations"
+      [count]="(c.destinations || []).length"
+      [flushBody]="true"
+      [tableHeaders]="destinationsTableHeaders"
+      [tableRows]="destinationsTableRows"
+      [compactTable]="true"
+    ></blogsphere-details-card>
+
+    <blogsphere-details-card
+      mode="table"
+      icon="route"
+      title="Routes"
+      [count]="(c.routes || []).length"
+      [flushBody]="true"
+      [tableHeaders]="routesTableHeaders"
+      [tableRows]="routesTableRows"
+      [compactTable]="true"
+    >
+      <div empty class="cd-empty">
+        <span class="material-symbols-rounded cd-empty__icon">route</span>
+        <p class="cd-empty__text">No routes found for this cluster.</p>
+        <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (click)="goToRoutes()">
+          Add route
+        </blogsphere-button>
       </div>
-    </div>
-
-    <!-- Destination card -->
-    <div class="row mb-xl">
-      <div class="col-12">
-        <blogsphere-info-card
-          [variant]="InfoCardVariant.primary"
-          [size]="InfoCardSize.large"
-          [showIcon]="true"
-          [elevated]="false"
-          icon="directions_run"
-          title="Destinations ({{ clusterDetails.destinations.length }})"
-        >
-          <div class="cluster-details__table-wrap mt-xl">
-            <table class="cluster-details__table">
-              <colgroup>
-                <col style="width: 28%" />
-                <col style="width: 10%" />
-                <col style="width: 10%" />
-                <col style="width: 52%" />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th class="cluster-details__table-col--left">Destination Id</th>
-                  <th class="cluster-details__table-col--center">Status</th>
-                  <th class="cluster-details__table-col--center">Weight</th>
-                  <th class="cluster-details__table-col--left">Address</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let destination of clusterDetails.destinations">
-                  <td class="cluster-details__table-col--left cluster-details__table-emphasis">
-                    {{ destination.destinationId }}
-                  </td>
-                  <td class="cluster-details__table-col--center">
-                    <span *ngIf="destination.isActive" class="material-symbols-rounded text-success">check_circle</span>
-                    <span *ngIf="!destination.isActive" class="material-symbols-rounded text-error">cancel</span>
-                  </td>
-                  <td class="cluster-details__table-col--center">N/A</td>
-                  <td class="cluster-details__table-col--left cluster-details__table-mono">
-                    {{ destination.address }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </blogsphere-info-card>
-      </div>
-    </div>
-
-    <!-- Routes card -->
-    <div class="row mb-xl">
-      <div class="col-12">
-        <blogsphere-info-card
-          [variant]="InfoCardVariant.primary"
-          [size]="InfoCardSize.large"
-          [showIcon]="true"
-          icon="route"
-          title="Routes ({{ clusterDetails.routes.length }})"
-          [elevated]="false"
-        >
-          <div class="cluster-details__table-wrap mt-xl" *ngIf="clusterDetails.routes.length > 0">
-            <table class="cluster-details__table">
-              <colgroup>
-                <col style="width: 28%" />
-                <col style="width: 10%" />
-                <col style="width: 18%" />
-                <col style="width: 44%" />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th class="cluster-details__table-col--left">Route Id</th>
-                  <th class="cluster-details__table-col--center">Status</th>
-                  <th class="cluster-details__table-col--center">Method</th>
-                  <th class="cluster-details__table-col--left">Path</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let route of clusterDetails.routes">
-                  <td class="cursor-pointer cluster-details__table-col--left cluster-details__table-emphasis">
-                    {{ route.routeId | capitalize }}
-                  </td>
-                  <td class="cluster-details__table-col--center">
-                    <span *ngIf="route.isActive" class="material-symbols-rounded text-success">check_circle</span>
-                    <span *ngIf="!route.isActive" class="material-symbols-rounded text-error">cancel</span>
-                  </td>
-                  <td class="cluster-details__table-col--center">
-                    <span
-                      *ngFor="let method of route.methods"
-                      class="badge"
-                      [class.badge-green]="method === 'GET'"
-                      [class.badge-yellow]="method === 'POST'"
-                      [class.badge-blue]="method === 'PUT'"
-                      [class.badge-red]="method === 'DELETE'"
-                    >
-                      {{ method }}
-                    </span>
-                  </td>
-                  <td class="cluster-details__table-col--left cluster-details__table-mono">{{ route.path }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div
-            class="cluster-details__empty container d-flex flex-column align-items-center justify-content-center gap-md"
-            *ngIf="clusterDetails.routes.length === 0"
-          >
-            <div class="font-size-2xl">No routes found for this cluster</div>
-            <div class="font-size-2xl">
-              <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (click)="goToRoutes()">
-                Add route
-              </blogsphere-button>
-            </div>
-          </div>
-        </blogsphere-info-card>
-      </div>
-    </div>
+    </blogsphere-details-card>
   </ng-container>
 
   <ng-container *ngIf="isJsonView">
-    <div class="row mb-xl">
-      <div class="col-12">
-        <!-- Json view of cluster details -->
-        <div class="json-container container">
-          <pre>{{ clusterDetails | json }}</pre>
-        </div>
+    <blogsphere-details-card mode="keyValue" icon="data_object" title="Raw JSON" [flushBody]="true">
+      <div class="details-json">
+        <pre class="details-json__pre">{{ c | json }}</pre>
       </div>
-    </div>
+    </blogsphere-details-card>
   </ng-container>
 </div>
 

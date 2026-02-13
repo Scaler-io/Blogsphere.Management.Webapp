@@ -9,7 +9,8 @@ import { BadgeModule } from 'src/app/shared/components/badge/badge.module';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { HeroHeaderModule } from 'src/app/shared/components/hero-header/hero-header.module';
 import { DetailsCardModule } from 'src/app/shared/components/details-card/details-card.module';
-import { ApiClusterModule } from "../../api-cluster/api-cluster.module";
+import { ApiClusterModule } from '../../api-cluster/api-cluster.module';
+import { TooltipModule } from 'src/app/shared/components/tooltip/tooltip.module';
 
 @NgModule({
   declarations: [RouteDetailsComponent],
@@ -23,8 +24,9 @@ import { ApiClusterModule } from "../../api-cluster/api-cluster.module";
     PipesModule,
     HeroHeaderModule,
     DetailsCardModule,
-    ApiClusterModule
-],
+    ApiClusterModule,
+    TooltipModule,
+  ],
   exports: [RouteDetailsComponent],
 })
 export class RouteDetailsModule {}
