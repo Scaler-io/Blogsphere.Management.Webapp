@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonSize, ButtonType } from 'src/app/core/model/core';
 
 @Component({
-  selector: 'blogsphere-hero-header',
-  templateUrl: './hero-header.component.html',
-  styleUrls: ['./hero-header.component.scss'],
+    selector: 'blogsphere-hero-header',
+    templateUrl: './hero-header.component.html',
+    styleUrls: ['./hero-header.component.scss'],
+    standalone: false
 })
 export class HeroHeaderComponent {
   @Input() icon: string = '';

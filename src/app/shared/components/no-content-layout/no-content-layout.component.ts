@@ -2,9 +2,10 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ButtonType, ButtonSize, IconType } from 'src/app/core/model/core';
 
 @Component({
-  selector: 'blogsphere-no-content-layout',
-  templateUrl: './no-content-layout.component.html',
-  styleUrls: ['./no-content-layout.component.scss'],
+    selector: 'blogsphere-no-content-layout',
+    templateUrl: './no-content-layout.component.html',
+    styleUrls: ['./no-content-layout.component.scss'],
+    standalone: false
 })
 export class NoContentLayoutComponent implements OnInit {
   @Input() title: string = 'No Data Available';

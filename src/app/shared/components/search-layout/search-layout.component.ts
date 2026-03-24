@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ButtonSize, ButtonType } from 'src/app/core/model/core';
 import { SearchLayoutService } from './search-layout.service';
 import { AppState } from 'src/app/store/app.state';
@@ -7,12 +7,13 @@ import { Store } from '@ngrx/store';
 import { selectMobileViewState } from 'src/app/state/mobile-view/mobile-view.selector';
 
 @Component({
-  selector: 'blogsphere-search-layout',
-  templateUrl: './search-layout.component.html',
-  styleUrls: ['./search-layout.component.scss'],
+    selector: 'blogsphere-search-layout',
+    templateUrl: './search-layout.component.html',
+    styleUrls: ['./search-layout.component.scss'],
+    standalone: false
 })
 export class SearchLayoutComponent implements OnInit {
-  public searchInput: FormControl = new FormControl('');
+  public searchInput: UntypedFormControl = new UntypedFormControl('');
   public filterPanelOpened: boolean = false;
   public selectedSortField: string = 'Last created';
   public isFilterApplied: boolean = false;

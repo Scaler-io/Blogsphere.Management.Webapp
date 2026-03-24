@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BadgeType } from 'src/app/core/model/core';
 
 @Component({
-  selector: 'blogsphere-badge',
-  templateUrl: './badge.component.html',
-  styleUrls: ['./badge.component.scss'],
+    selector: 'blogsphere-badge',
+    templateUrl: './badge.component.html',
+    styleUrls: ['./badge.component.scss'],
+    standalone: false
 })
 export class BadgeComponent implements OnInit {
   @Input() type: BadgeType = BadgeType.primary;

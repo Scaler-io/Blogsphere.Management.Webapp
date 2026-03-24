@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GenericErrorComponent } from './error.component';
+import { GenericErrorComponent } from './generic-error.component';
 
 describe('GenericErrorComponent', () => {
   let component: GenericErrorComponent;

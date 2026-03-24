@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 interface ValidationMessage {
   error: string;
@@ -36,7 +36,7 @@ export const validationMessages: ValidationMessage[] = [
 
 export function validationMessage(
   formControl: string,
-  formGroup: FormGroup
+  formGroup: UntypedFormGroup
 ): string | undefined {
   if (formGroup && formGroup.get(formControl)) {
     for (const error of validationMessages) {

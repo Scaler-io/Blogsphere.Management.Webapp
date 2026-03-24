@@ -6,7 +6,7 @@
       [matTooltip]="ToolTipText.RouteDetails"
       matTooltipClass="tooltip-class"
       matTooltipPosition="right"
-    >
+      >
       info
     </span>
   </div>
@@ -36,9 +36,11 @@
             <mat-form-field class="w-100 font-size-xl">
               <mat-label>Methods</mat-label>
               <mat-select formControlName="methods" multiple>
-                <mat-option *ngFor="let method of httpMethods" [value]="method">
-                  {{ method }}
-                </mat-option>
+                @for (method of httpMethods; track method) {
+                  <mat-option [value]="method">
+                    {{ method }}
+                  </mat-option>
+                }
               </mat-select>
               <mat-error>{{ getErrorMessages('methods') }}</mat-error>
             </mat-form-field>
@@ -47,7 +49,9 @@
             <mat-form-field class="w-100 font-size-xl">
               <mat-label>Rate limiter policy</mat-label>
               <mat-select formControlName="rateLimiterPolicy">
-                <mat-option *ngFor="let policy of rateLimiterPolicies" [value]="policy">{{ policy }}</mat-option>
+                @for (policy of rateLimiterPolicies; track policy) {
+                  <mat-option [value]="policy">{{ policy }}</mat-option>
+                }
               </mat-select>
               <mat-error>{{ getErrorMessages('rateLimiterPolicy') }}</mat-error>
             </mat-form-field>
@@ -59,7 +63,9 @@
             <mat-form-field class="w-100 font-size-xl">
               <mat-label>Cluster Id</mat-label>
               <mat-select formControlName="clusterId">
-                <mat-option *ngFor="let cluster of clusterIds" [value]="cluster.id">{{ cluster.name }}</mat-option>
+                @for (cluster of clusterIds; track cluster) {
+                  <mat-option [value]="cluster.id">{{ cluster.name }}</mat-option>
+                }
               </mat-select>
               <mat-error>{{ getErrorMessages('clusterId') }}</mat-error>
             </mat-form-field>
@@ -79,7 +85,7 @@
                   [matTooltip]="ToolTipText.Headers"
                   matTooltipClass="tooltip-class"
                   matTooltipPosition="right"
-                >
+                  >
                   info
                 </span>
               </div>
@@ -87,7 +93,7 @@
                 class="material-symbols-outlined mr-lg cursor-pointer p-xs border-radius-full"
                 matRipple
                 (click)="addHeader()"
-              >
+                >
                 add
               </span>
             </div>
@@ -108,66 +114,74 @@
                   </tr>
                 </thead>
                 <tbody formArrayName="headers">
-                  <tr
-                    @fadeSlideInOut
-                    *ngFor="let header of headers.controls; let headerFormGroup = index"
+                  @for (header of headers.controls; track header; let headerFormGroup = $index) {
+                    <tr
+                      @fadeSlideInOut
                     [ngClass]="{
                       'bg-error': isHeaderFormDirty(headerFormGroup) && !isHeaderFormValid(headerFormGroup)
                     }"
-                  >
-                    <ng-container [formGroupName]="headerFormGroup">
-                      <td>
-                        <span
-                          *ngIf="isHeaderFormDirty(headerFormGroup)"
-                          class="material-symbols-outlined font-size-3xl"
+                      >
+                      <ng-container [formGroupName]="headerFormGroup">
+                        <td>
+                          @if (isHeaderFormDirty(headerFormGroup)) {
+                            <span
+                              class="material-symbols-outlined font-size-3xl"
                           [ngClass]="{
                             'text-error': !isHeaderFormValid(headerFormGroup),
                             'text-success': isHeaderFormValid(headerFormGroup)
                           }"
-                        >
-                          {{ isHeaderFormValid(headerFormGroup) ? 'check_circle' : 'cancel' }}
-                        </span>
-                      </td>
-                      <td>
-                        <div class="form-field">
-                          <input type="text" formControlName="name" placeholder="api-version" />
-                        </div>
-                      </td>
-                      <td>
-                        <div class="form-field">
-                          <input type="text" formControlName="values" placeholder="v2,v3 (comma-separated)" />
-                        </div>
-                      </td>
-                      <td>
-                        <div class="form-field">
-                          <mat-select formControlName="mode">
-                            <mat-option *ngFor="let mode of headerModeOptions" [value]="mode">{{ mode }}</mat-option>
-                          </mat-select>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="form-field">
-                          <mat-slide-toggle formControlName="isActive" color="primary"></mat-slide-toggle>
-                        </div>
-                      </td>
-                      <td>
-                        <span
-                          class="material-symbols-outlined font-size-3xl text-error cursor-pointer"
-                          (click)="removeHeader(headerFormGroup)"
-                        >
-                          delete
-                        </span>
-                      </td>
-                    </ng-container>
-                  </tr>
+                              >
+                              {{ isHeaderFormValid(headerFormGroup) ? 'check_circle' : 'cancel' }}
+                            </span>
+                          }
+                        </td>
+                        <td>
+                          <div class="form-field">
+                            <input type="text" formControlName="name" placeholder="api-version" />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-field">
+                            <input type="text" formControlName="values" placeholder="v2,v3 (comma-separated)" />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-field">
+                            <mat-select formControlName="mode">
+                              @for (mode of headerModeOptions; track mode) {
+                                <mat-option [value]="mode">{{ mode }}</mat-option>
+                              }
+                            </mat-select>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-field">
+                            <mat-slide-toggle formControlName="isActive" color="primary"></mat-slide-toggle>
+                          </div>
+                        </td>
+                        <td>
+                          <span
+                            class="material-symbols-outlined font-size-3xl text-error cursor-pointer"
+                            (click)="removeHeader(headerFormGroup)"
+                            >
+                            delete
+                          </span>
+                        </td>
+                      </ng-container>
+                    </tr>
+                  }
                 </tbody>
               </table>
-              <div class="mt-md" *ngIf="headers.length === 0">
-                <p class="text-muted font-size-lg">No headers configured. Click add to add header rules.</p>
-              </div>
-              <div class="mt-md" *ngIf="shouldShowHeaderFormErrors()">
-                <p class="text-error font-size-lg">Please fill all the headers with valid values</p>
-              </div>
+              @if (headers.length === 0) {
+                <div class="mt-md">
+                  <p class="text-muted font-size-lg">No headers configured. Click add to add header rules.</p>
+                </div>
+              }
+              @if (shouldShowHeaderFormErrors()) {
+                <div class="mt-md">
+                  <p class="text-error font-size-lg">Please fill all the headers with valid values</p>
+                </div>
+              }
             </div>
           </div>
         </div>
@@ -182,7 +196,7 @@
                   [matTooltip]="ToolTipText.Transforms"
                   matTooltipClass="tooltip-class"
                   matTooltipPosition="right"
-                >
+                  >
                   info
                 </span>
               </div>
@@ -190,7 +204,7 @@
                 class="material-symbols-outlined mr-lg cursor-pointer p-xs border-radius-full"
                 matRipple
                 (click)="addTransform()"
-              >
+                >
                 add
               </span>
             </div>
@@ -209,57 +223,65 @@
                   </tr>
                 </thead>
                 <tbody formArrayName="transforms">
-                  <tr
-                    @fadeSlideInOut
-                    *ngFor="let transform of transforms.controls; let transformFormGroup = index"
+                  @for (transform of transforms.controls; track transform; let transformFormGroup = $index) {
+                    <tr
+                      @fadeSlideInOut
                     [ngClass]="{
                       'bg-error': isTransformFormDirty(transformFormGroup) && !isTransformFormValid(transformFormGroup)
                     }"
-                  >
-                    <ng-container [formGroupName]="transformFormGroup">
-                      <td>
-                        <span
-                          *ngIf="isTransformFormDirty(transformFormGroup)"
-                          class="material-symbols-outlined font-size-3xl"
+                      >
+                      <ng-container [formGroupName]="transformFormGroup">
+                        <td>
+                          @if (isTransformFormDirty(transformFormGroup)) {
+                            <span
+                              class="material-symbols-outlined font-size-3xl"
                           [ngClass]="{
                             'text-error': !isTransformFormValid(transformFormGroup),
                             'text-success': isTransformFormValid(transformFormGroup)
                           }"
-                        >
-                          {{ isTransformFormValid(transformFormGroup) ? 'check_circle' : 'cancel' }}
-                        </span>
-                      </td>
-                      <td>
-                        <div class="form-field">
-                          <input type="text" formControlName="pathPattern" placeholder="/api/v2/{**catch-all}" />
-                        </div>
-                      </td>
-                      <td>
-                        <div class="form-field">
-                          <mat-slide-toggle formControlName="isActive" color="primary"></mat-slide-toggle>
-                        </div>
-                      </td>
-                      <td>
-                        <span
-                          class="material-symbols-outlined font-size-3xl text-error cursor-pointer"
-                          (click)="removeTransform(transformFormGroup)"
-                        >
-                          delete
-                        </span>
-                      </td>
-                    </ng-container>
-                  </tr>
+                              >
+                              {{ isTransformFormValid(transformFormGroup) ? 'check_circle' : 'cancel' }}
+                            </span>
+                          }
+                        </td>
+                        <td>
+                          <div class="form-field">
+                            <input type="text" formControlName="pathPattern" placeholder="/api/v2/{**catch-all}" />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-field">
+                            <mat-slide-toggle formControlName="isActive" color="primary"></mat-slide-toggle>
+                          </div>
+                        </td>
+                        <td>
+                          <span
+                            class="material-symbols-outlined font-size-3xl text-error cursor-pointer"
+                            (click)="removeTransform(transformFormGroup)"
+                            >
+                            delete
+                          </span>
+                        </td>
+                      </ng-container>
+                    </tr>
+                  }
                 </tbody>
               </table>
-              <div class="mt-md" *ngIf="isAnyTransformProvided && transforms.length === 0">
-                <p class="text-muted font-size-lg">No transforms configured. Click add to add transform rules.</p>
-              </div>
-              <div class="mt-md" *ngIf="!isAnyTransformProvided">
-                <p class="text-error font-size-lg">Please select at least one transform</p>
-              </div>
-              <div class="mt-md" *ngIf="shouldShowTransformFormErrors()">
-                <p class="text-error font-size-lg">Please fill all the transforms with valid values</p>
-              </div>
+              @if (isAnyTransformProvided && transforms.length === 0) {
+                <div class="mt-md">
+                  <p class="text-muted font-size-lg">No transforms configured. Click add to add transform rules.</p>
+                </div>
+              }
+              @if (!isAnyTransformProvided) {
+                <div class="mt-md">
+                  <p class="text-error font-size-lg">Please select at least one transform</p>
+                </div>
+              }
+              @if (shouldShowTransformFormErrors()) {
+                <div class="mt-md">
+                  <p class="text-error font-size-lg">Please fill all the transforms with valid values</p>
+                </div>
+              }
             </div>
           </div>
         </div>
@@ -271,7 +293,7 @@
         [type]="ButtonType.secondary"
         [size]="ButtonSize.small"
         (next)="onSubmit()"
-      >
+        >
         {{ isEditMode ? 'Update' : 'Create' }}
       </blogsphere-button>
     </div>

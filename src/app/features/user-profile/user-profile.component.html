@@ -1,7 +1,6 @@
 <div class="account-center">
-  <ng-container *ngIf="profileViewModel$ | async as vm">
-    <ng-container *ngIf="!vm.isLoading; else loadingState">
-
+  @if (profileViewModel$ | async; as vm) {
+    @if (!vm.isLoading) {
       <!-- Breadcrumb navigation -->
       <nav class="account-center__breadcrumb">
         <a routerLink="/dashboard" class="account-center__breadcrumb-link">
@@ -11,7 +10,6 @@
         <span class="material-symbols-outlined account-center__breadcrumb-sep">chevron_right</span>
         <span class="account-center__breadcrumb-current">Account Center</span>
       </nav>
-
       <!-- Page title -->
       <div class="account-center__heading">
         <h1 class="account-center__title">Account Center</h1>
@@ -19,7 +17,6 @@
           Manage your profile details, security settings and account preferences across Blogsphere.
         </p>
       </div>
-
       <!-- Profile identity card -->
       <section class="account-center__profile-card">
         <div class="account-center__profile-top">
@@ -29,18 +26,21 @@
           <div class="account-center__profile-info">
             <h2 class="account-center__profile-name">{{ vm.user?.name || 'User' }}</h2>
             <p class="account-center__profile-email">{{ vm.user?.email || 'No email available' }}</p>
-            <span class="account-center__profile-badge" *ngIf="vm.user?.role">
-              <span class="material-symbols-outlined">verified</span>
-              {{ vm.user?.role }}
-            </span>
+            @if (vm.user?.role) {
+              <span class="account-center__profile-badge">
+                <span class="material-symbols-outlined">verified</span>
+                {{ vm.user?.role }}
+              </span>
+            }
           </div>
         </div>
-        <div class="account-center__profile-meta" *ngIf="vm.user?.department">
-          <span class="material-symbols-outlined">business</span>
-          <span>{{ vm.user.department }}</span>
-        </div>
+        @if (vm.user?.department) {
+          <div class="account-center__profile-meta">
+            <span class="material-symbols-outlined">business</span>
+            <span>{{ vm.user.department }}</span>
+          </div>
+        }
       </section>
-
       <!-- Personal information section -->
       <section class="account-center__section">
         <div class="account-center__section-header">
@@ -49,7 +49,6 @@
             Your personal details used across the Blogsphere workspace.
           </p>
         </div>
-
         <div class="account-center__card">
           <div class="account-center__row">
             <div class="account-center__row-icon">
@@ -60,7 +59,6 @@
               <span class="account-center__row-value">{{ vm.user?.name || 'Not set' }}</span>
             </div>
           </div>
-
           <div class="account-center__row">
             <div class="account-center__row-icon">
               <span class="material-symbols-outlined">mail</span>
@@ -72,7 +70,6 @@
               </span>
             </div>
           </div>
-
           <div class="account-center__row">
             <div class="account-center__row-icon">
               <span class="material-symbols-outlined">apartment</span>
@@ -82,7 +79,6 @@
               <span class="account-center__row-value">{{ vm.user?.department || 'Not set' }}</span>
             </div>
           </div>
-
           <div class="account-center__row account-center__row--last">
             <div class="account-center__row-icon">
               <span class="material-symbols-outlined">fingerprint</span>
@@ -96,7 +92,6 @@
           </div>
         </div>
       </section>
-
       <!-- Password & Security section -->
       <section class="account-center__section">
         <div class="account-center__section-header">
@@ -105,7 +100,6 @@
             Manage your sign-in protection and account recovery options.
           </p>
         </div>
-
         <div class="account-center__card">
           <div class="account-center__row account-center__row--interactive" (click)="resetPassword()">
             <div class="account-center__row-icon">
@@ -120,7 +114,6 @@
               <span class="material-symbols-outlined">chevron_right</span>
             </button>
           </div>
-
           <div class="account-center__row account-center__row--interactive" (click)="redirectToIdentityServer()">
             <div class="account-center__row-icon">
               <span class="material-symbols-outlined">security</span>
@@ -134,7 +127,6 @@
               <span class="material-symbols-outlined">chevron_right</span>
             </button>
           </div>
-
           <div class="account-center__row account-center__row--interactive account-center__row--last" (click)="redirectToIdentityServer()">
             <div class="account-center__row-icon">
               <span class="material-symbols-outlined">phone_iphone</span>
@@ -150,7 +142,6 @@
           </div>
         </div>
       </section>
-
       <!-- Access & Permissions section -->
       <section class="account-center__section">
         <div class="account-center__section-header">
@@ -159,7 +150,6 @@
             Your role and permission scope within the Blogsphere platform.
           </p>
         </div>
-
         <div class="account-center__card">
           <div class="account-center__row">
             <div class="account-center__row-icon">
@@ -170,38 +160,37 @@
               <span class="account-center__row-value">{{ vm.user?.role || 'Not assigned' }}</span>
             </div>
           </div>
-
           <div class="account-center__row account-center__row--last">
             <div class="account-center__row-icon">
               <span class="material-symbols-outlined">key</span>
             </div>
             <div class="account-center__row-content">
               <span class="account-center__row-label">Permissions</span>
-              <div class="account-center__permissions" *ngIf="vm.permissions.length; else noPermissions">
-                <span class="account-center__permission-chip" *ngFor="let permission of vm.permissions">
-                  {{ permission }}
-                </span>
-              </div>
-              <ng-template #noPermissions>
+              @if (vm.permissions.length) {
+                <div class="account-center__permissions">
+                  @for (permission of vm.permissions; track permission) {
+                    <span class="account-center__permission-chip">
+                      {{ permission }}
+                    </span>
+                  }
+                </div>
+              } @else {
                 <span class="account-center__row-hint">No permissions assigned</span>
-              </ng-template>
+              }
             </div>
           </div>
         </div>
       </section>
-
       <!-- Footer note -->
       <footer class="account-center__footer">
         <span class="material-symbols-outlined account-center__footer-icon">shield</span>
         <span>Your account is protected by Blogsphere. To update sensitive details like your email or password, you will be securely redirected to your identity provider.</span>
       </footer>
+    } @else {
+      <div class="account-center__loading">
+        <blogsphere-loader [enabled]="true"></blogsphere-loader>
+      </div>
+    }
+  }
 
-    </ng-container>
-  </ng-container>
-
-  <ng-template #loadingState>
-    <div class="account-center__loading">
-      <blogsphere-loader [enabled]="true"></blogsphere-loader>
-    </div>
-  </ng-template>
 </div>

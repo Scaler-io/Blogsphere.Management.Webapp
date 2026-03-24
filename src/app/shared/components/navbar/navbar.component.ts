@@ -10,9 +10,10 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'blogsphere-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+    selector: 'blogsphere-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss'],
+    standalone: false
 })
 export class NavbarComponent implements OnInit {
   @ViewChild(MatExpansionPanel) panel: MatExpansionPanel;

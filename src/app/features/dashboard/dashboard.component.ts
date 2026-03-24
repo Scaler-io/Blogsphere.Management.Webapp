@@ -20,11 +20,12 @@ import {
 import { DashboardSummaryResponse } from 'src/app/core/model/dashboard.model';
 
 @Component({
-  selector: 'blogsphere-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
-  animations: [fadeSlideInOut],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'blogsphere-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
+    animations: [fadeSlideInOut],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

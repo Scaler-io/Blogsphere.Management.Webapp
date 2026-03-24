@@ -14,9 +14,10 @@ import { PaginationMetaData } from 'src/app/core/model/pagination';
 import { BadgeType } from 'src/app/core/model/core';
 
 @Component({
-  selector: 'blogsphere-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
+    selector: 'blogsphere-table',
+    templateUrl: './table.component.html',
+    styleUrls: ['./table.component.scss'],
+    standalone: false
 })
 export class TableComponent implements OnInit, OnChanges {
   @Input('dataSource') tableDataSource: MatTableDataSource<TableDataSource>;

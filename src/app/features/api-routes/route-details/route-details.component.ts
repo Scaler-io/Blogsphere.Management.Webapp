@@ -24,9 +24,10 @@ import {
 import { DateHelper } from 'src/app/shared/helpers/date.helper';
 
 @Component({
-  selector: 'blogsphere-route-details',
-  templateUrl: './route-details.component.html',
-  styleUrls: ['./route-details.component.scss'],
+    selector: 'blogsphere-route-details',
+    templateUrl: './route-details.component.html',
+    styleUrls: ['./route-details.component.scss'],
+    standalone: false
 })
 export class RouteDetailsComponent implements OnInit, OnDestroy {
   public apiRouteId: string = this.route.snapshot.params['id'];

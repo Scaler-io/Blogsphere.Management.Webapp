@@ -4,9 +4,11 @@
       <mat-form-field class="font-size-xl" appearance="standard">
         <mat-label>Load balancer type</mat-label>
         <mat-select formControlName="loadBalancerName">
-          <mat-option *ngFor="let option of loadBalancerPolicyOptions" [value]="option">
-            {{ loadBalancerLabel(option) }}
-          </mat-option>
+          @for (option of loadBalancerPolicyOptions; track option) {
+            <mat-option [value]="option">
+              {{ loadBalancerLabel(option) }}
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </div>
@@ -33,7 +35,7 @@
           [min]="fromMinDate"
           [max]="fromMaxDate"
           formControlName="fromDate"
-        />
+          />
         <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
         <mat-datepicker #fromPicker></mat-datepicker>
       </mat-form-field>

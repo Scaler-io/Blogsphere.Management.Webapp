@@ -3,9 +3,10 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { ButtonSize, ButtonType, ItemDeleteDialogData } from 'src/app/core/model/core';
 
 @Component({
-  selector: 'blogsphere-item-delete-dialog',
-  templateUrl: './item-delete-dialog.component.html',
-  styleUrls: ['./item-delete-dialog.component.scss'],
+    selector: 'blogsphere-item-delete-dialog',
+    templateUrl: './item-delete-dialog.component.html',
+    styleUrls: ['./item-delete-dialog.component.scss'],
+    standalone: false
 })
 export class ItemDeleteDialogComponent implements OnInit {
   public dialogData: ItemDeleteDialogData;

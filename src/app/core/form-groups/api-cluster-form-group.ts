@@ -1,7 +1,7 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 export class ApiClusterFormGroupHelper {
-  public static createApiClusterFormGroup(fb: FormBuilder): FormGroup {
+  public static createApiClusterFormGroup(fb: UntypedFormBuilder): UntypedFormGroup {
     const group = fb.group({
       clusterId: ['', [Validators.required]],
       loadBalancingPolicy: ['', [Validators.required]],
@@ -36,7 +36,7 @@ export class ApiClusterFormGroupHelper {
     return group;
   }
 
-  public static createApiClusterFilterFormGroup(fb: FormBuilder): FormGroup {
+  public static createApiClusterFilterFormGroup(fb: UntypedFormBuilder): UntypedFormGroup {
     const group = fb.group({
       loadBalancerName: [null],
       status: [null],
@@ -69,7 +69,7 @@ export class ApiClusterFormGroupHelper {
 }
 
 export class ApiClusterDestinationsFormGroupHelper {
-  public static createApiClusterDestinationsFormGroup(fb: FormBuilder): FormGroup {
+  public static createApiClusterDestinationsFormGroup(fb: UntypedFormBuilder): UntypedFormGroup {
     const group = fb.group({
       destinationId: ['', [Validators.required]],
       address: ['', [Validators.required]],

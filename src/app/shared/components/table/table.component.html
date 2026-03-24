@@ -1,57 +1,65 @@
 <table class="table__layout" cdk-table [dataSource]="tableDataSource">
-  <ng-container *ngFor="let col of columns" [cdkColumnDef]="col">
-    <th class="table__header-cell" cdk-header-cell *cdkHeaderCellDef>
-      {{ columnMap ? (getColumnKey(col) | capitalize) : (col | capitalize) }}
-    </th>
-    <td class="table__cell" cdk-cell *cdkCellDef="let element; let i = index">
-      <ng-container *ngIf="col !== 'actions'; else actionColumns">
-        <ng-container *ngIf="isStatusField(col)">
-          <blogsphere-badge
-            [type]="element[getColumnValue(col)] === 'Active' ? BadgeType.success : BadgeType.danger"
-            [isRounded]="true"
-          >
-            {{ element[getColumnValue(col)] }}
-          </blogsphere-badge>
-        </ng-container>
-        <ng-container *ngIf="isLinkField(col)">
-          <a (click)="onLinkClick(element)">{{ element[getColumnValue(col)] }}</a>
-        </ng-container>
-        <ng-container *ngIf="!isStatusField(col) && !isLinkField(col)">
-          {{
+  @for (col of columns; track col) {
+    <ng-container [cdkColumnDef]="col">
+      <th class="table__header-cell" cdk-header-cell *cdkHeaderCellDef>
+        {{ columnMap ? (getColumnKey(col) | capitalize) : (col | capitalize) }}
+      </th>
+      <td class="table__cell" cdk-cell *cdkCellDef="let element; let i = index">
+        @if (col !== 'actions') {
+          @if (isStatusField(col)) {
+            <blogsphere-badge
+              [type]="element[getColumnValue(col)] === 'Active' ? BadgeType.success : BadgeType.danger"
+              [isRounded]="true"
+              >
+              {{ element[getColumnValue(col)] }}
+            </blogsphere-badge>
+          }
+          @if (isLinkField(col)) {
+            <a (click)="onLinkClick(element)">{{ element[getColumnValue(col)] }}</a>
+          }
+          @if (!isStatusField(col) && !isLinkField(col)) {
+            {{
             !columnMap
-              ? element[col]
-              : isDateField(col)
-                ? (element[getColumnValue(col)] | formatDate | formatStatus)
-                : element[getColumnValue(col)]
-          }}
-        </ng-container>
-      </ng-container>
-      <ng-template #actionColumns>
-        <div class="custom-menu" matRipple [matMenuTriggerFor]="actionMenu">
-          <span class="material-symbols-outlined">more_horiz</span>
-          <mat-menu #actionMenu="matMenu">
-            <button *ngIf="allowVisit" mat-menu-item (click)="onVisit(element)">Visit</button>
-            <button *ngIf="allowEdit" mat-menu-item (click)="onEdit(element)">Edit</button>
-            <button *ngIf="allowDelete" mat-menu-item (click)="onDelete(element)">Delete</button>
-          </mat-menu>
-        </div>
-      </ng-template>
-    </td>
-  </ng-container>
+            ? element[col]
+            : isDateField(col)
+            ? (element[getColumnValue(col)] | formatDate | formatStatus)
+            : element[getColumnValue(col)]
+            }}
+          }
+        } @else {
+          <div class="custom-menu" matRipple [matMenuTriggerFor]="actionMenu">
+            <span class="material-symbols-outlined">more_horiz</span>
+            <mat-menu #actionMenu="matMenu">
+              @if (allowVisit) {
+                <button mat-menu-item (click)="onVisit(element)">Visit</button>
+              }
+              @if (allowEdit) {
+                <button mat-menu-item (click)="onEdit(element)">Edit</button>
+              }
+              @if (allowDelete) {
+                <button mat-menu-item (click)="onDelete(element)">Delete</button>
+              }
+            </mat-menu>
+          </div>
+        }
+      </td>
+    </ng-container>
+  }
   <tr class="table__header-row" cdk-header-row *cdkHeaderRowDef="columns"></tr>
   <tr class="table__row" cdk-row *cdkRowDef="let row; columns: columns"></tr>
 </table>
 
-<blogsphere-paginator
-  *ngIf="dataLength > 0"
-  [pageMetadata]="customPageMetadata"
-  (pageChange)="onPageChange($event)"
-></blogsphere-paginator>
+@if (dataLength > 0) {
+  <blogsphere-paginator
+    [pageMetadata]="customPageMetadata"
+    (pageChange)="onPageChange($event)"
+  ></blogsphere-paginator>
+}
 
 <!-- <mat-paginator
-  [length]="dataLength"
-  [pageIndex]="paginationMetadata.currentPage - 1"
-  [pageSize]="paginationMetadata.top"
-  [pageSizeOptions]="[10, 20, 50, 100]"
-  (page)="onPageChange($event)"
+[length]="dataLength"
+[pageIndex]="paginationMetadata.currentPage - 1"
+[pageSize]="paginationMetadata.top"
+[pageSizeOptions]="[10, 20, 50, 100]"
+(page)="onPageChange($event)"
 ></mat-paginator> -->

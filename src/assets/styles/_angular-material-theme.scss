@@ -154,17 +154,17 @@ $custom-warn-palette: (
 // DEFINE THEME PALETTES
 // ============================================================================
 
-$Blogsphere-primary: mat.define-palette($custom-primary-palette, 500);
-$Blogsphere-accent: mat.define-palette($custom-accent-palette, 500);
-$Blogsphere-success: mat.define-palette($custom-success-palette, 500);
-$Blogsphere-warn: mat.define-palette($custom-warn-palette, 500);
-$Blogsphere-error: mat.define-palette($custom-warn-palette, 500);
+$Blogsphere-primary: mat.m2-define-palette($custom-primary-palette, 500);
+$Blogsphere-accent: mat.m2-define-palette($custom-accent-palette, 500);
+$Blogsphere-success: mat.m2-define-palette($custom-success-palette, 500);
+$Blogsphere-warn: mat.m2-define-palette($custom-warn-palette, 500);
+$Blogsphere-error: mat.m2-define-palette($custom-warn-palette, 500);
 
 // ============================================================================
 // CREATE THEME OBJECT
 // ============================================================================
 
-$Blogsphere-theme: mat.define-light-theme(
+$Blogsphere-theme: mat.m2-define-light-theme(
   (
     color: (
       primary: $Blogsphere-primary,

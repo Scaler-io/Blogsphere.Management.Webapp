@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BreadcrumbService } from 'xng-breadcrumb';
@@ -36,13 +36,14 @@ import {
 import * as ApiClusterActions from 'src/app/state/api-cluster/api-custer.action';
 
 @Component({
-  selector: 'blogsphere-route-setup',
-  templateUrl: './route-setup.component.html',
-  styleUrls: ['./route-setup.component.scss'],
-  animations: [fadeSlideInOut],
+    selector: 'blogsphere-route-setup',
+    templateUrl: './route-setup.component.html',
+    styleUrls: ['./route-setup.component.scss'],
+    animations: [fadeSlideInOut],
+    standalone: false
 })
 export class RouteSetupComponent implements OnInit, OnDestroy {
-  public routeForm: FormGroup;
+  public routeForm: UntypedFormGroup;
   public routeId: string = this.route.snapshot.params['id'];
   public route$ = this.store.select(selectApiRoute);
   public isAnyHeaderProvided: boolean = true;
@@ -64,16 +65,16 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
   ButtonSize = ButtonSize;
   ToolTipText = ToolTipText;
 
-  public get headers(): FormArray {
-    return this.routeForm.get('headers') as FormArray;
+  public get headers(): UntypedFormArray {
+    return this.routeForm.get('headers') as UntypedFormArray;
   }
 
-  public get transforms(): FormArray {
-    return this.routeForm.get('transforms') as FormArray;
+  public get transforms(): UntypedFormArray {
+    return this.routeForm.get('transforms') as UntypedFormArray;
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<AppState>,
     private router: Router,
     private route: ActivatedRoute,

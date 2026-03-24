@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  Router,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
 import { selectError } from 'src/app/state/error/error.selector';
@@ -14,7 +8,7 @@ import { AppState } from 'src/app/store/app.state';
 @Injectable({
   providedIn: 'root',
 })
-export class CanActivateErrorPageGuard implements CanActivate {
+export class CanActivateErrorPageGuard  {
   constructor(private store: Store<AppState>, private router: Router) {}
 
   canActivate(

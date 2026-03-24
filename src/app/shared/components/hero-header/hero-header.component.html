@@ -10,20 +10,24 @@
   </div>
 
   <div class="hero-header__actions">
-    <blogsphere-button *ngIf="showEditButton" [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="edit.emit()">
-      <span class="material-symbols-outlined hero-header__btn-icon">edit</span>
-      Edit
-    </blogsphere-button>
+    @if (showEditButton) {
+      <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="edit.emit()">
+        <span class="material-symbols-outlined hero-header__btn-icon">edit</span>
+        Edit
+      </blogsphere-button>
+    }
     <blogsphere-button [type]="ButtonType.success" [size]="ButtonSize.small" (next)="toggle()">
       <span class="material-symbols-outlined hero-header__btn-icon">
         {{ isJsonView ? 'table_chart' : 'data_object' }}
       </span>
       {{ isJsonView ? 'Table view' : 'JSON view' }}
     </blogsphere-button>
-    <blogsphere-button *ngIf="showDeleteButton" [type]="ButtonType.danger" [size]="ButtonSize.small" (next)="delete.emit()">
-      <span class="material-symbols-outlined hero-header__btn-icon">delete</span>
-      Delete
-    </blogsphere-button>
+    @if (showDeleteButton) {
+      <blogsphere-button [type]="ButtonType.danger" [size]="ButtonSize.small" (next)="delete.emit()">
+        <span class="material-symbols-outlined hero-header__btn-icon">delete</span>
+        Delete
+      </blogsphere-button>
+    }
   </div>
 </header>
 

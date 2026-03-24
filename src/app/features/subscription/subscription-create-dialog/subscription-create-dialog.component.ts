@@ -7,7 +7,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { ButtonSize, ButtonType } from 'src/app/core/model/core';
@@ -21,13 +21,14 @@ import { validationMessage } from 'src/app/core/validators/validation-message';
 import { CreateSubscriptionRequest } from 'src/app/core/model/subscription.model';
 
 @Component({
-  selector: 'blogsphere-subscription-create-dialog',
-  templateUrl: './subscription-create-dialog.component.html',
-  styleUrls: ['./subscription-create-dialog.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'blogsphere-subscription-create-dialog',
+    templateUrl: './subscription-create-dialog.component.html',
+    styleUrls: ['./subscription-create-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SubscriptionCreateDialogComponent implements OnInit, OnDestroy {
-  public subscriptionFormGroup: FormGroup;
+  public subscriptionFormGroup: UntypedFormGroup;
   public isCreating$ = this.store.select(selectSubscriptionsCreating);
   public createSuccess$ = this.store.select(selectSubscriptionsCreating);
   public error$ = this.store.select(selectError);
@@ -39,7 +40,7 @@ export class SubscriptionCreateDialogComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialogRef: MatDialogRef<SubscriptionCreateDialogComponent>,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<AppState>,
     private cdr: ChangeDetectorRef,
     private zone: NgZone,

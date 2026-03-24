@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
@@ -16,12 +16,13 @@ import { selectError } from 'src/app/state/error/error.selector';
 import { AppState } from 'src/app/store/app.state';
 
 @Component({
-  selector: 'blogsphere-api-product-create-dialog',
-  templateUrl: './api-product-create-dialog.component.html',
-  styleUrls: ['./api-product-create-dialog.component.scss'],
+    selector: 'blogsphere-api-product-create-dialog',
+    templateUrl: './api-product-create-dialog.component.html',
+    styleUrls: ['./api-product-create-dialog.component.scss'],
+    standalone: false
 })
 export class ApiProductCreateDialogComponent implements OnInit, OnDestroy {
-  public apiProductFormGroup: FormGroup;
+  public apiProductFormGroup: UntypedFormGroup;
   public isCreating$ = this.store.select(selectApiProductsCreating);
   public createSuccess$ = this.store.select(selectApiProductsCreateSuccess);
   public error$ = this.store.select(selectError);
@@ -32,7 +33,7 @@ export class ApiProductCreateDialogComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialogRef: MatDialogRef<ApiProductCreateDialogComponent>,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<AppState>
   ) {}
 

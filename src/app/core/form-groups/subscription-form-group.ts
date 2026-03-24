@@ -1,14 +1,14 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 export class SubscriptionFormGroupHelper {
-  public static createApiProductFormGroup(fb: FormBuilder): FormGroup {
+  public static createApiProductFormGroup(fb: UntypedFormBuilder): UntypedFormGroup {
     return fb.group({
       productName: ['', [Validators.required]],
       productDescription: ['', [Validators.required]],
     });
   }
 
-  public static createSubscribedApiFormGroup(fb: FormBuilder, productId?: string): FormGroup {
+  public static createSubscribedApiFormGroup(fb: UntypedFormBuilder, productId?: string): UntypedFormGroup {
     return fb.group({
       apiName: ['', [Validators.required]],
       apiPath: ['', [Validators.required]],
@@ -17,7 +17,7 @@ export class SubscriptionFormGroupHelper {
     });
   }
 
-  public static createSubscriptionFormGroup(fb: FormBuilder, productId?: string): FormGroup {
+  public static createSubscriptionFormGroup(fb: UntypedFormBuilder, productId?: string): UntypedFormGroup {
     return fb.group({
       subscriptionName: ['', [Validators.required]],
       subscriptionDescription: ['', [Validators.required]],

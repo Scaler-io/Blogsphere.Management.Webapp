@@ -2,9 +2,10 @@ import { Component, Input } from '@angular/core';
 import { DetailsCardMode, DetailsCardTableCell, DetailsCardTableRow } from './details-card.model';
 
 @Component({
-  selector: 'blogsphere-details-card',
-  templateUrl: './details-card.component.html',
-  styleUrls: ['./details-card.component.scss'],
+    selector: 'blogsphere-details-card',
+    templateUrl: './details-card.component.html',
+    styleUrls: ['./details-card.component.scss'],
+    standalone: false
 })
 export class DetailsCardComponent {
   @Input() mode: DetailsCardMode = 'keyValue';

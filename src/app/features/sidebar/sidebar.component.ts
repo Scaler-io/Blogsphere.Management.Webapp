@@ -6,9 +6,10 @@ import { selectMobileViewState } from 'src/app/state/mobile-view/mobile-view.sel
 import { ToggleSideNav } from 'src/app/state/sidenav/sidenav.action';
 
 @Component({
-  selector: 'blogsphere-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+    selector: 'blogsphere-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.scss'],
+    standalone: false
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   public isSidenavExpanded: boolean;

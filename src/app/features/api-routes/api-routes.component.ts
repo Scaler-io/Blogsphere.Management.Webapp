@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { fadeSlideInOut } from 'src/app/core/animations/fade-in-out';
@@ -24,10 +24,11 @@ import { PageEvent } from '@angular/material/paginator';
 import { CapitalizePipe } from 'src/app/shared/pipes/capitalize.pipe';
 
 @Component({
-  selector: 'blogsphere-api-routes',
-  templateUrl: './api-routes.component.html',
-  styleUrls: ['./api-routes.component.scss'],
-  animations: [fadeSlideInOut],
+    selector: 'blogsphere-api-routes',
+    templateUrl: './api-routes.component.html',
+    styleUrls: ['./api-routes.component.scss'],
+    animations: [fadeSlideInOut],
+    standalone: false
 })
 export class ApiRoutesComponent implements OnInit, OnDestroy {
   public apiRoutes$ = this.store.select(selectApiRoutes);
@@ -69,7 +70,7 @@ export class ApiRoutesComponent implements OnInit, OnDestroy {
     private searchLayoutService: SearchLayoutService,
     private router: Router,
     private auth: AuthService,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { fadeSlideInOut } from 'src/app/core/animations/fade-in-out';
 import {
@@ -28,18 +28,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
-  selector: 'blogsphere-cluster-setup',
-  templateUrl: './cluster-setup.component.html',
-  styleUrls: ['./cluster-setup.component.scss'],
-  animations: [fadeSlideInOut],
+    selector: 'blogsphere-cluster-setup',
+    templateUrl: './cluster-setup.component.html',
+    styleUrls: ['./cluster-setup.component.scss'],
+    animations: [fadeSlideInOut],
+    standalone: false
 })
 export class ClusterSetupComponent implements OnInit, OnDestroy {
-  public clusterForm: FormGroup;
+  public clusterForm: UntypedFormGroup;
   public clusterId: string = this.route.snapshot.params['id'];
   public cluster$ = this.store.select(selectApiCluster);
   public isAnyDestinationProvided: boolean = true;
-  public get destinations(): FormArray {
-    return this.clusterForm.get('destinations') as FormArray;
+  public get destinations(): UntypedFormArray {
+    return this.clusterForm.get('destinations') as UntypedFormArray;
   }
   public loadBalancerPolicyOptions: LoadBalancerPolicy[] = Object.values(LoadBalancerPolicy);
   public isCreatingCluster$ = this.store.select(selectApiClusterCreating);
@@ -58,7 +59,7 @@ export class ClusterSetupComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<AppState>,
     private router: Router,
     private route: ActivatedRoute,

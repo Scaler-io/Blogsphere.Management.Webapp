@@ -28,18 +28,19 @@
           <div class="error-page__actions">
             <div class="row justify-content-center gap-md">
               <div class="col-12 col-sm-auto">
-                <blogsphere-button
-                  [type]="'primary'"
-                  [size]="'small'"
-                  icon="arrow_back"
-                  iconPosition="left"
-                  [elevated]="true"
-                  (next)="goBackToOrigin()"
-                  *ngIf="errorComponentRoute$ | async as route"
-                  class="w-100"
-                >
-                  Go Back to {{ sourcePage }}
-                </blogsphere-button>
+                @if (errorComponentRoute$ | async; as route) {
+                  <blogsphere-button
+                    [type]="'primary'"
+                    [size]="'small'"
+                    icon="arrow_back"
+                    iconPosition="left"
+                    [elevated]="true"
+                    (next)="goBackToOrigin()"
+                    class="w-100"
+                    >
+                    Go Back to {{ sourcePage }}
+                  </blogsphere-button>
+                }
               </div>
 
               <div class="col-12 col-sm-auto">
@@ -51,7 +52,7 @@
                   [elevated]="true"
                   (next)="goToDashboard()"
                   class="w-100"
-                >
+                  >
                   Go to Dashboard
                 </blogsphere-button>
               </div>
@@ -67,7 +68,7 @@
               icon="lightbulb"
               [elevated]="false"
               borderPosition="left"
-            >
+              >
               <ul>
                 <li>Try refreshing the page</li>
                 <li>Check your internet connection</li>

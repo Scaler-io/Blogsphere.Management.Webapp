@@ -103,7 +103,7 @@ export class AuthService {
   /**
    * Get the current access token
    */
-  public getAccessToken(): string {
+  public getAccessToken(): Observable<string> {
     return this.oidcSecurityService.getAccessToken();
   }
 

@@ -3,9 +3,10 @@ import { ButtonType, ButtonSize } from 'src/app/core/model/core';
 
 
 @Component({
-  selector: 'blogsphere-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss'],
+    selector: 'blogsphere-button',
+    templateUrl: './button.component.html',
+    styleUrls: ['./button.component.scss'],
+    standalone: false
 })
 export class ButtonComponent implements OnInit {
   @Input() isAutoWidth: boolean = false;

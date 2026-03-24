@@ -10,17 +10,20 @@
           icon="hub"
           [showIcon]="true"
           borderPosition="left"
-        >
+          >
           <div class="dashboard__card-body">
-            <p class="dashboard__stat" *ngIf="!(dashboardLoading$ | async)">
-              {{ totalClusters }}
-            </p>
-            <mat-progress-spinner
-              *ngIf="dashboardLoading$ | async"
-              mode="indeterminate"
-              diameter="32"
-              color="primary"
-            ></mat-progress-spinner>
+            @if (!(dashboardLoading$ | async)) {
+              <p class="dashboard__stat">
+                {{ totalClusters }}
+              </p>
+            }
+            @if (dashboardLoading$ | async) {
+              <mat-progress-spinner
+                mode="indeterminate"
+                diameter="32"
+                color="primary"
+              ></mat-progress-spinner>
+            }
             <p class="dashboard__hint">Clusters configured in the API gateway</p>
             <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="navigateToClusters()">
               View clusters
@@ -36,17 +39,20 @@
           icon="route"
           [showIcon]="true"
           borderPosition="left"
-        >
+          >
           <div class="dashboard__card-body">
-            <p class="dashboard__stat" *ngIf="!(dashboardLoading$ | async)">
-              {{ totalRoutes }}
-            </p>
-            <mat-progress-spinner
-              *ngIf="dashboardLoading$ | async"
-              mode="indeterminate"
-              diameter="32"
-              color="primary"
-            ></mat-progress-spinner>
+            @if (!(dashboardLoading$ | async)) {
+              <p class="dashboard__stat">
+                {{ totalRoutes }}
+              </p>
+            }
+            @if (dashboardLoading$ | async) {
+              <mat-progress-spinner
+                mode="indeterminate"
+                diameter="32"
+                color="primary"
+              ></mat-progress-spinner>
+            }
             <p class="dashboard__hint">Routes configured in the API gateway</p>
             <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="navigateToRoutes()">
               View routes
@@ -64,19 +70,22 @@
           icon="trending_up"
           [showIcon]="true"
           borderPosition="none"
-        >
+          >
           <div class="dashboard__chart-container dashboard__chart-container--line">
-            <div *ngIf="!chartsDataLoaded" class="dashboard__chart-loading">
-              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
-              <p>Loading chart data...</p>
-            </div>
-            <canvas
-              *ngIf="chartsDataLoaded"
-              baseChart
-              [data]="growthChartData"
-              [options]="growthChartOptions"
-              [type]="lineChartType"
-            ></canvas>
+            @if (!chartsDataLoaded) {
+              <div class="dashboard__chart-loading">
+                <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+                <p>Loading chart data...</p>
+              </div>
+            }
+            @if (chartsDataLoaded) {
+              <canvas
+                baseChart
+                [data]="growthChartData"
+                [options]="growthChartOptions"
+                [type]="lineChartType"
+              ></canvas>
+            }
           </div>
         </blogsphere-info-card>
       </div>
@@ -90,19 +99,22 @@
           icon="pie_chart"
           [showIcon]="true"
           borderPosition="none"
-        >
+          >
           <div class="dashboard__chart-container dashboard__chart-container--doughnut">
-            <div *ngIf="!chartsDataLoaded" class="dashboard__chart-loading">
-              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
-              <p>Loading chart data...</p>
-            </div>
-            <canvas
-              *ngIf="chartsDataLoaded"
-              baseChart
-              [data]="statusChartData"
-              [options]="statusChartOptions"
-              [type]="doughnutChartType"
-            ></canvas>
+            @if (!chartsDataLoaded) {
+              <div class="dashboard__chart-loading">
+                <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+                <p>Loading chart data...</p>
+              </div>
+            }
+            @if (chartsDataLoaded) {
+              <canvas
+                baseChart
+                [data]="statusChartData"
+                [options]="statusChartOptions"
+                [type]="doughnutChartType"
+              ></canvas>
+            }
           </div>
         </blogsphere-info-card>
       </div>
@@ -114,19 +126,22 @@
           icon="bar_chart"
           [showIcon]="true"
           borderPosition="none"
-        >
+          >
           <div class="dashboard__chart-container dashboard__chart-container--bar">
-            <div *ngIf="!chartsDataLoaded" class="dashboard__chart-loading">
-              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
-              <p>Loading chart data...</p>
-            </div>
-            <canvas
-              *ngIf="chartsDataLoaded"
-              baseChart
-              [data]="activityChartData"
-              [options]="activityChartOptions"
-              [type]="barChartType"
-            ></canvas>
+            @if (!chartsDataLoaded) {
+              <div class="dashboard__chart-loading">
+                <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+                <p>Loading chart data...</p>
+              </div>
+            }
+            @if (chartsDataLoaded) {
+              <canvas
+                baseChart
+                [data]="activityChartData"
+                [options]="activityChartOptions"
+                [type]="barChartType"
+              ></canvas>
+            }
           </div>
         </blogsphere-info-card>
       </div>
@@ -144,23 +159,26 @@
           icon="subscriptions"
           [showIcon]="true"
           borderPosition="left"
-        >
+          >
           <div class="dashboard__card-body">
-            <p class="dashboard__stat" *ngIf="!(dashboardLoading$ | async)">
-              {{ totalProducts }}
-            </p>
-            <mat-progress-spinner
-              *ngIf="dashboardLoading$ | async"
-              mode="indeterminate"
-              diameter="32"
-              color="primary"
-            ></mat-progress-spinner>
+            @if (!(dashboardLoading$ | async)) {
+              <p class="dashboard__stat">
+                {{ totalProducts }}
+              </p>
+            }
+            @if (dashboardLoading$ | async) {
+              <mat-progress-spinner
+                mode="indeterminate"
+                diameter="32"
+                color="primary"
+              ></mat-progress-spinner>
+            }
             <p class="dashboard__hint">API products available for subscription</p>
             <blogsphere-button
               [type]="ButtonType.secondary"
               [size]="ButtonSize.small"
               (next)="navigateToSubscription()"
-            >
+              >
               View subscription manager
             </blogsphere-button>
           </div>

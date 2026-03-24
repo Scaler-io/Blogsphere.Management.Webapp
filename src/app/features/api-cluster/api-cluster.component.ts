@@ -28,15 +28,16 @@ import { SearchLayoutService } from 'src/app/shared/components/search-layout/sea
 import { Router } from '@angular/router';
 import { IconType } from 'src/app/core/model/core';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ApiClusterFormGroupHelper } from 'src/app/core/form-groups/api-cluster-form-group';
 
 @Component({
-  selector: 'blogsphere-api-cluster',
-  templateUrl: './api-cluster.component.html',
-  styleUrls: ['./api-cluster.component.scss'],
-  animations: [fadeSlideInOut],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'blogsphere-api-cluster',
+    templateUrl: './api-cluster.component.html',
+    styleUrls: ['./api-cluster.component.scss'],
+    animations: [fadeSlideInOut],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ApiClusterComponent implements OnInit, OnDestroy {
   public apiClusters$ = this.store.select(selectApiClusters);
@@ -69,7 +70,7 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
   public isFilterApplied: boolean;
   public isSearchApplied: boolean;
   public searchTerm: string;
-  public clusterFilterForm: FormGroup = ApiClusterFormGroupHelper.createApiClusterFilterFormGroup(
+  public clusterFilterForm: UntypedFormGroup = ApiClusterFormGroupHelper.createApiClusterFilterFormGroup(
     this.fb
   );
   private currentSortField: string;
@@ -88,7 +89,7 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
     private searchLayoutService: SearchLayoutService,
     private router: Router,
     private auth: AuthService,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit(): void {

@@ -1,17 +1,22 @@
 <div [ngClass]="cardClasses">
   <div class="info-card__content">
     <!-- Header with icon and title -->
-    <div class="info-card__header" *ngIf="showIcon || title">
-      <div class="info-card__header-content">
-        <span
-          *ngIf="showIcon && icon"
-          class="info-card__icon material-symbols-outlined"
-        >
-          {{ icon }}
-        </span>
-        <h3 *ngIf="title" class="info-card__title">{{ title }}</h3>
+    @if (showIcon || title) {
+      <div class="info-card__header">
+        <div class="info-card__header-content">
+          @if (showIcon && icon) {
+            <span
+              class="info-card__icon material-symbols-outlined"
+              >
+              {{ icon }}
+            </span>
+          }
+          @if (title) {
+            <h3 class="info-card__title">{{ title }}</h3>
+          }
+        </div>
       </div>
-    </div>
+    }
 
     <!-- Body content -->
     <div class="info-card__body">
