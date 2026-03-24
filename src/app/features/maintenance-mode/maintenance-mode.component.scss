@@ -1,0 +1,60 @@
+@import '../../../assets/styles/sass-utils/variables';
+@import '../../../assets/styles/sass-utils/mixins';
+
+.maintenance-page {
+  min-height: 100%;
+  @include flex-center;
+
+  &__content {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  &__illustration {
+    @include flex-center;
+    margin: 0 auto;
+
+    &-img {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+
+      @include respond-to(xs) {
+        max-width: 260px;
+      }
+    }
+  }
+
+  &__title {
+    @include heading(1);
+    color: $color-text-primary;
+    margin: 0;
+
+    @include respond-to(md) {
+      font-size: $font-size-4xl;
+    }
+  }
+
+  &__message {
+    color: $color-text-secondary;
+    line-height: $line-height-relaxed;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+}
+
+// Animation for illustration
+.maintenance-page__illustration-img {
+  animation: maintenance-float 3s ease-in-out infinite;
+}
+
+@keyframes maintenance-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
