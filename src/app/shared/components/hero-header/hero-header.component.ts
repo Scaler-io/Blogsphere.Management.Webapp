@@ -12,6 +12,9 @@ export class HeroHeaderComponent {
   @Input() subtitle: string = '';
   public isJsonView: boolean = false;
 
+  @Input() showEditButton: boolean = true;
+  @Input() showDeleteButton: boolean = true;
+
   @Output() edit: EventEmitter<void> = new EventEmitter<void>();
   @Output() toggleView: EventEmitter<void> = new EventEmitter<void>();
   @Output() delete: EventEmitter<void> = new EventEmitter<void>();
