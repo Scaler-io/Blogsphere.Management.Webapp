@@ -1,19 +1,18 @@
-import { CommandResponse, MetaData, SearchRequestBase } from "./core";
-import { PaginatedResult } from "./pagination";
-import { TableDataSource } from "./table-source";
+import { CommandResponse, MetaData, SearchRequestBase } from './core';
+import { PaginatedResult } from './pagination';
+import { TableDataSource } from './table-source';
 
 export interface ApiRouteSearchRequest extends SearchRequestBase {}
 
-export class PaginatedApiRouteList extends PaginatedResult
-{
-    constructor(
-        public pageIndex: number,
-        public pageSize: number,
-        public count: number,
-        public data: ApiRouteSummary[]
-    ){
-        super(pageIndex, pageSize, count, data);
-    }
+export class PaginatedApiRouteList extends PaginatedResult {
+  constructor(
+    public pageIndex: number,
+    public pageSize: number,
+    public count: number,
+    public data: ApiRouteSummary[]
+  ) {
+    super(pageIndex, pageSize, count, data);
+  }
 }
 
 export interface ApiRouteSummary extends TableDataSource {
@@ -65,9 +64,9 @@ export interface ApiRoute {
   id: string;
   routeId: string;
   path: string;
-  methods: HttpMethodEnum[];
+  methods: HttpMethods[];
   isActive: boolean;
-  rateLimiterPolicy: string;
+  rateLimiterPolicy: RateLimiterPolicies;
   clusterDetails: BasicClusterDetails;
   headers: RouteHeaderDetails[];
   transforms: RouteTransformDetails[];
@@ -78,7 +77,7 @@ export interface RouteHeaderDetails {
   id: string;
   name: string;
   values: string[];
-  mode: HeaderModeEnum;
+  mode: HeaderModes;
   isActive: boolean;
 }
 
@@ -93,7 +92,11 @@ export interface BasicClusterDetails {
   clusterId: string;
 }
 
-export enum HttpMethodEnum {
+export enum RateLimiterPolicies {
+  BlogsphereRateLimitter = 'blogsphereratelimitter',
+}
+
+export enum HttpMethods {
   Get = 'GET',
   Post = 'POST',
   Put = 'PUT',
@@ -103,15 +106,16 @@ export enum HttpMethodEnum {
   Options = 'OPTIONS',
 }
 
-export enum HeaderModeEnum {
+export enum HeaderModes {
   ExactHeader = 'exactheader',
   Exists = 'exists',
   Prefix = 'prefix',
   Suffix = 'suffix',
 }
 
-export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'] as const;
-export type HttpMethod = (typeof HTTP_METHODS)[number];
+// export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'] as const;
+// export type HttpMethod = (typeof HTTP_METHODS)[number];
 
-export const HEADER_MODE_OPTIONS = ['exactheader', 'exists', 'prefix', 'suffix'] as const;
-export type HeaderMode = (typeof HEADER_MODE_OPTIONS)[number];
+// export const HEADER_MODE_OPTIONS = ['exactheader', 'exists', 'prefix', 'suffix'] as const;
+// export type HeaderMode = (typeof HEADER_MODE_OPTIONS)[number];
+
