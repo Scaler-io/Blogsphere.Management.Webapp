@@ -1,12 +1,20 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { OidcSecurityService, LoginResponse } from 'angular-auth-oidc-client';
-import { Observable, map, catchError, of, take } from 'rxjs';
+import { Observable, map, catchError, of } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private oidcSecurityService: OidcSecurityService) {}
+  private readonly identityBaseUrl = environment.oidc.authority;
+  private readonly oidcClientId = environment.oidc.clientId;
+
+  constructor(
+    private oidcSecurityService: OidcSecurityService,
+    private http: HttpClient
+  ) {}
 
   /**
    * Initialize authentication check
@@ -37,6 +45,49 @@ export class AuthService {
    */
   public logout(): void {
     this.oidcSecurityService.logoff();
+  }
+
+  /**
+   * Redirect to authenticated IdentityServer password reset page.
+   * Goes through OIDC authorize flow first to ensure Identity Server session exists,
+   * then redirects to the password reset page to avoid an extra login prompt.
+   */
+  public redirectToPasswordReset(): void {
+    sessionStorage.setItem('pendingPasswordResetRedirect', 'true');
+    this.oidcSecurityService.authorize();
+  }
+
+  /**
+   * Build the Identity Server password reset page URL (used after authorize flow establishes session).
+   */
+  public getPasswordResetUrl(): string {
+    const resetUrl = new URL('/Account/SelfResetPassword/Index', this.identityBaseUrl);
+    resetUrl.searchParams.set('returnUrl', `${window.location.origin}/user-profile`);
+    resetUrl.searchParams.set('clientId', this.oidcClientId);
+    return resetUrl.toString();
+  }
+
+  /**
+   * Build the Identity Server account management page URL.
+   */
+  public getIdentityAccountUrl(): string {
+    const accountUrl = new URL('/Account/Manage/Index', this.identityBaseUrl);
+    accountUrl.searchParams.set('returnUrl', `${window.location.origin}/user-profile`);
+    accountUrl.searchParams.set('clientId', this.oidcClientId);
+    return accountUrl.toString();
+  }
+
+  /**
+   * Check if IdServer cookie session is present.
+   */
+  public checkIdServerSession(): Observable<boolean> {
+    const checkUrl = new URL('/account/session/check', this.identityBaseUrl);
+    return this.http
+      .get(checkUrl.toString(), { withCredentials: true, observe: 'response' })
+      .pipe(
+        map(() => true),
+        catchError(() => of(false))
+      );
   }
 
   /**
