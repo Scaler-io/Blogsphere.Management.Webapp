@@ -10,3 +10,4 @@
 - Alsways give a look to the https://github.com/Scaler-io/Blogsphere.IdentityService/tree/main/src/IdentityService/Pages to see the how the theme looks like. This app should follow the same blogsphere theme.
 
 - Use angular material components only for forms, ripples, table, menu, tabs and dialogs
+- Always use a meanigful name for variables, constants, function names and avoid use single charactar or undeterministic names.
