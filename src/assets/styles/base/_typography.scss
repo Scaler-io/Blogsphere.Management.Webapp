@@ -135,9 +135,9 @@ mark,
 
 a {
   color: $color-primary;
-  text-decoration: none;
+  text-decoration: none !important;
   transition: color 0.3s ease;
-
+  cursor: pointer;
   &:hover,
   &:focus {
     color: $color-primary-dark;
@@ -244,7 +244,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 0.875em;
 }
 
@@ -308,7 +308,7 @@ blockquote {
     color: $color-text-secondary;
 
     &::before {
-      content: "— ";
+      content: '— ';
     }
   }
 }
