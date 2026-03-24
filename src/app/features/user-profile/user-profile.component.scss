@@ -1,0 +1,416 @@
+@import '../../../assets/styles/sass-utils/variables';
+@import '../../../assets/styles/sass-utils/mixins';
+
+.account-center {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-md $spacing-3xl;
+  min-height: 100%;
+
+  // ── Breadcrumb ──────────────────────────────────────────────────────
+  &__breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    margin-bottom: $spacing-xl;
+  }
+
+  &__breadcrumb-link {
+    @include font($font-size-2xl, $font-weight-medium);
+    color: $color-primary;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+
+    .material-symbols-outlined {
+      font-size: 22px;
+    }
+
+    &:hover {
+      color: $color-primary-dark;
+    }
+  }
+
+  &__breadcrumb-sep {
+    font-size: 22px;
+    color: $gray-400;
+  }
+
+  &__breadcrumb-current {
+    @include font($font-size-2xl, $font-weight-medium);
+    color: rgba($color-text-primary, 0.55);
+  }
+
+  // ── Page heading ────────────────────────────────────────────────────
+  &__heading {
+    margin-bottom: $spacing-xl;
+  }
+
+  &__title {
+    @include font($font-size-5xl, $font-weight-bold, $line-height-tight);
+    color: $color-text-primary;
+    margin: 0 0 $spacing-sm 0;
+    letter-spacing: -0.3px;
+  }
+
+  &__subtitle {
+    @include font($font-size-2xl, $font-weight-regular);
+    color: rgba($color-text-primary, 0.6);
+    margin: 0;
+    max-width: 600px;
+  }
+
+  // ── Profile identity card ──────────────────────────────────────────
+  &__profile-card {
+    @include card;
+    padding: $spacing-xl;
+    margin-bottom: $spacing-2xl;
+    border: 1px solid $color-border-light;
+  }
+
+  &__profile-top {
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+  }
+
+  &__avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: $border-radius-full;
+    background: $gradient-primary;
+    @include flex-center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba($primary-500, 0.25);
+  }
+
+  &__avatar-initials {
+    @include font($font-size-4xl, $font-weight-bold);
+    color: $white;
+    letter-spacing: 1px;
+    line-height: 1;
+    user-select: none;
+  }
+
+  &__profile-info {
+    min-width: 0;
+    flex: 1;
+  }
+
+  &__profile-name {
+    @include font($font-size-4xl, $font-weight-bold, $line-height-tight);
+    color: $color-text-primary;
+    margin: 0 0 4px 0;
+  }
+
+  &__profile-email {
+    @include font($font-size-2xl, $font-weight-regular);
+    color: rgba($color-text-primary, 0.65);
+    margin: 0 0 $spacing-sm 0;
+    font-family: $font-family-secondary;
+    @include text-truncate;
+  }
+
+  &__profile-badge {
+    @include font($font-size-lg, $font-weight-medium);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: $color-primary;
+    background: rgba($color-primary, 0.08);
+    border: 1px solid rgba($color-primary, 0.15);
+    padding: 4px $spacing-md;
+    border-radius: $border-radius-full;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    .material-symbols-outlined {
+      font-size: 18px;
+      font-variation-settings: 'FILL' 1;
+    }
+  }
+
+  &__profile-meta {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-top: $spacing-lg;
+    padding-top: $spacing-lg;
+    border-top: 1px solid $color-border-light;
+    @include font($font-size-2xl, $font-weight-medium);
+    color: rgba($color-text-primary, 0.6);
+
+    .material-symbols-outlined {
+      font-size: 24px;
+      color: $gray-500;
+    }
+  }
+
+  // ── Section layout ─────────────────────────────────────────────────
+  &__section {
+    margin-bottom: $spacing-2xl;
+  }
+
+  &__section-header {
+    margin-bottom: $spacing-md;
+  }
+
+  &__section-title {
+    @include font($font-size-4xl, $font-weight-bold, $line-height-tight);
+    color: $color-text-primary;
+    margin: 0 0 $spacing-xs 0;
+  }
+
+  &__section-desc {
+    @include font($font-size-2xl, $font-weight-regular);
+    color: rgba($color-text-primary, 0.55);
+    margin: 0;
+  }
+
+  // ── Card & row system ──────────────────────────────────────────────
+  &__card {
+    @include card;
+    border: 1px solid $color-border-light;
+    overflow: hidden;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-lg $spacing-xl;
+    border-bottom: 1px solid $color-border-light;
+    transition: background-color 0.15s ease;
+
+    &--last {
+      border-bottom: none;
+    }
+
+    &--interactive {
+      cursor: pointer;
+
+      &:hover {
+        background: rgba($color-primary, 0.03);
+      }
+    }
+  }
+
+  &__row-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: $border-radius-xl;
+    background: rgba($color-primary, 0.07);
+    @include flex-center;
+    flex-shrink: 0;
+
+    .material-symbols-outlined {
+      font-size: 24px;
+      color: $color-primary;
+    }
+  }
+
+  &__row-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  &__row-label {
+    @include font($font-size-2xl, $font-weight-medium);
+    color: $color-text-primary;
+  }
+
+  &__row-value {
+    @include font($font-size-2xl, $font-weight-regular);
+    color: rgba($color-text-primary, 0.75);
+    @include text-truncate;
+
+    &--mono {
+      font-family: $font-family-secondary;
+      font-size: $font-size-2xl;
+      color: rgba($color-text-primary, 0.7);
+      background: rgba($color-primary, 0.04);
+      padding: 2px $spacing-sm;
+      border-radius: $border-radius-base;
+      display: inline-block;
+      max-width: 100%;
+      @include text-truncate;
+    }
+  }
+
+  &__row-hint {
+    @include font($font-size-xl, $font-weight-regular);
+    color: rgba($color-text-primary, 0.5);
+  }
+
+  &__row-action {
+    @include font($font-size-lg, $font-weight-medium);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: $color-primary;
+    background: transparent;
+    border: 1px solid rgba($color-primary, 0.2);
+    border-radius: $border-radius-full;
+    padding: $spacing-sm $spacing-lg;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+
+    .material-symbols-outlined {
+      font-size: 20px;
+    }
+
+    &:hover {
+      background: rgba($color-primary, 0.06);
+      border-color: rgba($color-primary, 0.35);
+    }
+  }
+
+  // ── Permissions ────────────────────────────────────────────────────
+  &__permissions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+    margin-top: 4px;
+  }
+
+  &__permission-chip {
+    @include font($font-size-lg, $font-weight-medium);
+    color: rgba($color-text-primary, 0.7);
+    background: rgba($color-primary, 0.06);
+    border: 1px solid rgba($color-primary, 0.12);
+    padding: 4px $spacing-md;
+    border-radius: $border-radius-full;
+    letter-spacing: 0.2px;
+    text-transform: lowercase;
+  }
+
+  // ── Footer note ────────────────────────────────────────────────────
+  &__footer {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-lg $spacing-xl;
+    background: rgba($color-primary, 0.03);
+    border: 1px solid rgba($color-primary, 0.08);
+    border-radius: $border-radius-lg;
+    @include font($font-size-xl, $font-weight-regular);
+    color: rgba($color-text-primary, 0.6);
+    line-height: $line-height-relaxed;
+  }
+
+  &__footer-icon {
+    font-size: 24px;
+    color: $color-primary;
+    flex-shrink: 0;
+  }
+
+  // ── Loading state ──────────────────────────────────────────────────
+  &__loading {
+    position: relative;
+    min-height: 320px;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+  }
+
+  // ── Responsive ─────────────────────────────────────────────────────
+  @include respond-to(md) {
+    &__title {
+      font-size: $font-size-4xl;
+    }
+
+    &__profile-name {
+      font-size: $font-size-3xl;
+    }
+
+    &__avatar {
+      width: 80px;
+      height: 80px;
+    }
+
+    &__avatar-initials {
+      font-size: $font-size-3xl;
+    }
+  }
+
+  @include respond-to(xs) {
+    padding: $spacing-md $spacing-md $spacing-xl;
+
+    &__title {
+      font-size: $font-size-3xl;
+    }
+
+    &__subtitle {
+      font-size: $font-size-xl;
+    }
+
+    &__profile-card {
+      padding: $spacing-lg;
+    }
+
+    &__profile-top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-md;
+    }
+
+    &__avatar {
+      width: 72px;
+      height: 72px;
+    }
+
+    &__avatar-initials {
+      font-size: $font-size-2xl;
+    }
+
+    &__profile-name {
+      font-size: $font-size-2xl;
+    }
+
+    &__profile-email {
+      font-size: $font-size-xl;
+    }
+
+    &__row {
+      padding: $spacing-md;
+      gap: $spacing-sm;
+      flex-wrap: wrap;
+    }
+
+    &__row-icon {
+      width: 40px;
+      height: 40px;
+
+      .material-symbols-outlined {
+        font-size: 20px;
+      }
+    }
+
+    &__row-label {
+      font-size: $font-size-xl;
+    }
+
+    &__row-value {
+      font-size: $font-size-xl;
+    }
+
+    &__row-hint {
+      font-size: $font-size-lg;
+    }
+
+    &__section-title {
+      font-size: $font-size-3xl;
+    }
+
+    &__footer {
+      padding: $spacing-md;
+      font-size: $font-size-lg;
+    }
+  }
+}
