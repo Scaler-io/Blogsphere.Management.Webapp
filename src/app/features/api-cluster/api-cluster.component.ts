@@ -54,7 +54,12 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
     'destinations',
   ];
   public columnNameMap: TableColumnMap = {
-    clusterName: { value: 'clusterId', isDateField: false, isStatusField: false },
+    clusterName: {
+      value: 'clusterId',
+      isDateField: false,
+      isStatusField: false,
+      isLinkField: true,
+    },
     loadBalancerName: { value: 'loadBalancerName', isDateField: false, isStatusField: false },
     status: { value: 'status', isDateField: false, isStatusField: true },
     routes: { value: 'routeCount', isDateField: false, isStatusField: false },
@@ -121,6 +126,10 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
   }
 
   public onView(event: ApiClusterSummary): void {
+    this.router.navigate(['api-cluster', 'details', event.id]);
+  }
+
+  public onLinkClick(event: ApiClusterSummary): void {
     this.router.navigate(['api-cluster', 'details', event.id]);
   }
 

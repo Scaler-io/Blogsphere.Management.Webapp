@@ -13,8 +13,9 @@ import {
   ApiRoute,
   ApiRouteCommandResponse,
   ApiRouteUpsertRequest,
-  HEADER_MODE_OPTIONS,
-  HTTP_METHODS,
+  HeaderModes,
+  HttpMethods,
+  RateLimiterPolicies,
 } from 'src/app/core/model/api-route.model';
 import { ButtonSize, ButtonType, ToolTipText } from 'src/app/core/model/core';
 import { validationMessage } from 'src/app/core/validators/validation-message';
@@ -46,15 +47,16 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
   public route$ = this.store.select(selectApiRoute);
   public isAnyHeaderProvided: boolean = true;
   public isAnyTransformProvided: boolean = true;
-  public httpMethods = HTTP_METHODS;
-  public headerModeOptions = HEADER_MODE_OPTIONS;
+  public httpMethods = Object.values(HttpMethods);
+  public headerModeOptions = Object.values(HeaderModes);
+  public rateLimiterPolicies = Object.values(RateLimiterPolicies);
   public isCreatingRoute$ = this.store.select(selectApiRouteCreating);
   public isRouteCreated$ = this.store.select(selectApiRouteCommandResponse);
   public isUpdatingRoute$ = this.store.select(selectApiRouteUpdating);
   public isRouteUpdated$ = this.store.select(selectApiRouteCommandResponse);
   public apiClusterCount = this.store.select(selectTotalApiClusters);
 
-  public clusterIds: { id: string, name: string }[] = [];
+  public clusterIds: { id: string; name: string }[] = [];
   public isEditMode: boolean = false;
   private destroy$ = new Subject<void>();
 
@@ -94,102 +96,6 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  private setupClusterIdsSubscription(): void {
-    this.store.dispatch(new ApiClusterActions.GetApiClusterCount({ isFilteredQuery: false }));
-
-    this.apiClusterCount
-      .pipe(
-        filter(count => count > 0),
-        take(1),
-        switchMap(count => {
-          this.store.dispatch(
-            new ApiClusterActions.GetAllApiClusters({
-              isFilteredQuery: false,
-              pageIndex: 1,
-              pageSize: count,
-              matchPhraseField: '',
-              matchPhrase: '',
-              sortField: 'createdAt',
-              sortOrder: 'desc',
-            })
-          );
-          return this.store.select(selectApiClusters).pipe(
-            filter(
-              (clusters): clusters is NonNullable<typeof clusters> =>
-                !!clusters && clusters.length === count
-            ),
-            take(1),
-            map(clusters => clusters.map(cluster => ({ id: cluster.clusterId, name: cluster.clusterId })))
-          );
-        }),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(clusters => {
-        this.clusterIds = clusters.map(cluster => ({ id: cluster.id, name: cluster.name }));
-      });
-  }
-
-  private loadRouteForEdit(): void {
-    this.isEditMode = true;
-    this.store.dispatch(new ApiRouteActions.GetApiRouteById({ id: this.routeId }));
-    this.route$.pipe(takeUntil(this.destroy$)).subscribe(route => {
-      if (route) {
-        this.patchRouteFormWithRoute(route);
-        this.patchHeadersFromRoute(route);
-        this.patchTransformsFromRoute(route);
-      }
-    });
-  }
-
-  private patchRouteFormWithRoute(route: ApiRoute): void {
-    this.breadCrumb.set('@route-name', `Edit ${route.routeId}`);
-    this.routeForm.patchValue({
-      ...route,
-      headers: undefined,
-      transforms: undefined,
-    });
-  }
-
-  private patchHeadersFromRoute(route: ApiRoute): void {
-    this.headers.clear();
-    (route.headers || []).forEach(() => {
-      this.headers.push(ApiRouteHeadersFormGroupHelper.createRouteHeaderFormGroup(this.fb));
-    });
-    this.headers.patchValue(
-      (route.headers || []).map(h => ({
-        name: h.name,
-        values: Array.isArray(h.values) ? h.values.join(', ') : h.values,
-        mode: h.mode,
-        isActive: h.isActive,
-      }))
-    );
-  }
-
-  private patchTransformsFromRoute(route: ApiRoute): void {
-    this.transforms.clear();
-    (route.transforms || []).forEach(() => {
-      this.transforms.push(
-        ApiRouteTransformsFormGroupHelper.createRouteTransformFormGroup(this.fb)
-      );
-    });
-    this.transforms.patchValue(route.transforms || []);
-  }
-
-  private resetFormForCreate(): void {
-    this.routeForm.reset();
-    this.headers.clear();
-    this.transforms.clear();
-  }
-
-  private subscribeToRouteCommandResponses(): void {
-    this.isRouteCreated$.pipe(takeUntil(this.destroy$)).subscribe(response => {
-      if (response) this.handleRouteResponse(response);
-    });
-    this.isRouteUpdated$.pipe(takeUntil(this.destroy$)).subscribe(response => {
-      if (response) this.handleRouteResponse(response);
-    });
   }
 
   public addHeader(): void {
@@ -242,7 +148,105 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
 
   public onSubmit(): void {
     if (this.markFormTouchedIfInvalid()) return;
+    console.log(this.buildUpsertRequest());
     this.dispatchUpsertRequest(this.buildUpsertRequest());
+  }
+
+  private setupClusterIdsSubscription(): void {
+    this.store.dispatch(new ApiClusterActions.GetApiClusterCount({ isFilteredQuery: false }));
+
+    this.apiClusterCount
+      .pipe(
+        filter(count => count > 0),
+        take(1),
+        switchMap(count => {
+          this.store.dispatch(
+            new ApiClusterActions.GetAllApiClusters({
+              isFilteredQuery: false,
+              pageIndex: 1,
+              pageSize: count,
+              matchPhraseField: '',
+              matchPhrase: '',
+              sortField: 'createdAt',
+              sortOrder: 'desc',
+            })
+          );
+          return this.store.select(selectApiClusters).pipe(
+            filter(
+              (clusters): clusters is NonNullable<typeof clusters> =>
+                !!clusters && clusters.length === count
+            ),
+            take(1),
+            map(clusters => clusters.map(cluster => ({ id: cluster.id, name: cluster.clusterId })))
+          );
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(clusters => {
+        this.clusterIds = clusters.map(cluster => ({ id: cluster.id, name: cluster.name }));
+      });
+  }
+
+  private loadRouteForEdit(): void {
+    this.isEditMode = true;
+    this.store.dispatch(new ApiRouteActions.GetApiRouteById({ id: this.routeId }));
+    this.route$.pipe(takeUntil(this.destroy$)).subscribe(route => {
+      if (route) {
+        this.patchRouteFormWithRoute(route);
+        this.patchHeadersFromRoute(route);
+        this.patchTransformsFromRoute(route);
+      }
+    });
+  }
+
+  private patchRouteFormWithRoute(route: ApiRoute): void {
+    this.breadCrumb.set('@route-name', `Edit ${route.routeId}`);
+    this.routeForm.patchValue({
+      ...route,
+      clusterId: route.clusterDetails.id,
+      headers: undefined,
+      transforms: undefined,
+    });
+  }
+
+  private patchHeadersFromRoute(route: ApiRoute): void {
+    this.headers.clear();
+    (route.headers || []).forEach(() => {
+      this.headers.push(ApiRouteHeadersFormGroupHelper.createRouteHeaderFormGroup(this.fb));
+    });
+    this.headers.patchValue(
+      (route.headers || []).map(h => ({
+        name: h.name,
+        values: Array.isArray(h.values) ? h.values.join(', ') : h.values,
+        mode: h.mode,
+        isActive: h.isActive,
+      }))
+    );
+  }
+
+  private patchTransformsFromRoute(route: ApiRoute): void {
+    this.transforms.clear();
+    (route.transforms || []).forEach(() => {
+      this.transforms.push(
+        ApiRouteTransformsFormGroupHelper.createRouteTransformFormGroup(this.fb)
+      );
+    });
+    this.transforms.patchValue(route.transforms || []);
+  }
+
+  private resetFormForCreate(): void {
+    this.routeForm.reset();
+    this.headers.clear();
+    this.transforms.clear();
+  }
+
+  private subscribeToRouteCommandResponses(): void {
+    this.isRouteCreated$.pipe(takeUntil(this.destroy$)).subscribe(response => {
+      if (response) this.handleRouteResponse(response);
+    });
+    this.isRouteUpdated$.pipe(takeUntil(this.destroy$)).subscribe(response => {
+      if (response) this.handleRouteResponse(response);
+    });
   }
 
   private isFormInvalid(): boolean {
@@ -271,14 +275,14 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
       rateLimiterPolicy: rawValue.rateLimiterPolicy,
       clusterId: rawValue.clusterId,
       headers: (rawValue.headers || []).map(
-        (h: { name: string; values: string; mode: string; isActive: boolean }) => ({
-          name: h.name,
-          values: (h.values || '')
+        (header: { name: string; values: string; mode: string; isActive: boolean }) => ({
+          name: header.name,
+          values: (header.values || '')
             .split(',')
             .map((v: string) => v.trim())
             .filter(Boolean),
-          mode: h.mode,
-          isActive: h.isActive,
+          mode: header.mode,
+          isActive: header.isActive,
         })
       ),
       transforms: rawValue.transforms || [],

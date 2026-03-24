@@ -40,7 +40,7 @@ export class ApiRoutesComponent implements OnInit, OnDestroy {
   public displayedColumns: string[] = ['routeName', 'path', 'rateLimitterPolicy', 'status'];
 
   public columnNameMap: TableColumnMap = {
-    routeName: { value: 'routeId', isDateField: false, isStatusField: false },
+    routeName: { value: 'routeId', isDateField: false, isStatusField: false, isLinkField: true },
     path: { value: 'path', isDateField: false, isStatusField: false },
     rateLimitterPolicy: { value: 'rateLimitterPolicy', isDateField: false, isStatusField: false },
     status: { value: 'status', isDateField: false, isStatusField: true },
@@ -274,6 +274,10 @@ export class ApiRoutesComponent implements OnInit, OnDestroy {
           }
         });
       });
+  }
+
+  public onLinkClick(event: ApiRouteSummary): void {
+    this.router.navigate(['api-route', 'details', event.id]);
   }
 
   // private applyFilter(): void {
