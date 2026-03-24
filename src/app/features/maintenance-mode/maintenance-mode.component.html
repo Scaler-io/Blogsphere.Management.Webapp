@@ -1,0 +1,50 @@
+<div class="maintenance-page">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+        <div class="maintenance-page__content">
+          <!-- Animated Illustration -->
+          <div class="maintenance-page__illustration mb-2xl">
+            <img
+              src="assets/svgs/maintenance-illustration.svg"
+              alt="Maintenance in progress"
+              class="maintenance-page__illustration-img"
+            />
+          </div>
+
+          <!-- Title -->
+          <h1 class="maintenance-page__title text-center mb-lg">
+            We'll be back soon!
+          </h1>
+
+          <!-- Message -->
+          <div class="maintenance-page__message text-center mb-xl">
+            <p class="font-size-2xl">
+              Our team is performing scheduled maintenance to improve your
+              experience. We'll be back up and running shortly.
+            </p>
+          </div>
+
+          <!-- Helpful Tips -->
+          <div class="maintenance-page__tips mt-2xl">
+            <blogsphere-info-card
+              variant="tips"
+              size="large"
+              title="What's happening?"
+              icon="build"
+              [elevated]="false"
+              borderPosition="left"
+            >
+              <ul>
+                <li>We're upgrading our systems for better performance</li>
+                <li>Your data is safe and secure</li>
+                <li>Expected downtime is typically 15-30 minutes</li>
+                <li>Try refreshing in a few minutes if you need immediate access</li>
+              </ul>
+            </blogsphere-info-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

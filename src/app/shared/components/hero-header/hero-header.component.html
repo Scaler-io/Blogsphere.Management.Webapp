@@ -10,7 +10,7 @@
   </div>
 
   <div class="hero-header__actions">
-    <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="edit.emit()">
+    <blogsphere-button *ngIf="showEditButton" [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="edit.emit()">
       <span class="material-symbols-outlined hero-header__btn-icon">edit</span>
       Edit
     </blogsphere-button>
@@ -20,7 +20,7 @@
       </span>
       {{ isJsonView ? 'Table view' : 'JSON view' }}
     </blogsphere-button>
-    <blogsphere-button [type]="ButtonType.danger" [size]="ButtonSize.small" (next)="delete.emit()">
+    <blogsphere-button *ngIf="showDeleteButton" [type]="ButtonType.danger" [size]="ButtonSize.small" (next)="delete.emit()">
       <span class="material-symbols-outlined hero-header__btn-icon">delete</span>
       Delete
     </blogsphere-button>

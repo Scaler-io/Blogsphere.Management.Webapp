@@ -53,4 +53,3 @@ export class DetailsCardComponent {
     return this.isCellObject(cell) && cell.variant === 'chip';
   }
 }
-

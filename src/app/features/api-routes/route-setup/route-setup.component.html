@@ -46,7 +46,9 @@
           <div class="col-12 col-md-4">
             <mat-form-field class="w-100 font-size-xl">
               <mat-label>Rate limiter policy</mat-label>
-              <input matInput type="text" formControlName="rateLimiterPolicy" />
+              <mat-select formControlName="rateLimiterPolicy">
+                <mat-option *ngFor="let policy of rateLimiterPolicies" [value]="policy">{{ policy }}</mat-option>
+              </mat-select>
               <mat-error>{{ getErrorMessages('rateLimiterPolicy') }}</mat-error>
             </mat-form-field>
           </div>

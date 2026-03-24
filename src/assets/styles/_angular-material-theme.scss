@@ -149,6 +149,7 @@ $custom-warn-palette: (
   ),
 );
 
+
 // ============================================================================
 // DEFINE THEME PALETTES
 // ============================================================================
@@ -231,8 +232,50 @@ $Blogsphere-theme: mat.define-light-theme(
   color: $gray-800 !important;
   font-size: $font-size-lg !important;
   border-radius: $border-radius-md !important;
+  box-shadow: 0 4px 12px $color-shadow !important;
+
+  .mat-simple-snack-bar-content {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+
+    &::before {
+      font-family: 'Material Symbols Outlined' !important;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 1.5rem !important;
+      flex-shrink: 0;
+    }
+  }
+
   .mat-simple-snackbar-action button {
     color: $color-text-secondary !important;
+  }
+}
+
+$snackbar-types: (
+  'success': ($color-success, 'check_circle'),
+  'error': ($color-error, 'dangerous'),
+  'warning': ($color-warning, 'warning'),
+  'info': ($color-info, 'info'),
+  'primary': ($color-primary, 'thumb_up'),
+  'blogsphere': ($color-primary, 'auto_awesome')
+);
+
+@each $type, $config in $snackbar-types {
+  $color: nth($config, 1);
+  $icon: nth($config, 2);
+
+  .snackbar-#{$type} .mat-snack-bar-container,
+  .mat-snack-bar-container.snackbar-#{$type} {
+    border-left: 4px solid $color !important;
+    @if $type == 'blogsphere' {
+      background: linear-gradient(135deg, rgba($primary-500, 0.04) 0%, $color-surface 100%) !important;
+    }
+
+    .mat-simple-snack-bar-content::before {
+      content: '#{$icon}' !important;
+      color: $color !important;
+    }
   }
 }
 

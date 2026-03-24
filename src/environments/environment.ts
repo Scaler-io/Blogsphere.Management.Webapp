@@ -4,6 +4,12 @@
 
 export const environment = {
   production: false,
+  maintenanceMode: false,
+  oidc: {
+    authority: 'http://localhost:5000',
+    clientId: 'blogsphere-management',
+    scope: 'openid profile email apigateway:read apigateway:write apigateway:delete offline_access bffapi:manage',
+  },
   blogShereApiGatewayBaseUrl: 'http://localhost:8000/api/v1',
   blogsphereSearchApiBaseUrl: 'http://localhost:8000/search',
   blogsphereBffBaseUrl: 'http://localhost:8000/bff',

@@ -13,26 +13,37 @@ export const initialState: AuthState = {
   user: null,
 };
 
-const parseJson = item => {
+const parseJson = (item: string) => {
   return JSON.parse(item);
 };
 
 export function authReducer(state: AuthState = initialState, action: AuthActions) {
+  const userData = action.payload?.userData;
   switch (action.type) {
     case SET_AUTH_STATE:
+      if (!userData) {
+        return {
+          ...state,
+          isAuthenticated: action.payload.isAuthenticated,
+          user: null,
+        };
+      }
       return {
         ...state,
         isAuthenticated: action.payload.isAuthenticated,
         user: <AuthUser>{
-          name: action.payload.userData.name,
-          email: action.payload.userData.email,
-          role: action.payload.userData.role,
+          name: userData.name,
+          email: userData.email,
+          role: userData.role,
           permissions:
-            action.payload.userData.permissions === '*'
+            userData.permissions === '*'
               ? '*'
-              : parseJson(action.payload.userData.permissions),
-          employeeId: action.payload.userData.employee_Id,
-          department: action.payload.userData.department,
+              : typeof userData.permissions === 'string'
+                ? parseJson(userData.permissions)
+                : userData.permissions,
+          employeeId:
+            userData.employee_id ?? userData.employeeId ?? userData.employee_Id ?? '',
+          department: userData.department,
         },
       };
     default:

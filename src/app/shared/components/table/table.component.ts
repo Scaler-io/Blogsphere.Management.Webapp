@@ -33,6 +33,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Output() visit: EventEmitter<TableDataSource> = new EventEmitter<TableDataSource>();
   @Output() edit: EventEmitter<TableDataSource> = new EventEmitter<TableDataSource>();
   @Output() delete: EventEmitter<TableDataSource> = new EventEmitter<TableDataSource>();
+  @Output() linkClick: EventEmitter<TableDataSource> = new EventEmitter<TableDataSource>();
 
   public customPageMetadata;
 
@@ -92,8 +93,16 @@ export class TableComponent implements OnInit, OnChanges {
     return this.columnMap[Object.keys(this.columnMap).find(k => k === column)].isStatusField;
   }
 
+  public isLinkField(column: string): boolean {
+    return this.columnMap[Object.keys(this.columnMap).find(k => k === column)].isLinkField;
+  }
+
   public slideToggle(event) {
     console.log(event);
+  }
+
+  public onLinkClick(item: TableDataSource): void {
+    this.linkClick.emit(item);
   }
 
   private addActionsColumn(columnMap: TableColumnMap, value: string): TableColumnMap {

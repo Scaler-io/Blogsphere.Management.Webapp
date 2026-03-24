@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthModule } from 'angular-auth-oidc-client';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   declarations: [],
@@ -10,12 +11,11 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     CommonModule,
     AuthModule.forRoot({
       config: {
-        authority: 'http://secure-identity.blogsphere.in',
+        authority: environment.oidc.authority,
         redirectUrl: window.location.origin,
         postLogoutRedirectUri: window.location.origin,
-        clientId: 'blogsphere-management',
-        scope:
-          'openid profile email apigateway:read apigateway:write apigateway:delete offline_access bffapi:manage',
+        clientId: environment.oidc.clientId,
+        scope: environment.oidc.scope,
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,

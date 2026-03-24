@@ -7,6 +7,8 @@
     (edit)="goToEdit()"
     (toggleView)="toggleJsonView()"
     (delete)="openDeleteDialog()"
+    [showEditButton]="true"
+    [showDeleteButton]="false"
   ></blogsphere-hero-header>
 
   <section class="cd-stats">
@@ -68,17 +70,35 @@
       <blogsphere-kv-row label="Created by">
         <span #triggerRefCreatedBy class="cursor-pointer">{{ c.metaData?.createdBy?.fullName || 'N/A' }}</span>
         <blogsphere-tooltip *ngIf="c.metaData?.createdBy" [trigger]="triggerRefCreatedBy" position="below">
-          <p><strong>Email:</strong> {{ c.metaData.createdBy.email }}</p>
-          <p><strong>Role:</strong> {{ c.metaData.createdBy.jobTitle }}</p>
-          <p><strong>Employee Id:</strong> {{ c.metaData.createdBy.employeeId }}</p>
+          <p>
+            <strong>Email:</strong>
+            {{ c.metaData.createdBy.email }}
+          </p>
+          <p>
+            <strong>Role:</strong>
+            {{ c.metaData.createdBy.jobTitle }}
+          </p>
+          <p>
+            <strong>Employee Id:</strong>
+            {{ c.metaData.createdBy.employeeId }}
+          </p>
         </blogsphere-tooltip>
       </blogsphere-kv-row>
       <blogsphere-kv-row label="Updated by">
         <span #triggerRefUpdatedBy class="cursor-pointer">{{ c.metaData?.updatedBy?.fullName || 'N/A' }}</span>
         <blogsphere-tooltip *ngIf="c.metaData?.updatedBy" [trigger]="triggerRefUpdatedBy" position="below">
-          <p><strong>Email:</strong> {{ c.metaData.updatedBy.email }}</p>
-          <p><strong>Role:</strong> {{ c.metaData.updatedBy.jobTitle }}</p>
-          <p><strong>Employee Id:</strong> {{ c.metaData.updatedBy.employeeId }}</p>
+          <p>
+            <strong>Email:</strong>
+            {{ c.metaData.updatedBy.email }}
+          </p>
+          <p>
+            <strong>Role:</strong>
+            {{ c.metaData.updatedBy.jobTitle }}
+          </p>
+          <p>
+            <strong>Employee Id:</strong>
+            {{ c.metaData.updatedBy.employeeId }}
+          </p>
         </blogsphere-tooltip>
       </blogsphere-kv-row>
     </blogsphere-details-card>

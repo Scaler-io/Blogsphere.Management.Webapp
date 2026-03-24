@@ -8,4 +8,5 @@ export interface TableColumnValueMap {
   value: string;
   isDateField: boolean;
   isStatusField: boolean;
+  isLinkField?: boolean;
 }

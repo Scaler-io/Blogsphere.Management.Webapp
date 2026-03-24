@@ -6,10 +6,11 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { BadgeModule } from '../badge/badge.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { PaginatorModule } from '../paginator/paginator.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [TableComponent],
-  imports: [CommonModule, AppMaterialModule, CdkTableModule, BadgeModule, PipesModule, PaginatorModule],
+  imports: [CommonModule, AppMaterialModule, CdkTableModule, BadgeModule, PipesModule, PaginatorModule, RouterModule],
   exports: [TableComponent],
 })
 export class TableModule {}

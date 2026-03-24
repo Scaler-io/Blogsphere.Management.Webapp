@@ -22,6 +22,7 @@
                     (pageChange)="onPageChange($event)"
                     [allowEdit]="allowEditOption$ | async"
                     [allowDelete]="false"
+                    (linkClick)="onLinkClick($event)"
                 ></blogsphere-table>
                 
                 <blogsphere-no-content-layout

@@ -26,10 +26,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let row of tableRows">
-                <td
-                  *ngFor="let cell of row"
-                  [ngClass]="cellClasses(cell)"
-                >
+                <td *ngFor="let cell of row" [ngClass]="cellClasses(cell)">
                   <ng-container *ngIf="isCellObject(cell) && cell.status !== undefined; else textCell">
                     <span *ngIf="cell.status" class="material-symbols-rounded text-success">check_circle</span>
                     <span *ngIf="!cell.status" class="material-symbols-rounded text-error">cancel</span>
@@ -55,4 +52,3 @@
     </ng-container>
   </div>
 </section>
-

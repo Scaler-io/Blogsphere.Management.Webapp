@@ -147,7 +147,7 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
         text: (h?.values || []).join(', '),
         variant: 'mono',
       };
-      const statusCell: DetailsCardTableCell = { status: !!h?.isActive, align: 'center' };
+      const statusCell: DetailsCardTableCell = { status: !!h?.isActive };
       return [nameCell, modeCell, valuesCell, statusCell];
     });
   }
@@ -155,7 +155,7 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
   private buildTransformsTableRows(transforms: any[] | null | undefined): DetailsCardTableRow[] {
     return (transforms || []).map(t => {
       const pathCell: DetailsCardTableCell = { text: t?.pathPattern ?? '', variant: 'mono' };
-      const statusCell: DetailsCardTableCell = { status: !!t?.isActive, align: 'center' };
+      const statusCell: DetailsCardTableCell = { status: !!t?.isActive };
       return [pathCell, statusCell];
     });
   }

@@ -13,6 +13,7 @@ export class PageHeaderComponent implements OnInit {
   public isBusy: boolean;
   public isSuccessPage: boolean;
   public isGenericErrorPage: boolean;
+  public isMaintenancePage: boolean;
 
   private pageIconMap = {
     ['Dashboard']: 'dashboard',
@@ -23,11 +24,17 @@ export class PageHeaderComponent implements OnInit {
 
   constructor(private breadcrumb: BreadcrumbService, private router: Router) {}
 
+  private setPageVisibilityFlags(): void {
+    this.isSuccessPage = this.router.url.includes('/success');
+    this.isGenericErrorPage = this.router.url.includes('/error');
+    this.isMaintenancePage = this.router.url.includes('/maintenance');
+  }
+
   ngOnInit(): void {
+    this.setPageVisibilityFlags();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.isSuccessPage = this.router.url.includes('/success');
-        this.isGenericErrorPage = this.router.url.includes('/error');
+        this.setPageVisibilityFlags();
       }
     });
 

@@ -16,8 +16,11 @@ import { ItemDeleteDialogComponent } from 'src/app/shared/components/item-delete
 import { DateHelper } from 'src/app/shared/helpers/date.helper';
 import * as ApiClusterActions from 'src/app/state/api-cluster/api-custer.action';
 import * as RequestPageActions from 'src/app/state/request-page/request-page.action';
-import { ApiClusterCommandType } from 'src/app/core/model/api-cluster.model';
-import { DetailsCardTableCell, DetailsCardTableRow } from 'src/app/shared/components/details-card/details-card.model';
+import { ApiClusterCommandType, ClusterRouteDetails } from 'src/app/core/model/api-cluster.model';
+import {
+  DetailsCardTableCell,
+  DetailsCardTableRow,
+} from 'src/app/shared/components/details-card/details-card.model';
 
 @Component({
   selector: 'blogsphere-cluster-details',
@@ -113,21 +116,31 @@ export class ClusterDetailsComponent implements OnInit, OnDestroy {
     return DateHelper.formatDateToTimeAgo(date);
   }
 
-  private buildDestinationsTableRows(destinations: any[] | null | undefined): DetailsCardTableRow[] {
+  private buildDestinationsTableRows(
+    destinations: any[] | null | undefined
+  ): DetailsCardTableRow[] {
     return (destinations || []).map(d => {
       const idCell: DetailsCardTableCell = { text: d?.destinationId ?? '', variant: 'emphasis' };
-      const statusCell: DetailsCardTableCell = { status: !!d?.isActive, align: 'center' };
+      const statusCell: DetailsCardTableCell = { status: !!d?.isActive };
       const weightCell: string = 'N/A';
       const addressCell: DetailsCardTableCell = { text: d?.address ?? '', variant: 'mono' };
       return [idCell, statusCell, weightCell, addressCell];
     });
   }
 
-  private buildRoutesTableRows(routes: any[] | null | undefined): DetailsCardTableRow[] {
+  private buildRoutesTableRows(
+    routes: ClusterRouteDetails[] | null | undefined
+  ): DetailsCardTableRow[] {
     return (routes || []).map(r => {
-      const idCell: DetailsCardTableCell = { text: r?.routeId ?? '', variant: 'emphasis' };
-      const statusCell: DetailsCardTableCell = { status: !!r?.isActive, align: 'center' };
-      const methodsCell: DetailsCardTableCell = { text: (r?.methods || []).join(', '), variant: 'mono' };
+      const idCell: DetailsCardTableCell = {
+        text: r?.routeId ?? '',
+        variant: 'emphasis',
+      };
+      const statusCell: DetailsCardTableCell = { status: !!r?.isActive };
+      const methodsCell: DetailsCardTableCell = {
+        text: (r?.methods || []).join(', '),
+        variant: 'mono',
+      };
       const pathCell: DetailsCardTableCell = { text: (r as any)?.path ?? 'N/A', variant: 'mono' };
       return [idCell, statusCell, methodsCell, pathCell];
     });

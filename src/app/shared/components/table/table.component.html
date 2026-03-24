@@ -5,23 +5,26 @@
     </th>
     <td class="table__cell" cdk-cell *cdkCellDef="let element; let i = index">
       <ng-container *ngIf="col !== 'actions'; else actionColumns">
-        <ng-container *ngIf="isStatusField(col); else defaultDisplay">
+        <ng-container *ngIf="isStatusField(col)">
           <blogsphere-badge
-            [type]="element[getColumnValue(col)] ? BadgeType.success : BadgeType.danger"
-            isRounded="true"
+            [type]="element[getColumnValue(col)] === 'Active' ? BadgeType.success : BadgeType.danger"
+            [isRounded]="true"
           >
-            {{ element[getColumnValue(col)] | formatStatus }}
+            {{ element[getColumnValue(col)] }}
           </blogsphere-badge>
         </ng-container>
-        <ng-template #defaultDisplay>
+        <ng-container *ngIf="isLinkField(col)">
+          <a (click)="onLinkClick(element)">{{ element[getColumnValue(col)] }}</a>
+        </ng-container>
+        <ng-container *ngIf="!isStatusField(col) && !isLinkField(col)">
           {{
             !columnMap
               ? element[col]
               : isDateField(col)
-              ? (element[getColumnValue(col)] | formatDate | formatStatus)
-              : element[getColumnValue(col)]
+                ? (element[getColumnValue(col)] | formatDate | formatStatus)
+                : element[getColumnValue(col)]
           }}
-        </ng-template>
+        </ng-container>
       </ng-container>
       <ng-template #actionColumns>
         <div class="custom-menu" matRipple [matMenuTriggerFor]="actionMenu">
