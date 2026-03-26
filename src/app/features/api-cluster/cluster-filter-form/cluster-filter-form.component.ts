@@ -1,15 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { LoadBalancerPolicy, LoadBalancerPolicySelectLabel } from 'src/app/core/model/api-cluster.model';
 
 @Component({
-  selector: 'blogsphere-cluster-filter-form',
-  templateUrl: './cluster-filter-form.component.html',
-  styleUrls: ['./cluster-filter-form.component.scss'],
+    selector: 'blogsphere-cluster-filter-form',
+    templateUrl: './cluster-filter-form.component.html',
+    styleUrls: ['./cluster-filter-form.component.scss'],
+    standalone: false
 })
 export class ClusterFilterFormComponent implements OnInit {
-  @Input() filterForm: FormGroup;
+  @Input() filterForm: UntypedFormGroup;
   public loadBalancerPolicyOptions: LoadBalancerPolicy[] = Object.values(LoadBalancerPolicy);
   public loadBalancerLabel(option: LoadBalancerPolicy): string {
     return LoadBalancerPolicySelectLabel[option];

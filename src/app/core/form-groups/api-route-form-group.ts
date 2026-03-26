@@ -1,4 +1,4 @@
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 function atLeastOneMethod(control: AbstractControl) {
   const value = control.value;
@@ -9,7 +9,7 @@ function atLeastOneMethod(control: AbstractControl) {
 }
 
 export class ApiRouteFormGroupHelper {
-  public static createApiRouteFormGroup(fb: FormBuilder): FormGroup {
+  public static createApiRouteFormGroup(fb: UntypedFormBuilder): UntypedFormGroup {
     return fb.group({
       routeId: ['', [Validators.required]],
       path: ['', [Validators.required]],
@@ -24,7 +24,7 @@ export class ApiRouteFormGroupHelper {
 }
 
 export class ApiRouteHeadersFormGroupHelper {
-  public static createRouteHeaderFormGroup(fb: FormBuilder): FormGroup {
+  public static createRouteHeaderFormGroup(fb: UntypedFormBuilder): UntypedFormGroup {
     return fb.group({
       name: ['', [Validators.required]],
       values: ['', [Validators.required]], // Comma-separated string, e.g. "v2,v3"
@@ -35,7 +35,7 @@ export class ApiRouteHeadersFormGroupHelper {
 }
 
 export class ApiRouteTransformsFormGroupHelper {
-  public static createRouteTransformFormGroup(fb: FormBuilder): FormGroup {
+  public static createRouteTransformFormGroup(fb: UntypedFormBuilder): UntypedFormGroup {
     return fb.group({
       pathPattern: ['', [Validators.required]],
       isActive: [true],

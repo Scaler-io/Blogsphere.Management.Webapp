@@ -10,9 +10,10 @@ import {
 import { ResetError } from 'src/app/state/error/error.action';
 
 @Component({
-  selector: 'blogsphere-generic-error',
-  templateUrl: './generic-error.component.html',
-  styleUrls: ['./generic-error.component.scss'],
+    selector: 'blogsphere-generic-error',
+    templateUrl: './generic-error.component.html',
+    styleUrls: ['./generic-error.component.scss'],
+    standalone: false
 })
 export class GenericErrorComponent implements OnInit {
   constructor(private router: Router, private store: Store<AppState>) {}

@@ -29,15 +29,15 @@
             <div class="row justify-content-center gap-md">
               <div class="col-12 col-sm-auto">
                 <blogsphere-button
+                  *ngIf="errorComponentRoute$ | async"
                   [type]="'primary'"
                   [size]="'small'"
                   icon="arrow_back"
                   iconPosition="left"
                   [elevated]="true"
                   (next)="goBackToOrigin()"
-                  *ngIf="errorComponentRoute$ | async as route"
                   class="w-100"
-                >
+                  >
                   Go Back to {{ sourcePage }}
                 </blogsphere-button>
               </div>
@@ -51,7 +51,7 @@
                   [elevated]="true"
                   (next)="goToDashboard()"
                   class="w-100"
-                >
+                  >
                   Go to Dashboard
                 </blogsphere-button>
               </div>
@@ -67,7 +67,7 @@
               icon="lightbulb"
               [elevated]="false"
               borderPosition="left"
-            >
+              >
               <ul>
                 <li>Try refreshing the page</li>
                 <li>Check your internet connection</li>

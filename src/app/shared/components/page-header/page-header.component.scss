@@ -1,5 +1,5 @@
-@import "../../../../assets/styles/sass-utils/functions";
-@import "../../../../assets/styles/sass-utils/variables";
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/functions' as *;
 
 .page-header {
   &__page-icon {

@@ -6,7 +6,7 @@
       [matTooltip]="ToolTipText.ClusterDetails"
       matTooltipClass="tooltip-class"
       matTooltipPosition="right"
-    >
+      >
       info
     </span>
   </div>
@@ -27,9 +27,11 @@
               <mat-label>Load balancer policy</mat-label>
               <!-- <input matInput type="text" formControlName="loadBalancingPolicy" /> -->
               <mat-select formControlName="loadBalancingPolicy">
-                <mat-option *ngFor="let option of loadBalancerPolicyOptions" [value]="option">
-                  {{ loadBalancerLabel(option) }}
-                </mat-option>
+                @for (option of loadBalancerPolicyOptions; track option) {
+                  <mat-option [value]="option">
+                    {{ loadBalancerLabel(option) }}
+                  </mat-option>
+                }
               </mat-select>
               <mat-error>{{ getErrorMessages('loadBalancingPolicy') }}</mat-error>
             </mat-form-field>
@@ -80,7 +82,7 @@
                   [matTooltip]="ToolTipText.Destinations"
                   matTooltipClass="tooltip-class"
                   matTooltipPosition="right"
-                >
+                  >
                   info
                 </span>
               </div>
@@ -88,7 +90,7 @@
                 class="material-symbols-outlined mr-lg cursor-pointer p-xs border-radius-full"
                 matRipple
                 (click)="addDestination()"
-              >
+                >
                 add
               </span>
             </div>
@@ -108,60 +110,66 @@
                   </tr>
                 </thead>
                 <tbody formArrayName="destinations">
-                  <tr
-                    @fadeSlideInOut
-                    *ngFor="let destination of destinations.controls; let destinationFormGroup = index"
+                  @for (destination of destinations.controls; track destination; let destinationFormGroup = $index) {
+                    <tr
+                      @fadeSlideInOut
                     [ngClass]="{
                       'bg-error':
                         isDestinationFormDirty(destinationFormGroup) && !isDestinationFormValid(destinationFormGroup)
                     }"
-                  >
-                    <ng-container [formGroupName]="destinationFormGroup">
-                      <td>
-                        <span
-                          *ngIf="isDestinationFormDirty(destinationFormGroup)"
-                          class="material-symbols-outlined font-size-3xl"
+                      >
+                      <ng-container [formGroupName]="destinationFormGroup">
+                        <td>
+                          @if (isDestinationFormDirty(destinationFormGroup)) {
+                            <span
+                              class="material-symbols-outlined font-size-3xl"
                           [ngClass]="{
                             'text-error': !isDestinationFormValid(destinationFormGroup),
                             'text-success': isDestinationFormValid(destinationFormGroup)
                           }"
-                        >
-                          {{ isDestinationFormValid(destinationFormGroup) ? 'check_circle' : 'cancel' }}
-                        </span>
-                      </td>
-                      <td>
-                        <div class="form-field">
-                          <input type="text" formControlName="destinationId" />
-                        </div>
-                      </td>
-                      <td>
-                        <div class="form-field">
-                          <input type="text" formControlName="address" />
-                        </div>
-                      </td>
-                      <td>
-                        <div class="form-field">
-                          <mat-slide-toggle formControlName="isActive" color="primary"></mat-slide-toggle>
-                        </div>
-                      </td>
-                      <td>
-                        <span
-                          class="material-symbols-outlined font-size-3xl text-error cursor-pointer"
-                          (click)="removeDestination(destinationFormGroup)"
-                        >
-                          delete
-                        </span>
-                      </td>
-                    </ng-container>
-                  </tr>
+                              >
+                              {{ isDestinationFormValid(destinationFormGroup) ? 'check_circle' : 'cancel' }}
+                            </span>
+                          }
+                        </td>
+                        <td>
+                          <div class="form-field">
+                            <input type="text" formControlName="destinationId" />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-field">
+                            <input type="text" formControlName="address" />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-field">
+                            <mat-slide-toggle formControlName="isActive" color="primary"></mat-slide-toggle>
+                          </div>
+                        </td>
+                        <td>
+                          <span
+                            class="material-symbols-outlined font-size-3xl text-error cursor-pointer"
+                            (click)="removeDestination(destinationFormGroup)"
+                            >
+                            delete
+                          </span>
+                        </td>
+                      </ng-container>
+                    </tr>
+                  }
                 </tbody>
               </table>
-              <div class="mt-md" *ngIf="!isAnyDestinationProvided">
-                <p class="text-error font-size-lg">Please select at least one destination</p>
-              </div>
-              <div class="mt-md" *ngIf="shouldShowDestinationFormErrors()">
-                <p class="text-error font-size-lg">Please fill all the destinations with valid values</p>
-              </div>
+              @if (!isAnyDestinationProvided) {
+                <div class="mt-md">
+                  <p class="text-error font-size-lg">Please select at least one destination</p>
+                </div>
+              }
+              @if (shouldShowDestinationFormErrors()) {
+                <div class="mt-md">
+                  <p class="text-error font-size-lg">Please fill all the destinations with valid values</p>
+                </div>
+              }
             </div>
           </div>
         </div>
@@ -173,7 +181,7 @@
         [type]="ButtonType.secondary"
         [size]="ButtonSize.small"
         (next)="onSubmit()"
-      >
+        >
         {{ isEditMode ? 'Update' : 'Create' }}
       </blogsphere-button>
     </div>

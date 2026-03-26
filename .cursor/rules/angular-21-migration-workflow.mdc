@@ -1,0 +1,38 @@
+---
+description: Angular 13→21 migration workflow, git branching, and post-upgrade control-flow refactor
+alwaysApply: true
+---
+
+# Angular migration and template refactor (Blogsphere management webapp)
+
+## Git and safety (mandatory)
+
+- **Never** change application or config files on `main` / default branch for this effort. **Create a dedicated branch first** (e.g. `chore/angular-21-migration`), then work only there.
+- For large phases, use **sub-branches or commits after each successful step** (e.g. after each `ng update` major, or after each feature area for control-flow).
+- If you stop mid-task: leave a **clean commit** with passing `ng build` (and `ng test` if feasible); note the **current todo id** in the commit message.
+
+## Phase A — Upgrade (order)
+
+1. Node **20.19+** or **22.12+** (or 24) per [version compatibility](https://angular.dev/reference/versions).
+2. **Stabilize** Angular 13 to stable **13.4.x** (exit `next` prerelease line), verify build.
+3. **Incremental** `ng update @angular/core @angular/cli` **one major at a time** through **21** — build + smoke test after each major.
+4. Align **peer** libs: `@ngrx/*`, `@angular/material`, `angular-auth-oidc-client`, charts, pagination, breadcrumb.
+5. OIDC / `CoreModule` auth setup — verify login, refresh, interceptors.
+6. Material theming / SCSS fixes if MDC migration shifts styles.
+
+## Phase B — Control flow refactor (only after Phase A is green)
+
+- Run **only when** the app is on Angular **17+** (built-in `@if` / `@for` / `@switch`) and **stable**.
+- Prefer **small batches**: one module or feature at a time; replace `*ngIf` / `*ngFor` / `ngSwitch` with `@if` / `@for` / `@switch` per [Built-in control flow](https://angular.dev/guide/templates/control-flow).
+- Watch **trackBy**: use `@for (...; track $index)` or a stable id — not `trackBy` function name from `*ngFor` without adapting.
+- After each batch: `ng build`, spot-check UI, run tests.
+
+## Precautions
+
+- Do **not** mix mass control-flow edits with `ng update` in the same commit.
+- Preserve **accessibility** (e.g. `NgTemplateOutlet` patterns may need explicit `@if` + `ng-container`).
+- Third-party components that rely on old structural directives: verify in isolation first.
+
+## Todo tracking
+
+Follow the numbered checklist in the project migration plan (or agent todo list): prerequisites → stabilize 13 → incremental updates → third parties → OIDC → Material → final verify → **then** control-flow inventory and refactor.

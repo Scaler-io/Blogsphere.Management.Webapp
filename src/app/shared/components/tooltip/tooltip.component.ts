@@ -14,9 +14,10 @@ import {
 export type TooltipPosition = 'above' | 'below' | 'left' | 'right' | 'bottom';
 
 @Component({
-  selector: 'blogsphere-tooltip',
-  templateUrl: './tooltip.component.html',
-  styleUrls: ['./tooltip.component.scss'],
+    selector: 'blogsphere-tooltip',
+    templateUrl: './tooltip.component.html',
+    styleUrls: ['./tooltip.component.scss'],
+    standalone: false
 })
 export class TooltipComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('panel') panelRef: ElementRef<HTMLElement> | null = null;

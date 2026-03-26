@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'textMask',
+    name: 'textMask',
+    standalone: false
 })
 export class TextMaskPipe implements PipeTransform {
   transform(value: unknown, ...args: unknown[]): unknown {

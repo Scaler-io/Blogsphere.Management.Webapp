@@ -7,9 +7,10 @@ import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { environment } from '../environments/environment';
 
 @Component({
-  selector: 'blogsphere-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+    selector: 'blogsphere-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy {
   public isMobileView: boolean = false;

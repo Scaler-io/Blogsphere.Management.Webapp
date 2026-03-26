@@ -30,6 +30,7 @@ export enum IconType {
   data = 'data',
   search = 'search',
   empty = 'empty',
+  custom = 'custom',
 }
 
 export interface SearchRequestBase {}

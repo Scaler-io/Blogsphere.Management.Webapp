@@ -1,17 +1,19 @@
 <div class="container" [formGroup]="filterForm">
   <div class="row">
     <div class="col-md-4">
-      <mat-form-field class="font-size-xl" appearance="standard">
+      <mat-form-field class="font-size-xl">
         <mat-label>Load balancer type</mat-label>
         <mat-select formControlName="loadBalancerName">
-          <mat-option *ngFor="let option of loadBalancerPolicyOptions" [value]="option">
-            {{ loadBalancerLabel(option) }}
-          </mat-option>
+          @for (option of loadBalancerPolicyOptions; track option) {
+            <mat-option [value]="option">
+              {{ loadBalancerLabel(option) }}
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </div>
     <div class="col-md-4">
-      <mat-form-field class="font-size-xl" appearance="standard">
+      <mat-form-field class="font-size-xl">
         <mat-label>Cluster status</mat-label>
         <mat-select formControlName="status">
           <mat-option value="Active">Active</mat-option>
@@ -24,8 +26,8 @@
     <div class="col-12">
       <h5>Filter by date</h5>
     </div>
-    <div class="col-md-12">
-      <mat-form-field class="font-size-xl" appearance="standard">
+    <div class="col-md-6">
+      <mat-form-field class="font-size-xl">
         <mat-label>From date</mat-label>
         <input
           matInput
@@ -38,8 +40,8 @@
         <mat-datepicker #fromPicker></mat-datepicker>
       </mat-form-field>
     </div>
-    <div class="col-md-12">
-      <mat-form-field class="font-size-xl" appearance="standard">
+    <div class="col-md-6">
+      <mat-form-field class="font-size-xl" appearance="outline">
         <mat-label>To date</mat-label>
         <input matInput [matDatepicker]="topicker" [min]="toMinDate" [max]="toMaxDate" formControlName="toDate" />
         <mat-datepicker-toggle matSuffix [for]="topicker"></mat-datepicker-toggle>

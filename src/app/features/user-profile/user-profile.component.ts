@@ -7,9 +7,10 @@ import { getAuthState, getAuthStatus } from 'src/app/state/auth/auth.selector';
 import { AppState } from 'src/app/store/app.state';
 
 @Component({
-  selector: 'blogsphere-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss'],
+    selector: 'blogsphere-user-profile',
+    templateUrl: './user-profile.component.html',
+    styleUrls: ['./user-profile.component.scss'],
+    standalone: false
 })
 export class UserProfileComponent {
   public profileViewModel$ = combineLatest({

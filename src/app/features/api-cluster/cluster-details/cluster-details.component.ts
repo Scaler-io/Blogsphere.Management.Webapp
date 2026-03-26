@@ -23,9 +23,10 @@ import {
 } from 'src/app/shared/components/details-card/details-card.model';
 
 @Component({
-  selector: 'blogsphere-cluster-details',
-  templateUrl: './cluster-details.component.html',
-  styleUrls: ['./cluster-details.component.scss'],
+    selector: 'blogsphere-cluster-details',
+    templateUrl: './cluster-details.component.html',
+    styleUrls: ['./cluster-details.component.scss'],
+    standalone: false
 })
 export class ClusterDetailsComponent implements OnInit, OnDestroy {
   public clusterId: string = this.route.snapshot.params['id'];

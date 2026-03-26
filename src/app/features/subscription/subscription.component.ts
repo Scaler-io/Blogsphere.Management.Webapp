@@ -10,10 +10,11 @@ import { ResetError } from 'src/app/state/error/error.action';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'blogsphere-subscription',
-  templateUrl: './subscription.component.html',
-  styleUrls: ['./subscription.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'blogsphere-subscription',
+    templateUrl: './subscription.component.html',
+    styleUrls: ['./subscription.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SubscriptionComponent implements OnInit {
   public apiProducts$ = this.store.select(selectApiProducts);

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
@@ -7,7 +7,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class SearchLayoutService {
   // Observable sources
-  private searchInputSource = new BehaviorSubject<FormControl>(new FormControl(''));
+  private searchInputSource = new BehaviorSubject<UntypedFormControl>(new UntypedFormControl(''));
   private filterSource = new Subject<void>();
   private sortChangeSource = new Subject<string>();
   private filterClearSource = new Subject<void>();
@@ -24,7 +24,7 @@ export class SearchLayoutService {
 
   constructor() {}
 
-  emitSearchInput(formControl: FormControl) {
+  emitSearchInput(formControl: UntypedFormControl) {
     this.searchInputSource.next(formControl);
   }
 

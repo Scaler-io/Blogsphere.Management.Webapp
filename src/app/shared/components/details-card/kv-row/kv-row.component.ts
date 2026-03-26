@@ -3,9 +3,10 @@ import { Component, Input } from '@angular/core';
 export type KvRowValueVariant = 'default' | 'mono' | 'link';
 
 @Component({
-  selector: 'blogsphere-kv-row',
-  templateUrl: './kv-row.component.html',
-  styleUrls: ['./kv-row.component.scss'],
+    selector: 'blogsphere-kv-row',
+    templateUrl: './kv-row.component.html',
+    styleUrls: ['./kv-row.component.scss'],
+    standalone: false
 })
 export class KvRowComponent {
   @Input() label: string = '';

@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'formatStatus',
+    name: 'formatStatus',
+    standalone: false
 })
 export class FormatStatusPipe implements PipeTransform {
   transform(value: string | boolean, ...args: unknown[]): string {

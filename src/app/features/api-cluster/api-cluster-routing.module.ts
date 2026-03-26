@@ -29,23 +29,14 @@ const routes: Routes = [
     },
   },
   {
-    path: 'cluster-setup',
+    path: 'cluster-setup/:id',
+    component: ClusterSetupComponent,
     data: {
       breadcrumb: {
         label: 'Cluster setup',
+        alias: 'cluster-name',
       },
     },
-    children: [
-      {
-        path: ':id',
-        component: ClusterSetupComponent,
-        data: {
-          breadcrumb: {
-            alias: 'cluster-name',
-          },
-        },
-      },
-    ],
   },
 ];
 

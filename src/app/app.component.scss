@@ -1,4 +1,4 @@
-@import "../assets/styles/sass-utils/variables";
+@use 'sass-utils/variables' as *;
 
 $page-content-padding: 1.5rem 4.5rem 0 4.5rem;
 $page-content-padding-mobile: 1.2rem 1.5rem 0 1.5rem;

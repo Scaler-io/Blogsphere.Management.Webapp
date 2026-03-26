@@ -3,9 +3,10 @@ import { NavigationEnd, Router } from '@angular/router';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
-  selector: 'blogsphere-page-header',
-  templateUrl: './page-header.component.html',
-  styleUrls: ['./page-header.component.scss'],
+    selector: 'blogsphere-page-header',
+    templateUrl: './page-header.component.html',
+    styleUrls: ['./page-header.component.scss'],
+    standalone: false
 })
 export class PageHeaderComponent implements OnInit {
   public pageIcon: string;

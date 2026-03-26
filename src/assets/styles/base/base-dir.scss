@@ -1,8 +1,9 @@
 // ============================================================================
-// BASE STYLES DIRECTORY - IMPORTS ALL BASE STYLESHEETS
+// BASE STYLES DIRECTORY - LOADS ALL BASE STYLESHEETS
 // ============================================================================
-// Import order matters - load foundational styles first
+// Load order matters — foundational styles first
 
-@import "reset";
-@import "typography";
-@import "grid";
+@use 'reset' as *;
+@use 'typography' as *;
+@use 'grid' as *;
+

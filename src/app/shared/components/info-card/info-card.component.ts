@@ -17,9 +17,10 @@ export enum InfoCardSize {
 }
 
 @Component({
-  selector: 'blogsphere-info-card',
-  templateUrl: './info-card.component.html',
-  styleUrls: ['./info-card.component.scss'],
+    selector: 'blogsphere-info-card',
+    templateUrl: './info-card.component.html',
+    styleUrls: ['./info-card.component.scss'],
+    standalone: false
 })
 export class InfoCardComponent implements OnInit {
   @Input() variant: InfoCardVariant = InfoCardVariant.info;

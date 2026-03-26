@@ -5,7 +5,9 @@
 // Supports: xs, sm, md, lg, xl, 2xl breakpoints
 // Classes: row, col-{breakpoint}-{size}, col-offset-{breakpoint}-{size}
 
-@use 'sass:math';
+@use 'sass:math' as math;
+@use '../sass-utils/variables' as *;
+@use '../sass-utils/mixins' as *;
 
 // ============================================================================
 // GRID VARIABLES
@@ -50,6 +52,12 @@ $grid-container-padding: $spacing-md; // 16px
   width: 100%;
   margin: 0 auto;
   padding: 0 $grid-container-padding;
+}
+
+// Search-layout filter dropdown: container max-widths are for page layout, not fixed overlays
+.filter-options-panel__body .container,
+.filter-options-panel__body .container-fluid {
+  max-width: 100%;
 }
 
 // ============================================================================
@@ -97,6 +105,7 @@ $grid-container-padding: $spacing-md; // 16px
   width: 100%;
   padding: 0 math.div($grid-gutter, 2);
   flex: 0 0 100%; // Default to full width on mobile
+  min-width: 0; // lets flex row children respect horizontal gutters next to MDC form fields
 }
 
 // ============================================================================
@@ -104,7 +113,10 @@ $grid-container-padding: $spacing-md; // 16px
 // ============================================================================
 
 @mixin generate-columns($breakpoint: '') {
-  $prefix: if($breakpoint == '', 'col', 'col-#{$breakpoint}');
+  $prefix: 'col';
+  @if $breakpoint != '' {
+    $prefix: 'col-#{$breakpoint}';
+  }
 
   // Base column class for each breakpoint
   .#{$prefix} {
@@ -121,15 +133,15 @@ $grid-container-padding: $spacing-md; // 16px
   // Generate numbered columns (1-12)
   @for $i from 1 through $grid-columns {
     .#{$prefix}-#{$i} {
-      flex: 0 0 percentage(math.div($i, $grid-columns));
-      max-width: percentage(math.div($i, $grid-columns));
+      flex: 0 0 math.percentage(math.div($i, $grid-columns));
+      max-width: math.percentage(math.div($i, $grid-columns));
     }
   }
 
   // Generate offset classes
   @for $i from 0 through ($grid-columns - 1) {
     .#{$prefix}-offset-#{$i} {
-      margin-left: percentage(math.div($i, $grid-columns));
+      margin-left: math.percentage(math.div($i, $grid-columns));
     }
   }
 

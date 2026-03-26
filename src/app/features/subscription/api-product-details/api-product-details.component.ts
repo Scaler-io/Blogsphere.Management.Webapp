@@ -40,11 +40,12 @@ import * as SubscriptionActions from 'src/app/state/subscription/subscription.ac
 import { fadeSlideInOut } from 'src/app/core/animations/fade-in-out';
 
 @Component({
-  selector: 'blogsphere-api-product-details',
-  templateUrl: './api-product-details.component.html',
-  styleUrls: ['./api-product-details.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [fadeSlideInOut],
+    selector: 'blogsphere-api-product-details',
+    templateUrl: './api-product-details.component.html',
+    styleUrls: ['./api-product-details.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [fadeSlideInOut],
+    standalone: false
 })
 export class ApiProductDetailsComponent implements OnInit, OnDestroy {
   public apiProductId = this.route.snapshot.params['id'];

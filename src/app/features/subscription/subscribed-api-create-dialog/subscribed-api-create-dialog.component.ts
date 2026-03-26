@@ -7,7 +7,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AppState } from 'src/app/store/app.state';
 import { Store } from '@ngrx/store';
@@ -25,13 +25,14 @@ import { CreateSubscribedApiRequest } from 'src/app/core/model/subscription.mode
 import * as SubscribedApiActions from 'src/app/state/subscribed-api/subscribed-api.action';
 
 @Component({
-  selector: 'blogsphere-subscribed-api-create-dialog',
-  templateUrl: './subscribed-api-create-dialog.component.html',
-  styleUrls: ['./subscribed-api-create-dialog.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'blogsphere-subscribed-api-create-dialog',
+    templateUrl: './subscribed-api-create-dialog.component.html',
+    styleUrls: ['./subscribed-api-create-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SubscribedApiCreateDialogComponent implements OnInit, OnDestroy {
-  public subscribedApiFormGroup: FormGroup;
+  public subscribedApiFormGroup: UntypedFormGroup;
   private destroy$ = new Subject<void>();
   public isCreating$ = this.store.select(selectSubscribedApisCreating);
   public createSuccess$ = this.store.select(selectSubscribedApisCreateSuccess);
@@ -42,7 +43,7 @@ export class SubscribedApiCreateDialogComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialogRef: MatDialogRef<SubscribedApiCreateDialogComponent>,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<AppState>,
     private cdr: ChangeDetectorRef,
     private zone: NgZone,

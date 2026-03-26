@@ -3,10 +3,14 @@
   <blogsphere-navbar [isProfilePage]="isProfilePage"></blogsphere-navbar>
   <div class="app__main__container d-flex overflow-auto">
     <!-- sidebar component -->
-    <blogsphere-sidebar *ngIf="!maintenanceMode && !isProfilePage"></blogsphere-sidebar>
+    @if (!maintenanceMode && !isProfilePage) {
+      <blogsphere-sidebar></blogsphere-sidebar>
+    }
     <div class="app__main--content position-relative d-flex flex-column overflow-y-scroll p-md" >
       <!-- content header component -->
-      <blogsphere-page-header *ngIf="!isProfilePage"></blogsphere-page-header>
+      @if (!isProfilePage) {
+        <blogsphere-page-header></blogsphere-page-header>
+      }
       <div class="w-100 h-100 text-2xl p-lg">
         <!-- content render component -->
         <router-outlet></router-outlet>

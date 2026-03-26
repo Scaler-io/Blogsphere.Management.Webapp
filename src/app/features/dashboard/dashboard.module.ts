@@ -10,7 +10,11 @@ import {
   dashboardReducer,
 } from 'src/app/state/dashboard/dashboard.reducer';
 import { DashboardEffects } from 'src/app/state/dashboard/dashboard.effect';
-import { NgChartsModule } from 'ng2-charts';
+import {
+  BaseChartDirective,
+  provideCharts,
+  withDefaultRegisterables,
+} from 'ng2-charts';
 import { AppMaterialModule } from 'src/app/app-material.module';
 import { ButtonModule } from 'src/app/shared/components/button/button.module';
 import { InfoCardModule } from 'src/app/shared/components/info-card';
@@ -30,9 +34,10 @@ import { DashboardService } from 'src/app/core/services/dashboard.service';
     ButtonModule,
     InfoCardModule,
     LoaderModule,
-    NgChartsModule,
+    BaseChartDirective,
   ],
   providers: [
+    provideCharts(withDefaultRegisterables()),
     {
       provide: DASHBOARD_SERVICE_TOKEN,
       useClass: DashboardService,
