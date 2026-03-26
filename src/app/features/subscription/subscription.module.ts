@@ -7,7 +7,7 @@ import { AppMaterialModule } from 'src/app/app-material.module';
 import { BadgeModule } from 'src/app/shared/components/badge/badge.module';
 import { ButtonModule } from 'src/app/shared/components/button/button.module';
 import { LoaderModule } from 'src/app/shared/components/loader/loader.module';
-import { PaginatorModule } from 'src/app/shared/components/paginator/paginator.module';
+import { TableModule } from 'src/app/shared/components/table/table.module';
 import { ApiProductCreateDialogModule } from './api-product-create-dialog/api-product-create-dialog.module';
 import { ApiProductDetailsModule } from './api-product-details/api-product-details.module';
 import { SubscribedApiCreateDialogModule } from './subscribed-api-create-dialog/subscribed-api-create-dialog.module';
@@ -23,7 +23,7 @@ import { SubscriptionCreateDialogModule } from './subscription-create-dialog/sub
     BadgeModule,
     ButtonModule,
     LoaderModule,
-    PaginatorModule,
+    TableModule,
     ApiProductCreateDialogModule,
     ApiProductDetailsModule,
     SubscribedApiCreateDialogModule,
