@@ -1,16 +1,18 @@
-import { DashboardSummaryResponse } from 'src/app/core/model/dashboard.model';
+import { DashboardResponse } from 'src/app/core/model/dashboard.model';
 import * as DashboardActions from './dashboard.action';
 
 export const DASHBOARD_STATE_NAME = 'dashboard';
 
 export interface DashboardState {
-  summary: DashboardSummaryResponse;
+  summary: DashboardResponse | null;
   isLoading: boolean;
+  activeScope: string | null;
 }
 
 const initialState: DashboardState = {
   summary: null,
   isLoading: false,
+  activeScope: null,
 };
 
 export function dashboardReducer(
@@ -23,6 +25,8 @@ export function dashboardReducer(
       return {
         ...state,
         isLoading: true,
+        activeScope: action.payload ?? null,
+        summary: null,
       };
 
     case DashboardActions.GET_DASHBOARD_SUMMARY_SUCCESS:
@@ -30,6 +34,7 @@ export function dashboardReducer(
         ...state,
         summary: action.payload,
         isLoading: false,
+        activeScope: action.payload.kind,
       };
 
     case DashboardActions.GET_DASHBOARD_SUMMARY_FAILED:

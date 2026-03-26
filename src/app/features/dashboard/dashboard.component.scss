@@ -2,74 +2,51 @@
 @use 'sass-utils/mixins' as *;
 
 .dashboard {
-  &__section {
-    margin-bottom: $spacing-xl;
+  &__toolbar {
+    align-items: flex-end;
+
+    @include respond-to(md) {
+      align-items: center;
+    }
   }
 
-  &__section-title {
-    @include font($font-size-xl, $font-weight-bold);
-    color: rgba($color-text-primary, 0.85);
-    letter-spacing: 0.5px;
-    margin-bottom: $spacing-md;
-    padding-bottom: $spacing-sm;
-    border-bottom: 1px solid rgba($color-border, 0.35);
-  }
-
-  &__card-body {
+  &__toolbar-actions {
     display: flex;
-    flex-direction: column;
-    gap: $spacing-md;
+    justify-content: flex-start;
+
+    @include respond-to(md) {
+      justify-content: flex-end;
+    }
   }
 
-  &__stat {
-    @include font($font-size-3xl, $font-weight-bold);
-    color: $color-text-primary;
-    margin: 0;
-    line-height: 1.2;
+  &__title {
+    @include font($font-size-2xl, $font-weight-bold);
+    color: rgba($color-text-primary, 0.9);
+    margin: 0 0 $spacing-sm;
   }
 
-  &__hint {
+  &__scope-select {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  &__empty {
     @include font($font-size-base, $font-weight-regular);
     color: rgba($color-text-primary, 0.75);
     margin: 0;
-    line-height: 1.4;
   }
 
-  &__chart-container {
-    position: relative;
-    width: 100%;
-
-    &--line {
-      height: 300px;
-    }
-
-    &--bar {
-      height: 280px;
-    }
-
-    &--doughnut {
-      height: 280px;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    canvas {
-      max-width: 100%;
-    }
-  }
-
-  &__chart-loading {
+  &__page-loading {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    min-height: 200px;
     gap: $spacing-md;
+    min-height: 240px;
 
     p {
       @include font($font-size-base, $font-weight-regular);
-      color: rgba($color-text-primary, 0.6);
+      color: rgba($color-text-primary, 0.65);
       margin: 0;
     }
   }

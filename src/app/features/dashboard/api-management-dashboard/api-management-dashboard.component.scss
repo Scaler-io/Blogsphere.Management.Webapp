@@ -1,0 +1,78 @@
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: block;
+}
+
+.dashboard__section {
+  margin-bottom: $spacing-xl;
+}
+
+.dashboard__section-title {
+  @include font($font-size-xl, $font-weight-bold);
+  color: rgba($color-text-primary, 0.85);
+  letter-spacing: 0.5px;
+  margin-bottom: $spacing-md;
+  padding-bottom: $spacing-sm;
+  border-bottom: 1px solid rgba($color-border, 0.35);
+}
+
+.dashboard__card-body {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.dashboard__stat {
+  @include font($font-size-3xl, $font-weight-bold);
+  color: $color-text-primary;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.dashboard__hint {
+  @include font($font-size-base, $font-weight-regular);
+  color: rgba($color-text-primary, 0.75);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.dashboard__chart-container {
+  position: relative;
+  width: 100%;
+
+  &--line {
+    height: 300px;
+  }
+
+  &--bar {
+    height: 280px;
+  }
+
+  &--doughnut {
+    height: 280px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  canvas {
+    max-width: 100%;
+  }
+}
+
+.dashboard__chart-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 200px;
+  gap: $spacing-md;
+
+  p {
+    @include font($font-size-base, $font-weight-regular);
+    color: rgba($color-text-primary, 0.6);
+    margin: 0;
+  }
+}

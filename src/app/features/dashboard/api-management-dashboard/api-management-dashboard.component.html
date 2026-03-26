@@ -1,0 +1,160 @@
+<section class="dashboard__section">
+  <h2 class="dashboard__section-title">API Gateway</h2>
+  <div class="row">
+    <div class="col-12 col-lg-6 col-xl-4 mb-lg">
+      <blogsphere-info-card
+        variant="primary"
+        size="medium"
+        title="API Clusters"
+        icon="hub"
+        [showIcon]="true"
+        borderPosition="left"
+        >
+        <div class="dashboard__card-body">
+          <p class="dashboard__stat">
+            {{ totalClusters }}
+          </p>
+          <p class="dashboard__hint">Clusters configured in the API gateway</p>
+          <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="navigateToClusters()">
+            View clusters
+          </blogsphere-button>
+        </div>
+      </blogsphere-info-card>
+    </div>
+    <div class="col-12 col-lg-6 col-xl-4 mb-lg">
+      <blogsphere-info-card
+        variant="info"
+        size="medium"
+        title="API Routes"
+        icon="route"
+        [showIcon]="true"
+        borderPosition="left"
+        >
+        <div class="dashboard__card-body">
+          <p class="dashboard__stat">
+            {{ totalRoutes }}
+          </p>
+          <p class="dashboard__hint">Routes configured in the API gateway</p>
+          <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="navigateToRoutes()">
+            View routes
+          </blogsphere-button>
+        </div>
+      </blogsphere-info-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 mb-lg">
+      <blogsphere-info-card
+        variant="info"
+        size="medium"
+        title="Growth Trend"
+        icon="trending_up"
+        [showIcon]="true"
+        borderPosition="none"
+        >
+        <div class="dashboard__chart-container dashboard__chart-container--line">
+          @if (!chartsDataLoaded) {
+            <div class="dashboard__chart-loading">
+              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+              <p>Loading chart data...</p>
+            </div>
+          }
+          @if (chartsDataLoaded) {
+            <canvas
+              baseChart
+              [data]="growthChartData"
+              [options]="growthChartOptions"
+              [type]="lineChartType"
+            ></canvas>
+          }
+        </div>
+      </blogsphere-info-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-lg-6 mb-lg">
+      <blogsphere-info-card
+        variant="success"
+        size="medium"
+        title="Cluster Status Distribution"
+        icon="pie_chart"
+        [showIcon]="true"
+        borderPosition="none"
+        >
+        <div class="dashboard__chart-container dashboard__chart-container--doughnut">
+          @if (!chartsDataLoaded) {
+            <div class="dashboard__chart-loading">
+              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+              <p>Loading chart data...</p>
+            </div>
+          }
+          @if (chartsDataLoaded) {
+            <canvas
+              baseChart
+              [data]="statusChartData"
+              [options]="statusChartOptions"
+              [type]="doughnutChartType"
+            ></canvas>
+          }
+        </div>
+      </blogsphere-info-card>
+    </div>
+    <div class="col-12 col-lg-6 mb-lg">
+      <blogsphere-info-card
+        variant="warning"
+        size="medium"
+        title="Monthly Route Activity"
+        icon="bar_chart"
+        [showIcon]="true"
+        borderPosition="none"
+        >
+        <div class="dashboard__chart-container dashboard__chart-container--bar">
+          @if (!chartsDataLoaded) {
+            <div class="dashboard__chart-loading">
+              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+              <p>Loading chart data...</p>
+            </div>
+          }
+          @if (chartsDataLoaded) {
+            <canvas
+              baseChart
+              [data]="activityChartData"
+              [options]="activityChartOptions"
+              [type]="barChartType"
+            ></canvas>
+          }
+        </div>
+      </blogsphere-info-card>
+    </div>
+  </div>
+</section>
+
+<section class="dashboard__section">
+  <h2 class="dashboard__section-title">Subscription manager</h2>
+  <div class="row">
+    <div class="col-12 col-lg-6 col-xl-4 mb-lg">
+      <blogsphere-info-card
+        variant="success"
+        size="medium"
+        title="API Products"
+        icon="subscriptions"
+        [showIcon]="true"
+        borderPosition="left"
+        >
+        <div class="dashboard__card-body">
+          <p class="dashboard__stat">
+            {{ totalProducts }}
+          </p>
+          <p class="dashboard__hint">API products available for subscription</p>
+          <blogsphere-button
+            [type]="ButtonType.secondary"
+            [size]="ButtonSize.small"
+            (next)="navigateToSubscription()"
+            >
+            View subscription manager
+          </blogsphere-button>
+        </div>
+      </blogsphere-info-card>
+    </div>
+  </div>
+</section>

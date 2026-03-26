@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { DashboardComponent } from './dashboard.component';
+import { ApiManagementDashboardComponent } from './api-management-dashboard/api-management-dashboard.component';
+import { UserManagementDashboardComponent } from './user-management-dashboard/user-management-dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import {
   DASHBOARD_STATE_NAME,
@@ -23,7 +25,11 @@ import { DASHBOARD_SERVICE_TOKEN } from 'src/app/core/services/interface/dashboa
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [
+    DashboardComponent,
+    ApiManagementDashboardComponent,
+    UserManagementDashboardComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule,

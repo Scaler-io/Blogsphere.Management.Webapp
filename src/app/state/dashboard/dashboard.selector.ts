@@ -9,3 +9,8 @@ export const selectDashboardLoading = createSelector(
   selectDashboardState,
   state => state.isLoading
 );
+
+export const selectDashboardActiveScope = createSelector(
+  selectDashboardState,
+  state => state.activeScope
+);

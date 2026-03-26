@@ -1,9 +1,9 @@
 import { InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DashboardSummaryResponse } from '../../model/dashboard.model';
+import { DashboardResponse } from '../../model/dashboard.model';
 
 export interface IDashboardService {
-  getDashboardSummary(): Observable<DashboardSummaryResponse>;
+  getDashboardSummary(scope: string): Observable<DashboardResponse>;
 }
 
 export const DASHBOARD_SERVICE_TOKEN = new InjectionToken<IDashboardService>('DashboardService');

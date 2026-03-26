@@ -1,18 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import {
-  catchError,
-  EMPTY,
-  expand,
-  map,
-  merge,
-  Observable,
-  of,
-  switchMap,
-  takeUntil,
-  timer,
-} from 'rxjs';
+import { catchError, exhaustMap, map, merge, Observable, of, switchMap, takeUntil, timer } from 'rxjs';
 import * as DashboardActions from './dashboard.action';
 import * as ErrorActions from '../error/error.action';
 import {
@@ -31,73 +20,42 @@ export class DashboardEffects {
   getDashboardSummary$ = createEffect(() =>
     this.actions$.pipe(
       ofType(DashboardActions.GET_DASHBOARD_SUMMARY),
-      switchMap(() => {
-        return this.dashboardService.getDashboardSummary().pipe(
-          map(summary => new DashboardActions.GetDashboardSummarySuccess(summary)),
-          catchError(error => this.handleError(error))
+      switchMap((action: DashboardActions.GetDashboardSummary) => {
+        const scope = action.payload;
+        return this.dashboardService.getDashboardSummary(scope).pipe(
+          map((summary) => new DashboardActions.GetDashboardSummarySuccess(summary)),
+          catchError((error) => this.handleError(error))
         );
       })
     )
   );
 
   /**
-   * Starts a polling loop that:
-   * - fetches immediately
-   * - then waits `environment.dashboardRefreshIntervalSeconds` (default 30s)
-   * - repeats until STOP_DASHBOARD_POLLING is dispatched
+   * Polls on a fixed interval until STOP_DASHBOARD_POLLING. Uses the scope from
+   * StartDashboardPolling for every request (fixes accidental use of summary payload as scope).
    */
   pollDashboardSummary$ = createEffect(() =>
     this.actions$.pipe(
       ofType(DashboardActions.START_DASHBOARD_POLLING),
-      switchMap(() =>
-        this.dashboardService.getDashboardSummary().pipe(
-          map(summary => new DashboardActions.GetDashboardSummarySuccess(summary)),
-          catchError(error => this.handleError(error)),
-          expand((action: any) => {
-            // Only schedule next poll once per "cycle".
-            // - On success: wait environment configured interval (default 30s).
-            // - On failed: retry after environment configured interval (default 30s).
-            // - Ignore SET_ERROR so we don't schedule twice (handleError merges two actions).
-            const refreshAfterSeconds = Math.max(
-              0,
-              environment.dashboardRefreshIntervalSeconds ?? 30
-            );
+      switchMap((action: DashboardActions.StartDashboardPolling) => {
+        const scope = action.payload;
+        const intervalSeconds = Math.max(1, environment.dashboardRefreshIntervalSeconds ?? 30);
+        const intervalMs = intervalSeconds * 1000;
 
-            if (action?.type === DashboardActions.GET_DASHBOARD_SUMMARY_SUCCESS) {
-              return timer(refreshAfterSeconds * 1000).pipe(
-                switchMap(() =>
-                  this.dashboardService.getDashboardSummary().pipe(
-                    map(
-                      nextSummary => new DashboardActions.GetDashboardSummarySuccess(nextSummary)
-                    ),
-                    catchError(error => this.handleError(error))
-                  )
-                )
-              );
-            }
-
-            if (action?.type === DashboardActions.GET_DASHBOARD_SUMMARY_FAILED) {
-              return timer(refreshAfterSeconds * 1000).pipe(
-                switchMap(() =>
-                  this.dashboardService.getDashboardSummary().pipe(
-                    map(
-                      nextSummary => new DashboardActions.GetDashboardSummarySuccess(nextSummary)
-                    ),
-                    catchError(error => this.handleError(error))
-                  )
-                )
-              );
-            }
-
-            return EMPTY;
-          }),
+        return timer(0, intervalMs).pipe(
+          exhaustMap(() =>
+            this.dashboardService.getDashboardSummary(scope).pipe(
+              map((summary) => new DashboardActions.GetDashboardSummarySuccess(summary)),
+              catchError((error) => this.handleError(error))
+            )
+          ),
           takeUntil(this.actions$.pipe(ofType(DashboardActions.STOP_DASHBOARD_POLLING)))
-        )
-      )
+        );
+      })
     )
   );
 
-  private handleError(error: any, source?: string, route?: string): Observable<Action> {
+  private handleError(error: unknown, source?: string, route?: string): Observable<Action> {
     const errorState = {
       error: error,
       source: source ? source : 'Dashboard',
