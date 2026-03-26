@@ -29,23 +29,14 @@ const routes: Routes = [
     },
   },
   {
-    path: 'route-setup',
+    path: 'route-setup/:id',
+    component: RouteSetupComponent,
     data: {
       breadcrumb: {
         label: 'Route setup',
+        alias: 'route-name',
       },
     },
-    children: [
-      {
-        path: ':id',
-        component: RouteSetupComponent,
-        data: {
-          breadcrumb: {
-            alias: 'route-name',
-          },
-        },
-      },
-    ],
   },
 ];
 
