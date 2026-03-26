@@ -5,6 +5,8 @@ import { CanActivateErrorPageGuard } from './core/guards/can-activate-error-page
 import { CanActivateSuccessPageGuard } from './core/guards/can-activate-success-page.guard';
 import { MaintenanceModeGuard } from './core/guards/maintenance-mode.guard';
 import { CanActivateMaintenancePageGuard } from './core/guards/can-activate-maintenance-page.guard';
+import { permissionsGuard } from './core/guards/permission.guard';
+import { AppPermission } from './core/auth/permissions.constants';
 
 const routes: Routes = [
   {
@@ -23,22 +25,31 @@ const routes: Routes = [
     path: 'api-cluster',
     loadChildren: () =>
       import('./features/api-cluster/api-cluster.module').then(m => m.ApiClusterModule),
-    data: { breadcrumb: { label: 'Clusters' } },
-    canActivate: [MaintenanceModeGuard],
+    data: {
+      breadcrumb: { label: 'Clusters' },
+      requiredPermission: AppPermission.SYSTEM_VIEW_SETTINGS,
+    },
+    canActivate: [MaintenanceModeGuard, permissionsGuard],
   },
   {
     path: 'api-route',
     loadChildren: () =>
       import('./features/api-routes/api-routes.module').then(m => m.ApiRoutesModule),
-    data: { breadcrumb: { label: 'Routes' } },
-    canActivate: [MaintenanceModeGuard],
+    data: {
+      breadcrumb: { label: 'Routes' },
+      requiredPermission: AppPermission.SYSTEM_VIEW_SETTINGS,
+    },
+    canActivate: [MaintenanceModeGuard, permissionsGuard],
   },
   {
     path: 'subscription',
     loadChildren: () =>
       import('./features/subscription/subscription.module').then(m => m.SubscriptionModule),
-    data: { breadcrumb: { label: 'Subscription manager' } },
-    canActivate: [MaintenanceModeGuard],
+    data: {
+      breadcrumb: { label: 'Subscription manager' },
+      requiredPermission: AppPermission.SYSTEM_VIEW_SETTINGS,
+    },
+    canActivate: [MaintenanceModeGuard, permissionsGuard],
   },
   {
     path: 'success',
