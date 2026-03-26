@@ -1,5 +1,6 @@
-@import "../../../../assets/styles/sass-utils/variables";
-@import "../../../../assets/styles/sass-utils/mixins";
+@use 'sass:color' as color;
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
 
 .button__layout {
   display: inline-flex;
@@ -68,7 +69,7 @@
     color: $color-text-primary;
 
     &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
-      background-color: darken(#fddc63, 10%);
+      background-color: color.adjust(#fddc63, $lightness: -10%);
     }
   }
 
@@ -89,14 +90,14 @@
     background: linear-gradient(
       135deg,
       $color-primary 0%,
-      lighten($color-primary, 15%) 100%
+      color.adjust($color-primary, $lightness: 15%) 100%
     );
     color: white;
 
     &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
       background: linear-gradient(
         135deg,
-        darken($color-primary, 5%) 0%,
+        color.adjust($color-primary, $lightness: -5%) 0%,
         $color-primary 100%
       );
     }
@@ -108,7 +109,7 @@
     color: white;
 
     &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
-      background-color: darken($color-error, 10%);
+      background-color: color.adjust($color-error, $lightness: -10%);
     }
   }
 
@@ -118,7 +119,7 @@
     color: $color-text-primary;
 
     &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
-      background-color: darken($color-warning, 10%);
+      background-color: color.adjust($color-warning, $lightness: -10%);
     }
   }
 
@@ -128,7 +129,7 @@
     color: white;
 
     &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
-      background-color: darken($color-success, 10%);
+      background-color: color.adjust($color-success, $lightness: -10%);
     }
   }
 
@@ -138,7 +139,7 @@
     color: white;
 
     &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
-      background-color: darken($color-info, 10%);
+      background-color: color.adjust($color-info, $lightness: -10%);
     }
   }
 
@@ -161,7 +162,7 @@
     text-decoration: underline;
 
     &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
-      color: darken($color-primary, 15%);
+      color: color.adjust($color-primary, $lightness: -15%);
     }
   }
 

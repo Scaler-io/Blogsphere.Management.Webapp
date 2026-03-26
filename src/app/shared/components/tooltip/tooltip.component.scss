@@ -1,4 +1,4 @@
-@import '../../../../assets/styles/sass-utils/variables';
+@use 'sass-utils/variables' as *;
 
 :host {
   display: contents; /* host takes no space; panel is position:fixed */

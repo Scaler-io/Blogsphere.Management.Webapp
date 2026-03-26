@@ -1,4 +1,4 @@
-@import "../../../../assets/styles/sass-utils/variables";
+@use 'sass-utils/variables' as *;
 
 .close-icon {
   font-size: 24px;

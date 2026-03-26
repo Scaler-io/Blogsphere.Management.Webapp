@@ -1,5 +1,5 @@
-@import '../../../assets/styles/sass-utils/variables.scss';
-@import '../../../assets/styles/sass-utils/mixins.scss';
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
 
 .success-page__layout {
   height: 100%;

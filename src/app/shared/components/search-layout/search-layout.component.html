@@ -14,8 +14,8 @@
       <span class="value">{{ selectedSortField }}</span>
     </div>
     <mat-menu #sortMenu="matMenu" xPosition="before">
-      <button matButton mat-menu-item (click)="sortMenuChanged('createdAt')">Last created</button>
-      <button matButton mat-menu-item (click)="sortMenuChanged('updatedAt')">Last updated</button>
+      <button type="button" mat-menu-item (click)="sortMenuChanged('createdAt')">Last created</button>
+      <button type="button" mat-menu-item (click)="sortMenuChanged('updatedAt')">Last updated</button>
     </mat-menu>
   </div>
 

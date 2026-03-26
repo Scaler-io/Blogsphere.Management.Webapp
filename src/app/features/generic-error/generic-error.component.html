@@ -28,19 +28,18 @@
           <div class="error-page__actions">
             <div class="row justify-content-center gap-md">
               <div class="col-12 col-sm-auto">
-                @if (errorComponentRoute$ | async; as route) {
-                  <blogsphere-button
-                    [type]="'primary'"
-                    [size]="'small'"
-                    icon="arrow_back"
-                    iconPosition="left"
-                    [elevated]="true"
-                    (next)="goBackToOrigin()"
-                    class="w-100"
-                    >
-                    Go Back to {{ sourcePage }}
-                  </blogsphere-button>
-                }
+                <blogsphere-button
+                  *ngIf="errorComponentRoute$ | async"
+                  [type]="'primary'"
+                  [size]="'small'"
+                  icon="arrow_back"
+                  iconPosition="left"
+                  [elevated]="true"
+                  (next)="goBackToOrigin()"
+                  class="w-100"
+                  >
+                  Go Back to {{ sourcePage }}
+                </blogsphere-button>
               </div>
 
               <div class="col-12 col-sm-auto">

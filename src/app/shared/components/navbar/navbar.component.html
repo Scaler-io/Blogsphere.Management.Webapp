@@ -54,17 +54,13 @@
 }
 
 <!-- Material profile menu -->
-<mat-menu #userActionMenu="matMenu">
-  <div mat-button mat-menu-item (click)="navigateToUserProfile()">
-    <span class="material-symbols-outlined">person</span>
+<mat-menu #userActionMenu="matMenu" class="mt-sm">
+  <button type="button" mat-menu-item (click)="navigateToUserProfile()">
+    <span class="material-symbols-outlined" aria-hidden="true">person</span>
     <span>My profile</span>
-  </div>
-  <div mat-button mat-menu-item (click)="resetPassword()">
-    <span class="material-symbols-outlined">lock_reset</span>
-    <span>Reset Password</span>
-  </div>
-  <div mat-button mat-menu-item (click)="signout()">
-    <span class="material-symbols-outlined">power_settings_new</span>
+  </button>
+  <button type="button" mat-menu-item (click)="signout()">
+    <span class="material-symbols-outlined" aria-hidden="true">power_settings_new</span>
     <span>Logout</span>
-  </div>
+  </button>
 </mat-menu>
