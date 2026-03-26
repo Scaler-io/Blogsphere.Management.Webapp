@@ -1,3 +1,5 @@
+@use '../sass-utils/variables' as *;
+
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -87,6 +89,13 @@ canvas,
 svg {
   display: block;
   max-width: 100%;
+}
+
+// mat-progress-spinner renders an SVG circle; global `max-width: 100%` on all svg can
+// squash it in flex/grid (width follows column, height does not) → imperfect roundness.
+.mat-mdc-progress-spinner svg,
+mat-progress-spinner svg {
+  max-width: none;
 }
 
 /*

@@ -1,3 +1,7 @@
+@use 'sass:color' as color;
+@use 'sass:math' as math;
+@use 'variables' as *;
+
 @mixin respond-to($breakpoint) {
   @if $breakpoint == xs {
     @media (max-width: #{$breakpoint-sm - 1px}) {
@@ -191,12 +195,12 @@
     }
   } @else {
     &:hover:not(:disabled) {
-      background-color: darken($bg-color, 10%);
+      background-color: color.adjust($bg-color, $lightness: -10%);
     }
   }
 
   &:active:not(:disabled) {
-    background-color: darken($bg-color, 15%);
+    background-color: color.adjust($bg-color, $lightness: -15%);
   }
 }
 
@@ -318,7 +322,7 @@
   &::before {
     content: "";
     display: block;
-    padding-top: percentage($height / $width);
+    padding-top: math.percentage(math.div($height, $width));
   }
 
   > * {

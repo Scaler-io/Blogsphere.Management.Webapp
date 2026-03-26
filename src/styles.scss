@@ -2,32 +2,21 @@
 // BLOGSPHERE MANAGEMENT WEBAPP - MAIN STYLES
 // ============================================================================
 
-// Import Titillium Web font first
-@import './assets/styles/titillium-web';
+// 1. Titillium Web font faces
+@use './assets/styles/titillium-web';
 
-// ============================================================================
-// SASS ARCHITECTURE STRUCTURE
-// Based on industry best practices for maintainable SCSS
-// ============================================================================
+// 2. SASS UTILS (variables, functions, mixins, helpers) — loaded first for :root below
+@use './assets/styles/sass-utils/sass-utils-dir' as *;
 
-// 1. SASS UTILS (Variables, Functions, Mixins, Helpers)
-//    Import utilities first as they're used by other files
-@import './assets/styles/sass-utils/sass-utils-dir';
+// 3. BASE (reset, typography, grid) — before Material so global resets do not override MDC
+@use './assets/styles/base/base-dir';
 
-// 2. VENDORS (External libraries - Angular Material in our case)
-@import './assets/styles/angular-material-theme';
+// 4. Angular Material theme + MDC component styles
+@use './assets/styles/angular-material-theme';
 
-// 3. BASE (Reset, Typography, Base elements)
-@import './assets/styles/base/base-dir';
-
-// 4. LAYOUT (Future: Header, Footer, Navigation, Grid)
-// @import "./assets/styles/layout/layout-dir";
-
-// 5. COMPONENTS (Future: Buttons, Cards, Forms, etc.)
-// @import "./assets/styles/components/components-dir";
-
-// 6. PAGES (Future: Page-specific styles)
-// @import "./assets/styles/pages/pages-dir";
+// Future: @use './assets/styles/layout/layout-dir';
+// Future: @use './assets/styles/components/components-dir';
+// Future: @use './assets/styles/pages/pages-dir';
 
 // ============================================================================
 // CSS CUSTOM PROPERTIES (CSS Variables)

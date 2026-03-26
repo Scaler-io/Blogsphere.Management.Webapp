@@ -2,6 +2,8 @@
 // ANGULAR MATERIAL THEME CONFIGURATION - AGL INSPIRED
 // ============================================================================
 
+@use 'sass:list' as list;
+@use 'sass-utils/variables' as *;
 @use '@angular/material' as mat;
 
 // ============================================================================
@@ -186,6 +188,24 @@ $Blogsphere-theme: mat.m2-define-light-theme(
 // Include theme styles for core and each component used in your app
 @include mat.all-component-themes($Blogsphere-theme);
 
+// Form fields — typed value (input/textarea) larger than label & hints; uses design tokens
+@include mat.form-field-overrides(
+  (
+    container-text-size: $font-size-2xl,
+    container-text-line-height: $line-height-normal,
+    outlined-label-text-size: $font-size-2xl,
+    filled-label-text-size: $font-size-lg,
+    outlined-label-text-populated-size: $font-size-2xl,
+    subscript-text-size: $font-size-xl,
+  )
+);
+
+// Explicit: ensure the actual input value uses the container size (covers edge cases where token alone is not applied)
+.mat-mdc-form-field input.mat-mdc-input-element,
+.mat-mdc-form-field textarea.mat-mdc-input-element {
+  font-size: var(--mat-form-field-container-text-size, #{$font-size-2xl});
+}
+
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
@@ -193,23 +213,36 @@ $Blogsphere-theme: mat.m2-define-light-theme(
   font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
 }
 
-.mat-menu-panel {
-  .mat-menu-content {
-    .mat-menu-item {
+// MDC mat-menu — icon + label vertically centered (Material Symbols baseline differs from body text)
+.mat-mdc-menu-panel {
+  .mat-mdc-menu-content {
+    .mat-mdc-menu-item {
       display: flex !important;
       align-items: center !important;
-      column-gap: 1.2rem !important;
-      &:hover {
+      justify-content: flex-start !important;
+      column-gap: $spacing-sm !important;
+
+      &:hover:not([disabled]) {
         background: $color-primary !important;
         color: $color-accent !important;
       }
-      span {
-        &:first-child {
-          font-size: $font-size-4xl !important;
-        }
-        &:last-child {
-          font-size: $font-size-lg !important;
-        }
+
+      .mat-mdc-menu-item-text {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: $spacing-lg;
+        font-size: $font-size-2xl !important;
+      }
+
+      .material-symbols-outlined {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        line-height: 1 !important;
+        width: $font-size-2xl;
+        height: $font-size-2xl;
+        font-size: $font-size-4xl !important;
+        flex-shrink: 0;
       }
     }
   }
@@ -221,33 +254,44 @@ $Blogsphere-theme: mat.m2-define-light-theme(
     &--list-item {
       display: flex;
       align-items: center;
-      column-gap: 1.5rem;
-      padding: 1rem !important;
+      column-gap: $spacing-lg;
+      padding: $spacing-md !important;
     }
   }
 }
 
-.mat-snack-bar-container {
-  background-color: $color-surface !important;
-  color: $gray-800 !important;
-  font-size: $font-size-lg !important;
+// Snackbar — white surface + type accent + one icon. MDC has TWO .mat-mdc-snack-bar-label nodes (outer portal host + inner matSnackBarLabel); only .mdc-snackbar__label gets ::before or you get duplicate icons. Theme color applies to .mat-mdc-snackbar-surface, not the host.
+mat-snack-bar-container,
+.mat-snack-bar-container,
+.mat-mdc-snack-bar-container {
+  font-size: $font-size-2xl !important;
+  font-weight: $font-weight-regular !important;
   border-radius: $border-radius-md !important;
-  box-shadow: 0 4px 12px $color-shadow !important;
+  
+  .mat-mdc-snackbar-surface,
+  .mdc-snackbar__surface {
+    background-color: $color-surface !important;
+    color: $gray-800 !important;
+    box-shadow: 0 $spacing-xs $spacing-md $color-shadow !important;
+  }
 
-  .mat-simple-snack-bar-content {
+  // Inner message label only (not the outer portal wrapper)
+  .mat-simple-snack-bar-content,
+  .mat-mdc-snack-bar-label.mdc-snackbar__label {
     display: flex !important;
     align-items: center !important;
-    gap: 0.75rem !important;
+    gap: $spacing-sm !important;
 
     &::before {
       font-family: 'Material Symbols Outlined' !important;
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      font-size: 1.5rem !important;
+      font-size: $font-size-2xl !important;
       flex-shrink: 0;
     }
   }
 
-  .mat-simple-snackbar-action button {
+  .mat-simple-snackbar-action button,
+  .mat-mdc-snack-bar-actions .mat-mdc-button {
     color: $color-text-secondary !important;
   }
 }
@@ -262,53 +306,77 @@ $snackbar-types: (
 );
 
 @each $type, $config in $snackbar-types {
-  $color: nth($config, 1);
-  $icon: nth($config, 2);
+  $color: list.nth($config, 1);
+  $icon: list.nth($config, 2);
 
+  .snackbar-#{$type} mat-snack-bar-container,
   .snackbar-#{$type} .mat-snack-bar-container,
-  .mat-snack-bar-container.snackbar-#{$type} {
-    border-left: 4px solid $color !important;
-    @if $type == 'blogsphere' {
-      background: linear-gradient(135deg, rgba($primary-500, 0.04) 0%, $color-surface 100%) !important;
+  .snackbar-#{$type} .mat-mdc-snack-bar-container,
+  mat-snack-bar-container.snackbar-#{$type},
+  .mat-snack-bar-container.snackbar-#{$type},
+  .mat-mdc-snack-bar-container.snackbar-#{$type} {
+    .mat-mdc-snackbar-surface,
+    .mdc-snackbar__surface {
+      border-left: $spacing-xs solid $color !important;
+      @if $type == 'blogsphere' {
+        background: linear-gradient(135deg, rgba($primary-500, 0.04) 0%, $color-surface 100%) !important;
+      }
     }
 
-    .mat-simple-snack-bar-content::before {
-      content: '#{$icon}' !important;
+    .mat-simple-snack-bar-content::before,
+    .mat-mdc-snack-bar-label.mdc-snackbar__label::before {
+        content: '#{$icon}' !important;
       color: $color !important;
     }
   }
 }
 
-.mat-form-field-appearance-outline {
-  .mat-form-field-outline-thick {
-    color: rgba(0, 0, 0, 0.12);
+// MDC outlined text field: notch pieces replace legacy .mat-form-field-outline-thick
+.mat-mdc-form-field.mat-form-field-appearance-outline {
+  .mdc-text-field--outlined:not(.mdc-text-field--focused):not(.mdc-text-field--invalid) .mdc-notched-outline .mat-mdc-notch-piece {
+    border-color: rgba($black, 0.12);
   }
 }
 
-mat-slide-toggle {
-  // Force consistent dimensions to prevent layout shift
-  min-width: 48px;
-  max-width: 48px;
-  width: 48px;
+mat-slide-toggle,
+.mat-mdc-slide-toggle {
+  // Force consistent dimensions to prevent layout shift (48px touch target)
+  min-width: $spacing-2xl;
+  max-width: $spacing-2xl;
+  width: $spacing-2xl;
   display: inline-block;
+}
+
+// Keep MDC form fields inside grid columns (see base/_grid.scss .row / [class*='col-'])
+.row [class*='col-'] .mat-mdc-form-field {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+// ============================================================================
+// MATERIAL DIALOGS — spacing between fields when hints/errors show
+// ============================================================================
+
+.mat-mdc-dialog-container .mat-mdc-form-field {
+  display: block;
+  margin-bottom: $spacing-sm;
 }
 
 // ============================================================================
 // GLOBAL MAT-SELECT PANEL STYLES
 // ============================================================================
 
-.mat-select-panel {
-  .mat-option.mat-selected:not(.mat-option-disabled) {
+.mat-mdc-select-panel {
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) {
     background-color: $color-primary !important;
     color: $color-text-inverse !important;
 
-    // Ensure text remains white on hover when selected
     &:hover {
       background-color: $color-primary-dark !important;
       color: $color-text-inverse !important;
     }
 
-    // Handle pseudo elements for checkmark
     .mat-pseudo-checkbox-checked {
       &::after {
         color: $color-text-inverse !important;

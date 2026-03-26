@@ -1,3 +1,7 @@
+@use '../sass-utils/variables' as *;
+@use '../sass-utils/functions' as *;
+@use '../sass-utils/mixins' as *;
+
 html {
   font-size: 10px; // Base font size for rem calculations
   scroll-behavior: smooth;
