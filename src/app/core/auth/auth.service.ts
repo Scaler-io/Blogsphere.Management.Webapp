@@ -44,7 +44,24 @@ export class AuthService {
    * Logout the user
    */
   public logout(): void {
-    this.oidcSecurityService.logoff();
+    // Do not set window.location in the success path: logoff() already redirects the browser
+    // to the STS end_session endpoint (GET). A second navigation to '/' races with that and
+    // can skip IdP logout entirely while tokens are cleared locally.
+    this.oidcSecurityService
+      .logoffAndRevokeTokens()
+      .pipe(
+        catchError(err => {
+          console.error('Token revocation failed; attempting logout without revoke', err);
+          return this.oidcSecurityService.logoff();
+        })
+      )
+      .subscribe({
+        error: error => {
+          console.error('Error logging out', error);
+          this.oidcSecurityService.logoffLocal();
+          window.location.href = '/';
+        },
+      });
   }
 
   /**

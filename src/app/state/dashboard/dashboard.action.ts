@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { DashboardSummaryResponse } from 'src/app/core/model/dashboard.model';
+import { DashboardResponse } from 'src/app/core/model/dashboard.model';
 
 export const GET_DASHBOARD_SUMMARY = 'GET_DASHBOARD_SUMMARY';
 export const GET_DASHBOARD_SUMMARY_SUCCESS = 'GET_DASHBOARD_SUMMARY_SUCCESS';
@@ -9,12 +9,12 @@ export const STOP_DASHBOARD_POLLING = 'STOP_DASHBOARD_POLLING';
 
 export class GetDashboardSummary implements Action {
   readonly type = GET_DASHBOARD_SUMMARY;
-  constructor() {}
+  constructor(public payload: string) {}
 }
 
 export class GetDashboardSummarySuccess implements Action {
   readonly type = GET_DASHBOARD_SUMMARY_SUCCESS;
-  constructor(public payload: DashboardSummaryResponse) {}
+  constructor(public payload: DashboardResponse) {}
 }
 
 export class GetDashboardSummaryFailed implements Action {
@@ -24,7 +24,7 @@ export class GetDashboardSummaryFailed implements Action {
 
 export class StartDashboardPolling implements Action {
   readonly type = START_DASHBOARD_POLLING;
-  constructor() {}
+  constructor(public payload: string) {}
 }
 
 export class StopDashboardPolling implements Action {

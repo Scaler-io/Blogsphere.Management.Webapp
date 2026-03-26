@@ -1,0 +1,35 @@
+<section class="dashboard__section">
+  <h2 class="dashboard__section-title">User management</h2>
+  <div class="row">
+    <div class="col-12 col-lg-6 col-xl-4 mb-lg">
+      <blogsphere-info-card
+        variant="primary"
+        size="medium"
+        title="Total users"
+        icon="group"
+        [showIcon]="true"
+        borderPosition="left"
+        >
+        <div class="dashboard__card-body">
+          <p class="dashboard__stat">{{ totalUsers }}</p>
+          <p class="dashboard__hint">Registered users in the system</p>
+        </div>
+      </blogsphere-info-card>
+    </div>
+    <div class="col-12 col-lg-6 col-xl-4 mb-lg">
+      <blogsphere-info-card
+        variant="info"
+        size="medium"
+        title="Active users"
+        icon="verified_user"
+        [showIcon]="true"
+        borderPosition="left"
+        >
+        <div class="dashboard__card-body">
+          <p class="dashboard__stat">{{ totalActiveUsers }}</p>
+          <p class="dashboard__hint">Users currently active</p>
+        </div>
+      </blogsphere-info-card>
+    </div>
+  </div>
+</section>

@@ -20,6 +20,21 @@ export const selectApiProductsPageMetadata = createSelector(
   })
 );
 
+/** Shape expected by `blogsphere-table` (PaginationMetaData: top, currentPage, count) */
+export const selectApiProductsPaginationMetaData = createSelector(
+  selectApiProductState,
+  (state) => ({
+    top: state.pageSize,
+    currentPage: state.pageNumber,
+    count: state.totalCount,
+  })
+);
+
+export const selectApiProductsTotalCount = createSelector(
+  selectApiProductState,
+  (state) => state.totalCount
+);
+
 // fetch selected product
 export const selectedApiProduct = createSelector(
   selectApiProductState,

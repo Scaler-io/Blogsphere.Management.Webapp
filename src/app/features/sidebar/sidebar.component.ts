@@ -1,24 +1,30 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppPermission } from 'src/app/core/auth/permissions.constants';
 import { AppState } from 'src/app/store/app.state';
+import { selectHasPermission } from 'src/app/state/auth/auth.selector';
 import { getSidenavToggleState } from 'src/app/state/sidenav/sidenav.selector';
 import { selectMobileViewState } from 'src/app/state/mobile-view/mobile-view.selector';
 import { ToggleSideNav } from 'src/app/state/sidenav/sidenav.action';
 
 @Component({
-    selector: 'blogsphere-sidebar',
-    templateUrl: './sidebar.component.html',
-    styleUrls: ['./sidebar.component.scss'],
-    standalone: false
+  selector: 'blogsphere-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss'],
+  standalone: false,
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   public isSidenavExpanded: boolean;
   public isMobileView: boolean;
+  public canAccessSystemSettings$: Observable<boolean> = this.store.select(
+    selectHasPermission(AppPermission.SYSTEM_VIEW_SETTINGS)
+  );
 
   public subMenuList = {
     apiManager: false,
   };
-
+    
   private subscriptions = {
     sidenavToggleState: null,
     mobileViewState: null,

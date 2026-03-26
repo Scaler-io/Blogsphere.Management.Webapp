@@ -1,0 +1,47 @@
+/**
+ * Known JWT permission strings from the identity server.
+ * Use these for type-safe checks instead of raw strings.
+ */
+export const AppPermission = {
+  BLOG_CREATE: 'blog:create',
+  BLOG_DELETE: 'blog:delete',
+  BLOG_PUBLISH: 'blog:publish',
+  BLOG_UNPUBLISH: 'blog:unpublish',
+  BLOG_UPDATE: 'blog:update',
+  BLOG_VIEW: 'blog:view',
+  CATEGORY_CREATE: 'category:create',
+  CATEGORY_DELETE: 'category:delete',
+  CATEGORY_UPDATE: 'category:update',
+  CATEGORY_VIEW: 'category:view',
+  COMMENT_DELETE: 'comment:delete',
+  COMMENT_MODERATE: 'comment:moderate',
+  COMMENT_VIEW: 'comment:view',
+  CONTENT_CREATE: 'content:create',
+  CONTENT_DELETE: 'content:delete',
+  CONTENT_MODERATE: 'content:moderate',
+  CONTENT_PUBLISH: 'content:publish',
+  CONTENT_UNPUBLISH: 'content:unpublish',
+  CONTENT_UPDATE: 'content:update',
+  CONTENT_VIEW: 'content:view',
+  ROLE_ASSIGN_PERMISSIONS: 'role:assign-permissions',
+  ROLE_CREATE: 'role:create',
+  ROLE_UPDATE: 'role:update',
+  ROLE_VIEW: 'role:view',
+  SUPPORT_MANAGE_TICKETS: 'support:manage-tickets',
+  SUPPORT_RESOLVE_TICKETS: 'support:resolve-tickets',
+  SUPPORT_VIEW_TICKETS: 'support:view-tickets',
+  SYSTEM_UPDATE_SETTINGS: 'system:update-settings',
+  SYSTEM_VIEW_ANALYTICS: 'system:view-analytics',
+  SYSTEM_VIEW_LOGS: 'system:view-logs',
+  SYSTEM_VIEW_SETTINGS: 'system:view-settings',
+  TAG_CREATE: 'tag:create',
+  TAG_DELETE: 'tag:delete',
+  TAG_UPDATE: 'tag:update',
+  TAG_VIEW: 'tag:view',
+  USER_CREATE: 'user:create',
+  USER_MANAGE_ROLES: 'user:manage-roles',
+  USER_UPDATE: 'user:update',
+  USER_VIEW: 'user:view',
+} as const;
+
+export type AppPermission = (typeof AppPermission)[keyof typeof AppPermission];

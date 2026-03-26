@@ -1,189 +1,46 @@
 <div @fadeSlideInOut class="dashboard">
-  <section class="dashboard__section">
-    <h2 class="dashboard__section-title">API Gateway</h2>
-    <div class="row">
-      <div class="col-12 col-lg-6 col-xl-4 mb-lg">
-        <blogsphere-info-card
-          variant="primary"
-          size="medium"
-          title="API Clusters"
-          icon="hub"
-          [showIcon]="true"
-          borderPosition="left"
-          >
-          <div class="dashboard__card-body">
-            @if (!(dashboardLoading$ | async)) {
-              <p class="dashboard__stat">
-                {{ totalClusters }}
-              </p>
-            }
-            @if (dashboardLoading$ | async) {
-              <mat-progress-spinner
-                mode="indeterminate"
-                diameter="32"
-                color="primary"
-              ></mat-progress-spinner>
-            }
-            <p class="dashboard__hint">Clusters configured in the API gateway</p>
-            <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="navigateToClusters()">
-              View clusters
-            </blogsphere-button>
-          </div>
-        </blogsphere-info-card>
-      </div>
-      <div class="col-12 col-lg-6 col-xl-4 mb-lg">
-        <blogsphere-info-card
-          variant="info"
-          size="medium"
-          title="API Routes"
-          icon="route"
-          [showIcon]="true"
-          borderPosition="left"
-          >
-          <div class="dashboard__card-body">
-            @if (!(dashboardLoading$ | async)) {
-              <p class="dashboard__stat">
-                {{ totalRoutes }}
-              </p>
-            }
-            @if (dashboardLoading$ | async) {
-              <mat-progress-spinner
-                mode="indeterminate"
-                diameter="32"
-                color="primary"
-              ></mat-progress-spinner>
-            }
-            <p class="dashboard__hint">Routes configured in the API gateway</p>
-            <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="navigateToRoutes()">
-              View routes
-            </blogsphere-button>
-          </div>
-        </blogsphere-info-card>
-      </div>
+  <div class="row dashboard__toolbar mb-lg">
+    <div class="col-12 col-md-6">
+      <h1 class="dashboard__title">Dashboard</h1>
     </div>
-    <div class="row">
-      <div class="col-12 mb-lg">
-        <blogsphere-info-card
-          variant="info"
-          size="medium"
-          title="Growth Trend"
-          icon="trending_up"
-          [showIcon]="true"
-          borderPosition="none"
-          >
-          <div class="dashboard__chart-container dashboard__chart-container--line">
-            @if (!chartsDataLoaded) {
-              <div class="dashboard__chart-loading">
-                <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
-                <p>Loading chart data...</p>
-              </div>
+    <div class="col-12 col-md-6 dashboard__toolbar-actions">
+      @if (dashboardScopeOptions.length > 0) {
+        <mat-form-field appearance="outline" class="dashboard__scope-select" subscriptSizing="dynamic">
+          <mat-label>Scope</mat-label>
+          <mat-select
+            [value]="selectedScope"
+            (selectionChange)="onDashboardScopeChange($event.value)"
+            >
+            @for (option of dashboardScopeOptions; track option.id) {
+              <mat-option [value]="option.id">{{ option.label }}</mat-option>
             }
-            @if (chartsDataLoaded) {
-              <canvas
-                baseChart
-                [data]="growthChartData"
-                [options]="growthChartOptions"
-                [type]="lineChartType"
-              ></canvas>
-            }
-          </div>
-        </blogsphere-info-card>
-      </div>
+          </mat-select>
+        </mat-form-field>
+      }
     </div>
-    <div class="row">
-      <div class="col-12 col-lg-6 mb-lg">
-        <blogsphere-info-card
-          variant="success"
-          size="medium"
-          title="Cluster Status Distribution"
-          icon="pie_chart"
-          [showIcon]="true"
-          borderPosition="none"
-          >
-          <div class="dashboard__chart-container dashboard__chart-container--doughnut">
-            @if (!chartsDataLoaded) {
-              <div class="dashboard__chart-loading">
-                <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
-                <p>Loading chart data...</p>
-              </div>
-            }
-            @if (chartsDataLoaded) {
-              <canvas
-                baseChart
-                [data]="statusChartData"
-                [options]="statusChartOptions"
-                [type]="doughnutChartType"
-              ></canvas>
-            }
-          </div>
-        </blogsphere-info-card>
-      </div>
-      <div class="col-12 col-lg-6 mb-lg">
-        <blogsphere-info-card
-          variant="warning"
-          size="medium"
-          title="Monthly Route Activity"
-          icon="bar_chart"
-          [showIcon]="true"
-          borderPosition="none"
-          >
-          <div class="dashboard__chart-container dashboard__chart-container--bar">
-            @if (!chartsDataLoaded) {
-              <div class="dashboard__chart-loading">
-                <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
-                <p>Loading chart data...</p>
-              </div>
-            }
-            @if (chartsDataLoaded) {
-              <canvas
-                baseChart
-                [data]="activityChartData"
-                [options]="activityChartOptions"
-                [type]="barChartType"
-              ></canvas>
-            }
-          </div>
-        </blogsphere-info-card>
-      </div>
-    </div>
-  </section>
+  </div>
 
-  <section class="dashboard__section">
-    <h2 class="dashboard__section-title">Subscription manager</h2>
-    <div class="row">
-      <div class="col-12 col-lg-6 col-xl-4 mb-lg">
-        <blogsphere-info-card
-          variant="success"
-          size="medium"
-          title="API Products"
-          icon="subscriptions"
-          [showIcon]="true"
-          borderPosition="left"
-          >
-          <div class="dashboard__card-body">
-            @if (!(dashboardLoading$ | async)) {
-              <p class="dashboard__stat">
-                {{ totalProducts }}
-              </p>
-            }
-            @if (dashboardLoading$ | async) {
-              <mat-progress-spinner
-                mode="indeterminate"
-                diameter="32"
-                color="primary"
-              ></mat-progress-spinner>
-            }
-            <p class="dashboard__hint">API products available for subscription</p>
-            <blogsphere-button
-              [type]="ButtonType.secondary"
-              [size]="ButtonSize.small"
-              (next)="navigateToSubscription()"
-              >
-              View subscription manager
-            </blogsphere-button>
-          </div>
-        </blogsphere-info-card>
+  @if (dashboardScopeOptions.length === 0) {
+    <p class="dashboard__empty">You do not have permission to view any dashboards.</p>
+  }
+
+  @if (dashboardScopeOptions.length > 0) {
+    @if (dashboardLoading$ | async) {
+      <div class="dashboard__page-loading">
+        <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+        <p>Loading dashboard…</p>
       </div>
-    </div>
-  </section>
+    } @else {
+      @if (dashboardSummary$ | async; as summary) {
+        @switch (summary.kind) {
+          @case ('api-management') {
+            <blogsphere-api-management-dashboard [summary]="summary" />
+          }
+          @case ('user-management') {
+            <blogsphere-user-management-dashboard [summary]="summary" />
+          }
+        }
+      }
+    }
+  }
 </div>
