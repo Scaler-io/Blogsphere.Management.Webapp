@@ -42,15 +42,41 @@ export interface ApiManagementDashboardResponse {
   refreshAfterSeconds: number;
 }
 
-export interface UserManagementDashboardSummary {
+/** Grouped analytics sections (management users, future app users, …). */
+export interface UserManagementDashboardAnalytics {
+  managementUsers: ManagementUserAnalytics | null;
+}
+
+export interface ManagementUserAnalytics {
+  analyticsKey?: string;
+  summary?: ManagementUserAnalyticsSummary;
+  charts?: ManagementUserAnalyticsCharts;
+}
+
+export interface ManagementUserAnalyticsSummary {
   totalUsers: number;
   activeUsers: number;
+  inactiveUsers: number;
+  newUsersLast30Days: number;
+}
+
+export interface ManagementUserAnalyticsCharts {
+  growthTrend: GrowthTrendChart;
+  monthlyRegistrations: MonthlyActivityChart;
+  statusDistribution: StatusDistributionChart;
+  topDepartments: LabeledCountsChart;
+  topRoles: LabeledCountsChart;
+}
+
+export interface LabeledCountsChart {
+  labels: string[];
+  counts: number[];
 }
 
 /** User management dashboard (user-centric metrics). */
 export interface UserManagementDashboardResponse {
   kind: 'user-management';
-  summary: UserManagementDashboardSummary;
+  analytics: UserManagementDashboardAnalytics;
   timestamp: string;
   refreshAfterSeconds: number;
 }
