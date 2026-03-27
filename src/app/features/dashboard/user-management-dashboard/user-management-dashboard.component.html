@@ -1,7 +1,9 @@
 <section class="dashboard__section">
   <h2 class="dashboard__section-title">User management</h2>
+  <p class="dashboard__section-lead">Directory users (management)</p>
+
   <div class="row">
-    <div class="col-12 col-lg-6 col-xl-4 mb-lg">
+    <div class="col-12 col-lg-6 col-xl-3 mb-lg">
       <blogsphere-info-card
         variant="primary"
         size="medium"
@@ -12,13 +14,13 @@
         >
         <div class="dashboard__card-body">
           <p class="dashboard__stat">{{ totalUsers }}</p>
-          <p class="dashboard__hint">Registered users in the system</p>
+          <p class="dashboard__hint">Accounts in the directory index</p>
         </div>
       </blogsphere-info-card>
     </div>
-    <div class="col-12 col-lg-6 col-xl-4 mb-lg">
+    <div class="col-12 col-lg-6 col-xl-3 mb-lg">
       <blogsphere-info-card
-        variant="info"
+        variant="success"
         size="medium"
         title="Active users"
         icon="verified_user"
@@ -26,8 +28,182 @@
         borderPosition="left"
         >
         <div class="dashboard__card-body">
-          <p class="dashboard__stat">{{ totalActiveUsers }}</p>
-          <p class="dashboard__hint">Users currently active</p>
+          <p class="dashboard__stat">{{ activeUsers }}</p>
+          <p class="dashboard__hint">Users marked active</p>
+        </div>
+      </blogsphere-info-card>
+    </div>
+    <div class="col-12 col-lg-6 col-xl-3 mb-lg">
+      <blogsphere-info-card
+        variant="warning"
+        size="medium"
+        title="Inactive users"
+        icon="person_off"
+        [showIcon]="true"
+        borderPosition="left"
+        >
+        <div class="dashboard__card-body">
+          <p class="dashboard__stat">{{ inactiveUsers }}</p>
+          <p class="dashboard__hint">Users marked inactive</p>
+        </div>
+      </blogsphere-info-card>
+    </div>
+    <div class="col-12 col-lg-6 col-xl-3 mb-lg">
+      <blogsphere-info-card
+        variant="info"
+        size="medium"
+        title="New (30 days)"
+        icon="person_add"
+        [showIcon]="true"
+        borderPosition="left"
+        >
+        <div class="dashboard__card-body">
+          <p class="dashboard__stat">{{ newUsersLast30Days }}</p>
+          <p class="dashboard__hint">New accounts in the last 30 days</p>
+        </div>
+      </blogsphere-info-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mb-lg">
+      <blogsphere-info-card
+        variant="info"
+        size="medium"
+        title="Account growth (cumulative)"
+        icon="trending_up"
+        [showIcon]="true"
+        borderPosition="none"
+        >
+        <div class="dashboard__chart-container dashboard__chart-container--line">
+          @if (!chartsDataLoaded) {
+            <div class="dashboard__chart-loading">
+              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+              <p>Loading chart data...</p>
+            </div>
+          }
+          @if (chartsDataLoaded) {
+            <canvas
+              baseChart
+              [data]="growthChartData"
+              [options]="growthChartOptions"
+              [type]="lineChartType"
+            ></canvas>
+          }
+        </div>
+      </blogsphere-info-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-lg-6 mb-lg">
+      <blogsphere-info-card
+        variant="primary"
+        size="medium"
+        title="Monthly registrations"
+        icon="bar_chart"
+        [showIcon]="true"
+        borderPosition="none"
+        >
+        <div class="dashboard__chart-container dashboard__chart-container--bar">
+          @if (!chartsDataLoaded) {
+            <div class="dashboard__chart-loading">
+              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+              <p>Loading chart data...</p>
+            </div>
+          }
+          @if (chartsDataLoaded) {
+            <canvas
+              baseChart
+              [data]="monthlyChartData"
+              [options]="monthlyChartOptions"
+              [type]="barChartType"
+            ></canvas>
+          }
+        </div>
+      </blogsphere-info-card>
+    </div>
+    <div class="col-12 col-lg-6 mb-lg">
+      <blogsphere-info-card
+        variant="success"
+        size="medium"
+        title="Status distribution"
+        icon="pie_chart"
+        [showIcon]="true"
+        borderPosition="none"
+        >
+        <div class="dashboard__chart-container dashboard__chart-container--doughnut">
+          @if (!chartsDataLoaded) {
+            <div class="dashboard__chart-loading">
+              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+              <p>Loading chart data...</p>
+            </div>
+          }
+          @if (chartsDataLoaded) {
+            <canvas
+              baseChart
+              [data]="statusChartData"
+              [options]="statusChartOptions"
+              [type]="doughnutChartType"
+            ></canvas>
+          }
+        </div>
+      </blogsphere-info-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-lg-6 mb-lg">
+      <blogsphere-info-card
+        variant="success"
+        size="medium"
+        title="Top departments"
+        icon="domain"
+        [showIcon]="true"
+        borderPosition="none"
+        >
+        <div class="dashboard__chart-container dashboard__chart-container--horizontal-bar">
+          @if (!chartsDataLoaded) {
+            <div class="dashboard__chart-loading">
+              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+              <p>Loading chart data...</p>
+            </div>
+          }
+          @if (chartsDataLoaded) {
+            <canvas
+              baseChart
+              [data]="topDepartmentsChartData"
+              [options]="topDepartmentsChartOptions"
+              [type]="barChartType"
+            ></canvas>
+          }
+        </div>
+      </blogsphere-info-card>
+    </div>
+    <div class="col-12 col-lg-6 mb-lg">
+      <blogsphere-info-card
+        variant="primary"
+        size="medium"
+        title="Top roles"
+        icon="badge"
+        [showIcon]="true"
+        borderPosition="none"
+        >
+        <div class="dashboard__chart-container dashboard__chart-container--horizontal-bar">
+          @if (!chartsDataLoaded) {
+            <div class="dashboard__chart-loading">
+              <mat-progress-spinner mode="indeterminate" diameter="48" color="primary"></mat-progress-spinner>
+              <p>Loading chart data...</p>
+            </div>
+          }
+          @if (chartsDataLoaded) {
+            <canvas
+              baseChart
+              [data]="topRolesChartData"
+              [options]="topRolesChartOptions"
+              [type]="barChartType"
+            ></canvas>
+          }
         </div>
       </blogsphere-info-card>
     </div>
