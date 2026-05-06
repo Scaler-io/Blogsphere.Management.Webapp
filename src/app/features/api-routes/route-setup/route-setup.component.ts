@@ -201,7 +201,7 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
   }
 
   private patchRouteFormWithRoute(route: ApiRoute): void {
-    this.breadCrumb.set('@route-name', `Edit ${route.routeId}`);
+    this.breadCrumb.set('@route-name', route.routeId);
     this.routeForm.patchValue({
       ...route,
       clusterId: route.clusterDetails.id,

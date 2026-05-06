@@ -6,4 +6,5 @@ export interface AuthUser {
   permissions: string[] | '*';
   employeeId: string;
   department: string;
+  fullName: string;
 }

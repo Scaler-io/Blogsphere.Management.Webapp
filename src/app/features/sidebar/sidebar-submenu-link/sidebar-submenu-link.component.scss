@@ -1,0 +1,19 @@
+@use 'sass-utils/variables' as *;
+
+:host {
+  display: block;
+}
+
+.sidebar-submenu-link {
+  display: flex;
+  align-items: center;
+  font-size: $font-size-2xl;
+  column-gap: 1.5rem;
+  padding: 1.2rem 0 1.2rem 3rem;
+  cursor: pointer;
+
+  &.route-active {
+    color: $color-primary;
+    font-weight: $font-weight-medium;
+  }
+}

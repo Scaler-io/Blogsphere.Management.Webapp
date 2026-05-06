@@ -1,0 +1,26 @@
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: block;
+}
+
+.empty-state {
+  @include flex-column-center;
+  gap: $spacing-sm;
+  padding: $spacing-xl 0;
+  text-align: center;
+
+  &__icon {
+    font-size: 36px;
+    line-height: 1;
+    color: rgba($color-text-primary, 0.25);
+  }
+
+  &__text {
+    @include font($font-size-base, $font-weight-regular);
+    color: rgba($color-text-primary, 0.5);
+    margin: 0;
+    max-width: 36ch;
+  }
+}

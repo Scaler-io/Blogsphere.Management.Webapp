@@ -21,9 +21,10 @@ export class UserProfileComponent {
       const resolvedUser = isAuthenticated ? user : null;
       return {
         user: resolvedUser,
-        permissions: this.normalizePermissions(resolvedUser),
+        role: this.normalizeRoleAndPermissions(resolvedUser).role,
+        permissions: this.normalizeRoleAndPermissions(resolvedUser).permissions,
         isLoading: !isAuthenticated || !resolvedUser,
-        initials: this.getInitials(resolvedUser?.name),
+        initials: this.getInitials(resolvedUser?.fullName),
       };
     })
   );
@@ -38,7 +39,7 @@ export class UserProfileComponent {
     window.location.assign(this.authService.getIdentityAccountUrl());
   }
 
-  public getInitials(name: string | undefined): string {
+  private getInitials(name: string | undefined): string {
     if (!name) return '?';
     const parts = name.trim().split(/\s+/);
     if (parts.length >= 2) {
@@ -47,13 +48,14 @@ export class UserProfileComponent {
     return parts[0][0]?.toUpperCase() ?? '?';
   }
 
-  private normalizePermissions(user: AuthUser | null): string[] {
+  private normalizeRoleAndPermissions(user: AuthUser | null): { role: string; permissions: string[] } {
     const permissions = (user?.permissions ?? []) as string[] | string;
+    const jsonRole = (user?.role !== 'Admin' && user?.role !== 'SuperAdmin') ? JSON.parse(user?.role) : user?.role;
 
     if (permissions === '*') {
-      return ['All permissions'];
+      return { role: Array.isArray(jsonRole) ? jsonRole[0] : jsonRole ?? '', permissions: ['All permissions'] };
     }
 
-    return Array.isArray(permissions) ? permissions : [];
+    return { role: Array.isArray(jsonRole) ? jsonRole[0] : jsonRole ?? '', permissions: Array.isArray(permissions) ? permissions : [] };
   }
 }

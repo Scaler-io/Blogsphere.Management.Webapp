@@ -14,7 +14,6 @@ import { appReducer } from './store/app.state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { PageHeaderModule } from './shared/components/page-header/page-header.module';
-import { AuthModule } from 'angular-auth-oidc-client';
 import { LoaderModule } from './shared/components/loader/loader.module';
 import { TooltipModule } from './shared/components/tooltip/tooltip.module';
 import { ErrorEffects } from './state/error/error.effect';

@@ -74,8 +74,14 @@ const routes: Routes = [
     path: 'user-profile',
     loadChildren: () =>
       import('./features/user-profile/user-profile.module').then(m => m.UserProfileModule),
-    data: { breadcrumb: { label: 'User profile' } },
     canActivate: [MaintenanceModeGuard],
+  },
+  {
+    path: 'user-manager',
+    loadChildren: () =>
+      import('./features/user-manager/user-manager.module').then(m => m.UserManagerModule),
+    data: { breadcrumb: { label: 'User manager' }, requiredPermission: AppPermission.USER_VIEW },
+    canActivate: [MaintenanceModeGuard, permissionsGuard],
   },
   {
     path: '**',

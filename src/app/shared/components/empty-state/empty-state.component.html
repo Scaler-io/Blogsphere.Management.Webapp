@@ -1,0 +1,7 @@
+<div class="empty-state">
+  <span class="material-symbols-rounded empty-state__icon" aria-hidden="true">{{ icon }}</span>
+  @if (text) {
+    <p class="empty-state__text">{{ text }}</p>
+  }
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,11 @@
+<div
+  class="sidebar-submenu-link"
+  matRipple
+  [routerLink]="link"
+  [routerLinkActive]="'route-active'"
+  (click)="navigate.emit()"
+  role="listitem"
+>
+  <span class="material-symbols-outlined text-2xl">{{ icon }}</span>
+  <span class="text-xl">{{ label }}</span>
+</div>

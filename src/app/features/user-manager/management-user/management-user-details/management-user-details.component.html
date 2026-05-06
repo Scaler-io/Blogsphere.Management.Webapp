@@ -1,0 +1,272 @@
+@if (!(isManagementUserLoading$ | async) && managementUser$ | async; as u) {
+  <div class="ud" @fadeSlideInOut>
+    @if (!isJsonView) {
+      <!-- ───────── HERO ───────── -->
+      <blogsphere-page-hero [title]="u.fullName" [compact]="true">
+        <blogsphere-page-hero-avatar
+          hero-avatar
+          shape="circle"
+          [initials]="(u.firstName?.[0] || '') + (u.lastName?.[0] || '')"
+          [isActive]="u.isActive"
+          [isInactive]="!u.isActive"
+        ></blogsphere-page-hero-avatar>
+
+        <div hero-body class="ud-hero-body">
+          <p class="ud-hero-body__title">
+            <span class="material-symbols-rounded ud-hero-body__title-icon">work</span>
+            <span class="ud-hero-body__title-text">{{ u.jobTitle || 'No title' }}</span>
+            @if (u.department) {
+              <span class="ud-hero-body__title-sep" aria-hidden="true">·</span>
+              <span class="material-symbols-rounded ud-hero-body__title-icon">domain</span>
+              <span class="ud-hero-body__title-text">{{ u.department }}</span>
+            }
+          </p>
+
+          <div class="ud-hero-body__chips">
+            <blogsphere-badge [type]="u.isActive ? BadgeType.success : BadgeType.danger" [isRounded]="true">
+              {{ u.isActive ? 'Active' : 'Inactive' }}
+            </blogsphere-badge>
+            <blogsphere-badge
+              [type]="u.isTwoFactorEnabled ? BadgeType.success : BadgeType.warning"
+              [isRounded]="true"
+            >
+              2FA {{ u.isTwoFactorEnabled ? 'On' : 'Off' }}
+            </blogsphere-badge>
+            <blogsphere-badge [type]="u.isEmailConfirmed ? BadgeType.primary : BadgeType.warning" [isRounded]="true">
+              Email {{ u.isEmailConfirmed ? 'verified' : 'unverified' }}
+            </blogsphere-badge>
+          </div>
+        </div>
+
+        <blogsphere-button
+          hero-actions
+          [type]="ButtonType.secondary"
+          [size]="ButtonSize.small"
+          (next)="toggleJsonView()"
+        >
+          <span class="material-symbols-rounded ud-hero-btn-icon">data_object</span>
+          JSON view
+        </blogsphere-button>
+
+        <ng-container hero-contact>
+          <span class="ud-hero-contact-item" [matTooltip]="'Email'">
+            <span class="material-symbols-rounded ud-hero-contact-item__icon">mail</span>
+            <span class="ud-hero-contact-item__text">{{ u.email || '—' }}</span>
+          </span>
+          <span class="ud-hero-contact-item" [matTooltip]="'Username'">
+            <span class="material-symbols-rounded ud-hero-contact-item__icon">alternate_email</span>
+            <span class="ud-hero-contact-item__text">{{ u.userName || '—' }}</span>
+          </span>
+          <span class="ud-hero-contact-item" [matTooltip]="'Employee ID'">
+            <span class="material-symbols-rounded ud-hero-contact-item__icon">badge</span>
+            <span class="ud-hero-contact-item__text">{{ u.employeeId || '—' }}</span>
+          </span>
+        </ng-container>
+      </blogsphere-page-hero>
+
+      <!-- ───────── METRIC TILES ───────── -->
+      <section class="row gutter-sm ud-grid-row" aria-label="User metrics">
+        <div class="col-6 col-md-3">
+          <blogsphere-stat-tile
+            tone="primary"
+            icon="shield_person"
+            [value]="(u.roles || []).length"
+            label="Assigned roles"
+          ></blogsphere-stat-tile>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <blogsphere-stat-tile
+            tone="info"
+            icon="vpn_key"
+            [value]="(u.permissions || []).length"
+            label="Permissions"
+          ></blogsphere-stat-tile>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <blogsphere-stat-tile
+            [tone]="u.isEmailConfirmed ? 'success' : 'warning'"
+            [icon]="u.isEmailConfirmed ? 'mark_email_read' : 'mark_email_unread'"
+            [value]="u.isEmailConfirmed ? 'Verified' : 'Pending'"
+            label="Email status"
+          ></blogsphere-stat-tile>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <blogsphere-stat-tile
+            [tone]="u.isPhoneNumberConfirmed ? 'success' : 'warning'"
+            [icon]="u.isPhoneNumberConfirmed ? 'phone_enabled' : 'phone_disabled'"
+            [value]="u.isPhoneNumberConfirmed ? 'Verified' : 'Pending'"
+            label="Phone status"
+          ></blogsphere-stat-tile>
+        </div>
+      </section>
+
+      <!-- ───────── IDENTITY + ORGANIZATION ───────── -->
+      <div class="row ud-grid-row ud-card-grid align-items-stretch">
+        <div class="col-12 col-md-6">
+          <blogsphere-details-card mode="keyValue" icon="person" title="Identity">
+            <blogsphere-kv-row label="Full name">{{ u.fullName || '—' }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="First name">{{ u.firstName || '—' }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Last name">{{ u.lastName || '—' }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Username" variant="mono">{{ u.userName || '—' }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Display name">{{ u.displayName || '—' }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Unique id" variant="mono">{{ u.id || '—' }}</blogsphere-kv-row>
+          </blogsphere-details-card>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <blogsphere-details-card mode="keyValue" icon="business_center" title="Organization">
+            <blogsphere-kv-row label="Email" variant="link">{{ u.email || '—' }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Job title">{{ u.jobTitle || '—' }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Department">{{ u.department || '—' }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Employee id" variant="mono">{{ u.employeeId || '—' }}</blogsphere-kv-row>
+          </blogsphere-details-card>
+        </div>
+      </div>
+
+      <!-- ───────── SECURITY & VERIFICATION ───────── -->
+      <div class="row ud-grid-row ud-card-grid align-items-stretch">
+        <div class="col-12 col-md-6">
+          <blogsphere-details-card mode="keyValue" icon="encrypted" title="Security & verification">
+            <blogsphere-kv-row label="Email confirmed">
+              <blogsphere-status-pill
+                [state]="u.isEmailConfirmed ? 'success' : 'warning'"
+                [icon]="u.isEmailConfirmed ? 'check_circle' : 'warning'"
+                [label]="u.isEmailConfirmed ? 'Verified' : 'Pending verification'"
+              ></blogsphere-status-pill>
+            </blogsphere-kv-row>
+            <blogsphere-kv-row label="Phone confirmed">
+              <blogsphere-status-pill
+                [state]="u.isPhoneNumberConfirmed ? 'success' : 'warning'"
+                [icon]="u.isPhoneNumberConfirmed ? 'check_circle' : 'warning'"
+                [label]="u.isPhoneNumberConfirmed ? 'Verified' : 'Pending verification'"
+              ></blogsphere-status-pill>
+            </blogsphere-kv-row>
+            <blogsphere-kv-row label="Two-factor authentication">
+              <blogsphere-status-pill
+                [state]="u.isTwoFactorEnabled ? 'success' : 'danger'"
+                [icon]="u.isTwoFactorEnabled ? 'verified_user' : 'gpp_maybe'"
+                [label]="u.isTwoFactorEnabled ? 'Enabled' : 'Disabled'"
+              ></blogsphere-status-pill>
+            </blogsphere-kv-row>
+          </blogsphere-details-card>
+        </div>
+
+        <!-- ───────── ACTIVITY ───────── -->
+        <div class="col-12 col-md-6">
+          <blogsphere-details-card mode="keyValue" icon="history" title="Activity">
+            <blogsphere-kv-row label="Created">{{ formatDate(u.metadata?.createdAt) }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Updated">{{ formatDate(u.metadata?.updatedAt) }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Last login">{{ formatDate(u.metadata?.lastLoginAt) }}</blogsphere-kv-row>
+          </blogsphere-details-card>
+        </div>
+      </div>
+
+      <div class="row ud-grid-row ud-panel-grid align-items-stretch">
+        <!-- ───────── ROLES ───────── -->
+        <div class="col-12 col-lg-6">
+          <blogsphere-section-panel
+            icon="manage_accounts"
+            title="Roles"
+            [count]="(u.roles || []).length"
+            description="User's assigned roles and access level"
+          >
+            @if ((u.roles || []).length) {
+              <div class="row gutter-sm">
+                @for (role of u.roles; track role.name) {
+                  <div class="col-12">
+                    <article class="ud-role-card" matRipple>
+                      <span class="ud-role-card__icon">
+                        <span class="material-symbols-rounded">verified_user</span>
+                      </span>
+                      <div class="ud-role-card__body">
+                        <div class="ud-role-card__head">
+                          <h3 class="ud-role-card__name">{{ role.name }}</h3>
+                          @if (role.isSystemRole) {
+                            <blogsphere-badge [type]="BadgeType.primary" [isRounded]="true">System</blogsphere-badge>
+                          }
+                        </div>
+                        @if (role.description) {
+                          <p class="ud-role-card__desc">{{ role.description }}</p>
+                        }
+                      </div>
+                    </article>
+                  </div>
+                }
+              </div>
+            } @else {
+              <blogsphere-empty-state icon="manage_accounts" text="No roles assigned to this user."></blogsphere-empty-state>
+            }
+          </blogsphere-section-panel>
+        </div>
+
+        <!-- ───────── PERMISSIONS ───────── -->
+        <div class="col-12 col-lg-6">
+          <blogsphere-section-panel
+            icon="vpn_key"
+            title="Permissions"
+            [count]="(u.permissions || []).length"
+            description="Fine-grained access this user is allowed to perform"
+          >
+            @if ((u.permissions || []).length) {
+              <div class="ud-perm-groups">
+                @for (group of groupPermissions(u.permissions); track group.category) {
+                  <div class="ud-perm-group">
+                    <div class="ud-perm-group__head">
+                      <span class="material-symbols-rounded ud-perm-group__head-icon">folder</span>
+                      <span class="ud-perm-group__head-name">{{ group.category }}</span>
+                      <span class="ud-perm-group__head-count">{{ group.items.length }}</span>
+                    </div>
+                    <div class="ud-perm-chips">
+                      @for (perm of group.items; track perm) {
+                        <span class="ud-perm-chip" [matTooltip]="perm">
+                          <span class="material-symbols-rounded ud-perm-chip__icon">lock</span>
+                          <span class="ud-perm-chip__text">{{ perm }}</span>
+                        </span>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            } @else {
+              <blogsphere-empty-state icon="vpn_key" text="No permissions assigned to this user."></blogsphere-empty-state>
+            }
+          </blogsphere-section-panel>
+        </div>
+      </div>
+
+    }
+
+    @if (isJsonView) {
+      <!-- ───────── JSON VIEW ───────── -->
+      <blogsphere-page-hero [title]="u.fullName" [subtitle]="u.email || '—'" [compact]="true">
+        <blogsphere-page-hero-avatar
+          hero-avatar
+          shape="circle"
+          size="small"
+          [initials]="(u.firstName?.[0] || '') + (u.lastName?.[0] || '')"
+        ></blogsphere-page-hero-avatar>
+
+        <blogsphere-button
+          hero-actions
+          [type]="ButtonType.secondary"
+          [size]="ButtonSize.small"
+          (next)="toggleJsonView()"
+        >
+          <span class="material-symbols-rounded ud-hero-btn-icon">table_chart</span>
+          Table view
+        </blogsphere-button>
+      </blogsphere-page-hero>
+
+      <blogsphere-details-card mode="keyValue" icon="data_object" title="Raw details" [flushBody]="true">
+        <div class="details-json">
+          <pre class="details-json__pre">{{ u | json }}</pre>
+        </div>
+      </blogsphere-details-card>
+    }
+  </div>
+}
+
+<blogsphere-loader [enabled]="isManagementUserLoading$ | async"></blogsphere-loader>
