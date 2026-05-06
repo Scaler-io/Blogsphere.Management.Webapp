@@ -1,0 +1,94 @@
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: block;
+}
+
+.stat-tile {
+  @include card;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  height: 100%;
+  @include transition(all);
+
+  --stat-tile-color: #{$color-primary};
+  --stat-tile-bg: #{rgba($color-primary, 0.08)};
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: $spacing-md;
+    bottom: $spacing-md;
+    width: 3px;
+    border-radius: $border-radius-full;
+    background: var(--stat-tile-color);
+  }
+
+  &:hover {
+    box-shadow: 0 6px 16px $color-shadow;
+    transform: translateY(-2px);
+  }
+
+  &--primary {
+    --stat-tile-color: #{$color-primary};
+    --stat-tile-bg: #{rgba($color-primary, 0.08)};
+  }
+
+  &--info {
+    --stat-tile-color: #{$color-info-dark};
+    --stat-tile-bg: #{rgba($color-info-dark, 0.08)};
+  }
+
+  &--success {
+    --stat-tile-color: #{$color-success-dark};
+    --stat-tile-bg: #{rgba($color-success, 0.1)};
+  }
+
+  &--warning {
+    --stat-tile-color: #{$color-warning-dark};
+    --stat-tile-bg: #{rgba($color-warning, 0.12)};
+  }
+
+  &--danger {
+    --stat-tile-color: #{$color-error-dark};
+    --stat-tile-bg: #{rgba($color-error, 0.08)};
+  }
+
+  &__icon-tile {
+    width: 44px;
+    height: 44px;
+    border-radius: $border-radius-md;
+    background: var(--stat-tile-bg);
+    @include flex-center;
+    flex-shrink: 0;
+
+    .material-symbols-rounded {
+      font-size: 24px;
+      line-height: 1;
+      color: var(--stat-tile-color);
+    }
+  }
+
+  &__body {
+    @include flex-column;
+    min-width: 0;
+  }
+
+  &__num {
+    @include font($font-size-2xl, $font-weight-bold, $line-height-tight);
+    color: $color-text-primary;
+  }
+
+  &__label {
+    @include font($font-size-sm, $font-weight-medium);
+    color: rgba($color-text-primary, 0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-top: 2px;
+  }
+}

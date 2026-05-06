@@ -1,0 +1,19 @@
+<section class="section-panel">
+  <header class="section-panel__head">
+    <span class="material-symbols-rounded section-panel__head-icon" aria-hidden="true">{{ icon }}</span>
+    <div class="section-panel__head-text">
+      <h2 class="section-panel__head-title">
+        {{ title }}
+        @if (count !== null && count !== undefined) {
+          <span class="section-panel__head-count">{{ count }}</span>
+        }
+      </h2>
+      @if (description) {
+        <p class="section-panel__head-sub">{{ description }}</p>
+      }
+    </div>
+  </header>
+  <div class="section-panel__body">
+    <ng-content></ng-content>
+  </div>
+</section>
