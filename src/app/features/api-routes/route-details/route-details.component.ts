@@ -11,23 +11,19 @@ import {
 import { AppState } from 'src/app/store/app.state';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { InfoCardSize, InfoCardVariant } from 'src/app/shared/components/info-card';
-import { BadgeType, ButtonSize, ButtonType, ItemDeleteDialogData } from 'src/app/core/model/core';
+import { ButtonSize, ButtonType, ItemDeleteDialogData } from 'src/app/core/model/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ItemDeleteDialogComponent } from 'src/app/shared/components/item-delete-dialog/item-delete-dialog.component';
 import * as ApiRouteActions from 'src/app/state/api-route/api-route.action';
 import * as RequestPageActions from 'src/app/state/request-page/request-page.action';
 import { ApiRouteCommandType } from 'src/app/core/model/api-route.model';
-import {
-  DetailsCardTableCell,
-  DetailsCardTableRow,
-} from 'src/app/shared/components/details-card/details-card.model';
 import { DateHelper } from 'src/app/shared/helpers/date.helper';
 
 @Component({
-    selector: 'blogsphere-route-details',
-    templateUrl: './route-details.component.html',
-    styleUrls: ['./route-details.component.scss'],
-    standalone: false
+  selector: 'blogsphere-route-details',
+  templateUrl: './route-details.component.html',
+  styleUrls: ['./route-details.component.scss'],
+  standalone: false,
 })
 export class RouteDetailsComponent implements OnInit, OnDestroy {
   public apiRouteId: string = this.route.snapshot.params['id'];
@@ -37,11 +33,6 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
   public routeCommandResponse$ = this.store.select(selectApiRouteCommandResponse);
   public isJsonView: boolean = false;
 
-  public headersTableHeaders: string[] = ['Name', 'Mode', 'Values', 'Status'];
-  public transformsTableHeaders: string[] = ['Path pattern', 'Status'];
-  public headersTableRows: DetailsCardTableRow[] = [];
-  public transformsTableRows: DetailsCardTableRow[] = [];
-
   private routeName: string;
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -49,7 +40,6 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
   InfoCardSize = InfoCardSize;
   ButtonType = ButtonType;
   ButtonSize = ButtonSize;
-  BadgeType = BadgeType;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,8 +55,6 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
     this.routeDetails$.pipe(takeUntil(this.destroy$)).subscribe(res => {
       if (res) {
         this.routeName = res.routeId;
-        this.headersTableRows = this.buildHeadersTableRows(res.headers);
-        this.transformsTableRows = this.buildTransformsTableRows(res.transforms);
       }
     });
 
@@ -111,6 +99,11 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  public formatDate(date: string | null | undefined): string {
+    if (!date) return 'N/A';
+    return DateHelper.formatDateToTimeAgo(date);
+  }
+
   private loadApiRouteDetails(): void {
     if (this.apiRouteId) {
       this.store.dispatch(new ApiRouteActions.GetApiRouteById({ id: this.apiRouteId }));
@@ -120,11 +113,6 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
         }
       });
     }
-  }
-
-  public formatDate(date: string | null | undefined): string {
-    if (!date) return 'N/A';
-    return DateHelper.formatDateToTimeAgo(date);
   }
 
   private handleRouteResponse(): void {
@@ -138,26 +126,5 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
       })
     );
     this.router.navigate(['success']);
-  }
-
-  private buildHeadersTableRows(headers: any[] | null | undefined): DetailsCardTableRow[] {
-    return (headers || []).map(h => {
-      const nameCell: DetailsCardTableCell = { text: h?.name ?? '', variant: 'emphasis' };
-      const modeCell: DetailsCardTableCell = { text: h?.mode ?? '', variant: 'chip' };
-      const valuesCell: DetailsCardTableCell = {
-        text: (h?.values || []).join(', '),
-        variant: 'mono',
-      };
-      const statusCell: DetailsCardTableCell = { status: !!h?.isActive };
-      return [nameCell, modeCell, valuesCell, statusCell];
-    });
-  }
-
-  private buildTransformsTableRows(transforms: any[] | null | undefined): DetailsCardTableRow[] {
-    return (transforms || []).map(t => {
-      const pathCell: DetailsCardTableCell = { text: t?.pathPattern ?? '', variant: 'mono' };
-      const statusCell: DetailsCardTableCell = { status: !!t?.isActive };
-      return [pathCell, statusCell];
-    });
   }
 }
