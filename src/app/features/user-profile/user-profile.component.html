@@ -24,12 +24,12 @@
             <span class="account-center__avatar-initials">{{ vm.initials }}</span>
           </div>
           <div class="account-center__profile-info">
-            <h2 class="account-center__profile-name">{{ vm.user?.name || 'User' }}</h2>
+            <h2 class="account-center__profile-name">{{ vm.user?.fullName || 'User' }}</h2>
             <p class="account-center__profile-email">{{ vm.user?.email || 'No email available' }}</p>
-            @if (vm.user?.role) {
+            @if (vm.role) {
               <span class="account-center__profile-badge">
                 <span class="material-symbols-outlined">verified</span>
-                {{ vm.user?.role }}
+                {{ vm.role }}
               </span>
             }
           </div>
@@ -56,7 +56,7 @@
             </div>
             <div class="account-center__row-content">
               <span class="account-center__row-label">Full name</span>
-              <span class="account-center__row-value">{{ vm.user?.name || 'Not set' }}</span>
+              <span class="account-center__row-value">{{ vm.user?.fullName || 'Not set' }}</span>
             </div>
           </div>
           <div class="account-center__row">
@@ -157,7 +157,7 @@
             </div>
             <div class="account-center__row-content">
               <span class="account-center__row-label">Role</span>
-              <span class="account-center__row-value">{{ vm.user?.role || 'Not assigned' }}</span>
+              <span class="account-center__row-value">{{ vm.role || 'Not assigned' }}</span>
             </div>
           </div>
           <div class="account-center__row account-center__row--last">

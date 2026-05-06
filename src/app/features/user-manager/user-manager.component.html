@@ -1,0 +1,11 @@
+<div class="user-manager__container">
+  <blogsphere-search-layout *ngIf="!isUserDetailsRoute" [allowAdd]="canWriteUsers$ | async" addButtonLabel="Create User" filterLabel="Filter Users" [isFileterFormValid]="true">
+    <ng-container>
+      a form here
+    </ng-container>
+  </blogsphere-search-layout>
+  <ng-container>
+      <router-outlet></router-outlet>
+  </ng-container>
+</div>
+  
