@@ -1,0 +1,24 @@
+<div
+  class="sidenav__content-list--item sidebar-expandable-nav"
+  [class.route-active]="isGroupActive()"
+  (click)="headerClick.emit()"
+  role="listitem"
+>
+  <div class="main-content">
+    <span class="material-symbols-outlined item-icon">{{ headerIcon }}</span>
+    <span class="item-label">{{ label }}</span>
+    <span class="material-symbols-outlined item-icon">
+      {{ expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+    </span>
+  </div>
+  <div class="submenu" [class.submenu--active]="expanded" role="list">
+    @for (item of submenuItems; track item.routerLink) {
+      <blogsphere-sidebar-submenu-link
+        [link]="item.routerLink"
+        [icon]="item.icon"
+        [label]="item.label"
+        (navigate)="submenuNavigate.emit()"
+      />
+    }
+  </div>
+</div>

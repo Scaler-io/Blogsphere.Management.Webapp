@@ -1,0 +1,13 @@
+<div
+  class="sidenav__content-list--item sidebar-nav-link"
+  matRipple
+  [routerLink]="link"
+  (click)="navigate.emit()"
+  [routerLinkActive]="'route-active'"
+  role="listitem"
+>
+  <div class="main-content">
+    <span class="material-symbols-outlined item-icon">{{ icon }}</span>
+    <span class="item-label">{{ label }}</span>
+  </div>
+</div>
