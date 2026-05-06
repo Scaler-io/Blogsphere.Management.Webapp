@@ -22,7 +22,7 @@
     {
       "files": "*.{ts,js,tsx,jsx}",
       "options": {
-        "printWidth": 100,
+        "printWidth": 150,
         "tabWidth": 2,
         "singleQuote": true,
         "trailingComma": "es5",

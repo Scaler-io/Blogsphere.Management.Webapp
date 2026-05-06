@@ -1,0 +1,56 @@
+---
+alwaysApply: true
+---
+# Angular web expert (this repo)
+
+Apply to all work in this project. Aligns with the personal skill `angular-web-expert` if present.
+
+## Architecture (NgModule-first)
+
+- **Modular components only** — Every component belongs to an Angular `NgModule` (`*.module.ts`). Declare components in `declarations`; import/export modules as the feature needs. Do **not** use standalone components (`standalone: true`). Keep `standalone: false` (or omit where the default matches the module pattern) and wire everything through modules.
+- **One module per reusable component (when split)** — If a feature is broken into child components (e.g. sidebar nav link, submenu row), each child has its own `*.module.ts` that **declares** and **exports** that component. The parent feature module **imports** those feature modules (e.g. `SidebarModule` imports `SidebarNavLinkModule`, `SidebarExpandableNavItemModule`). Import the **directives/modules** each child template needs (`RouterModule`, `MatRippleModule`, etc.) in **that** child’s module, not only in the parent.
+- **Sub-features are modules too** — Nested or “child” UI (e.g. `cluster-details`, `route-setup`, shared `button`, `table`) each live in their own feature/shared folder with a dedicated `*.module.ts`, consistent with `src/app/features/**` and `src/app/shared/components/**`.
+- **RxJS over signals** — Do **not** use Angular `signal` / `computed` / `effect` for app or template state. Use RxJS (`Observable`, `Subject` / `BehaviorSubject` where appropriate), NgRx store selectors, and the `async` pipe (or explicit subscription in components with cleanup). Prefer existing store and service patterns in this repo.
+- **Dependency injection** — Use constructor injection to match existing components and services unless the file already uses `inject()` consistently.
+
+## Component selectors and naming
+
+- **Use element selectors with the `blogsphere-` prefix** — Kebab-case, readable, and aligned with the folder or feature name (e.g. `blogsphere-sidebar-nav-link`, `blogsphere-sidebar-expandable-nav-item`). Templates should read as `<blogsphere-sidebar-nav-link …>` not obscure patterns.
+- **Do not use attribute-on-native-element selectors** such as `li[blogsphereSidebarNavLink]` or `button[blogsphereFoo]` unless the user **explicitly** asks for that pattern. They are easy to misuse, harder to review, and do not match this project’s usual component style.
+- **Inputs/outputs** — Use clear `@Input()` / `@Output()` names (`link`, `label`, `navigate`, `headerClick`). Pass `routerLink`, `matRipple`, and `routerLinkActive` **inside** the child template when that child owns the row, so the parent stays a thin shell.
+
+## DOM structure and accessibility
+
+- **Valid HTML** — A `<ul>` may only contain `<li>` (plus script-supporting elements). A custom element such as `<blogsphere-sidebar-nav-link>` is **not** a valid direct child of `<ul>`. If you need component hosts in a list-like nav, use a **`div`** with `role="list"` and rows with `role="listitem"`, or keep `ul`/`li` and put only native `li` in the DOM (no component wrapper between `ul` and `li`). Do not ship invalid markup and rely on the browser to “fix” it.
+- **Landmarks** — When using `role="list"` / `role="listitem"`, keep labels sensible (or `aria-label` on the list container) so behavior matches the old layout.
+
+## Styles (SCSS) and encapsulation
+
+- **Each component carries its own Sass** — Co-locate `*.component.scss` with the component; no shared sidebar-only partials unless the team agrees on a design-token file. Prefer **project variables/mixins** (`sass-utils/variables`, etc.).
+- **Default to emulated encapsulation** — Do **not** set `ViewEncapsulation.None` as a default fix. Prefer `:host { display: block; }` (or `display: contents` only when measured and justified) and BEM-style classes **inside** the component template so global utilities (e.g. `.text-xl` from `assets/styles`) still apply predictably.
+- **Splitting UI** — When moving markup from a parent into a child, **move or re-express** the same rules (using `:host` and inner classes) so layout, font size, and flex behavior are preserved. Do not assume parent `.sidenav …` selectors still apply to nodes inside another component’s template without checking encapsulation.
+- **Imports** — If a child template uses `routerLink`, `matRipple`, or Material directives, ensure the **child’s** `NgModule` imports `RouterModule`, `MatRippleModule`, or the relevant Material module.
+
+## Principles
+
+- **Business logic stays simple** — Straightforward conditionals and small functions; avoid extra abstractions (facades, “managers,” generic layers) unless the codebase already uses them or complexity is clearly justified.
+- **Naming** — Full words that describe intent: `loadUserDashboard`, `isSidebarCollapsed`, `onFilterChange`, `selectedTenantId`. Avoid vague `data`, `temp`, `info`, `handle`, `process` without domain context. Booleans: `is` / `has` / `should` / `can`. Match existing project conventions (e.g. `$` on observables) before introducing new ones.
+- **Angular** — NgModules, `OnPush` where appropriate, thin components. HTTP and heavy rules live in services. Prefer the `async` pipe for observables bound in templates; avoid unnecessary manual `subscribe` in templates.
+- **Templates** — Minimal logic in HTML; extract methods or small observables/pipes for non-trivial expressions. Use `@for` with a stable `track` (id or index per feature needs). Preserve accessibility (labels, focus, semantics).
+- **Styles** — Match existing SCSS structure, variables, and spacing. Component-scoped styles; shared tokens/mixins when the project provides them. Avoid deep brittle selectors and unnecessary `!important`.
+
+## Refactors
+
+- Change only what the task requires; preserve behavior unless asked otherwise.
+- After edits: correct NgModule `imports` / `declarations` / `exports` and component `module` wiring; do not introduce standalone or signal-based APIs.
+
+## Anti-patterns
+
+- Standalone components or migrating features to standalone without an explicit project-wide decision.
+- Angular signals for state that should be RxJS / store-driven in this app.
+- Attribute selector components on native elements (`li[...]`, `button[...]`) when a normal `blogsphere-*` element component is appropriate.
+- `ViewEncapsulation.None` used to paper over broken selectors after a split instead of fixing `:host` and class structure.
+- Invalid list markup (`<ul>` wrapping custom elements) or missing `MatRippleModule` / `RouterModule` in the **child** module that owns the template.
+- Over-engineering domain logic for one-off flows.
+- Names like `utils` / `helper` / `manager` without domain meaning.
+- Duplicating styles instead of reusing project variables/mixins.

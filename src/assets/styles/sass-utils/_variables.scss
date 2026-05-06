@@ -174,21 +174,15 @@ $color-border-dark: $gray-400; // #bdbdbd
 $color-shadow: rgba(0, 32, 91, 0.1); // Based on text dark blue
 $color-shadow-dark: rgba(0, 32, 91, 0.2);
 $color-shadow-light: rgba(0, 32, 91, 0.05);
+$color-shadow-inset-light: inset 0 8px 8px -6px rgba(0, 0, 0, 0.186);
+$color-shadow-inset-dark: inset 0 8px 8px -6px rgba(12, 12, 12, 0.448);
 
 // ============================================================================
 // GRADIENT COLORS
 // ============================================================================
 
-$gradient-primary: linear-gradient(
-  135deg,
-  $background-blue-500 0%,
-  $primary-500 100%
-);
-$gradient-accent: linear-gradient(
-  135deg,
-  $accent-yellow-400 0%,
-  $accent-yellow-600 100%
-);
+$gradient-primary: linear-gradient(135deg, $background-blue-500 0%, $primary-500 100%);
+$gradient-accent: linear-gradient(135deg, $accent-yellow-400 0%, $accent-yellow-600 100%);
 $gradient-success: linear-gradient(135deg, $success-400 0%, $success-600 100%);
 
 // ============================================================================
@@ -196,8 +190,8 @@ $gradient-success: linear-gradient(135deg, $success-400 0%, $success-600 100%);
 // ============================================================================
 
 // Font Families
-$font-family-primary: "Titillium Web", sans-serif;
-$font-family-secondary: "Roboto", "Helvetica Neue", sans-serif;
+$font-family-primary: 'Titillium Web', sans-serif;
+$font-family-secondary: 'Roboto', 'Helvetica Neue', sans-serif;
 
 // Font Weights
 $font-weight-light: 200;
