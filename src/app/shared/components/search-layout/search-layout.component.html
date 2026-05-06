@@ -28,10 +28,7 @@
 
       <!-- Filter options panel -->
       @if (!(isMobileView$ | async)) {
-        <div
-          class="filter-options-panel"
-          [class.filter-options-panel--hidden]="!filterPanelOpened"
-          >
+        <div class="filter-options-panel" [class.filter-options-panel--hidden]="!filterPanelOpened">
           <div class="filter-options-panel__header">
             <div class="filter-options-panel__header-heading">{{ filterLabel }}</div>
             <div class="filter-options-panel__header-closebtn">
@@ -47,58 +44,56 @@
               (next)="applyFilter()"
               [type]="ButtonType.secondary"
               [size]="ButtonSize.small"
-              >
+            >
               Apply filter
             </blogsphere-button>
-            <!-- <button mat-flat-button color="primary" [disabled]="!isFileterFormValid" (click)="applyFilter()">Apply filter</button>
-            <button mat-flat-button color="primary" [disabled]="!isFileterFormValid" (click)="applyFilter()">Apply filter</button> -->
           </div>
         </div>
       }
 
       <!-- Mobile filter options panel -->
-      <!-- <div
-      class="filter-options-panel__mobile"
-      *ngIf="isMobileView$ | async"
-      [class.filter-options-panel__mobile--hidden]="!filterPanelOpened"
+      <div
+        class="filter-options-panel__mobile"
+        *ngIf="isMobileView$ | async"
+        [class.filter-options-panel__mobile--hidden]="!filterPanelOpened"
       >
-      <div class="filter-options-panel__mobile__header">
-        <div class="filter-options-panel__mobile__header-heading">{{ filterLabel }}</div>
-        <div class="filter-options-panel__mobile__header-closebtn">
-          <span class="material-symbols-outlined" (click)="toggleFilterPanel()">close</span>
+        <div class="filter-options-panel__mobile__header">
+          <div class="filter-options-panel__mobile__header-heading">{{ filterLabel }}</div>
+          <div class="filter-options-panel__mobile__header-closebtn">
+            <span class="material-symbols-outlined" (click)="toggleFilterPanel()">close</span>
+          </div>
+        </div>
+
+        <div class="filter-options-panel__mobile__body">
+          <ng-content></ng-content>
+        </div>
+
+        <div class="filter-options-panel__mobile__footer">
+          <blogsphere-button
+            [isDisabled]="!isFileterFormValid"
+            (next)="applyFilter()"
+            [type]="ButtonType.secondary"
+            [size]="ButtonSize.small"
+          >
+            Apply filter
+          </blogsphere-button>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div class="filter-options-panel__mobile__body">
-        <ng-content></ng-content>
-      </div>
-
-      <div class="filter-options-panel__mobile__footer">
+  @if (allowAdd) {
+    <div class="col-xs-12 col-md-2">
+      <div class="w-100 d-md-flex justify-content-end mt-md">
         <blogsphere-button
-          [isDisabled]="!isFileterFormValid"
-          (next)="applyFilter()"
+          [isAutoWidth]="true"
           [type]="ButtonType.secondary"
           [size]="ButtonSize.small"
-          >
-          Apply filter
+          (click)="onAddResource()"
+        >
+          {{ addButtonLabel }}
         </blogsphere-button>
       </div>
-    </div> -->
-  </div>
-</div>
-
-<div class="col-xs-12 col-md-2">
-  <!-- <button mat-flat-button color="primary" (click)="onAddResource()">{{ addButtonLabel }}</button> -->
-  <!-- <button mat-flat-button color="primary" class="add-button" (click)="onAddResource()">{{ addButtonLabel }}</button> -->
-  <div class="w-100 d-md-flex justify-content-end mt-md">
-    <blogsphere-button
-      [isAutoWidth]="true"
-      [type]="ButtonType.secondary"
-      [size]="ButtonSize.small"
-      (click)="onAddResource()"
-      >
-      {{ addButtonLabel }}
-    </blogsphere-button>
-  </div>
-</div>
+    </div>
+  }
 </div>

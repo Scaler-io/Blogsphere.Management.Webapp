@@ -29,7 +29,7 @@
         } @else {
           <div class="custom-menu" matRipple [matMenuTriggerFor]="actionMenu">
             <span class="material-symbols-outlined">more_horiz</span>
-            <mat-menu #actionMenu="matMenu">
+            <mat-menu #actionMenu="matMenu" xPosition="before">
               @if (allowVisit) {
                 <button mat-menu-item (click)="onVisit(element)">Visit</button>
               }

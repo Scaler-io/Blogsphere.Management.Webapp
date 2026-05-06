@@ -3,10 +3,10 @@ import { NavigationEnd, Router } from '@angular/router';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
-    selector: 'blogsphere-page-header',
-    templateUrl: './page-header.component.html',
-    styleUrls: ['./page-header.component.scss'],
-    standalone: false
+  selector: 'blogsphere-page-header',
+  templateUrl: './page-header.component.html',
+  styleUrls: ['./page-header.component.scss'],
+  standalone: false,
 })
 export class PageHeaderComponent implements OnInit {
   public pageIcon: string;
@@ -21,9 +21,14 @@ export class PageHeaderComponent implements OnInit {
     ['Clusters']: 'hub',
     ['Routes']: 'route',
     ['Subscription manager']: 'subscriptions',
+    ['App users']: 'person',
+    ['Management users']: 'admin_panel_settings',
   };
 
-  constructor(private breadcrumb: BreadcrumbService, private router: Router) {}
+  constructor(
+    private breadcrumb: BreadcrumbService,
+    private router: Router
+  ) {}
 
   private setPageVisibilityFlags(): void {
     this.isSuccessPage = this.router.url.includes('/success');
@@ -43,7 +48,12 @@ export class PageHeaderComponent implements OnInit {
       if (page) {
         const pageLabel = page[page.length - 1]?.label as string;
         this.pageName = pageLabel;
-        this.pageIcon = this.pageIconMap[page[0]?.label.toString()];
+        for(let len = page.length - 1; len >= 0; len--) {
+          if(this.pageIconMap[page[len]?.label as string]) {
+            this.pageIcon = this.pageIconMap[page[len]?.label as string];
+            break;
+          }
+        }
         this.isBusy = false;
       }
     });
