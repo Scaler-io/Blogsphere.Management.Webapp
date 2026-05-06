@@ -1,0 +1,46 @@
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: inline-flex;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: 4px 10px;
+  border-radius: $border-radius-full;
+  @include font($font-size-base, $font-weight-medium);
+  white-space: nowrap;
+
+  &__icon {
+    font-size: 18px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  &__label {
+    line-height: 1;
+  }
+
+  &--success {
+    background: rgba($color-success, 0.1);
+    color: $color-success-dark;
+  }
+
+  &--warning {
+    background: rgba($color-warning, 0.14);
+    color: $color-warning-dark;
+  }
+
+  &--danger {
+    background: rgba($color-error, 0.08);
+    color: $color-error-dark;
+  }
+
+  &--neutral {
+    background: rgba($color-text-primary, 0.06);
+    color: rgba($color-text-primary, 0.7);
+  }
+}
