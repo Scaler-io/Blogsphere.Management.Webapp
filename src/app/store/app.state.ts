@@ -27,6 +27,10 @@ import {
   SUBSCRIPTION_STATE_NAME,
   SubscriptionState,
 } from '../state/subscription/subscription.reducer';
+import {
+  USER_MANAGER_STATE_NAME,
+  UserManagerState,
+} from '../state/user-manager/user-manager.reducer';
 
 export interface AppState {
   [MOBILE_VIEW_STATE_NAME]: MobileViewState;
@@ -40,6 +44,7 @@ export interface AppState {
   [API_ROUTE_STATE_NAME]: ApiRouteState;
   [REQUEST_PAGE_STATE_NAME]: RequestPageState;
   [DASHBOARD_STATE_NAME]: DashboardState;
+  [USER_MANAGER_STATE_NAME]: UserManagerState;
 }
 
 export const appReducer = {

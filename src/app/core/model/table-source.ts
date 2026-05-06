@@ -6,7 +6,7 @@ export interface TableColumnMap {
 
 export interface TableColumnValueMap {
   value: string;
-  isDateField: boolean;
-  isStatusField: boolean;
+  isDateField?: boolean;
+  isStatusField?: boolean;
   isLinkField?: boolean;
 }
