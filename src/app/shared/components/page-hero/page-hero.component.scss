@@ -1,0 +1,195 @@
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: block;
+}
+
+// ============================================================================
+// PAGE HERO — gradient cover, avatar slot, identity, action bar, contact strip
+// ============================================================================
+.page-hero {
+  @include card;
+  position: relative;
+  overflow: hidden;
+
+  // ── Gradient cover ───────────────────────────────────────────
+  &__cover {
+    height: 96px;
+    background: $gradient-primary;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 0%, rgba($accent-yellow-500, 0.18), transparent 45%),
+        radial-gradient(circle at 80% 120%, rgba($color-text-inverse, 0.18), transparent 50%);
+      pointer-events: none;
+    }
+
+    @include respond-to(xs) {
+      height: 72px;
+    }
+  }
+
+  // ── Main grid (avatar | body) ────────────────────────────────
+  &__main {
+    display: grid;
+    // Default hero: avatar | body. The action area floats absolutely
+    // at the top-right of the hero, overlaying the gradient cover.
+    grid-template-columns: auto 1fr;
+    align-items: flex-start;
+    gap: $spacing-lg $spacing-xl;
+    padding: 0 $spacing-2xl $spacing-xl;
+    margin-top: -56px;
+
+    @include respond-to(xs) {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+      padding: 0 $spacing-md $spacing-lg;
+      margin-top: -48px;
+      gap: $spacing-md;
+    }
+
+    // Compact variant (e.g. JSON view): no cover, actions stay in flow
+    // on the right of the row.
+    &--compact {
+      margin-top: 0;
+      padding: $spacing-lg $spacing-2xl;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+
+      @include respond-to(xs) {
+        padding: $spacing-md $spacing-lg;
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  // ── Avatar slot (rendered by consumer, e.g. blogsphere-page-hero-avatar) ──
+  &__avatar-slot {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  // ── Identity body ────────────────────────────────────────────
+  &__body {
+    min-width: 0;
+    padding-top: $spacing-2xl;
+
+    @include respond-to(xs) {
+      padding-top: $spacing-sm;
+    }
+  }
+
+  // The compact variant has no cover, so the body sits at the top
+  // and the title doesn't need vertical offset.
+  &--compact &__body {
+    padding-top: 0;
+  }
+
+  &__name {
+    @include heading(4);
+    color: $color-text-primary;
+    margin: 0 0 $spacing-xs;
+    word-break: break-word;
+
+    &--sm {
+      @include heading(5);
+      margin: 0;
+    }
+  }
+
+  &__subtitle {
+    @include font($font-size-sm, $font-weight-regular);
+    color: rgba($color-text-primary, 0.6);
+    margin: $spacing-xs 0 0;
+  }
+
+  // ── Actions area ─────────────────────────────────────────────
+  // Default: floats top-right over the gradient. Re-skinned below
+  // as a translucent glass pill for contrast on the blue gradient.
+  &__actions {
+    position: absolute;
+    top: $spacing-md;
+    right: $spacing-md;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    @include respond-to(xs) {
+      top: $spacing-sm;
+      right: $spacing-sm;
+    }
+  }
+
+  // In compact mode, actions sit in the grid flow on the right.
+  &--compact &__actions {
+    position: static;
+    align-items: flex-end;
+
+    @include respond-to(xs) {
+      align-items: center;
+    }
+  }
+
+  // ── Slotted button overrides ─────────────────────────────────
+  // The shared button component force-applies `text-transform: capitalize`
+  // which breaks Material Symbol ligatures (e.g. `data_object`) and mangles
+  // acronyms like "JSON". Neutralize for any button slotted into actions
+  // and turn the label into a flex row so icon + text align with a gap.
+  :host ::ng-deep &__actions {
+    .button__layout-label {
+      display: inline-flex;
+      align-items: center;
+      gap: $spacing-xs;
+      text-transform: none !important;
+    }
+  }
+
+  // Re-skin the action button when it floats over the gradient cover
+  // (regular hero only) — translucent glass pill with white text/border
+  // for high contrast against the blue gradient.
+  :host ::ng-deep &:not(&--compact) &__actions {
+    .button__layout--secondary {
+      background-color: rgba($color-background, 0.16) !important;
+      color: $color-text-inverse !important;
+      border-color: rgba($color-background, 0.5) !important;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18) !important;
+
+      &:hover:not(.button__layout--disabled):not(.button__layout--loading) {
+        background-color: rgba($color-background, 0.28) !important;
+        color: $color-text-inverse !important;
+        border-color: rgba($color-background, 0.75) !important;
+      }
+    }
+  }
+
+  // ── Contact strip ────────────────────────────────────────────
+  &__contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md $spacing-xl;
+    padding: $spacing-md $spacing-2xl;
+    border-top: 1px solid $color-border-light;
+    background: $color-background-secondary;
+
+    @include respond-to(xs) {
+      gap: $spacing-sm $spacing-md;
+      padding: $spacing-md $spacing-lg;
+      justify-content: center;
+    }
+
+    // Hide the strip when no items are projected so consumers can
+    // simply omit the slot to drop it.
+    &:empty {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,121 @@
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.hero-avatar {
+  position: relative;
+  background: $gradient-primary;
+  border: 4px solid $color-background;
+  box-shadow: 0 4px 12px $color-shadow-dark;
+  @include flex-center;
+  flex-shrink: 0;
+
+  // ── Shape ────────────────────────────────────────────────────
+  &--circle {
+    border-radius: $border-radius-full;
+  }
+
+  &--square {
+    border-radius: $border-radius-2xl;
+  }
+
+  // ── Size ─────────────────────────────────────────────────────
+  // Default: 112px circle (people) / 96px square (things). The size
+  // difference reflects that a circle reads slightly smaller visually.
+  &--default {
+    &.hero-avatar--circle {
+      width: 112px;
+      height: 112px;
+
+      @include respond-to(xs) {
+        width: 96px;
+        height: 96px;
+      }
+    }
+
+    &.hero-avatar--square {
+      width: 96px;
+      height: 96px;
+
+      @include respond-to(xs) {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  }
+
+  &--small {
+    width: 56px;
+    height: 56px;
+    border-width: 2px;
+    box-shadow: 0 2px 6px $color-shadow;
+
+    &.hero-avatar--square {
+      border-radius: $border-radius-lg;
+    }
+  }
+
+  // ── Inactive (muted gradient) ────────────────────────────────
+  &--muted {
+    background: linear-gradient(135deg, $gray-500 0%, $gray-700 100%);
+    filter: saturate(0.6);
+  }
+
+  // ── Glyph (Material icon) ────────────────────────────────────
+  &__icon {
+    font-size: 48px;
+    line-height: 1;
+    color: $color-text-inverse;
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 400;
+
+    &--sm {
+      font-size: 28px;
+    }
+  }
+
+  // ── Initials text ────────────────────────────────────────────
+  &__initials {
+    @include font($font-size-4xl, $font-weight-bold, $line-height-tight);
+    color: $color-text-inverse;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &--sm {
+      @include font($font-size-lg, $font-weight-bold, $line-height-tight);
+    }
+  }
+
+  // ── Status dot ───────────────────────────────────────────────
+  &__dot {
+    position: absolute;
+    right: 4px;
+    bottom: 6px;
+    width: 18px;
+    height: 18px;
+    border-radius: $border-radius-full;
+    background: $gray-400;
+    border: 3px solid $color-background;
+
+    &--active {
+      background: $color-success;
+      box-shadow: 0 0 0 0 rgba($color-success, 0.5);
+      animation: hero-avatar-pulse 2.4s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes hero-avatar-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba($color-success, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba($color-success, 0);
+  }
+}

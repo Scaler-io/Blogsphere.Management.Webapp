@@ -1,0 +1,31 @@
+<section class="page-hero" [class.page-hero--compact]="compact">
+  @if (!compact) {
+    <div class="page-hero__cover" aria-hidden="true"></div>
+  }
+
+  <div class="page-hero__main" [class.page-hero__main--compact]="compact">
+    <div class="page-hero__avatar-slot">
+      <ng-content select="[hero-avatar]"></ng-content>
+    </div>
+
+    <div class="page-hero__body">
+      @if (title) {
+        <h1 class="page-hero__name" [class.page-hero__name--sm]="compact">{{ title }}</h1>
+      }
+      @if (compact && subtitle) {
+        <p class="page-hero__subtitle">{{ subtitle }}</p>
+      }
+      <ng-content select="[hero-body]"></ng-content>
+    </div>
+
+    <div class="page-hero__actions">
+      <ng-content select="[hero-actions]"></ng-content>
+    </div>
+  </div>
+
+  @if (!compact) {
+    <div class="page-hero__contact">
+      <ng-content select="[hero-contact]"></ng-content>
+    </div>
+  }
+</section>
