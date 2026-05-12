@@ -29,7 +29,7 @@
   &__path-icon {
     font-size: 1.125rem;
     line-height: 1;
-    color: var(--mat-sys-primary);
+    color: var(--mat-sys-on-surface-variant);
     flex-shrink: 0;
   }
 
@@ -37,8 +37,8 @@
     font-family: $font-family-mono;
     font-size: $type-body-lg-size;
     font-weight: $font-weight-medium;
-    color: var(--mat-sys-primary);
-    background: var(--mat-sys-primary-fixed);
+    color: var(--mat-sys-on-surface);
+    background: var(--mat-sys-surface-container);
     border: 1px solid var(--mat-sys-outline-variant);
     border-radius: $border-radius-md;
     padding: 4px $spacing-sm;
@@ -68,7 +68,7 @@
   &__icon {
     font-size: 1.125rem;
     line-height: 1;
-    color: var(--mat-sys-primary);
+    color: var(--mat-sys-on-surface-variant);
     flex-shrink: 0;
   }
 
@@ -146,14 +146,14 @@
     width: 2.25rem;
     height: 2.25rem;
     border-radius: $border-radius-md;
-    background: var(--mat-sys-primary-fixed);
+    background: var(--mat-sys-secondary-container);
     flex-shrink: 0;
     align-self: flex-start;
 
     .material-symbols-rounded {
       font-size: 1.25rem;
       line-height: 1;
-      color: var(--mat-sys-primary);
+      color: var(--mat-sys-on-secondary-container);
     }
   }
 
