@@ -1,0 +1,22 @@
+<button
+  type="button"
+  class="action-row"
+  (click)="onActivate($event)"
+  [attr.aria-label]="label + ' — ' + actionLabel"
+>
+  <span class="action-row__tile" aria-hidden="true">
+    <span class="material-symbols-rounded">{{ icon }}</span>
+  </span>
+
+  <span class="action-row__body">
+    <span class="action-row__label">{{ label }}</span>
+    @if (hint) {
+      <span class="action-row__hint">{{ hint }}</span>
+    }
+  </span>
+
+  <span class="action-row__cta">
+    <span>{{ actionLabel }}</span>
+    <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
+  </span>
+</button>

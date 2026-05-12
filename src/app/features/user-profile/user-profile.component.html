@@ -1,196 +1,130 @@
 <div class="account-center">
   @if (profileViewModel$ | async; as vm) {
     @if (!vm.isLoading) {
-      <!-- Breadcrumb navigation -->
-      <nav class="account-center__breadcrumb">
-        <a routerLink="/dashboard" class="account-center__breadcrumb-link">
-          <span class="material-symbols-outlined">home</span>
+      <nav class="account-center__crumbs" aria-label="Breadcrumb">
+        <a routerLink="/dashboard" class="account-center__crumb-link">
+          <span class="material-symbols-rounded">home</span>
           <span>Home</span>
         </a>
-        <span class="material-symbols-outlined account-center__breadcrumb-sep">chevron_right</span>
-        <span class="account-center__breadcrumb-current">Account Center</span>
+        <span class="material-symbols-rounded account-center__crumb-sep" aria-hidden="true">chevron_right</span>
+        <span class="account-center__crumb-current">Account Center</span>
       </nav>
-      <!-- Page title -->
-      <div class="account-center__heading">
+
+      <header class="account-center__heading">
         <h1 class="account-center__title">Account Center</h1>
         <p class="account-center__subtitle">
           Manage your profile details, security settings and account preferences across Blogsphere.
         </p>
-      </div>
-      <!-- Profile identity card -->
-      <section class="account-center__profile-card">
-        <div class="account-center__profile-top">
-          <div class="account-center__avatar">
-            <span class="account-center__avatar-initials">{{ vm.initials }}</span>
-          </div>
-          <div class="account-center__profile-info">
-            <h2 class="account-center__profile-name">{{ vm.user?.fullName || 'User' }}</h2>
-            <p class="account-center__profile-email">{{ vm.user?.email || 'No email available' }}</p>
-            @if (vm.role) {
-              <span class="account-center__profile-badge">
-                <span class="material-symbols-outlined">verified</span>
-                {{ vm.role }}
+      </header>
+
+      <blogsphere-page-hero
+        [title]="vm.user?.fullName || 'User'"
+        [subtitle]="vm.user?.email || 'No email available'"
+        [compact]="true"
+      >
+        <blogsphere-page-hero-avatar
+          hero-avatar
+          shape="circle"
+          [initials]="vm.initials"
+        ></blogsphere-page-hero-avatar>
+
+        @if (vm.role) {
+          <div hero-body class="account-center__hero-meta">
+            <blogsphere-status-pill
+              tone="info"
+              icon="verified"
+              [label]="vm.role"
+              size="sm"
+            ></blogsphere-status-pill>
+            @if (vm.user?.department) {
+              <span class="account-center__hero-dept">
+                <span class="material-symbols-rounded" aria-hidden="true">business</span>
+                <span>{{ vm.user.department }}</span>
               </span>
             }
           </div>
-        </div>
-        @if (vm.user?.department) {
-          <div class="account-center__profile-meta">
-            <span class="material-symbols-outlined">business</span>
-            <span>{{ vm.user.department }}</span>
-          </div>
         }
-      </section>
-      <!-- Personal information section -->
+      </blogsphere-page-hero>
+
       <section class="account-center__section">
         <div class="account-center__section-header">
-          <h3 class="account-center__section-title">Personal information</h3>
+          <h2 class="account-center__section-title">Personal information</h2>
           <p class="account-center__section-desc">
             Your personal details used across the Blogsphere workspace.
           </p>
         </div>
-        <div class="account-center__card">
-          <div class="account-center__row">
-            <div class="account-center__row-icon">
-              <span class="material-symbols-outlined">badge</span>
-            </div>
-            <div class="account-center__row-content">
-              <span class="account-center__row-label">Full name</span>
-              <span class="account-center__row-value">{{ vm.user?.fullName || 'Not set' }}</span>
-            </div>
-          </div>
-          <div class="account-center__row">
-            <div class="account-center__row-icon">
-              <span class="material-symbols-outlined">mail</span>
-            </div>
-            <div class="account-center__row-content">
-              <span class="account-center__row-label">Email address</span>
-              <span class="account-center__row-value account-center__row-value--mono">
-                {{ vm.user?.email || 'Not set' }}
-              </span>
-            </div>
-          </div>
-          <div class="account-center__row">
-            <div class="account-center__row-icon">
-              <span class="material-symbols-outlined">apartment</span>
-            </div>
-            <div class="account-center__row-content">
-              <span class="account-center__row-label">Department</span>
-              <span class="account-center__row-value">{{ vm.user?.department || 'Not set' }}</span>
-            </div>
-          </div>
-          <div class="account-center__row account-center__row--last">
-            <div class="account-center__row-icon">
-              <span class="material-symbols-outlined">fingerprint</span>
-            </div>
-            <div class="account-center__row-content">
-              <span class="account-center__row-label">Employee ID</span>
-              <span class="account-center__row-value account-center__row-value--mono">
-                {{ vm.user?.employeeId || 'Not set' }}
-              </span>
-            </div>
-          </div>
-        </div>
+        <blogsphere-details-card mode="keyValue" icon="badge" title="Personal information">
+          <blogsphere-kv-row label="Full name">{{ vm.user?.fullName || 'Not set' }}</blogsphere-kv-row>
+          <blogsphere-kv-row label="Email address" variant="mono">{{ vm.user?.email || 'Not set' }}</blogsphere-kv-row>
+          <blogsphere-kv-row label="Department">{{ vm.user?.department || 'Not set' }}</blogsphere-kv-row>
+          <blogsphere-kv-row label="Employee ID" variant="mono">{{ vm.user?.employeeId || 'Not set' }}</blogsphere-kv-row>
+        </blogsphere-details-card>
       </section>
-      <!-- Password & Security section -->
+
       <section class="account-center__section">
         <div class="account-center__section-header">
-          <h3 class="account-center__section-title">Password & security</h3>
+          <h2 class="account-center__section-title">Password &amp; security</h2>
           <p class="account-center__section-desc">
             Manage your sign-in protection and account recovery options.
           </p>
         </div>
-        <div class="account-center__card">
-          <div class="account-center__row account-center__row--interactive" (click)="resetPassword()">
-            <div class="account-center__row-icon">
-              <span class="material-symbols-outlined">lock_reset</span>
-            </div>
-            <div class="account-center__row-content">
-              <span class="account-center__row-label">Change password</span>
-              <span class="account-center__row-hint">Create a new password for your account</span>
-            </div>
-            <button class="account-center__row-action" type="button">
-              <span>Manage</span>
-              <span class="material-symbols-outlined">chevron_right</span>
-            </button>
-          </div>
-          <div class="account-center__row account-center__row--interactive" (click)="redirectToIdentityServer()">
-            <div class="account-center__row-icon">
-              <span class="material-symbols-outlined">security</span>
-            </div>
-            <div class="account-center__row-content">
-              <span class="account-center__row-label">Two-factor authentication</span>
-              <span class="account-center__row-hint">Add an extra layer of protection when signing in</span>
-            </div>
-            <button class="account-center__row-action" type="button">
-              <span>Manage</span>
-              <span class="material-symbols-outlined">chevron_right</span>
-            </button>
-          </div>
-          <div class="account-center__row account-center__row--interactive account-center__row--last" (click)="redirectToIdentityServer()">
-            <div class="account-center__row-icon">
-              <span class="material-symbols-outlined">phone_iphone</span>
-            </div>
-            <div class="account-center__row-content">
-              <span class="account-center__row-label">Recovery phone</span>
-              <span class="account-center__row-hint">Add or update your phone number for account recovery</span>
-            </div>
-            <button class="account-center__row-action" type="button">
-              <span>Manage</span>
-              <span class="material-symbols-outlined">chevron_right</span>
-            </button>
-          </div>
-        </div>
+        <blogsphere-details-card mode="keyValue" icon="encrypted" title="Password & security" [flushBody]="true">
+          <blogsphere-user-profile-action-row
+            icon="lock_reset"
+            label="Change password"
+            hint="Create a new password for your account"
+            (next)="resetPassword()"
+          ></blogsphere-user-profile-action-row>
+          <blogsphere-user-profile-action-row
+            icon="security"
+            label="Two-factor authentication"
+            hint="Add an extra layer of protection when signing in"
+            (next)="redirectToIdentityServer()"
+          ></blogsphere-user-profile-action-row>
+          <blogsphere-user-profile-action-row
+            icon="phone_iphone"
+            label="Recovery phone"
+            hint="Add or update your phone number for account recovery"
+            (next)="redirectToIdentityServer()"
+          ></blogsphere-user-profile-action-row>
+        </blogsphere-details-card>
       </section>
-      <!-- Access & Permissions section -->
+
       <section class="account-center__section">
         <div class="account-center__section-header">
-          <h3 class="account-center__section-title">Access & permissions</h3>
+          <h2 class="account-center__section-title">Access &amp; permissions</h2>
           <p class="account-center__section-desc">
             Your role and permission scope within the Blogsphere platform.
           </p>
         </div>
-        <div class="account-center__card">
-          <div class="account-center__row">
-            <div class="account-center__row-icon">
-              <span class="material-symbols-outlined">admin_panel_settings</span>
-            </div>
-            <div class="account-center__row-content">
-              <span class="account-center__row-label">Role</span>
-              <span class="account-center__row-value">{{ vm.role || 'Not assigned' }}</span>
-            </div>
-          </div>
-          <div class="account-center__row account-center__row--last">
-            <div class="account-center__row-icon">
-              <span class="material-symbols-outlined">key</span>
-            </div>
-            <div class="account-center__row-content">
-              <span class="account-center__row-label">Permissions</span>
-              @if (vm.permissions.length) {
-                <div class="account-center__permissions">
-                  @for (permission of vm.permissions; track permission) {
-                    <span class="account-center__permission-chip">
-                      {{ permission }}
-                    </span>
-                  }
-                </div>
-              } @else {
-                <span class="account-center__row-hint">No permissions assigned</span>
-              }
-            </div>
-          </div>
-        </div>
+        <blogsphere-details-card mode="keyValue" icon="admin_panel_settings" title="Access & permissions">
+          <blogsphere-kv-row label="Role">{{ vm.role || 'Not assigned' }}</blogsphere-kv-row>
+          <blogsphere-kv-row label="Permissions">
+            @if (vm.permissions.length) {
+              <div class="account-center__perms">
+                @for (permission of vm.permissions; track permission) {
+                  <span class="account-center__perm-chip">{{ permission }}</span>
+                }
+              </div>
+            } @else {
+              <span class="account-center__perms-empty">No permissions assigned</span>
+            }
+          </blogsphere-kv-row>
+        </blogsphere-details-card>
       </section>
-      <!-- Footer note -->
-      <footer class="account-center__footer">
-        <span class="material-symbols-outlined account-center__footer-icon">shield</span>
-        <span>Your account is protected by Blogsphere. To update sensitive details like your email or password, you will be securely redirected to your identity provider.</span>
-      </footer>
+
+      <blogsphere-info-card
+        variant="info"
+        icon="shield"
+        borderPosition="left"
+        [elevated]="false"
+      >
+        Your account is protected by Blogsphere. To update sensitive details like your email or password, you will be securely redirected to your identity provider.
+      </blogsphere-info-card>
     } @else {
       <div class="account-center__loading">
         <blogsphere-loader [enabled]="true"></blogsphere-loader>
       </div>
     }
   }
-
 </div>
