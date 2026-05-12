@@ -408,11 +408,40 @@ mat-slide-toggle,
   background: var(--mat-sys-surface-container-lowest);
   border-radius: $border-radius-xl;
   box-shadow: var(--md-elevation-overlay);
+  overflow: hidden; // only mat-dialog-content owns scroll
 }
 
 .mat-mdc-dialog-container .mat-mdc-form-field {
   display: block;
   margin-bottom: $spacing-sm;
+}
+
+// mat-dialog-content owns the dialog's scroll surface; everything else stays put.
+.mat-mdc-dialog-container .mat-mdc-dialog-content {
+  max-height: 65vh;
+  padding: $spacing-lg !important;
+  overflow-y: auto;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--mat-sys-outline-variant);
+    border-radius: $border-radius-full;
+  }
+}
+
+// Beat the global heading margin and Material's default title chrome.
+.mat-mdc-dialog-container .mat-mdc-dialog-title {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.mat-mdc-dialog-container .mat-mdc-dialog-actions {
+  padding: $spacing-md $spacing-lg $spacing-lg !important;
+  border-top: 1px solid var(--mat-sys-outline-variant);
 }
 
 // ============================================================================

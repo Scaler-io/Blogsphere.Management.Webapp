@@ -315,6 +315,8 @@
 // _angular-material-theme.scss.
 // ============================================================================
 
+// Legacy chrome — kept as a fallback for any dialog that hasn't yet adopted
+// the `.dialog-shell` + Material directive pattern. Do NOT delete.
 .dialog-header {
   display: flex;
   align-items: flex-start;
@@ -322,12 +324,6 @@
   gap: $spacing-md;
   padding: $spacing-lg $spacing-lg $spacing-md;
   border-bottom: 1px solid var(--mat-sys-outline-variant);
-}
-
-.dialog-subtitle {
-  @include type(body-md);
-  color: var(--mat-sys-on-surface-variant);
-  margin: $spacing-xs 0 0;
 }
 
 .dialog-body {
@@ -350,6 +346,44 @@
   &:hover {
     color: var(--md-status-error);
   }
+}
+
+// New shell — pairs with Material `mat-dialog-title` / `mat-dialog-content`
+// / `mat-dialog-actions` directives. The header sits centered so the close
+// icon aligns with the title block visually; mat-dialog-content owns scroll.
+.dialog-shell {
+  display: flex;
+  flex-direction: column;
+  min-width: min(34rem, 90vw);
+  max-width: min(36rem, 90vw);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+  }
+
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    min-width: 0;
+  }
+}
+
+.dialog-title {
+  margin: 0;
+  @include type(headline-md);
+  color: var(--mat-sys-on-surface);
+}
+
+.dialog-subtitle {
+  margin: 0;
+  @include type(body-md);
+  color: var(--mat-sys-on-surface-variant);
 }
 
 // ============================================================================
