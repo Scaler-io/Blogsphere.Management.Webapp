@@ -2,74 +2,66 @@
 @use 'sass-utils/mixins' as *;
 
 .cd {
-  max-width: 1280px;
+  max-width: $container-max;
   margin: 0 auto;
   padding: $spacing-xl $spacing-xl $spacing-3xl;
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   gap: $spacing-xl;
 
-  @include respond-to(xs) {
+  @include mobile-only {
     padding: $spacing-md $spacing-md $spacing-2xl;
     gap: $spacing-lg;
   }
 }
 
 .cd-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: $spacing-md;
+  @include grid-auto-fit(12.5rem, $spacing-md);
 
-  @include respond-to(xs) {
+  @include mobile-only {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 .cd-stat {
-  @include card;
-  padding: $spacing-lg $spacing-xl;
-  display: flex;
-  flex-direction: column;
+  @include md-card($padding: $spacing-lg $spacing-xl);
+  @include flex-column;
   gap: $spacing-xs;
-  border-left: 3px solid $color-primary;
-  @include transition(all);
+  border-left: 3px solid var(--mat-sys-secondary);
+  transition: box-shadow 200ms ease, transform 200ms ease;
 
   &:hover {
-    box-shadow: 0 4px 12px $color-shadow;
+    box-shadow: var(--md-elevation-card-hover);
     transform: translateY(-1px);
   }
 
   &__label {
-    @include font($font-size-base, $font-weight-medium);
-    color: rgba($color-text-primary, 0.55);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
+    @include eyebrow-label(var(--mat-sys-on-surface-variant));
   }
 
   &__value {
-    @include font($font-size-xl, $font-weight-medium);
-    color: $color-text-primary;
+    font-size: $type-headline-sm-size;
+    line-height: $type-headline-sm-line;
+    font-weight: $font-weight-medium;
+    color: var(--mat-sys-on-surface);
     word-break: break-word;
   }
 }
 
 .cd-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include flex-column-center;
   gap: $spacing-sm;
   padding: $spacing-xl $spacing-lg;
   text-align: center;
 
   &__icon {
-    font-size: 36px;
-    color: rgba($color-text-primary, 0.15);
+    font-size: 2.25rem;
+    color: var(--mat-sys-outline-variant);
   }
 
   &__text {
-    @include font($font-size-lg, $font-weight-regular);
-    color: rgba($color-text-primary, 0.45);
+    font-size: $type-body-lg-size;
+    line-height: $type-body-lg-line;
+    color: var(--mat-sys-on-surface-variant);
     margin: 0;
     max-width: 40ch;
   }

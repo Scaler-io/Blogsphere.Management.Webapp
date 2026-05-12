@@ -20,7 +20,7 @@
 :host(.host--collapsed):hover {
   .sidebar-expandable__header {
     justify-content: flex-start;
-    padding: $spacing-sm $spacing-md;
+    padding: $spacing-md $spacing-lg;
   }
 
   .sidebar-expandable__label,
@@ -30,22 +30,22 @@
 }
 
 .sidebar-expandable {
-  @include stack(2px);
+  @include stack($spacing-xs);
 
   &__header {
     display: flex;
     align-items: center;
     gap: $spacing-md;
     width: 100%;
-    padding: $spacing-sm $spacing-md;
+    padding: $spacing-md $spacing-lg;
     background: transparent;
     border: 0;
-    border-radius: $border-radius-full;
+    border-radius: $border-radius-lg;
     cursor: pointer;
     color: var(--md-on-surface-variant);
     font-family: $font-family-body;
     text-align: left;
-    transition: background-color 200ms ease, color 200ms ease, padding 200ms ease;
+    transition: transform 200ms ease, background-color 200ms ease, color 200ms ease, padding 200ms ease;
 
     @include hover-surface;
 
@@ -59,6 +59,7 @@
 
     &--group-active {
       color: var(--md-on-surface);
+      transform: translateX(0.25rem);
 
       .sidebar-expandable__icon {
         color: var(--md-secondary);

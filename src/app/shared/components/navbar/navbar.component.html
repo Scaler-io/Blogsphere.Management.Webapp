@@ -10,10 +10,6 @@
         (next)="toggleSidenav()"
       ></blogsphere-icon-button>
     }
-    <a class="topbar__brand-mark" [class.topbar__brand-mark--shift]="isProfilePage" routerLink="/dashboard">
-      <img class="topbar__logo" src="../../../../assets/svgs/blogsphere.logo.svg" alt="Blogsphere" />
-      <span class="topbar__name">logsphere</span>
-    </a>
   </div>
 
   @if (!(isMobileView$ | async) && !maintenanceMode && !isProfilePage) {
@@ -34,22 +30,6 @@
         variant="ghost"
         tone="on-surface"
       ></blogsphere-icon-button>
-
-      <button
-        type="button"
-        class="topbar__profile"
-        [matMenuTriggerFor]="userActionMenu"
-        #userMenuTrigger="matMenuTrigger"
-        [attr.aria-label]="'Account menu for ' + ((authUser$ | async)?.email)"
-      >
-        <span class="topbar__avatar" aria-hidden="true">
-          {{ ((authUser$ | async)?.email || '?') | slice : 0 : 1 | uppercase }}
-        </span>
-        <span class="topbar__profile-email">{{ (authUser$ | async)?.email }}</span>
-        <span class="material-symbols-rounded topbar__profile-chevron" aria-hidden="true">{{
-          userMenuTrigger.menuOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
-        }}</span>
-      </button>
     </div>
   }
 
@@ -87,14 +67,3 @@
     </mat-accordion>
   </div>
 }
-
-<mat-menu #userActionMenu="matMenu" class="topbar__menu-panel">
-  <button type="button" mat-menu-item (click)="navigateToUserProfile()">
-    <span class="material-symbols-rounded" aria-hidden="true">person</span>
-    <span>My profile</span>
-  </button>
-  <button type="button" mat-menu-item (click)="signout()">
-    <span class="material-symbols-rounded" aria-hidden="true">power_settings_new</span>
-    <span>Logout</span>
-  </button>
-</mat-menu>

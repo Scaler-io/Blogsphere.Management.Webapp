@@ -1,11 +1,13 @@
 import {
   Component,
+  ContentChild,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
+  TemplateRef,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -29,12 +31,17 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() allowVisit: boolean = true;
   @Input() allowEdit: boolean = true;
   @Input() allowDelete: boolean = true;
+  @Input() showHeader: boolean = false;
+  @Input() showFooter: boolean = false;
+  @Input() boldColumns: string[] = [];
 
   @Output() pageChange: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
   @Output() visit: EventEmitter<TableDataSource> = new EventEmitter<TableDataSource>();
   @Output() edit: EventEmitter<TableDataSource> = new EventEmitter<TableDataSource>();
   @Output() delete: EventEmitter<TableDataSource> = new EventEmitter<TableDataSource>();
   @Output() linkClick: EventEmitter<TableDataSource> = new EventEmitter<TableDataSource>();
+
+  @ContentChild('actionTemplate', { static: false }) actionTemplate?: TemplateRef<unknown>;
 
   public customPageMetadata;
 

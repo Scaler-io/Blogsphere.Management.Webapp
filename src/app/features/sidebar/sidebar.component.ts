@@ -3,7 +3,9 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppPermission } from 'src/app/core/auth/permissions.constants';
 import { AppState } from 'src/app/store/app.state';
-import { selectHasPermission } from 'src/app/state/auth/auth.selector';
+import { AuthUser } from 'src/app/core/model/auth';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { getAuthState, selectHasPermission } from 'src/app/state/auth/auth.selector';
 import { getSidenavToggleState } from 'src/app/state/sidenav/sidenav.selector';
 import { selectMobileViewState } from 'src/app/state/mobile-view/mobile-view.selector';
 import { ToggleSideNav } from 'src/app/state/sidenav/sidenav.action';
@@ -24,6 +26,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   public canAccessUserManagement$: Observable<boolean> = this.store.select(
     selectHasPermission(AppPermission.USER_VIEW)
   );
+  public authUser$: Observable<AuthUser | null> = this.store.select(getAuthState);
 
   public subMenuList = {
     apiManager: false,
@@ -44,7 +47,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
     mobileViewState: null,
   };
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    private authService: AuthService
+  ) {}
 
   @HostBinding('class.host--collapsed')
   get isCollapsedRail(): boolean {
@@ -109,6 +115,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
     if (this.isMobileView && this.isSidenavExpanded) {
       this.store.dispatch(new ToggleSideNav());
     }
+  }
+
+  public signout(): void {
+    this.authService.logout();
   }
 
   private updateSubmenuActions(menu: string): void {

@@ -1,0 +1,39 @@
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: inline-flex;
+}
+
+.method-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.5rem;
+  padding: 5px $spacing-sm;
+  border-radius: $border-radius-base;
+  font-family: $font-family-body;
+  font-size: $type-label-xs-size;
+  font-weight: $font-weight-bold;
+  letter-spacing: 0.6px;
+  line-height: 1;
+  color: var(--mat-sys-on-primary);
+  background: var(--mat-sys-outline);
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  &--get     { background: var(--md-status-success); color: var(--mat-sys-on-primary); }
+  &--post    { background: var(--md-status-warning); color: var(--mat-sys-on-surface); }
+  &--put     { background: var(--md-status-info); color: var(--mat-sys-on-primary); }
+  &--delete  { background: var(--md-status-error); color: var(--mat-sys-on-primary); }
+  &--patch   { background: var(--mat-sys-secondary); color: var(--mat-sys-on-secondary); }
+  &--head    { background: var(--md-status-info-container); color: var(--md-status-info); }
+  &--options { background: var(--mat-sys-tertiary-container); color: var(--mat-sys-on-tertiary-container); }
+  &--unknown { background: var(--mat-sys-outline); color: var(--mat-sys-on-primary); }
+
+  &--size-sm {
+    min-width: 3rem;
+    padding: 3px $spacing-xs;
+    font-size: 0.6875rem;
+  }
+}

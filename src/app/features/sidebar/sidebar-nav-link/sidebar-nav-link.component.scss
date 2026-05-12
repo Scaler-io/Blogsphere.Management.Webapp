@@ -18,7 +18,7 @@
 
 :host(.host--collapsed):hover .sidebar-nav-link {
   justify-content: flex-start;
-  padding: $spacing-sm $spacing-md;
+  padding: $spacing-md $spacing-lg;
 }
 
 :host(.host--collapsed):hover .sidebar-nav-link__label {
@@ -29,12 +29,12 @@
   display: flex;
   align-items: center;
   gap: $spacing-md;
-  padding: $spacing-sm $spacing-md;
-  border-radius: $border-radius-full;
+  padding: $spacing-md $spacing-lg;
+  border-radius: $border-radius-lg;
   color: var(--md-on-surface-variant);
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 200ms ease, color 200ms ease, padding 200ms ease;
+  transition: transform 200ms ease, background-color 200ms ease, color 200ms ease, padding 200ms ease;
   font-family: $font-family-body;
 
   @include hover-surface;
@@ -67,6 +67,7 @@
   &--active {
     background: var(--md-secondary-container);
     color: var(--md-on-secondary-container);
+    transform: translateX(0.25rem);
 
     &:hover {
       background: var(--md-secondary-container);

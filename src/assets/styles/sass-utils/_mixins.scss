@@ -278,6 +278,88 @@
   transition: grid-template-rows $duration $timing;
 }
 
+@mixin form-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--mat-sys-surface-container-lowest);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: $border-radius-md;
+  overflow: hidden;
+
+  thead tr {
+    background: var(--mat-sys-surface-container);
+  }
+
+  thead th {
+    @include eyebrow-label(var(--mat-sys-on-surface-variant));
+    padding: $spacing-md;
+    border: none;
+    position: relative;
+    text-align: left;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 60%;
+      background-color: var(--mat-sys-outline-variant);
+    }
+
+    &:last-child::after { display: none; }
+  }
+
+  tbody tr.bg-error {
+    background: var(--md-status-error-container);
+  }
+
+  tbody td {
+    padding: $spacing-md;
+    text-align: center;
+    border: none;
+    position: relative;
+    vertical-align: middle;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 60%;
+      background-color: var(--mat-sys-outline-variant);
+    }
+
+    &:last-child::after { display: none; }
+  }
+
+  .form-field input,
+  .form-field select {
+    border: none;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    outline: none;
+    background-color: transparent;
+    font-family: $font-family-body;
+    font-size: $type-body-md-size;
+    font-weight: $font-weight-regular;
+    line-height: $type-body-md-line;
+    padding: $spacing-xs 0;
+    transition: border-color 200ms ease;
+
+    &:focus {
+      border-bottom-color: var(--mat-sys-primary);
+    }
+  }
+
+  .form-field select {
+    cursor: pointer;
+    min-width: 7.5rem;
+  }
+}
+
 // ============================================================================
 // FLEXBOX MIXINS
 // ============================================================================
