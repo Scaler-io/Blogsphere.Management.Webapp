@@ -23,6 +23,7 @@ import { CreateSubscriptionRequest } from 'src/app/core/model/subscription.model
 @Component({
     selector: 'blogsphere-subscription-create-dialog',
     templateUrl: './subscription-create-dialog.component.html',
+    styleUrls: ['./subscription-create-dialog.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

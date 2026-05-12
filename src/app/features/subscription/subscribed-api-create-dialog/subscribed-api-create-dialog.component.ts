@@ -27,6 +27,7 @@ import * as SubscribedApiActions from 'src/app/state/subscribed-api/subscribed-a
 @Component({
     selector: 'blogsphere-subscribed-api-create-dialog',
     templateUrl: './subscribed-api-create-dialog.component.html',
+    styleUrls: ['./subscribed-api-create-dialog.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
