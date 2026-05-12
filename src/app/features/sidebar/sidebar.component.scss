@@ -85,6 +85,9 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 200ms ease, transform 200ms ease;
   }
 
   &__welcome {
@@ -99,6 +102,9 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 200ms ease, transform 200ms ease;
   }
 
   &__avatar {
@@ -197,15 +203,21 @@
     @include type(body-md);
     font-weight: $font-weight-medium;
     line-height: 1;
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 200ms ease, transform 200ms ease;
   }
 }
 
-// Collapsed (desktop rail) — hide text-only chunks; show icon-only welcome avatar + signout glyph
+// Collapsed (desktop rail) — fade text-only chunks so the width transition stays smooth;
+// icon-only welcome avatar + signout glyph remain visible.
 :host(.host--collapsed) {
   .sidenav__brand-name,
   .sidenav__welcome-text,
   .sidenav__signout-label {
-    display: none;
+    opacity: 0;
+    transform: translateX(-0.5rem);
+    pointer-events: none;
   }
 
   .sidenav__header,
