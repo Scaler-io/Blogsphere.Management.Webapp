@@ -16,6 +16,7 @@
         link="/dashboard"
         icon="dashboard"
         label="Dashboard"
+        [collapsed]="isCollapsedRail"
         (navigate)="handleSidenavItemClick()"
       />
       @if (canAccessSystemSettings$ | async) {
@@ -23,10 +24,12 @@
           link="/subscription"
           icon="subscriptions"
           label="Subscription manager"
+          [collapsed]="isCollapsedRail"
           (navigate)="handleSidenavItemClick()"
         />
         <blogsphere-sidebar-expandable-nav-item
           [expanded]="subMenuList.apiManager"
+          [collapsed]="isCollapsedRail"
           [submenuItems]="apiManagerSubmenuItems"
           [label]="'Api manager'"
           headerIcon="api"
@@ -37,6 +40,7 @@
       @if (canAccessUserManagement$ | async) {
         <blogsphere-sidebar-expandable-nav-item
           [expanded]="subMenuList.userManagement"
+          [collapsed]="isCollapsedRail"
           [submenuItems]="userManagementSubmenuItems"
           [label]="'User manager'"
           headerIcon="people"

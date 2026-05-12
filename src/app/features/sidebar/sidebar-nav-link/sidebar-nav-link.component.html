@@ -3,6 +3,8 @@
   matRipple
   [routerLink]="link"
   [routerLinkActive]="'sidebar-nav-link--active'"
+  [matTooltip]="collapsed ? label : ''"
+  matTooltipPosition="right"
   (click)="navigate.emit()"
   role="listitem"
 >

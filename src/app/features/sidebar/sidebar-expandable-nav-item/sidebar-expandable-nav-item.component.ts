@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 export interface SidebarSubmenuItem {
@@ -15,6 +15,7 @@ export interface SidebarSubmenuItem {
 })
 export class SidebarExpandableNavItemComponent {
   @Input() expanded = false;
+  @Input() collapsed = false;
   @Input() label = '';
   @Input() headerIcon = 'api';
   @Input() submenuItems: SidebarSubmenuItem[] = [];
@@ -22,6 +23,11 @@ export class SidebarExpandableNavItemComponent {
   @Output() submenuNavigate = new EventEmitter<void>();
 
   constructor(private router: Router) {}
+
+  @HostBinding('class.host--collapsed')
+  get isCollapsedHost(): boolean {
+    return this.collapsed;
+  }
 
   isGroupActive(): boolean {
     return this.submenuItems.some(i => this.router.isActive(i.routerLink, false));

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'blogsphere-sidebar-nav-link',
@@ -10,5 +10,11 @@ export class SidebarNavLinkComponent {
   @Input() link = '';
   @Input() icon = '';
   @Input() label = '';
+  @Input() collapsed = false;
   @Output() navigate = new EventEmitter<void>();
+
+  @HostBinding('class.host--collapsed')
+  get isCollapsedHost(): boolean {
+    return this.collapsed;
+  }
 }

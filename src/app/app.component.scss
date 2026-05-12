@@ -4,7 +4,8 @@
 .app-shell {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background: var(--md-background);
 
   &__body {
@@ -17,25 +18,24 @@
   &__main {
     flex: 1 1 auto;
     min-width: 0;
+    min-height: 0;
     display: flex;
     flex-direction: column;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     &--full {
-      // Profile page has its own shell (no sidebar / page-header)
       width: 100%;
     }
   }
 
   &__content {
     flex: 1 1 auto;
-    width: 100%;
-    max-width: $container-max;
-    margin: 0 auto;
-    padding: $page-margin-mobile;
+    @include page-container;
+    padding-block: $page-margin-mobile;
 
-    @include respond-to(md) {
-      padding: $page-margin-desktop;
+    @include desktop-up {
+      padding-block: $page-margin-desktop;
     }
   }
 
