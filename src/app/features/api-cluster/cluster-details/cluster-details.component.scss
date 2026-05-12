@@ -4,13 +4,13 @@
 .cd {
   max-width: $container-max;
   margin: 0 auto;
-  padding: $spacing-xl $spacing-xl $spacing-3xl;
+  padding: $spacing-md $spacing-lg $spacing-2xl;
   @include flex-column;
-  gap: $spacing-xl;
+  gap: $spacing-md;
 
   @include mobile-only {
-    padding: $spacing-md $spacing-md $spacing-2xl;
-    gap: $spacing-lg;
+    padding: $spacing-sm $spacing-md $spacing-xl;
+    gap: $spacing-md;
   }
 }
 
@@ -23,7 +23,7 @@
 }
 
 .cd-stat {
-  @include md-card($padding: $spacing-lg $spacing-xl);
+  @include md-card($padding: $spacing-md $spacing-lg);
   @include flex-column;
   gap: $spacing-xs;
   border-left: 3px solid var(--mat-sys-secondary);

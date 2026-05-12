@@ -9,9 +9,13 @@
     display: flex;
     align-items: center;
     gap: $spacing-md;
-    padding: $spacing-lg $spacing-xl;
-    border-bottom: 1px solid $color-border-light;
-    background: $color-background-secondary;
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    background: var(--mat-sys-surface-container-low);
+
+    @include mobile-only {
+      padding: $spacing-sm $spacing-md;
+    }
   }
 
   &__header-icon {
@@ -20,8 +24,8 @@
     justify-content: center;
     line-height: 1;
     flex-shrink: 0;
-    color: $color-primary;
-    font-size: 22px;
+    color: var(--mat-sys-secondary);
+    font-size: 1.25rem;
     font-variation-settings:
       'FILL' 1,
       'wght' 400,
@@ -30,19 +34,18 @@
   }
 
   &__header-title {
-    @include font($font-size-2xl, $font-weight-medium);
-    color: $color-text-primary;
-    margin: 0 !important;
+    @include type(headline-sm);
+    color: var(--mat-sys-on-surface);
+    margin: 0;
     display: flex;
     align-items: center;
     gap: $spacing-sm;
-    line-height: 1.2 !important;
     align-self: center;
   }
 
   &__header-count {
-    @include font($font-size-base, $font-weight-medium);
-    color: $color-primary;
+    @include type(label-sm);
+    color: var(--mat-sys-secondary);
     background: rgba($color-primary, 0.08);
     border-radius: $border-radius-full;
     padding: 2px $spacing-sm;
@@ -50,7 +53,11 @@
   }
 
   &__body {
-    padding: $spacing-xl;
+    padding: $spacing-lg;
+
+    @include mobile-only {
+      padding: $spacing-md;
+    }
 
     &--flush {
       padding: 0;

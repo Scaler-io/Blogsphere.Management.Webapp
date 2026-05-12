@@ -2,13 +2,13 @@
 @use 'sass-utils/mixins' as *;
 
 .product-details-box {
-  @include md-card($padding: $spacing-xl);
+  @include md-card($padding: $spacing-lg);
 
   .product-name {
     @include cluster($spacing-sm);
 
     h1 {
-      @include type(headline-md);
+      @include type(headline-sm);
       color: var(--mat-sys-on-surface);
     }
   }
@@ -35,12 +35,12 @@
 
 .api-subscriptions-layout {
   display: flex;
-  gap: $spacing-xl;
+  gap: $spacing-lg;
   min-height: 25rem;
 
   @include mobile-only {
     flex-direction: column;
-    gap: $spacing-lg;
+    gap: $spacing-md;
   }
 }
 

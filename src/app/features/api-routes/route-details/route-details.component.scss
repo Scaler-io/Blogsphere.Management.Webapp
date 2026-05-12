@@ -4,12 +4,12 @@
 .rd {
   max-width: $container-max;
   margin: 0 auto;
-  padding: $spacing-lg $spacing-xl $spacing-2xl;
+  padding: $spacing-md $spacing-lg $spacing-xl;
   @include flex-column;
-  gap: $spacing-lg;
+  gap: $spacing-md;
 
   @include mobile-only {
-    padding: $spacing-md $spacing-md $spacing-2xl;
+    padding: $spacing-sm $spacing-md $spacing-lg;
   }
 }
 
@@ -124,7 +124,7 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: $spacing-md;
-  padding: $spacing-md $spacing-lg;
+  padding: $spacing-sm $spacing-md;
   border: 1px solid var(--mat-sys-outline-variant);
   border-radius: $border-radius-lg;
   background: var(--mat-sys-surface-container-lowest);
