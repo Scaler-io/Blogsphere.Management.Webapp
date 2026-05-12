@@ -10,6 +10,21 @@
   overflow: hidden;
 }
 
+.table__header-strip {
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.table__header-strip-title {
+  min-width: 0;
+}
+
+.table__header-strip-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  flex-shrink: 0;
+}
+
 .table__scroll {
   width: 100%;
   overflow-x: auto;
@@ -23,14 +38,10 @@
   background: transparent;
 }
 
-.table__header-row {
-  background: var(--mat-sys-surface-container);
-}
-
 .table__header-cell {
   @include eyebrow-label(var(--mat-sys-on-surface-variant));
   text-align: left;
-  padding: $spacing-md $spacing-lg;
+  padding: $spacing-lg;
   border-bottom: 1px solid var(--mat-sys-outline-variant);
   white-space: nowrap;
 
@@ -50,11 +61,15 @@
 .table__cell {
   @include type(body-md);
   color: var(--mat-sys-on-surface);
-  padding: $spacing-md $spacing-lg;
+  padding: $spacing-lg;
   border-bottom: 1px solid var(--mat-sys-outline-variant);
   vertical-align: middle;
 
   &:first-child {
+    font-weight: $font-weight-bold;
+  }
+
+  &.is-bold {
     font-weight: $font-weight-bold;
   }
 
@@ -88,6 +103,44 @@
   padding: $spacing-3xl $spacing-md;
   color: var(--mat-sys-on-surface-variant);
   @include type(body-md);
+}
+
+.table__footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-md;
+  background: var(--mat-sys-surface-container-low);
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  color: var(--mat-sys-secondary);
+  @include type(label-sm);
+  font-weight: $font-weight-medium;
+}
+
+.table__link-action {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  color: var(--mat-sys-secondary);
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 200ms ease;
+
+  &:hover {
+    text-decoration: underline;
+    color: var(--mat-sys-secondary);
+  }
+
+  &:focus-visible {
+    @include focus-ring(var(--mat-sys-secondary));
+    border-radius: $border-radius-sm;
+  }
+
+  .material-symbols-outlined {
+    font-size: 1rem;
+    line-height: 1;
+  }
 }
 
 .custom-menu {

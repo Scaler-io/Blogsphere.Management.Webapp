@@ -16,6 +16,17 @@
   white-space: nowrap;
   vertical-align: middle;
 
+  // Sizing for projected leading icons (e.g. <span class="material-symbols-outlined">check</span>).
+  // ::ng-deep penetrates view encapsulation so the consumer's icon glyph picks up these styles;
+  // the direct-child selector is the encapsulated fallback for the same-template case.
+  ::ng-deep .material-symbols-outlined,
+  ::ng-deep .material-symbols-rounded,
+  & > .material-symbols-outlined,
+  & > .material-symbols-rounded {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
   &.rounded-pill {
     border-radius: $border-radius-full;
   }
