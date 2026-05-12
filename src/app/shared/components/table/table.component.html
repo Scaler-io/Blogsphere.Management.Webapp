@@ -1,53 +1,55 @@
-<table class="table__layout" cdk-table [dataSource]="tableDataSource">
-  @for (col of columns; track col) {
-    <ng-container [cdkColumnDef]="col">
-      <th class="table__header-cell" cdk-header-cell *cdkHeaderCellDef>
-        {{ columnMap ? (getColumnKey(col) | capitalize) : (col | capitalize) }}
-      </th>
-      <td class="table__cell" cdk-cell *cdkCellDef="let element; let i = index">
-        @if (col !== 'actions') {
-          @if (isStatusField(col)) {
-            <blogsphere-badge
-              [type]="element[getColumnValue(col)] === 'Active' ? BadgeType.success : BadgeType.danger"
-              [isRounded]="true"
+<div class="table__scroll">
+  <table class="table__layout" cdk-table [dataSource]="tableDataSource">
+    @for (col of columns; track col) {
+      <ng-container [cdkColumnDef]="col">
+        <th class="table__header-cell" cdk-header-cell *cdkHeaderCellDef>
+          {{ columnMap ? (getColumnKey(col) | capitalize) : (col | capitalize) }}
+        </th>
+        <td class="table__cell" cdk-cell *cdkCellDef="let element; let i = index">
+          @if (col !== 'actions') {
+            @if (isStatusField(col)) {
+              <blogsphere-badge
+                [type]="element[getColumnValue(col)] === 'Active' ? BadgeType.success : BadgeType.danger"
+                [isRounded]="true"
               >
-              {{ element[getColumnValue(col)] }}
-            </blogsphere-badge>
+                {{ element[getColumnValue(col)] }}
+              </blogsphere-badge>
+            }
+            @if (isLinkField(col)) {
+              <a (click)="onLinkClick(element)">{{ element[getColumnValue(col)] }}</a>
+            }
+            @if (!isStatusField(col) && !isLinkField(col)) {
+              {{
+              !columnMap
+              ? element[col]
+              : isDateField(col)
+              ? (element[getColumnValue(col)] | formatDate | formatStatus)
+              : element[getColumnValue(col)]
+              }}
+            }
+          } @else {
+            <div class="custom-menu" matRipple [matMenuTriggerFor]="actionMenu" aria-label="Row actions">
+              <span class="material-symbols-outlined">more_horiz</span>
+              <mat-menu #actionMenu="matMenu" xPosition="before">
+                @if (allowVisit) {
+                  <button mat-menu-item (click)="onVisit(element)">Visit</button>
+                }
+                @if (allowEdit) {
+                  <button mat-menu-item (click)="onEdit(element)">Edit</button>
+                }
+                @if (allowDelete) {
+                  <button mat-menu-item (click)="onDelete(element)">Delete</button>
+                }
+              </mat-menu>
+            </div>
           }
-          @if (isLinkField(col)) {
-            <a (click)="onLinkClick(element)">{{ element[getColumnValue(col)] }}</a>
-          }
-          @if (!isStatusField(col) && !isLinkField(col)) {
-            {{
-            !columnMap
-            ? element[col]
-            : isDateField(col)
-            ? (element[getColumnValue(col)] | formatDate | formatStatus)
-            : element[getColumnValue(col)]
-            }}
-          }
-        } @else {
-          <div class="custom-menu" matRipple [matMenuTriggerFor]="actionMenu">
-            <span class="material-symbols-outlined">more_horiz</span>
-            <mat-menu #actionMenu="matMenu" xPosition="before">
-              @if (allowVisit) {
-                <button mat-menu-item (click)="onVisit(element)">Visit</button>
-              }
-              @if (allowEdit) {
-                <button mat-menu-item (click)="onEdit(element)">Edit</button>
-              }
-              @if (allowDelete) {
-                <button mat-menu-item (click)="onDelete(element)">Delete</button>
-              }
-            </mat-menu>
-          </div>
-        }
-      </td>
-    </ng-container>
-  }
-  <tr class="table__header-row" cdk-header-row *cdkHeaderRowDef="columns"></tr>
-  <tr class="table__row" cdk-row *cdkRowDef="let row; columns: columns"></tr>
-</table>
+        </td>
+      </ng-container>
+    }
+    <tr class="table__header-row" cdk-header-row *cdkHeaderRowDef="columns"></tr>
+    <tr class="table__row" cdk-row *cdkRowDef="let row; columns: columns"></tr>
+  </table>
+</div>
 
 @if (dataLength > 0) {
   <blogsphere-paginator
@@ -55,11 +57,3 @@
     (pageChange)="onPageChange($event)"
   ></blogsphere-paginator>
 }
-
-<!-- <mat-paginator
-[length]="dataLength"
-[pageIndex]="paginationMetadata.currentPage - 1"
-[pageSize]="paginationMetadata.top"
-[pageSizeOptions]="[10, 20, 50, 100]"
-(page)="onPageChange($event)"
-></mat-paginator> -->

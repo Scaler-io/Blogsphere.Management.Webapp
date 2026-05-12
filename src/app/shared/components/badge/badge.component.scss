@@ -1,36 +1,47 @@
 @use 'sass-utils/variables' as *;
-@use 'sass-utils/functions' as *;
+@use 'sass-utils/mixins' as *;
 
 .badge {
-  display: inline-block;
-  padding: $spacing-xs $spacing-sm;
-  font-size: $font-size-base;
-  font-weight: $font-weight-medium;
-  line-height: $line-height-normal;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: 2px $spacing-sm;
+  border-radius: $border-radius-base;
+  font-family: $font-family-body;
+  font-size: $type-label-xs-size;
+  line-height: $type-label-xs-line;
+  font-weight: $type-label-xs-weight;
+  letter-spacing: $type-label-xs-tracking;
+  text-transform: uppercase;
   white-space: nowrap;
   vertical-align: middle;
+
   &.rounded-pill {
-    border-radius: $border-radius-md;
+    border-radius: $border-radius-full;
   }
+
   &--primary {
-    color: $color-primary;
-    background-color: tint($color-primary, 80%);
+    background: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
   }
+
   &--secondary {
-    color: $color-accent;
-    background-color: tint($color-accent, 80%);
+    background: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
   }
+
   &--success {
-    color: $color-success;
-    background-color: tint($color-success, 80%);
+    background: var(--md-status-success-container);
+    color: var(--md-status-success);
   }
+
   &--danger {
-    color: $color-error;
-    background-color: tint($color-error, 80%);
+    background: var(--md-status-error-container);
+    color: var(--md-status-error);
   }
+
   &--warning {
-    color: $color-warning;
-    background-color: tint($color-warning, 80%);
+    background: var(--md-status-warning-container);
+    color: var(--md-status-warning);
   }
 }
