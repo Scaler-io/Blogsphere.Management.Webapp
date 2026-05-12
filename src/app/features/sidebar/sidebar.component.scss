@@ -33,8 +33,6 @@
   height: 100%;
   background: var(--md-surface-container-lowest);
   border-right: 1px solid var(--md-outline-variant);
-  display: flex;
-  flex-direction: column;
   transition: width 0.25s ease-in-out, transform 0.25s ease-in-out;
 
   &--collapsed {
@@ -58,6 +56,98 @@
     }
   }
 
+  &__header {
+    flex-shrink: 0;
+  }
+
+  &__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    color: inherit;
+    text-decoration: none;
+    min-width: 0;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+      border-radius: $border-radius-md;
+    }
+  }
+
+  &__logo {
+    width: 2rem;
+    height: 2rem;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  &__brand-name {
+    @include type(headline-sm);
+    color: var(--md-on-surface);
+    font-family: $font-family-heading;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__welcome {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+
+  &__welcome-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
+    font-family: $font-family-body;
+    font-size: $type-label-sm-size;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+  }
+
+  &__welcome-label {
+    @include type(label-xs);
+    color: var(--mat-sys-on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__welcome-name {
+    @include type(body-md);
+    color: var(--mat-sys-on-surface);
+    font-weight: $font-weight-bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__welcome-role {
+    @include type(label-xs);
+    color: var(--mat-sys-on-surface-variant);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   &__nav {
     flex: 1 1 auto;
     min-height: 0;
@@ -67,10 +157,103 @@
   }
 
   &__list {
-    @include stack(2px);
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+
+  &__footer {
+    margin-top: auto;
+    flex-shrink: 0;
+    border-top: 1px solid var(--mat-sys-outline-variant);
+  }
+
+  &__signout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-sm;
+    width: 100%;
+    padding: $spacing-sm $spacing-md;
+    background: transparent;
+    border: 1.5px solid var(--mat-sys-secondary);
+    border-radius: $border-radius-lg;
+    color: var(--mat-sys-secondary);
+    font-family: $font-family-body;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+
+    &:hover {
+      background: var(--mat-sys-secondary-container);
+      color: var(--mat-sys-on-secondary-container);
+      border-color: var(--mat-sys-secondary-container);
+    }
+
+    &:focus-visible {
+      @include focus-ring(var(--mat-sys-secondary));
+    }
+  }
+
+  &__signout-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  &__signout-label {
+    @include type(body-md);
+    font-weight: $font-weight-medium;
+    line-height: 1;
+  }
+}
+
+// Collapsed (desktop rail) — hide text-only chunks; show icon-only welcome avatar + signout glyph
+:host(.host--collapsed) {
+  .sidenav__brand-name,
+  .sidenav__welcome-text,
+  .sidenav__signout-label {
+    display: none;
+  }
+
+  .sidenav__header,
+  .sidenav__footer {
+    padding-left: $spacing-sm;
+    padding-right: $spacing-sm;
+  }
+
+  .sidenav__welcome {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .sidenav__signout {
+    padding: $spacing-sm;
+  }
+
+  &:hover {
+    .sidenav__brand-name,
+    .sidenav__signout-label {
+      display: inline-block;
+    }
+
+    .sidenav__welcome-text {
+      display: flex;
+    }
+
+    .sidenav__header,
+    .sidenav__footer {
+      padding-left: $spacing-lg;
+      padding-right: $spacing-lg;
+    }
+
+    .sidenav__welcome {
+      justify-content: flex-start;
+    }
+
+    .sidenav__signout {
+      padding: $spacing-sm $spacing-md;
+    }
   }
 }
 

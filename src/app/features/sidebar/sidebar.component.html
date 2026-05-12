@@ -5,13 +5,35 @@
 ></div>
 
 <aside
-  class="sidenav"
+  class="sidenav d-flex flex-column"
   [class.sidenav--collapsed]="!isMobileView && !isSidenavExpanded"
   [class.sidenav--mobile-open]="isMobileView && isSidenavExpanded"
   [attr.aria-label]="'Primary navigation'"
 >
+  <header class="sidenav__header p-lg">
+    <a class="sidenav__brand" routerLink="/dashboard" (click)="handleSidenavItemClick()">
+      <img class="sidenav__logo" src="assets/svgs/blogsphere.logo.svg" alt="logsphere" />
+      <span class="sidenav__brand-name">logsphere</span>
+    </a>
+  </header>
+
+  @if (authUser$ | async; as authUser) {
+    <section class="sidenav__welcome px-lg mb-lg">
+      <span class="sidenav__avatar" aria-hidden="true">
+        {{ (authUser.fullName || authUser.email || '?') | slice : 0 : 1 | uppercase }}
+      </span>
+      <div class="sidenav__welcome-text">
+        <span class="sidenav__welcome-label">Welcome back</span>
+        <span class="sidenav__welcome-name">{{ authUser.fullName || authUser.email }}</span>
+        @if (authUser.role) {
+          <span class="sidenav__welcome-role">{{ authUser.role }}</span>
+        }
+      </div>
+    </section>
+  }
+
   <nav class="sidenav__nav">
-    <div class="sidenav__list" role="list">
+    <div class="sidenav__list stack-xs" role="list">
       <blogsphere-sidebar-nav-link
         link="/dashboard"
         icon="dashboard"
@@ -50,4 +72,18 @@
       }
     </div>
   </nav>
+
+  <footer class="sidenav__footer p-lg">
+    <button
+      type="button"
+      class="sidenav__signout"
+      mat-ripple
+      [matRippleDisabled]="isCollapsedRail"
+      (click)="signout()"
+      [attr.aria-label]="'Sign out'"
+    >
+      <span class="material-symbols-outlined sidenav__signout-icon" aria-hidden="true">logout</span>
+      <span class="sidenav__signout-label">Sign out</span>
+    </button>
+  </footer>
 </aside>
