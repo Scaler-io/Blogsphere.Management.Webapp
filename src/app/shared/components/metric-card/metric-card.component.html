@@ -17,10 +17,13 @@
   <p class="metric-card__value">{{ formattedValue }}</p>
 
   <div *ngIf="delta || subtext" class="metric-card__meta">
-    <span *ngIf="delta" class="metric-card__delta" [ngClass]="deltaToneClass">
-      <span class="material-symbols-rounded metric-card__delta-icon" aria-hidden="true">{{ deltaIcon }}</span>
-      <span class="metric-card__delta-value">{{ delta.value }}</span>
-    </span>
+    <blogsphere-status-pill
+      *ngIf="delta"
+      [tone]="deltaPillTone"
+      [icon]="deltaIcon"
+      [label]="delta.value"
+      size="sm"
+    ></blogsphere-status-pill>
     <span *ngIf="subtext" class="metric-card__subtext">{{ subtext }}</span>
   </div>
 

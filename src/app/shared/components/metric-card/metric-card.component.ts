@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { StatusPillTone } from '../status-pill/status-pill.component';
 
 export type MetricDeltaDirection = 'up' | 'down' | 'flat';
 export type MetricDeltaTone = 'positive' | 'negative' | 'neutral';
@@ -109,7 +110,14 @@ export class MetricCardComponent {
     }
   }
 
-  get deltaToneClass(): string {
-    return `metric-card__delta--${this.delta?.tone ?? 'neutral'}`;
+  get deltaPillTone(): StatusPillTone {
+    switch (this.delta?.tone ?? 'neutral') {
+      case 'positive':
+        return 'success';
+      case 'negative':
+        return 'error';
+      default:
+        return 'neutral';
+    }
   }
 }

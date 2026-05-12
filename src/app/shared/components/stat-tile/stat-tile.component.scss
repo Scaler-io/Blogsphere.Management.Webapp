@@ -93,42 +93,8 @@
   }
 
   &__meta {
-    display: flex;
-    align-items: center;
-    gap: $spacing-sm;
-    flex-wrap: wrap;
+    @include cluster($spacing-sm);
     margin-top: $spacing-xs;
-  }
-
-  &__delta {
-    display: inline-flex;
-    align-items: center;
-    gap: $spacing-xs;
-    padding: 0.125rem $spacing-sm;
-    border-radius: $border-radius-full;
-    font-size: $type-label-sm-size;
-    font-weight: $font-weight-medium;
-    line-height: $type-label-sm-line;
-  }
-
-  &__delta-icon {
-    font-size: 1rem;
-    line-height: 1;
-  }
-
-  &__delta--positive {
-    background: rgba(16, 185, 129, 0.12);
-    color: #047857;
-  }
-
-  &__delta--negative {
-    background: rgba(186, 26, 26, 0.12);
-    color: var(--md-error);
-  }
-
-  &__delta--neutral {
-    background: var(--md-surface-container);
-    color: var(--md-on-surface-variant);
   }
 
   &__caption {
