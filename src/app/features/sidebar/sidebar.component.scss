@@ -11,14 +11,6 @@
 
 :host(.host--collapsed) {
   width: $sidebar-collapsed-width;
-
-  &:hover {
-    width: $sidebar-width;
-
-    .sidenav {
-      width: $sidebar-width;
-    }
-  }
 }
 
 @include mobile-only {
@@ -80,14 +72,14 @@
   }
 
   &__logo {
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     display: block;
     flex-shrink: 0;
   }
 
   &__brand-name {
-    @include type(headline-sm);
+    @include type(headline-lg);
     color: var(--md-on-surface);
     font-family: $font-family-heading;
     white-space: nowrap;
@@ -230,31 +222,6 @@
 
   .sidenav__signout {
     padding: $spacing-sm;
-  }
-
-  &:hover {
-    .sidenav__brand-name,
-    .sidenav__signout-label {
-      display: inline-block;
-    }
-
-    .sidenav__welcome-text {
-      display: flex;
-    }
-
-    .sidenav__header,
-    .sidenav__footer {
-      padding-left: $spacing-lg;
-      padding-right: $spacing-lg;
-    }
-
-    .sidenav__welcome {
-      justify-content: flex-start;
-    }
-
-    .sidenav__signout {
-      padding: $spacing-sm $spacing-md;
-    }
   }
 }
 
