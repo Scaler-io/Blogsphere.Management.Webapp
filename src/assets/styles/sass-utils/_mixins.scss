@@ -92,11 +92,11 @@
   font-size: $size;
   font-weight: $weight;
   line-height: $line-height;
-  font-family: $font-family-primary;
+  font-family: $font-family-body;
 }
 
 @mixin heading($level) {
-  font-family: $font-family-primary;
+  font-family: $font-family-heading;
   font-weight: $font-weight-bold;
   margin: 0;
 
@@ -123,6 +123,76 @@
   @if $level == 6 {
     font-size: $font-size-lg;
     line-height: $line-height-normal;
+  }
+}
+
+// ============================================================================
+// M3 TYPE-SCALE MIXIN — `@include type(headline-md)` etc.
+// ============================================================================
+// Single mixin that applies size + line-height + weight + tracking + family
+// for any named tier from the prototype. Defaults to body-md if tier is
+// unrecognized so a typo emits readable text instead of nothing.
+
+@mixin type($tier) {
+  margin: 0;
+
+  @if $tier == headline-xl {
+    font-family: $font-family-heading;
+    font-size: $type-headline-xl-size;
+    line-height: $type-headline-xl-line;
+    font-weight: $type-headline-xl-weight;
+    letter-spacing: $type-headline-xl-tracking;
+  } @else if $tier == headline-lg {
+    font-family: $font-family-heading;
+    font-size: $type-headline-lg-size;
+    line-height: $type-headline-lg-line;
+    font-weight: $type-headline-lg-weight;
+    letter-spacing: $type-headline-lg-tracking;
+  } @else if $tier == headline-lg-mobile {
+    font-family: $font-family-heading;
+    font-size: $type-headline-lg-mobile-size;
+    line-height: $type-headline-lg-mobile-line;
+    font-weight: $type-headline-lg-mobile-weight;
+  } @else if $tier == headline-md {
+    font-family: $font-family-heading;
+    font-size: $type-headline-md-size;
+    line-height: $type-headline-md-line;
+    font-weight: $type-headline-md-weight;
+  } @else if $tier == headline-sm {
+    font-family: $font-family-heading;
+    font-size: $type-headline-sm-size;
+    line-height: $type-headline-sm-line;
+    font-weight: $type-headline-sm-weight;
+  } @else if $tier == body-lg {
+    font-family: $font-family-body;
+    font-size: $type-body-lg-size;
+    line-height: $type-body-lg-line;
+    font-weight: $type-body-lg-weight;
+  } @else if $tier == body-md {
+    font-family: $font-family-body;
+    font-size: $type-body-md-size;
+    line-height: $type-body-md-line;
+    font-weight: $type-body-md-weight;
+  } @else if $tier == body-sm {
+    font-family: $font-family-body;
+    font-size: $type-body-sm-size;
+    line-height: $type-body-sm-line;
+    font-weight: $type-body-sm-weight;
+  } @else if $tier == label-sm {
+    font-family: $font-family-body;
+    font-size: $type-label-sm-size;
+    line-height: $type-label-sm-line;
+    font-weight: $type-label-sm-weight;
+    letter-spacing: $type-label-sm-tracking;
+  } @else if $tier == label-xs {
+    font-family: $font-family-body;
+    font-size: $type-label-xs-size;
+    line-height: $type-label-xs-line;
+    font-weight: $type-label-xs-weight;
+    letter-spacing: $type-label-xs-tracking;
+    text-transform: uppercase;
+  } @else {
+    @include type(body-md);
   }
 }
 
