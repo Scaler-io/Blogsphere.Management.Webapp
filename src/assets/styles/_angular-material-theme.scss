@@ -399,8 +399,16 @@ mat-slide-toggle,
 }
 
 // ============================================================================
-// MAT-DIALOG — vertical spacing between form fields inside dialogs
+// MAT-DIALOG — M3 surface chrome + vertical spacing between form fields
 // ============================================================================
+// Global surface override so every CDK dialog uses the M3 lowest-surface
+// container with the same elevation overlay used by other elevated surfaces.
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  background: var(--mat-sys-surface-container-lowest);
+  border-radius: $border-radius-xl;
+  box-shadow: var(--md-elevation-overlay);
+}
 
 .mat-mdc-dialog-container .mat-mdc-form-field {
   display: block;
