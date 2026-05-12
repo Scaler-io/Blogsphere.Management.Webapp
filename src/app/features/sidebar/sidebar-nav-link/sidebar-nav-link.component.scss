@@ -16,15 +16,6 @@
   }
 }
 
-:host(.host--collapsed):hover .sidebar-nav-link {
-  justify-content: flex-start;
-  padding: $spacing-md $spacing-lg;
-}
-
-:host(.host--collapsed):hover .sidebar-nav-link__label {
-  display: block;
-}
-
 .sidebar-nav-link {
   display: flex;
   align-items: center;

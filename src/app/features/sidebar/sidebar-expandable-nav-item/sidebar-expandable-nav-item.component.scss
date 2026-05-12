@@ -17,18 +17,6 @@
   }
 }
 
-:host(.host--collapsed):hover {
-  .sidebar-expandable__header {
-    justify-content: flex-start;
-    padding: $spacing-md $spacing-lg;
-  }
-
-  .sidebar-expandable__label,
-  .sidebar-expandable__chevron {
-    display: inline-block;
-  }
-}
-
 .sidebar-expandable {
   @include stack($spacing-xs);
 
