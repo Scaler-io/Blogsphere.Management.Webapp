@@ -5,5 +5,13 @@
   <div class="stat-tile__body">
     <span class="stat-tile__num">{{ value }}</span>
     <span class="stat-tile__label">{{ label }}</span>
+
+    <div *ngIf="delta || caption" class="stat-tile__meta">
+      <span *ngIf="delta" class="stat-tile__delta" [ngClass]="deltaToneClass">
+        <span class="material-symbols-rounded stat-tile__delta-icon" aria-hidden="true">{{ deltaIcon }}</span>
+        <span class="stat-tile__delta-value">{{ delta.value }}</span>
+      </span>
+      <span *ngIf="caption" class="stat-tile__caption">{{ caption }}</span>
+    </div>
   </div>
 </div>

@@ -1,0 +1,21 @@
+<button
+  type="button"
+  class="quick-action-tile"
+  [ngClass]="hostClasses"
+  [attr.aria-label]="label"
+  [attr.aria-busy]="loading ? 'true' : null"
+  [disabled]="disabled || loading"
+  (click)="onActivate($event)"
+>
+  <span class="quick-action-tile__icon-wrap" aria-hidden="true">
+    <span *ngIf="!loading" class="material-symbols-rounded quick-action-tile__icon">{{ icon }}</span>
+    <span *ngIf="loading" class="quick-action-tile__spinner"></span>
+  </span>
+
+  <span class="quick-action-tile__text">
+    <span class="quick-action-tile__label">{{ label }}</span>
+    <span *ngIf="description" class="quick-action-tile__description">{{ description }}</span>
+  </span>
+
+  <span class="material-symbols-rounded quick-action-tile__chevron" aria-hidden="true">chevron_right</span>
+</button>

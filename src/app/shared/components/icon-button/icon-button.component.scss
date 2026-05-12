@@ -1,0 +1,191 @@
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: inline-flex;
+}
+
+.icon-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  font-family: $font-family-body;
+  border-radius: $border-radius-full;
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease,
+    box-shadow 200ms ease, transform 150ms ease;
+
+  &:hover:not(:disabled) {
+    transform: scale(1.04);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--md-primary);
+    outline-offset: 2px;
+  }
+
+  &:disabled,
+  &--disabled,
+  &--loading {
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+  }
+
+  &__glyph {
+    line-height: 1;
+    font-size: inherit;
+  }
+
+  &__spinner {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    animation: blogsphere-icon-button-spin 600ms linear infinite;
+  }
+
+  &__badge {
+    position: absolute;
+    top: -0.25rem;
+    right: -0.25rem;
+    min-width: 1.125rem;
+    height: 1.125rem;
+    padding: 0 0.25rem;
+    border-radius: $border-radius-full;
+    background: var(--md-error);
+    color: var(--md-on-error);
+    font-size: 0.625rem;
+    font-weight: $font-weight-bold;
+    line-height: 1.125rem;
+    text-align: center;
+    box-shadow: 0 0 0 2px var(--md-surface);
+  }
+
+  // -------- sizes --------
+  &--size-sm {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.125rem;
+  }
+
+  &--size-md {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+  }
+
+  &--size-lg {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+  }
+
+  // -------- variants & tones --------
+  &--variant-ghost {
+    background: transparent;
+    border-color: transparent;
+
+    &.icon-button--tone-primary { color: var(--md-primary); }
+    &.icon-button--tone-secondary { color: var(--md-secondary); }
+    &.icon-button--tone-on-surface { color: var(--md-on-surface-variant); }
+    &.icon-button--tone-on-inverse { color: var(--md-inverse-on-surface); }
+    &.icon-button--tone-error { color: var(--md-error); }
+
+    &:hover:not(:disabled) {
+      background: var(--md-surface-container);
+    }
+  }
+
+  &--variant-tonal {
+    border-color: transparent;
+
+    &.icon-button--tone-primary {
+      background: var(--md-primary-fixed);
+      color: var(--md-on-primary-fixed);
+
+      &:hover:not(:disabled) { background: var(--md-primary-fixed-dim); }
+    }
+    &.icon-button--tone-secondary {
+      background: var(--md-secondary-fixed);
+      color: var(--md-on-secondary-fixed);
+
+      &:hover:not(:disabled) { background: var(--md-secondary-fixed-dim); }
+    }
+    &.icon-button--tone-on-surface {
+      background: var(--md-surface-container-high);
+      color: var(--md-on-surface);
+
+      &:hover:not(:disabled) { background: var(--md-surface-container-highest); }
+    }
+    &.icon-button--tone-error {
+      background: var(--md-error-container);
+      color: var(--md-on-error-container);
+    }
+  }
+
+  &--variant-filled {
+    border-color: transparent;
+
+    &.icon-button--tone-primary {
+      background: var(--md-primary);
+      color: var(--md-on-primary);
+
+      &:hover:not(:disabled) { background: var(--md-primary-container); }
+    }
+    &.icon-button--tone-secondary {
+      background: var(--md-secondary);
+      color: var(--md-on-secondary);
+
+      &:hover:not(:disabled) { background: var(--md-on-secondary-fixed-variant); }
+    }
+    &.icon-button--tone-on-surface {
+      background: var(--md-on-surface);
+      color: var(--md-surface);
+    }
+    &.icon-button--tone-error {
+      background: var(--md-error);
+      color: var(--md-on-error);
+    }
+  }
+
+  &--variant-outlined {
+    background: transparent;
+
+    &.icon-button--tone-primary {
+      border-color: var(--md-primary);
+      color: var(--md-primary);
+
+      &:hover:not(:disabled) { background: rgba(0, 15, 118, 0.06); }
+    }
+    &.icon-button--tone-secondary {
+      border-color: var(--md-secondary);
+      color: var(--md-secondary);
+
+      &:hover:not(:disabled) { background: rgba(0, 105, 112, 0.08); }
+    }
+    &.icon-button--tone-on-surface {
+      border-color: var(--md-outline-variant);
+      color: var(--md-on-surface-variant);
+
+      &:hover:not(:disabled) { background: var(--md-surface-container); }
+    }
+    &.icon-button--tone-error {
+      border-color: var(--md-error);
+      color: var(--md-error);
+    }
+  }
+}
+
+@keyframes blogsphere-icon-button-spin {
+  to { transform: rotate(360deg); }
+}
