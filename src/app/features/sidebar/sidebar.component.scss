@@ -5,19 +5,12 @@
   display: block;
   flex-shrink: 0;
   width: $sidebar-width;
+  height: 100vh;
   transition: width 0.25s ease-in-out;
 }
 
 :host(.host--collapsed) {
   width: $sidebar-collapsed-width;
-
-  &:hover {
-    width: $sidebar-width;
-
-    .sidenav {
-      width: $sidebar-width;
-    }
-  }
 }
 
 @include mobile-only {
@@ -41,9 +34,9 @@
 
   @include mobile-only {
     position: fixed;
-    top: $topbar-height;
+    top: 0;
     left: 0;
-    height: calc(100% - #{$topbar-height});
+    height: 100%;
     width: $sidebar-width;
     z-index: $z-index-modal;
     transform: translateX(-100%);
@@ -79,14 +72,14 @@
   }
 
   &__logo {
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     display: block;
     flex-shrink: 0;
   }
 
   &__brand-name {
-    @include type(headline-sm);
+    @include type(headline-lg);
     color: var(--md-on-surface);
     font-family: $font-family-heading;
     white-space: nowrap;
@@ -229,31 +222,6 @@
 
   .sidenav__signout {
     padding: $spacing-sm;
-  }
-
-  &:hover {
-    .sidenav__brand-name,
-    .sidenav__signout-label {
-      display: inline-block;
-    }
-
-    .sidenav__welcome-text {
-      display: flex;
-    }
-
-    .sidenav__header,
-    .sidenav__footer {
-      padding-left: $spacing-lg;
-      padding-right: $spacing-lg;
-    }
-
-    .sidenav__welcome {
-      justify-content: flex-start;
-    }
-
-    .sidenav__signout {
-      padding: $spacing-sm $spacing-md;
-    }
   }
 }
 

@@ -4,10 +4,11 @@ import { SubscribedApiCreateDialogComponent } from './subscribed-api-create-dial
 import { AppMaterialModule } from 'src/app/app-material.module';
 import { ButtonModule } from 'src/app/shared/components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { IconButtonModule } from 'src/app/shared/components/icon-button/icon-button.module';
 
 @NgModule({
   declarations: [SubscribedApiCreateDialogComponent],
-  imports: [CommonModule, AppMaterialModule, ButtonModule, ReactiveFormsModule],
+  imports: [CommonModule, AppMaterialModule, ButtonModule, ReactiveFormsModule, IconButtonModule],
   exports: [SubscribedApiCreateDialogComponent],
 })
 export class SubscribedApiCreateDialogModule {}

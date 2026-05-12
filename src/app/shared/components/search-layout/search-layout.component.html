@@ -1,74 +1,63 @@
-<div class="row search-layout__action-box">
-  <div class="col-sm-12 col-md-6">
-    <div class="search-container">
-      <div class="input-wrapper">
-        <span class="material-symbols-outlined icon">search</span>
-        <input [formControl]="searchInput" type="text" class="search-input" placeholder="Search..." />
-      </div>
-    </div>
+<div class="search-layout d-flex align-items-center gap-md flex-wrap">
+  <div class="search-layout__search">
+    <span class="material-symbols-outlined search-layout__search-icon" aria-hidden="true">search</span>
+    <input
+      [formControl]="searchInput"
+      type="text"
+      class="search-layout__search-input"
+      placeholder="Search..."
+    />
   </div>
 
-  <div class="col-xs-5 col-md-2">
-    <div class="sort-container" [matMenuTriggerFor]="sortMenu" #sortMenuTrigger="matMenuTrigger">
-      <span class="label">Sort by :</span>
-      <span class="value">{{ selectedSortField }}</span>
-    </div>
-    <mat-menu #sortMenu="matMenu" xPosition="before">
-      <button type="button" mat-menu-item (click)="sortMenuChanged('createdAt')">Last created</button>
-      <button type="button" mat-menu-item (click)="sortMenuChanged('updatedAt')">Last updated</button>
-    </mat-menu>
-  </div>
+  <button
+    type="button"
+    class="search-layout__chip"
+    [matMenuTriggerFor]="sortMenu"
+    #sortMenuTrigger="matMenuTrigger"
+  >
+    <span class="search-layout__chip-label">Sort by</span>
+    <span class="search-layout__chip-value">{{ selectedSortField }}</span>
+    <span class="material-symbols-outlined search-layout__chip-icon" aria-hidden="true">expand_more</span>
+  </button>
+  <mat-menu #sortMenu="matMenu" xPosition="before">
+    <button type="button" mat-menu-item (click)="sortMenuChanged('createdAt')">Last created</button>
+    <button type="button" mat-menu-item (click)="sortMenuChanged('updatedAt')">Last updated</button>
+  </mat-menu>
 
-  <div class="col-xs-7 col-md-2">
-    <div class="filter-container">
-      <span class="filter-action" (click)="toggleFilterPanel()">
-        {{ isFilterApplied ? 'Filter Applied' : 'Apply filter' }}
+  <div class="search-layout__filter-cluster">
+    <button
+      type="button"
+      class="search-layout__chip"
+      [class.search-layout__chip--active]="isFilterApplied"
+      (click)="toggleFilterPanel()"
+    >
+      <span class="material-symbols-outlined search-layout__chip-icon" aria-hidden="true">tune</span>
+      <span class="search-layout__chip-label">
+        {{ isFilterApplied ? 'Filter applied' : 'Apply filter' }}
       </span>
-      <span class="filter-action" [class.disabled]="!isFilterApplied" (click)="clearFilter()">Clear filter</span>
+    </button>
+    <button
+      type="button"
+      class="search-layout__chip"
+      [disabled]="!isFilterApplied"
+      (click)="clearFilter()"
+    >
+      <span class="material-symbols-outlined search-layout__chip-icon" aria-hidden="true">clear</span>
+      <span class="search-layout__chip-label">Clear filter</span>
+    </button>
 
-      <!-- Filter options panel -->
-      @if (!(isMobileView$ | async)) {
-        <div class="filter-options-panel" [class.filter-options-panel--hidden]="!filterPanelOpened">
-          <div class="filter-options-panel__header">
-            <div class="filter-options-panel__header-heading">{{ filterLabel }}</div>
-            <div class="filter-options-panel__header-closebtn">
-              <span class="material-symbols-outlined" (click)="toggleFilterPanel()">close</span>
-            </div>
-          </div>
-          <div class="filter-options-panel__body">
-            <ng-content></ng-content>
-          </div>
-          <div class="filter-options-panel__footer">
-            <blogsphere-button
-              [isDisabled]="!isFileterFormValid"
-              (next)="applyFilter()"
-              [type]="ButtonType.secondary"
-              [size]="ButtonSize.small"
-            >
-              Apply filter
-            </blogsphere-button>
-          </div>
-        </div>
-      }
-
-      <!-- Mobile filter options panel -->
-      <div
-        class="filter-options-panel__mobile"
-        *ngIf="isMobileView$ | async"
-        [class.filter-options-panel__mobile--hidden]="!filterPanelOpened"
-      >
-        <div class="filter-options-panel__mobile__header">
-          <div class="filter-options-panel__mobile__header-heading">{{ filterLabel }}</div>
-          <div class="filter-options-panel__mobile__header-closebtn">
+    @if (!(isMobileView$ | async)) {
+      <div class="filter-options-panel" [class.filter-options-panel--hidden]="!filterPanelOpened">
+        <div class="filter-options-panel__header">
+          <div class="filter-options-panel__header-heading">{{ filterLabel }}</div>
+          <div class="filter-options-panel__header-closebtn">
             <span class="material-symbols-outlined" (click)="toggleFilterPanel()">close</span>
           </div>
         </div>
-
-        <div class="filter-options-panel__mobile__body">
+        <div class="filter-options-panel__body">
           <ng-content></ng-content>
         </div>
-
-        <div class="filter-options-panel__mobile__footer">
+        <div class="filter-options-panel__footer">
           <blogsphere-button
             [isDisabled]="!isFileterFormValid"
             (next)="applyFilter()"
@@ -79,21 +68,47 @@
           </blogsphere-button>
         </div>
       </div>
+    }
+
+    <div
+      class="filter-options-panel__mobile"
+      *ngIf="isMobileView$ | async"
+      [class.filter-options-panel__mobile--hidden]="!filterPanelOpened"
+    >
+      <div class="filter-options-panel__mobile__header">
+        <div class="filter-options-panel__mobile__header-heading">{{ filterLabel }}</div>
+        <div class="filter-options-panel__mobile__header-closebtn">
+          <span class="material-symbols-outlined" (click)="toggleFilterPanel()">close</span>
+        </div>
+      </div>
+
+      <div class="filter-options-panel__mobile__body">
+        <ng-content></ng-content>
+      </div>
+
+      <div class="filter-options-panel__mobile__footer">
+        <blogsphere-button
+          [isDisabled]="!isFileterFormValid"
+          (next)="applyFilter()"
+          [type]="ButtonType.secondary"
+          [size]="ButtonSize.small"
+        >
+          Apply filter
+        </blogsphere-button>
+      </div>
     </div>
   </div>
 
   @if (allowAdd) {
-    <div class="col-xs-12 col-md-2">
-      <div class="w-100 d-md-flex justify-content-end mt-md">
-        <blogsphere-button
-          [isAutoWidth]="true"
-          [type]="ButtonType.secondary"
-          [size]="ButtonSize.small"
-          (click)="onAddResource()"
-        >
-          {{ addButtonLabel }}
-        </blogsphere-button>
-      </div>
+    <div class="search-layout__cta">
+      <blogsphere-button
+        [isAutoWidth]="true"
+        [type]="ButtonType.secondary"
+        [size]="ButtonSize.small"
+        (click)="onAddResource()"
+      >
+        {{ addButtonLabel }}
+      </blogsphere-button>
     </div>
   }
 </div>

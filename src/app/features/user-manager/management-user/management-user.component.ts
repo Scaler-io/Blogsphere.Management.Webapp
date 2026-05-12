@@ -47,6 +47,7 @@ export class ManagementUserComponent implements OnInit, OnDestroy {
   public managementUsersDataSource = new MatTableDataSource<ManagementUserSummary>([]);
   public showEmptyStateButton: boolean;
   public displayedColumns: string[] = ['employeeId', 'email', 'fullName', 'roles', 'department', 'status'];
+  public boldColumns: string[] = ['fullName'];
   public columnNameMap: TableColumnMap = {
     employeeId: { value: 'employeeId', isLinkField: true },
     email: { value: 'email' },

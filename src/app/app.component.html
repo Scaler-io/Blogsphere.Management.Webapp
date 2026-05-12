@@ -1,12 +1,12 @@
 <main class="app-shell">
-  <blogsphere-navbar [isProfilePage]="isProfilePage"></blogsphere-navbar>
-
   <div class="app-shell__body">
     @if (!maintenanceMode && !isProfilePage) {
       <blogsphere-sidebar></blogsphere-sidebar>
     }
 
     <section class="app-shell__main" [class.app-shell__main--full]="isProfilePage">
+      <blogsphere-navbar [isProfilePage]="isProfilePage"></blogsphere-navbar>
+
       <div class="app-shell__content">
         @if (!isProfilePage) {
           <blogsphere-page-header></blogsphere-page-header>

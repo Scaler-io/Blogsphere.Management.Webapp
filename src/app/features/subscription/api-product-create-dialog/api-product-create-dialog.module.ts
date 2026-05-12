@@ -4,10 +4,11 @@ import { ApiProductCreateDialogComponent } from './api-product-create-dialog.com
 import { AppMaterialModule } from 'src/app/app-material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'src/app/shared/components/button/button.module';
+import { IconButtonModule } from 'src/app/shared/components/icon-button/icon-button.module';
 
 @NgModule({
   declarations: [ApiProductCreateDialogComponent],
-  imports: [CommonModule, AppMaterialModule, ReactiveFormsModule, ButtonModule],
+  imports: [CommonModule, AppMaterialModule, ReactiveFormsModule, ButtonModule, IconButtonModule],
   exports: [ApiProductCreateDialogComponent],
 })
 export class ApiProductCreateDialogModule {}
