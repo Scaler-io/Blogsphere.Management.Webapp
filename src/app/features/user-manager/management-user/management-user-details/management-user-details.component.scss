@@ -5,21 +5,19 @@
 // PAGE SHELL
 // ============================================================================
 .ud {
-  max-width: 1280px;
+  max-width: $container-max;
   margin: 0 auto;
   padding: $spacing-lg $spacing-xl $spacing-2xl;
   @include flex-column;
   gap: $spacing-lg;
 
-  @include respond-to(xs) {
+  @include mobile-only {
     padding: $spacing-md $spacing-md $spacing-2xl;
     gap: $spacing-lg;
   }
 }
 
-.ud-grid-row {
-  margin-bottom: 0;
-}
+.ud-grid-row { margin-bottom: 0; }
 
 // ============================================================================
 // HERO BODY (slotted into blogsphere-page-hero) — user-specific identity
@@ -27,138 +25,118 @@
 // ============================================================================
 .ud-hero-body {
   &__title {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: $spacing-xs $spacing-sm;
-    @include font($font-size-lg, $font-weight-medium);
-    color: rgba($color-text-primary, 0.65);
+    @include cluster($spacing-sm);
+    row-gap: $spacing-xs;
     margin: 0 0 $spacing-md;
+    font-size: $type-body-lg-size;
+    font-weight: $font-weight-medium;
+    color: var(--mat-sys-on-surface-variant);
 
-    @include respond-to(xs) {
-      justify-content: center;
-    }
+    @include mobile-only { justify-content: center; }
   }
 
   &__title-icon {
-    font-size: 18px;
+    font-size: 1.125rem;
     line-height: 1;
-    color: $color-primary;
+    color: var(--mat-sys-on-surface-variant);
+    flex-shrink: 0;
   }
 
-  &__title-text {
-    line-height: 1.2;
-  }
+  &__title-text { line-height: 1.2; }
 
   &__title-sep {
-    color: rgba($color-text-primary, 0.3);
+    color: var(--mat-sys-outline);
     margin: 0 $spacing-xs;
   }
 
   &__chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $spacing-sm;
+    @include cluster($spacing-sm);
 
-    @include respond-to(xs) {
-      justify-content: center;
-    }
+    @include mobile-only { justify-content: center; }
   }
 }
 
 .ud-hero-btn-icon {
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 1;
 }
 
 .ud-hero-contact-item {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-xs;
-  @include font($font-size-sm, $font-weight-regular);
-  color: rgba($color-text-primary, 0.7);
+  @include cluster($spacing-xs);
+  font-size: $type-body-sm-size;
+  color: var(--mat-sys-on-surface-variant);
   min-width: 0;
 
   &__icon {
-    font-size: 18px;
+    font-size: 1.125rem;
     line-height: 1;
-    color: $color-primary;
+    color: var(--mat-sys-on-surface-variant);
+    flex-shrink: 0;
   }
 
   &__text {
     @include text-truncate;
-    max-width: 260px;
-    @include transition(color);
+    max-width: 16.25rem;
+    transition: color 200ms ease;
   }
 
   &:hover &__text {
-    color: $color-primary;
+    color: var(--mat-sys-on-surface);
   }
 }
 
-:host ::ng-deep .ud-card-grid {
-  blogsphere-details-card {
-    display: block;
-    height: 100%;
-
-    .details-card {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .details-card__body {
-      flex: 1;
-    }
-  }
+// Equal-height stretch helpers — these reach into shared component
+// templates that live outside this file's scope, so ::ng-deep is required.
+:host ::ng-deep .ud-card-grid blogsphere-details-card,
+:host ::ng-deep .ud-panel-grid blogsphere-section-panel {
+  display: block;
+  height: 100%;
 }
 
-:host ::ng-deep .ud-panel-grid {
-  blogsphere-section-panel {
-    display: block;
-    height: 100%;
-
-    .section-panel {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .section-panel__body {
-      flex: 1;
-    }
-  }
+:host ::ng-deep .ud-card-grid .details-card,
+:host ::ng-deep .ud-panel-grid .section-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
+:host ::ng-deep .ud-card-grid .details-card__body,
+:host ::ng-deep .ud-panel-grid .section-panel__body {
+  flex: 1;
+}
+
+// ============================================================================
+// ROLE CARD — one per assigned role inside the Roles section panel
+// ============================================================================
 .ud-role-card {
   display: flex;
   align-items: flex-start;
   gap: $spacing-md;
   padding: $spacing-md $spacing-lg;
-  border: 1px solid $color-border-light;
+  border: 1px solid var(--mat-sys-outline-variant);
   border-radius: $border-radius-lg;
-  background: $color-background;
+  background: var(--mat-sys-surface-container-lowest);
   cursor: default;
-  @include transition(all);
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
 
   &:hover {
-    border-color: rgba($color-primary, 0.3);
-    box-shadow: 0 4px 12px $color-shadow-light;
+    border-color: var(--mat-sys-secondary);
+    box-shadow: var(--md-elevation-card);
     transform: translateY(-1px);
   }
 
   &__icon {
-    width: 40px;
-    height: 40px;
-    border-radius: $border-radius-md;
-    background: rgba($color-primary, 0.08);
     @include flex-center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: $border-radius-md;
+    background: var(--mat-sys-secondary-container);
     flex-shrink: 0;
 
     .material-symbols-rounded {
-      font-size: 22px;
+      font-size: 1.375rem;
       line-height: 1;
-      color: $color-primary;
+      color: var(--mat-sys-on-secondary-container);
     }
   }
 
@@ -167,23 +145,19 @@
     min-width: 0;
   }
 
-  &__head {
-    display: flex;
-    align-items: center;
-    gap: $spacing-sm;
-    flex-wrap: wrap;
-  }
+  &__head { @include cluster($spacing-sm); }
 
   &__name {
-    @include font($font-size-lg, $font-weight-medium);
-    color: $color-text-primary;
+    font-size: $type-body-lg-size;
+    font-weight: $font-weight-medium;
+    color: var(--mat-sys-on-surface);
     margin: 0;
     line-height: 1.3;
   }
 
   &__desc {
-    @include font($font-size-sm, $font-weight-regular);
-    color: rgba($color-text-primary, 0.6);
+    font-size: $type-body-sm-size;
+    color: var(--mat-sys-on-surface-variant);
     margin: $spacing-xs 0 0;
     line-height: $line-height-normal;
   }
@@ -200,45 +174,43 @@
 .ud-perm-group {
   &:not(:last-child) {
     padding-bottom: $spacing-md;
-    border-bottom: 1px dashed $color-border-light;
+    border-bottom: 1px dashed var(--mat-sys-outline-variant);
   }
 
   &__head {
-    display: flex;
-    align-items: center;
-    gap: $spacing-sm;
+    @include cluster($spacing-sm);
     margin-bottom: $spacing-lg;
   }
 
   &__head-icon {
-    font-size: 20px;
+    font-size: 1.25rem;
     line-height: 1;
-    color: $color-primary;
+    color: var(--mat-sys-on-surface-variant);
     font-variation-settings:
       'FILL' 1,
       'wght' 400;
   }
 
   &__head-name {
-    @include font($font-size-lg, $font-weight-medium);
-    color: $color-text-primary;
+    font-size: $type-body-lg-size;
+    font-weight: $font-weight-medium;
+    color: var(--mat-sys-on-surface);
     text-transform: capitalize;
     letter-spacing: 0.2px;
   }
 
   &__head-count {
-    @include font($font-size-base, $font-weight-bold);
-    color: rgba($color-text-primary, 0.5);
+    font-size: $type-label-xs-size;
+    font-weight: $type-label-xs-weight;
+    letter-spacing: $type-label-xs-tracking;
+    color: var(--mat-sys-on-surface-variant);
     text-transform: uppercase;
-    letter-spacing: 0.6px;
     margin-left: $spacing-xs;
   }
 }
 
 .ud-perm-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $spacing-sm;
+  @include cluster($spacing-sm);
 }
 
 .ud-perm-chip {
@@ -248,64 +220,52 @@
   max-width: 100%;
   padding: 6px $spacing-md;
   border-radius: $border-radius-full;
-  border: 1px solid rgba($color-primary, 0.15);
-  background: rgba($color-primary, 0.04);
-  @include font($font-size-lg, $font-weight-medium);
-  color: rgba($color-text-primary, 0.85);
+  border: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface-container-low);
+  font-size: $type-body-sm-size;
+  font-weight: $font-weight-medium;
+  color: var(--mat-sys-on-surface);
   letter-spacing: 0.015em;
   cursor: default;
-  @include transition(all);
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
 
   &:hover {
-    background: rgba($color-primary, 0.1);
-    border-color: rgba($color-primary, 0.3);
-    color: $color-primary;
+    background: var(--mat-sys-secondary-container);
+    border-color: var(--mat-sys-secondary);
+    color: var(--mat-sys-on-secondary-container);
   }
 
   &__icon {
-    font-size: 14px;
+    font-size: 0.875rem;
     line-height: 1;
-    color: $color-primary;
+    color: var(--mat-sys-on-surface-variant);
     flex-shrink: 0;
   }
 
   &__text {
     @include text-truncate;
-    max-width: 280px;
+    max-width: 17.5rem;
   }
 }
 
 // ============================================================================
-// AUTHOR (Activity creators)
+// RAW JSON VIEW
 // ============================================================================
-.ud-author {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-sm;
-  cursor: pointer;
+.details-json {
+  padding: $spacing-md;
 
-  &__avatar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: $border-radius-full;
-    background: $color-primary;
-    color: $color-text-inverse;
-    @include font($font-size-xs, $font-weight-bold);
-    text-transform: uppercase;
-    flex-shrink: 0;
-  }
-
-  &__name {
-    @include font($font-size-base, $font-weight-medium);
-    color: $color-text-primary;
-    @include text-truncate;
-
-    &--muted {
-      color: rgba($color-text-primary, 0.4);
-      font-weight: $font-weight-regular;
-    }
+  &__pre {
+    margin: 0;
+    font-family: $font-family-mono;
+    font-size: $type-body-sm-size;
+    line-height: $type-body-sm-line;
+    color: var(--mat-sys-on-surface);
+    background: var(--mat-sys-surface-container-low);
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: $border-radius-md;
+    padding: $spacing-md;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 }
