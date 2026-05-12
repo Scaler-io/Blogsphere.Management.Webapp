@@ -4,6 +4,8 @@
     class="sidebar-expandable__header"
     [class.sidebar-expandable__header--group-active]="isGroupActive()"
     [attr.aria-expanded]="expanded"
+    [matTooltip]="collapsed ? label : ''"
+    matTooltipPosition="right"
     (click)="headerClick.emit()"
   >
     <span class="material-symbols-rounded sidebar-expandable__icon" aria-hidden="true">{{ headerIcon }}</span>
@@ -13,14 +15,20 @@
     </span>
   </button>
 
-  <div class="sidebar-expandable__submenu" [class.sidebar-expandable__submenu--open]="expanded" role="list">
-    @for (item of submenuItems; track item.routerLink) {
-      <blogsphere-sidebar-submenu-link
-        [link]="item.routerLink"
-        [icon]="item.icon"
-        [label]="item.label"
-        (navigate)="submenuNavigate.emit()"
-      />
-    }
+  <div
+    class="sidebar-expandable__submenu"
+    [class.sidebar-expandable__submenu--open]="expanded && !collapsed"
+    [attr.aria-hidden]="!expanded || collapsed"
+  >
+    <div class="sidebar-expandable__submenu-inner" role="list">
+      @for (item of submenuItems; track item.routerLink) {
+        <blogsphere-sidebar-submenu-link
+          [link]="item.routerLink"
+          [icon]="item.icon"
+          [label]="item.label"
+          (navigate)="submenuNavigate.emit()"
+        />
+      }
+    </div>
   </div>
 </div>

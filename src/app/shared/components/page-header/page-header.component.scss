@@ -38,44 +38,16 @@
 
   &__title-text {
     margin: 0;
-    @include type(headline-lg);
+    @include type(headline-lg-mobile);
     color: var(--md-on-surface);
 
-    @include respond-to(sm) {
-      @include type(headline-lg-mobile);
+    @include desktop-up {
+      @include type(headline-lg);
     }
   }
 
   &__breadcrumb {
     @include type(label-sm);
     color: var(--md-on-surface-variant);
-
-    ::ng-deep .xng-breadcrumb-root {
-      display: flex;
-      align-items: center;
-      gap: $spacing-xs;
-    }
-
-    ::ng-deep .xng-breadcrumb-item {
-      display: inline-flex;
-      align-items: center;
-    }
-
-    ::ng-deep .xng-breadcrumb-link {
-      color: var(--md-on-surface-variant);
-      text-decoration: none;
-
-      &:hover { color: var(--md-secondary); text-decoration: underline; }
-    }
-
-    ::ng-deep .xng-breadcrumb-trail {
-      color: var(--md-on-surface);
-      font-weight: $font-weight-medium;
-    }
-
-    ::ng-deep .xng-breadcrumb-separator {
-      color: var(--md-outline);
-      margin: 0 $spacing-xs;
-    }
   }
 }

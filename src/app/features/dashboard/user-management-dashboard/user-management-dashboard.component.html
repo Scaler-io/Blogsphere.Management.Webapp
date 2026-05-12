@@ -1,5 +1,4 @@
 <section class="users-dashboard">
-  <!-- Hero metric grid -->
   <div class="users-dashboard__grid users-dashboard__grid--metrics">
     <blogsphere-metric-card
       label="TOTAL USERS"
@@ -43,130 +42,84 @@
     />
   </div>
 
-  <!-- Growth chart card (full width) -->
-  <div class="users-dashboard__chart users-dashboard__chart--wide">
-    <header class="users-dashboard__chart-header">
-      <div>
-        <span class="users-dashboard__chart-eyebrow">PERFORMANCE</span>
-        <h3 class="users-dashboard__chart-title">Account growth (cumulative)</h3>
-      </div>
-    </header>
-    <div class="users-dashboard__chart-body users-dashboard__chart-body--line">
-      @if (!chartsDataLoaded) {
-        <div class="users-dashboard__chart-loading">
-          <mat-progress-spinner mode="indeterminate" diameter="40" color="primary"></mat-progress-spinner>
-          <p>Loading chart data…</p>
-        </div>
-      } @else {
-        <canvas
-          baseChart
-          [data]="growthChartData"
-          [options]="growthChartOptions"
-          [type]="lineChartType"
-        ></canvas>
-      }
-    </div>
+  <blogsphere-chart-card
+    class="users-dashboard__chart--wide"
+    eyebrow="PERFORMANCE"
+    title="Account growth (cumulative)"
+    tone="secondary"
+    [loading]="!chartsDataLoaded"
+    bodyHeight="320px"
+  >
+    <canvas
+      baseChart
+      [data]="growthChartData"
+      [options]="growthChartOptions"
+      [type]="lineChartType"
+    ></canvas>
+  </blogsphere-chart-card>
+
+  <div class="users-dashboard__grid users-dashboard__grid--two-up">
+    <blogsphere-chart-card
+      eyebrow="REGISTRATIONS"
+      title="Monthly registrations"
+      tone="secondary"
+      [loading]="!chartsDataLoaded"
+      bodyHeight="280px"
+    >
+      <canvas
+        baseChart
+        [data]="monthlyChartData"
+        [options]="monthlyChartOptions"
+        [type]="barChartType"
+      ></canvas>
+    </blogsphere-chart-card>
+
+    <blogsphere-chart-card
+      eyebrow="DISTRIBUTION"
+      title="Status distribution"
+      tone="secondary"
+      [loading]="!chartsDataLoaded"
+      bodyHeight="280px"
+      bodyMaxWidth="360px"
+    >
+      <canvas
+        baseChart
+        [data]="statusChartData"
+        [options]="statusChartOptions"
+        [type]="doughnutChartType"
+      ></canvas>
+    </blogsphere-chart-card>
   </div>
 
-  <!-- Two-up: monthly bar + status doughnut -->
   <div class="users-dashboard__grid users-dashboard__grid--two-up">
-    <div class="users-dashboard__chart">
-      <header class="users-dashboard__chart-header">
-        <div>
-          <span class="users-dashboard__chart-eyebrow">REGISTRATIONS</span>
-          <h3 class="users-dashboard__chart-title">Monthly registrations</h3>
-        </div>
-      </header>
-      <div class="users-dashboard__chart-body users-dashboard__chart-body--bar">
-        @if (!chartsDataLoaded) {
-          <div class="users-dashboard__chart-loading">
-            <mat-progress-spinner mode="indeterminate" diameter="40" color="primary"></mat-progress-spinner>
-            <p>Loading chart data…</p>
-          </div>
-        } @else {
-          <canvas
-            baseChart
-            [data]="monthlyChartData"
-            [options]="monthlyChartOptions"
-            [type]="barChartType"
-          ></canvas>
-        }
-      </div>
-    </div>
+    <blogsphere-chart-card
+      eyebrow="SEGMENTS"
+      title="Top departments"
+      tone="secondary"
+      [loading]="!chartsDataLoaded"
+      bodyHeight="280px"
+    >
+      <canvas
+        baseChart
+        [data]="topDepartmentsChartData"
+        [options]="topDepartmentsChartOptions"
+        [type]="barChartType"
+      ></canvas>
+    </blogsphere-chart-card>
 
-    <div class="users-dashboard__chart">
-      <header class="users-dashboard__chart-header">
-        <div>
-          <span class="users-dashboard__chart-eyebrow">DISTRIBUTION</span>
-          <h3 class="users-dashboard__chart-title">Status distribution</h3>
-        </div>
-      </header>
-      <div class="users-dashboard__chart-body users-dashboard__chart-body--doughnut">
-        @if (!chartsDataLoaded) {
-          <div class="users-dashboard__chart-loading">
-            <mat-progress-spinner mode="indeterminate" diameter="40" color="primary"></mat-progress-spinner>
-            <p>Loading chart data…</p>
-          </div>
-        } @else {
-          <canvas
-            baseChart
-            [data]="statusChartData"
-            [options]="statusChartOptions"
-            [type]="doughnutChartType"
-          ></canvas>
-        }
-      </div>
-    </div>
-  </div>
-
-  <!-- Top departments + top roles -->
-  <div class="users-dashboard__grid users-dashboard__grid--two-up">
-    <div class="users-dashboard__chart">
-      <header class="users-dashboard__chart-header">
-        <div>
-          <span class="users-dashboard__chart-eyebrow">SEGMENTS</span>
-          <h3 class="users-dashboard__chart-title">Top departments</h3>
-        </div>
-      </header>
-      <div class="users-dashboard__chart-body users-dashboard__chart-body--horizontal-bar">
-        @if (!chartsDataLoaded) {
-          <div class="users-dashboard__chart-loading">
-            <mat-progress-spinner mode="indeterminate" diameter="40" color="primary"></mat-progress-spinner>
-            <p>Loading chart data…</p>
-          </div>
-        } @else {
-          <canvas
-            baseChart
-            [data]="topDepartmentsChartData"
-            [options]="topDepartmentsChartOptions"
-            [type]="barChartType"
-          ></canvas>
-        }
-      </div>
-    </div>
-
-    <div class="users-dashboard__chart">
-      <header class="users-dashboard__chart-header">
-        <div>
-          <span class="users-dashboard__chart-eyebrow">ROLES</span>
-          <h3 class="users-dashboard__chart-title">Top roles</h3>
-        </div>
-      </header>
-      <div class="users-dashboard__chart-body users-dashboard__chart-body--horizontal-bar">
-        @if (!chartsDataLoaded) {
-          <div class="users-dashboard__chart-loading">
-            <mat-progress-spinner mode="indeterminate" diameter="40" color="primary"></mat-progress-spinner>
-            <p>Loading chart data…</p>
-          </div>
-        } @else {
-          <canvas
-            baseChart
-            [data]="topRolesChartData"
-            [options]="topRolesChartOptions"
-            [type]="barChartType"
-          ></canvas>
-        }
-      </div>
-    </div>
+    <blogsphere-chart-card
+      eyebrow="ROLES"
+      title="Top roles"
+      tone="secondary"
+      [loading]="!chartsDataLoaded"
+      bodyHeight="280px"
+    >
+      <canvas
+        baseChart
+        [data]="topRolesChartData"
+        [options]="topRolesChartOptions"
+        [type]="barChartType"
+      ></canvas>
+    </blogsphere-chart-card>
   </div>
 </section>

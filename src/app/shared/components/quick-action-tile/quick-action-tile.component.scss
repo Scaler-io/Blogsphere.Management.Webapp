@@ -7,18 +7,14 @@
 }
 
 .quick-action-tile {
+  @include md-card($border-radius-md, $spacing-lg);
   position: relative;
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   gap: $spacing-md;
-  padding: $spacing-lg;
   text-align: left;
-  background: var(--md-surface-container-lowest);
-  border: 1px solid var(--md-outline-variant);
-  border-radius: $border-radius-md;
-  box-shadow: var(--md-elevation-card);
   font-family: $font-family-body;
   cursor: pointer;
   transition: box-shadow 200ms ease, transform 200ms ease, border-color 200ms ease,
@@ -36,15 +32,13 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--md-primary);
-    outline-offset: 2px;
+    @include focus-ring;
   }
 
   &:disabled,
   &--disabled,
   &--loading {
-    cursor: not-allowed;
-    opacity: 0.6;
+    @include disabled-state;
     transform: none;
   }
 
@@ -96,7 +90,7 @@
     border-radius: 50%;
     border: 2px solid currentColor;
     border-top-color: transparent;
-    animation: blogsphere-quick-action-spin 600ms linear infinite;
+    animation: blogsphere-inline-spin 600ms linear infinite;
   }
 
   &__text {
@@ -127,8 +121,4 @@
     font-size: 1.25rem;
     transition: transform 200ms ease, color 200ms ease;
   }
-}
-
-@keyframes blogsphere-quick-action-spin {
-  to { transform: rotate(360deg); }
 }

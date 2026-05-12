@@ -44,13 +44,11 @@
     }
 
     &:focus-visible {
-      outline: 2px solid var(--md-primary);
-      outline-offset: 2px;
+      @include focus-ring;
     }
 
     &:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
+      @include disabled-state;
     }
   }
 
@@ -59,7 +57,6 @@
     font-size: 1em;
   }
 
-  // -------- sizes --------
   &--size-sm .segmented-control__option {
     padding: 0.25rem $spacing-sm;
     font-size: $type-label-sm-size;
@@ -81,7 +78,6 @@
     min-height: 2.75rem;
   }
 
-  // -------- tones (selected state color) --------
   &--tone-neutral .segmented-control__option--active {
     background: var(--md-surface-container-lowest);
     color: var(--md-on-surface);

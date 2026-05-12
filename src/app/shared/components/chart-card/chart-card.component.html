@@ -1,0 +1,35 @@
+<section class="chart-card" [class.chart-card--loading]="loading">
+  <header class="chart-card__header">
+    <div class="chart-card__heading">
+      <span
+        *ngIf="eyebrow"
+        class="chart-card__eyebrow"
+        [class.chart-card__eyebrow--primary]="tone === 'primary'"
+        [class.chart-card__eyebrow--secondary]="tone === 'secondary'"
+      >{{ eyebrow }}</span>
+      <h3 class="chart-card__title">{{ title }}</h3>
+      <p *ngIf="subtitle" class="chart-card__subtitle">{{ subtitle }}</p>
+    </div>
+    <div class="chart-card__toolbar">
+      <ng-content select="[toolbar]"></ng-content>
+    </div>
+  </header>
+
+  <div
+    class="chart-card__body"
+    [style.height]="bodyHeight"
+    [style.max-width]="bodyMaxWidth"
+    [style.margin-inline]="bodyMaxWidth ? 'auto' : null"
+  >
+    <ng-container *ngIf="!loading; else loadingBlock">
+      <ng-content></ng-content>
+    </ng-container>
+    <ng-template #loadingBlock>
+      <ng-content select="[loading]"></ng-content>
+      <div class="chart-card__loading" *ngIf="loading">
+        <span class="chart-card__spinner" aria-hidden="true"></span>
+        <p class="chart-card__loading-label">{{ loadingLabel }}</p>
+      </div>
+    </ng-template>
+  </div>
+</section>

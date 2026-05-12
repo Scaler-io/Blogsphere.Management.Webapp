@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { StatusPillTone } from '../status-pill/status-pill.component';
 
 export type StatTileTone = 'primary' | 'info' | 'success' | 'warning' | 'danger';
 
@@ -18,12 +19,10 @@ export interface StatTileDelta {
   standalone: false,
 })
 export class StatTileComponent {
-  @Input() icon: string = '';
+  @Input() icon = '';
   @Input() value: string | number = '';
-  @Input() label: string = '';
+  @Input() label = '';
   @Input() tone: StatTileTone = 'primary';
-
-  // Phase-1 redesign additions — optional, backward-compatible.
   @Input() delta?: StatTileDelta;
   @Input() caption?: string;
 
@@ -38,7 +37,14 @@ export class StatTileComponent {
     }
   }
 
-  get deltaToneClass(): string {
-    return `stat-tile__delta--${this.delta?.tone ?? 'neutral'}`;
+  get deltaPillTone(): StatusPillTone {
+    switch (this.delta?.tone ?? 'neutral') {
+      case 'positive':
+        return 'success';
+      case 'negative':
+        return 'error';
+      default:
+        return 'neutral';
+    }
   }
 }

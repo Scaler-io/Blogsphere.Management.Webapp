@@ -41,6 +41,243 @@
   }
 }
 
+@mixin mobile-only    { @include respond-to(xs) { @content; } }
+@mixin tablet-up      { @include respond-to(sm) { @content; } }
+@mixin desktop-up     { @include respond-to(md) { @content; } }
+@mixin wide-up        { @include respond-to(lg) { @content; } }
+@mixin mobile-tablet  { @include respond-between($breakpoint-xs, $breakpoint-md) { @content; } }
+
+@mixin stack($gap: $spacing-md) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+@mixin cluster($gap: $spacing-md, $wrap: wrap, $align: center, $justify: flex-start) {
+  display: flex;
+  flex-wrap: $wrap;
+  gap: $gap;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+@mixin row-between($gap: $spacing-md, $wrap: wrap, $align: center) {
+  display: flex;
+  flex-wrap: $wrap;
+  gap: $gap;
+  align-items: $align;
+  justify-content: space-between;
+}
+
+@mixin page-container {
+  width: 100%;
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $page-margin-mobile;
+
+  @include desktop-up {
+    padding-inline: $page-margin-desktop;
+  }
+}
+
+@mixin section-stack($gap-mobile: $spacing-lg, $gap-desktop: $spacing-xl) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap-mobile;
+
+  @include desktop-up {
+    gap: $gap-desktop;
+  }
+}
+
+@mixin grid-auto-fit($min: 16rem, $gap: $spacing-md) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min, 1fr));
+  gap: $gap;
+}
+
+@mixin grid-bento(
+  $cols-mobile: 1,
+  $cols-tablet: 2,
+  $cols-desktop: 3,
+  $gap: $spacing-md
+) {
+  display: grid;
+  grid-template-columns: repeat($cols-mobile, minmax(0, 1fr));
+  gap: $gap;
+
+  @include tablet-up {
+    grid-template-columns: repeat($cols-tablet, minmax(0, 1fr));
+  }
+  @include desktop-up {
+    grid-template-columns: repeat($cols-desktop, minmax(0, 1fr));
+  }
+}
+
+@mixin offcanvas-drawer(
+  $side: left,
+  $width: $sidebar-width,
+  $duration: 0.25s,
+  $z: $z-index-modal
+) {
+  position: fixed;
+  top: 0;
+  width: $width;
+  height: 100%;
+  z-index: $z;
+  transition: transform $duration ease-in-out;
+
+  @if $side == left {
+    left: 0;
+    transform: translateX(-100%);
+  } @else {
+    right: 0;
+    transform: translateX(100%);
+  }
+
+  &.is-open {
+    transform: translateX(0);
+  }
+}
+
+@mixin overlay-backdrop($z: $z-index-modal-backdrop) {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: $z;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@mixin focus-ring($color: var(--md-primary), $offset: 2px, $width: 2px) {
+  outline: $width solid $color;
+  outline-offset: $offset;
+}
+
+@mixin touch-target($min: 2.75rem) {
+  min-width: $min;
+  min-height: $min;
+}
+
+@mixin reduced-motion-safe {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
+
+@mixin hover-surface($bg: var(--md-surface-container)) {
+  transition: background-color 200ms ease;
+
+  &:hover {
+    background-color: $bg;
+  }
+}
+
+@mixin disabled-state {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+@mixin md-card($radius: $border-radius-md, $padding: $spacing-lg) {
+  background: var(--md-surface-container-lowest);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: $radius;
+  box-shadow: var(--md-elevation-card);
+  padding: $padding;
+}
+
+@mixin md-card-hover($lift: 2px) {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+
+  &:hover {
+    transform: translateY(-#{$lift});
+    box-shadow: var(--md-elevation-card-hover);
+  }
+}
+
+@mixin status-pill($tone: 'success') {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: 2px $spacing-sm;
+  border-radius: $border-radius-full;
+  font-family: $font-family-body;
+  font-size: $type-label-xs-size;
+  line-height: $type-label-xs-line;
+  font-weight: $type-label-xs-weight;
+  letter-spacing: $type-label-xs-tracking;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  @if $tone == success {
+    background: var(--md-status-success-container);
+    color: var(--md-status-success);
+  } @else if $tone == warning {
+    background: var(--md-status-warning-container);
+    color: var(--md-status-warning);
+  } @else if $tone == error {
+    background: var(--md-status-error-container);
+    color: var(--md-status-error);
+  } @else if $tone == info {
+    background: var(--md-status-info-container);
+    color: var(--md-status-info);
+  } @else {
+    background: var(--md-surface-container-high);
+    color: var(--md-on-surface-variant);
+  }
+}
+
+@mixin eyebrow-label($color: var(--md-on-surface-variant)) {
+  font-family: $font-family-body;
+  font-size: $type-label-xs-size;
+  line-height: $type-label-xs-line;
+  font-weight: $type-label-xs-weight;
+  letter-spacing: $type-label-xs-tracking;
+  text-transform: uppercase;
+  color: $color;
+}
+
+@mixin material-icon($size: 1.5rem) {
+  font-family: 'Material Symbols Rounded', 'Material Symbols Outlined', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: $size;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+@mixin inline-spinner($size: 1.25rem, $color: currentColor) {
+  width: $size;
+  height: $size;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-top-color: $color;
+  border-radius: 50%;
+  animation: blogsphere-inline-spin 0.75s linear infinite;
+}
+
+@mixin collapse-rows($duration: 0.25s, $timing: ease-in-out) {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows $duration $timing;
+}
+
 // ============================================================================
 // FLEXBOX MIXINS
 // ============================================================================

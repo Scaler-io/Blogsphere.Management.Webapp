@@ -465,3 +465,42 @@ mat-slide-toggle,
 .mat-mdc-progress-spinner {
   --mdc-circular-progress-active-indicator-color: var(--mat-sys-primary);
 }
+
+// ============================================================================
+// XNG-BREADCRUMB — global hooks for the third-party breadcrumb library so
+// every page-header instance stays in the AGL palette without ::ng-deep.
+// ============================================================================
+
+.xng-breadcrumb-root {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  font-family: $font-family-body;
+  font-size: $type-label-sm-size;
+  line-height: $type-label-sm-line;
+}
+
+.xng-breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.xng-breadcrumb-link {
+  color: var(--mat-sys-on-surface-variant);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--mat-sys-secondary);
+    text-decoration: underline;
+  }
+}
+
+.xng-breadcrumb-trail {
+  color: var(--mat-sys-on-surface);
+  font-weight: $font-weight-medium;
+}
+
+.xng-breadcrumb-separator {
+  color: var(--mat-sys-outline);
+  margin: 0 $spacing-xs;
+}

@@ -49,26 +49,22 @@
     color: var(--md-on-surface-variant);
   }
 
-  // -------- sizes --------
   &--size-sm .progress-bar__track { height: 0.25rem; }
   &--size-md .progress-bar__track { height: 0.5rem; }
   &--size-lg .progress-bar__track { height: 0.75rem; }
 
-  // -------- tones --------
   &--tone-primary   .progress-bar__fill { background: var(--md-primary); }
   &--tone-secondary .progress-bar__fill { background: var(--md-secondary); }
-  &--tone-success   .progress-bar__fill { background: #10b981; }
-  &--tone-warning   .progress-bar__fill { background: #f59e0b; }
+  &--tone-success   .progress-bar__fill { background: var(--md-status-success); }
+  &--tone-warning   .progress-bar__fill { background: var(--md-status-warning); }
   &--tone-error     .progress-bar__fill { background: var(--md-error); }
   &--tone-neutral   .progress-bar__fill { background: var(--md-on-surface-variant); }
 
-  // -------- indeterminate --------
   &--indeterminate .progress-bar__fill {
     width: 35% !important;
     animation: blogsphere-progress-indeterminate 1.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 
-  // -------- striped --------
   &--striped .progress-bar__fill {
     background-image: linear-gradient(
       45deg,
