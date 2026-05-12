@@ -44,3 +44,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# UI redesign visual artifacts (chrome-devtools MCP screenshots)
+.cursor/redesign/
