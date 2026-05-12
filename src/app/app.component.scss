@@ -23,7 +23,8 @@
     min-height: 0;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     &--full {
       width: 100%;
@@ -33,8 +34,6 @@
   &__content {
     flex: 1 1 auto;
     min-height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
     @include page-container;
     padding-block: $page-margin-mobile;
 
