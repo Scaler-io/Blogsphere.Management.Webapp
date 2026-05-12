@@ -1,6 +1,7 @@
 // ============================================================================
 // BLOGSPHERE MANAGEMENT WEBAPP - MAIN STYLES
 // ============================================================================
+// AGL Energy Intelligence System theme tokens (cobalt + teal palette).
 
 // 1. Titillium Web font faces
 @use './assets/styles/titillium-web';
@@ -23,7 +24,88 @@
 // ============================================================================
 
 :root {
-  // Primary Colors
+  // ==========================================================================
+  // M3 (AGL prototype) tokens — preferred CSS variables for new code
+  // ==========================================================================
+
+  // Primary (cobalt)
+  --md-primary: #{$md-primary};
+  --md-on-primary: #{$md-on-primary};
+  --md-primary-container: #{$md-primary-container};
+  --md-on-primary-container: #{$md-on-primary-container};
+  --md-primary-fixed: #{$md-primary-fixed};
+  --md-primary-fixed-dim: #{$md-primary-fixed-dim};
+  --md-on-primary-fixed: #{$md-on-primary-fixed};
+  --md-on-primary-fixed-variant: #{$md-on-primary-fixed-variant};
+  --md-inverse-primary: #{$md-inverse-primary};
+
+  // Secondary (teal)
+  --md-secondary: #{$md-secondary};
+  --md-on-secondary: #{$md-on-secondary};
+  --md-secondary-container: #{$md-secondary-container};
+  --md-on-secondary-container: #{$md-on-secondary-container};
+  --md-secondary-fixed: #{$md-secondary-fixed};
+  --md-secondary-fixed-dim: #{$md-secondary-fixed-dim};
+  --md-on-secondary-fixed: #{$md-on-secondary-fixed};
+  --md-on-secondary-fixed-variant: #{$md-on-secondary-fixed-variant};
+
+  // Tertiary
+  --md-tertiary: #{$md-tertiary};
+  --md-on-tertiary: #{$md-on-tertiary};
+  --md-tertiary-container: #{$md-tertiary-container};
+  --md-on-tertiary-container: #{$md-on-tertiary-container};
+  --md-tertiary-fixed: #{$md-tertiary-fixed};
+  --md-tertiary-fixed-dim: #{$md-tertiary-fixed-dim};
+
+  // Surfaces (the prototype's defining structural tokens)
+  --md-surface: #{$md-surface};
+  --md-surface-dim: #{$md-surface-dim};
+  --md-surface-bright: #{$md-surface-bright};
+  --md-surface-container-lowest: #{$md-surface-container-lowest};
+  --md-surface-container-low: #{$md-surface-container-low};
+  --md-surface-container: #{$md-surface-container};
+  --md-surface-container-high: #{$md-surface-container-high};
+  --md-surface-container-highest: #{$md-surface-container-highest};
+  --md-surface-variant: #{$md-surface-variant};
+  --md-surface-tint: #{$md-surface-tint};
+
+  // On-surface + outline
+  --md-on-surface: #{$md-on-surface};
+  --md-on-surface-variant: #{$md-on-surface-variant};
+  --md-outline: #{$md-outline};
+  --md-outline-variant: #{$md-outline-variant};
+  --md-inverse-surface: #{$md-inverse-surface};
+  --md-inverse-on-surface: #{$md-inverse-on-surface};
+
+  // Background
+  --md-background: #{$md-background};
+  --md-on-background: #{$md-on-background};
+
+  // Error
+  --md-error: #{$md-error};
+  --md-on-error: #{$md-on-error};
+  --md-error-container: #{$md-error-container};
+  --md-on-error-container: #{$md-on-error-container};
+
+  // Elevation
+  --md-elevation-card: #{$md-elevation-card};
+  --md-elevation-card-hover: #{$md-elevation-card-hover};
+  --md-elevation-overlay: #{$md-elevation-overlay};
+
+  // Layout / page shell
+  --container-max: #{$container-max};
+  --page-margin-mobile: #{$page-margin-mobile};
+  --page-margin-desktop: #{$page-margin-desktop};
+  --page-gutter: #{$page-gutter};
+  --sidebar-width: #{$sidebar-width};
+  --sidebar-collapsed-width: #{$sidebar-collapsed-width};
+  --topbar-height: #{$topbar-height};
+
+  // ==========================================================================
+  // Legacy color CSS variables — repointed to M3 tokens, names kept stable
+  // ==========================================================================
+
+  // Primary Colors (legacy ramp kept for backward compat; primary aliases now M3)
   --color-primary-50: #{$primary-50};
   --color-primary-100: #{$primary-100};
   --color-primary-200: #{$primary-200};
@@ -34,11 +116,14 @@
   --color-primary-700: #{$primary-700};
   --color-primary-800: #{$primary-800};
   --color-primary-900: #{$primary-900};
-  --color-primary: var(--color-primary-500);
-  --color-primary-dark: var(--color-primary-700);
-  --color-primary-light: var(--color-primary-300);
+  --color-primary: var(--md-primary);
+  --color-primary-dark: var(--md-on-primary-fixed);
+  --color-primary-light: var(--md-primary-fixed-dim);
+  --color-primary-container: var(--md-primary-container);
+  --color-on-primary: var(--md-on-primary);
+  --color-on-primary-container: var(--md-on-primary-container);
 
-  // Accent Colors
+  // Accent Colors (repointed: yellow ramp kept as historical, alias now teal)
   --color-accent-50: #{$accent-yellow-50};
   --color-accent-100: #{$accent-yellow-100};
   --color-accent-200: #{$accent-yellow-200};
@@ -49,9 +134,12 @@
   --color-accent-700: #{$accent-yellow-700};
   --color-accent-800: #{$accent-yellow-800};
   --color-accent-900: #{$accent-yellow-900};
-  --color-accent: var(--color-accent-500);
-  --color-accent-dark: var(--color-accent-700);
-  --color-accent-light: var(--color-accent-300);
+  --color-accent: var(--md-secondary);
+  --color-accent-dark: var(--md-on-secondary-fixed-variant);
+  --color-accent-light: var(--md-secondary-fixed-dim);
+  --color-accent-container: var(--md-secondary-container);
+  --color-on-accent: var(--md-on-secondary);
+  --color-on-accent-container: var(--md-on-secondary-container);
 
   // Success Colors
   --color-success-50: #{$success-50};
@@ -83,12 +171,14 @@
   --color-warn-dark: var(--color-warn-700);
   --color-warn-light: var(--color-warn-300);
 
-  // Error Colors (Same as warn for consistency)
-  --color-error: var(--color-warn-500);
-  --color-error-dark: var(--color-warn-700);
-  --color-error-light: var(--color-warn-300);
+  // Error (now sourced from M3 error tokens)
+  --color-error: var(--md-error);
+  --color-error-dark: #{$error-800};
+  --color-error-light: var(--md-error-container);
+  --color-on-error: var(--md-on-error);
+  --color-on-error-container: var(--md-on-error-container);
 
-  // Neutral Colors
+  // Neutrals
   --color-white: #{$white};
   --color-black: #{$black};
   --color-gray-50: #{$gray-50};
@@ -103,20 +193,27 @@
   --color-gray-900: #{$gray-900};
 
   // Text Colors
-  --color-text-primary: #{$color-text-primary};
-  --color-text-secondary: #{$color-text-secondary};
-  --color-text-disabled: #{$color-text-disabled};
-  --color-text-inverse: #{$color-text-inverse};
+  --color-text-primary: var(--md-on-surface);
+  --color-text-secondary: var(--md-on-surface-variant);
+  --color-text-disabled: var(--md-outline);
+  --color-text-inverse: var(--md-inverse-on-surface);
 
   // Background Colors
-  --color-background: #{$color-background};
-  --color-background-secondary: #{$color-background-secondary};
-  --color-background-tertiary: #{$color-background-tertiary};
+  --color-background: var(--md-background);
+  --color-background-secondary: var(--md-surface-container-low);
+  --color-background-tertiary: var(--md-surface-container);
+
+  // Surface aliases
+  --color-surface: var(--md-surface-container-lowest);
+  --color-surface-secondary: var(--md-surface-container-low);
+  --color-surface-container: var(--md-surface-container);
+  --color-surface-container-high: var(--md-surface-container-high);
+  --color-surface-container-highest: var(--md-surface-container-highest);
 
   // Border Colors
-  --color-border: #{$color-border};
-  --color-border-light: #{$color-border-light};
-  --color-border-dark: #{$color-border-dark};
+  --color-border: var(--md-outline-variant);
+  --color-border-light: var(--md-surface-container);
+  --color-border-dark: var(--md-outline);
 
   // Shadow Colors
   --color-shadow: #{$color-shadow};
