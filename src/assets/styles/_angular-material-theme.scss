@@ -1,219 +1,262 @@
 // ============================================================================
-// ANGULAR MATERIAL THEME CONFIGURATION - AGL INSPIRED
+// ANGULAR MATERIAL THEME — Material 3 + AGL prototype color overrides
 // ============================================================================
+// This file replaces the previous M2 theme. The Material 3 system emits
+// `--mat-sys-*` CSS custom properties that map 1:1 to the prototype's named
+// tokens (surface, surface-container-low, on-surface-variant, primary-container,
+// outline-variant, …). The prototype, however, assigns *custom* hex values that
+// don't follow M3's standard tone-to-role mapping, so after `mat.theme(...)`
+// emits its baseline we re-point key `--mat-sys-*` tokens to the matching
+// `--md-*` variables defined in `styles.scss`.
 
 @use 'sass:list' as list;
+@use 'sass:map' as map;
 @use 'sass-utils/variables' as *;
 @use '@angular/material' as mat;
 
 // ============================================================================
-// ANGULAR MATERIAL CUSTOM COLOR PALETTES
+// M3 PALETTE — cobalt anchor (primary + tertiary sourced from this palette)
 // ============================================================================
+// Tones derived from the prototype's exposed hex values. M3 light theme uses
+// tone 40 for primary, tone 90 for primary-container — which differs from the
+// prototype's assignments. The `:root` override block below pins the final
+// values; this palette only seeds reasonable derived states (state layers,
+// disabled tones, ripple opacity, etc.).
 
-// Primary Blue Palette (AGL Main Blue #0033cc)
-$custom-primary-palette: (
-  50: #e6eeff,
-  100: #b3ccff,
-  200: #80aaff,
-  300: #4d88ff,
-  400: #1a66ff,
-  500: #0033cc,
-  // Main AGL Blue
-  600: #002eb8,
-  700: #0029a3,
-  800: #00248f,
-  900: #00205b,
-  // Text Dark Blue
-  A100: #b3ccff,
-  A200: #80aaff,
-  A400: #4d88ff,
-  A700: #1a66ff,
-  contrast: (
-    50: rgba(black, 0.87),
-    100: rgba(black, 0.87),
-    200: rgba(black, 0.87),
-    300: rgba(black, 0.87),
-    400: white,
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: rgba(black, 0.87),
-    A200: rgba(black, 0.87),
-    A400: white,
-    A700: white,
+$_blogsphere-cobalt: (
+  0: #000000,
+  10: #000b62,
+  20: #001488,
+  25: #001998,
+  30: #001cb0,
+  35: #1428c0,
+  40: #1e32bd,
+  50: #3c4ed5,
+  60: #5663f5,
+  70: #707cff,
+  80: #8d9aff,
+  90: #bcc2ff,
+  95: #dfe0ff,
+  98: #f0f0ff,
+  99: #fbfaff,
+  100: #ffffff,
+  secondary: (
+    0: #000000,
+    10: #002022,
+    20: #00373d,
+    25: #00444a,
+    30: #00505a,
+    35: #005d66,
+    40: #006970,
+    50: #008892,
+    60: #00a4b0,
+    70: #00c2d0,
+    80: #00dbe9,
+    90: #7df4ff,
+    95: #c3faff,
+    98: #f1fdff,
+    99: #f4fefe,
+    100: #ffffff,
+  ),
+  neutral: (
+    0: #000000,
+    10: #1a1c1d,
+    20: #2f3132,
+    25: #353838,
+    30: #404344,
+    35: #4c4e50,
+    40: #585b5c,
+    50: #717474,
+    60: #8b8d8e,
+    70: #a5a7a8,
+    80: #c1c3c4,
+    90: #dddee0,
+    95: #ebeced,
+    98: #f4f4f6,
+    99: #f9f9fb,
+    100: #ffffff,
+  ),
+  neutral-variant: (
+    0: #000000,
+    10: #1c1d29,
+    20: #31323e,
+    25: #3c3d49,
+    30: #454654,
+    35: #525366,
+    40: #5e5f6e,
+    50: #757686,
+    60: #8f90a0,
+    70: #aaabba,
+    80: #c5c5d7,
+    90: #e2e1f3,
+    95: #f0effc,
+    98: #f9f9ff,
+    99: #fefcff,
+    100: #ffffff,
+  ),
+  error: (
+    0: #000000,
+    10: #410002,
+    20: #690005,
+    25: #7e0007,
+    30: #93000a,
+    35: #a80710,
+    40: #ba1a1a,
+    50: #de3730,
+    60: #ff5449,
+    70: #ff897d,
+    80: #ffb4ab,
+    90: #ffdad6,
+    95: #ffedea,
+    98: #fff8f7,
+    99: #fffbff,
+    100: #ffffff,
   ),
 );
 
-// Accent Yellow Palette (AGL Accent Yellow #ffe600)
-$custom-accent-palette: (
-  50: #fffde6,
-  100: #fff9b3,
-  200: #fff580,
-  300: #fff14d,
-  400: #ffed1a,
-  500: #ffe600,
-  // Accent Yellow
-  600: #e6cf00,
-  700: #ccb800,
-  800: #b3a100,
-  900: #998a00,
-  A100: #fff9b3,
-  A200: #fff580,
-  A400: #fff14d,
-  A700: #ffed1a,
-  contrast: (
-    50: rgba(black, 0.87),
-    100: rgba(black, 0.87),
-    200: rgba(black, 0.87),
-    300: rgba(black, 0.87),
-    400: rgba(black, 0.87),
-    500: rgba(black, 0.87),
-    600: rgba(black, 0.87),
-    700: rgba(black, 0.87),
-    800: rgba(black, 0.87),
-    900: rgba(black, 0.87),
-    A100: rgba(black, 0.87),
-    A200: rgba(black, 0.87),
-    A400: rgba(black, 0.87),
-    A700: rgba(black, 0.87),
-  ),
-);
-
-// Success Green Palette (Emerald Green #10b981)
-$custom-success-palette: (
-  50: #e6f7f1,
-  100: #b3e7d1,
-  200: #80d7b1,
-  300: #4dc791,
-  400: #1ab771,
-  500: #10b981,
-  // Emerald Green
-  600: #0ea574,
-  700: #0c9167,
-  800: #0a7d5a,
-  900: #08694d,
-  A100: #b3e7d1,
-  A200: #80d7b1,
-  A400: #4dc791,
-  A700: #1ab771,
-  contrast: (
-    50: rgba(black, 0.87),
-    100: rgba(black, 0.87),
-    200: rgba(black, 0.87),
-    300: rgba(black, 0.87),
-    400: rgba(black, 0.87),
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: rgba(black, 0.87),
-    A200: rgba(black, 0.87),
-    A400: rgba(black, 0.87),
-    A700: white,
-  ),
-);
-
-// Warning/Error Red Orange Palette (#ff5252)
-$custom-warn-palette: (
-  50: #ffebee,
-  100: #ffcdd2,
-  200: #ef9a9a,
-  300: #e57373,
-  400: #ef5350,
-  500: #ff5252,
-  // Red Orange
-  600: #f44336,
-  700: #e53935,
-  800: #d32f2f,
-  900: #c62828,
-  A100: #ffcdd2,
-  A200: #ef9a9a,
-  A400: #e57373,
-  A700: #ef5350,
-  contrast: (
-    50: rgba(black, 0.87),
-    100: rgba(black, 0.87),
-    200: rgba(black, 0.87),
-    300: rgba(black, 0.87),
-    400: rgba(black, 0.87),
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: rgba(black, 0.87),
-    A200: rgba(black, 0.87),
-    A400: rgba(black, 0.87),
-    A700: white,
-  ),
-);
-
-
 // ============================================================================
-// DEFINE THEME PALETTES
+// MATERIAL 3 THEME — `mat.theme(...)` emits `--mat-sys-*` + component styles
 // ============================================================================
 
-$Blogsphere-primary: mat.m2-define-palette($custom-primary-palette, 500);
-$Blogsphere-accent: mat.m2-define-palette($custom-accent-palette, 500);
-$Blogsphere-success: mat.m2-define-palette($custom-success-palette, 500);
-$Blogsphere-warn: mat.m2-define-palette($custom-warn-palette, 500);
-$Blogsphere-error: mat.m2-define-palette($custom-warn-palette, 500);
-
-// ============================================================================
-// CREATE THEME OBJECT
-// ============================================================================
-
-$Blogsphere-theme: mat.m2-define-light-theme(
-  (
-    color: (
-      primary: $Blogsphere-primary,
-      accent: $Blogsphere-accent,
-      warn: $Blogsphere-warn,
-    ),
-  )
-);
-
-// ============================================================================
-// INCLUDE ANGULAR MATERIAL CORE AND THEME STYLES
-// ============================================================================
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat.core();
 
-// Include theme styles for core and each component used in your app
-@include mat.all-component-themes($Blogsphere-theme);
-
-// Form fields — typed value (input/textarea) larger than label & hints; uses design tokens
-@include mat.form-field-overrides(
-  (
-    container-text-size: $font-size-2xl,
-    container-text-line-height: $line-height-normal,
-    outlined-label-text-size: $font-size-2xl,
-    filled-label-text-size: $font-size-lg,
-    outlined-label-text-populated-size: $font-size-2xl,
-    subscript-text-size: $font-size-xl,
-  )
-);
-
-// Explicit: ensure the actual input value uses the container size (covers edge cases where token alone is not applied)
-.mat-mdc-form-field input.mat-mdc-input-element,
-.mat-mdc-form-field textarea.mat-mdc-input-element {
-  font-size: var(--mat-form-field-container-text-size, #{$font-size-2xl});
+html {
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: $_blogsphere-cobalt,
+      tertiary: $_blogsphere-cobalt,
+    ),
+    typography: (
+      plain-family: $font-family-body,
+      brand-family: $font-family-heading,
+      bold-weight: $font-weight-bold,
+      medium-weight: $font-weight-medium,
+      regular-weight: $font-weight-regular,
+    ),
+    density: 0,
+  ));
 }
 
+// ============================================================================
+// SYSTEM-TOKEN OVERRIDES — pin to prototype's exact hex assignments
+// ============================================================================
+// The prototype's "primary" (#000F76) is darker than M3's standard light-theme
+// primary (tone 40 = #1E32BD with our palette). To match the prototype 1:1
+// we override `--mat-sys-*` to the `--md-*` variables that styles.scss
+// already populates from the SCSS layer.
+
+:root {
+  // Primary / on-primary
+  --mat-sys-primary: var(--md-primary);
+  --mat-sys-on-primary: var(--md-on-primary);
+  --mat-sys-primary-container: var(--md-primary-container);
+  --mat-sys-on-primary-container: var(--md-on-primary-container);
+  --mat-sys-primary-fixed: var(--md-primary-fixed);
+  --mat-sys-primary-fixed-dim: var(--md-primary-fixed-dim);
+  --mat-sys-on-primary-fixed: var(--md-on-primary-fixed);
+  --mat-sys-on-primary-fixed-variant: var(--md-on-primary-fixed-variant);
+  --mat-sys-inverse-primary: var(--md-inverse-primary);
+
+  // Secondary / on-secondary
+  --mat-sys-secondary: var(--md-secondary);
+  --mat-sys-on-secondary: var(--md-on-secondary);
+  --mat-sys-secondary-container: var(--md-secondary-container);
+  --mat-sys-on-secondary-container: var(--md-on-secondary-container);
+  --mat-sys-secondary-fixed: var(--md-secondary-fixed);
+  --mat-sys-secondary-fixed-dim: var(--md-secondary-fixed-dim);
+  --mat-sys-on-secondary-fixed: var(--md-on-secondary-fixed);
+  --mat-sys-on-secondary-fixed-variant: var(--md-on-secondary-fixed-variant);
+
+  // Tertiary
+  --mat-sys-tertiary: var(--md-tertiary);
+  --mat-sys-on-tertiary: var(--md-on-tertiary);
+  --mat-sys-tertiary-container: var(--md-tertiary-container);
+  --mat-sys-on-tertiary-container: var(--md-on-tertiary-container);
+  --mat-sys-tertiary-fixed: var(--md-tertiary-fixed);
+  --mat-sys-tertiary-fixed-dim: var(--md-tertiary-fixed-dim);
+
+  // Surfaces — the prototype's defining structural tokens
+  --mat-sys-surface: var(--md-surface);
+  --mat-sys-surface-dim: var(--md-surface-dim);
+  --mat-sys-surface-bright: var(--md-surface-bright);
+  --mat-sys-surface-container-lowest: var(--md-surface-container-lowest);
+  --mat-sys-surface-container-low: var(--md-surface-container-low);
+  --mat-sys-surface-container: var(--md-surface-container);
+  --mat-sys-surface-container-high: var(--md-surface-container-high);
+  --mat-sys-surface-container-highest: var(--md-surface-container-highest);
+  --mat-sys-surface-variant: var(--md-surface-variant);
+  --mat-sys-surface-tint: var(--md-surface-tint);
+
+  // On-surface + outline
+  --mat-sys-on-surface: var(--md-on-surface);
+  --mat-sys-on-surface-variant: var(--md-on-surface-variant);
+  --mat-sys-outline: var(--md-outline);
+  --mat-sys-outline-variant: var(--md-outline-variant);
+  --mat-sys-inverse-surface: var(--md-inverse-surface);
+  --mat-sys-inverse-on-surface: var(--md-inverse-on-surface);
+
+  // Background
+  --mat-sys-background: var(--md-background);
+  --mat-sys-on-background: var(--md-on-background);
+
+  // Error
+  --mat-sys-error: var(--md-error);
+  --mat-sys-on-error: var(--md-on-error);
+  --mat-sys-error-container: var(--md-error-container);
+  --mat-sys-on-error-container: var(--md-on-error-container);
+}
+
+// ============================================================================
+// COMPONENT-LEVEL OVERRIDES — re-expressed against M3 system tokens
+// ============================================================================
+
+// Form fields — use sane sizes (legacy file forced 2xl which is too large
+// after the rem-base normalization)
+@include mat.form-field-overrides((
+  container-text-size: $type-body-md-size,
+  container-text-line-height: $type-body-md-line,
+  outlined-label-text-size: $type-body-md-size,
+  filled-label-text-size: $type-body-md-size,
+  outlined-label-text-populated-size: $type-body-md-size,
+  subscript-text-size: $type-label-xs-size,
+));
+
+// Explicit override for input/textarea (some MDC paths still ignore tokens)
+.mat-mdc-form-field input.mat-mdc-input-element,
+.mat-mdc-form-field textarea.mat-mdc-input-element {
+  font-size: var(--mat-form-field-container-text-size, #{$type-body-md-size});
+}
+
+// MDC outlined notch — keep the soft outline tint the prototype uses
+.mat-mdc-form-field.mat-form-field-appearance-outline {
+  .mdc-text-field--outlined:not(.mdc-text-field--focused):not(.mdc-text-field--invalid)
+    .mdc-notched-outline
+    .mat-mdc-notch-piece {
+    border-color: var(--mat-sys-outline-variant);
+  }
+}
+
+// Keep MDC form fields inside legacy grid columns (see _grid.scss .row / .col-*)
+.row [class*='col-'] .mat-mdc-form-field {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+// Material symbols default font-variation-settings (kept from legacy theme)
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
+
 .material-symbols-rounded {
   font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
 }
 
-// MDC mat-menu — icon + label vertically centered (Material Symbols baseline differs from body text)
+// ============================================================================
+// MAT-MENU — icon + label vertical alignment, hover state
+// ============================================================================
+
 .mat-mdc-menu-panel {
   .mat-mdc-menu-content {
     .mat-mdc-menu-item {
@@ -221,17 +264,18 @@ $Blogsphere-theme: mat.m2-define-light-theme(
       align-items: center !important;
       justify-content: flex-start !important;
       column-gap: $spacing-sm !important;
+      font-family: $font-family-body !important;
 
       &:hover:not([disabled]) {
-        background: $color-primary !important;
-        color: $color-accent !important;
+        background: var(--mat-sys-surface-container) !important;
+        color: var(--mat-sys-on-surface) !important;
       }
 
       .mat-mdc-menu-item-text {
         display: inline-flex !important;
         align-items: center !important;
-        gap: $spacing-lg;
-        font-size: $font-size-2xl !important;
+        gap: $spacing-sm;
+        font-size: $type-body-md-size !important;
       }
 
       .material-symbols-outlined {
@@ -239,43 +283,49 @@ $Blogsphere-theme: mat.m2-define-light-theme(
         align-items: center !important;
         justify-content: center !important;
         line-height: 1 !important;
-        width: $font-size-2xl;
-        height: $font-size-2xl;
-        font-size: $font-size-4xl !important;
+        width: 1.25rem;
+        height: 1.25rem;
+        font-size: 1.25rem !important;
         flex-shrink: 0;
+        color: var(--mat-sys-on-surface-variant);
       }
     }
   }
 }
 
+// ============================================================================
+// MAT-EXPANSION-PANEL — keep zero body padding for list-style children
+// ============================================================================
+
 .mat-expansion-panel-body {
   padding: 0 !important;
-  .mat-expansion-panel {
-    &--list-item {
-      display: flex;
-      align-items: center;
-      column-gap: $spacing-lg;
-      padding: $spacing-md !important;
-    }
+
+  .mat-expansion-panel--list-item {
+    display: flex;
+    align-items: center;
+    column-gap: $spacing-lg;
+    padding: $spacing-md !important;
   }
 }
 
-// Snackbar — white surface + type accent + one icon. MDC has TWO .mat-mdc-snack-bar-label nodes (outer portal host + inner matSnackBarLabel); only .mdc-snackbar__label gets ::before or you get duplicate icons. Theme color applies to .mat-mdc-snackbar-surface, not the host.
+// ============================================================================
+// MAT-SNACKBAR — variant gradient + icon-stripe pattern (translated to M3)
+// ============================================================================
+
 mat-snack-bar-container,
 .mat-snack-bar-container,
 .mat-mdc-snack-bar-container {
-  font-size: $font-size-2xl !important;
+  font-size: $type-body-md-size !important;
   font-weight: $font-weight-regular !important;
   border-radius: $border-radius-md !important;
-  
+
   .mat-mdc-snackbar-surface,
   .mdc-snackbar__surface {
-    background-color: $color-surface !important;
-    color: $gray-800 !important;
-    box-shadow: 0 $spacing-xs $spacing-md $color-shadow !important;
+    background-color: var(--mat-sys-surface-container-lowest) !important;
+    color: var(--mat-sys-on-surface) !important;
+    box-shadow: var(--md-elevation-card-hover) !important;
   }
 
-  // Inner message label only (not the outer portal wrapper)
   .mat-simple-snack-bar-content,
   .mat-mdc-snack-bar-label.mdc-snackbar__label {
     display: flex !important;
@@ -285,24 +335,24 @@ mat-snack-bar-container,
     &::before {
       font-family: 'Material Symbols Outlined' !important;
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      font-size: $font-size-2xl !important;
+      font-size: $type-body-lg-size !important;
       flex-shrink: 0;
     }
   }
 
   .mat-simple-snackbar-action button,
   .mat-mdc-snack-bar-actions .mat-mdc-button {
-    color: $color-text-secondary !important;
+    color: var(--mat-sys-secondary) !important;
   }
 }
 
 $snackbar-types: (
-  'success': ($color-success, 'check_circle'),
-  'error': ($color-error, 'dangerous'),
-  'warning': ($color-warning, 'warning'),
-  'info': ($color-info, 'info'),
-  'primary': ($color-primary, 'thumb_up'),
-  'blogsphere': ($color-primary, 'auto_awesome')
+  'success': (var(--color-success), 'check_circle'),
+  'error': (var(--mat-sys-error), 'dangerous'),
+  'warning': (var(--color-warn), 'warning'),
+  'info': (var(--color-info), 'info'),
+  'primary': (var(--mat-sys-primary), 'thumb_up'),
+  'blogsphere': (var(--mat-sys-secondary), 'auto_awesome'),
 );
 
 @each $type, $config in $snackbar-types {
@@ -318,44 +368,38 @@ $snackbar-types: (
     .mat-mdc-snackbar-surface,
     .mdc-snackbar__surface {
       border-left: $spacing-xs solid $color !important;
+
       @if $type == 'blogsphere' {
-        background: linear-gradient(135deg, rgba($primary-500, 0.04) 0%, $color-surface 100%) !important;
+        background: linear-gradient(
+          135deg,
+          rgba($md-primary-container, 0.04) 0%,
+          $md-surface-container-lowest 100%
+        ) !important;
       }
     }
 
     .mat-simple-snack-bar-content::before,
     .mat-mdc-snack-bar-label.mdc-snackbar__label::before {
-        content: '#{$icon}' !important;
+      content: '#{$icon}' !important;
       color: $color !important;
     }
   }
 }
 
-// MDC outlined text field: notch pieces replace legacy .mat-form-field-outline-thick
-.mat-mdc-form-field.mat-form-field-appearance-outline {
-  .mdc-text-field--outlined:not(.mdc-text-field--focused):not(.mdc-text-field--invalid) .mdc-notched-outline .mat-mdc-notch-piece {
-    border-color: rgba($black, 0.12);
-  }
-}
+// ============================================================================
+// MAT-SLIDE-TOGGLE — keep the legacy 48px width to prevent layout shift
+// ============================================================================
 
 mat-slide-toggle,
 .mat-mdc-slide-toggle {
-  // Force consistent dimensions to prevent layout shift (48px touch target)
   min-width: $spacing-2xl;
   max-width: $spacing-2xl;
   width: $spacing-2xl;
   display: inline-block;
 }
 
-// Keep MDC form fields inside grid columns (see base/_grid.scss .row / [class*='col-'])
-.row [class*='col-'] .mat-mdc-form-field {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
 // ============================================================================
-// MATERIAL DIALOGS — spacing between fields when hints/errors show
+// MAT-DIALOG — vertical spacing between form fields inside dialogs
 // ============================================================================
 
 .mat-mdc-dialog-container .mat-mdc-form-field {
@@ -364,37 +408,60 @@ mat-slide-toggle,
 }
 
 // ============================================================================
-// GLOBAL MAT-SELECT — trigger arrow
+// MAT-SELECT — trigger arrow + selected-option styling
 // ============================================================================
-// Material sets .mat-mdc-select-arrow to 10×5px; the 24×24 SVG is centered inside
-// with position:absolute, so it is effectively clipped to a dot. Match the box to the SVG.
-//
-// MatSelect uses emulated encapsulation (e.g. .mat-mdc-select-arrow[_ngcontent-…]), so a
-// single-class global rule loses to component CSS. Use the trigger chain (0,3,0)+ so our
-// styles win without !important.
-.mat-mdc-select-trigger .mat-mdc-select-arrow-wrapper .mat-mdc-select-arrow {
-  width: $font-size-4xl;
-  height: $font-size-4xl;
-}
+// The default MDC arrow box is 10×5px while the SVG inside is 24×24, so it
+// renders as a clipped dot. Match the box to the SVG.
 
-// ============================================================================
-// GLOBAL MAT-SELECT PANEL STYLES
-// ============================================================================
+.mat-mdc-select-trigger .mat-mdc-select-arrow-wrapper .mat-mdc-select-arrow {
+  width: 1.5rem;
+  height: 1.5rem;
+}
 
 .mat-mdc-select-panel {
   .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) {
-    background-color: $color-primary !important;
-    color: $color-text-inverse !important;
+    background-color: var(--mat-sys-secondary-container) !important;
+    color: var(--mat-sys-on-secondary-container) !important;
 
     &:hover {
-      background-color: $color-primary-dark !important;
-      color: $color-text-inverse !important;
+      background-color: var(--mat-sys-secondary-fixed-dim) !important;
+      color: var(--mat-sys-on-secondary-fixed) !important;
     }
 
     .mat-pseudo-checkbox-checked {
       &::after {
-        color: $color-text-inverse !important;
+        color: var(--mat-sys-on-secondary-container) !important;
       }
     }
   }
+}
+
+// ============================================================================
+// MAT-PAGINATOR — slimmer toolbar height, system-token colors
+// ============================================================================
+
+.mat-mdc-paginator {
+  background-color: transparent;
+  color: var(--mat-sys-on-surface-variant);
+  font-family: $font-family-body;
+  font-size: $type-label-sm-size;
+}
+
+// ============================================================================
+// MAT-TOOLTIP — pin to inverse-surface
+// ============================================================================
+
+.mat-mdc-tooltip {
+  --mdc-plain-tooltip-container-color: var(--mat-sys-inverse-surface);
+  --mdc-plain-tooltip-supporting-text-color: var(--mat-sys-inverse-on-surface);
+  --mdc-plain-tooltip-supporting-text-size: #{$type-label-sm-size};
+  --mdc-plain-tooltip-container-shape: #{$border-radius-base};
+}
+
+// ============================================================================
+// MAT-PROGRESS-SPINNER — uses surface-tint for an explicit visible color
+// ============================================================================
+
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: var(--mat-sys-primary);
 }
