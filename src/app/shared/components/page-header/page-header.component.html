@@ -1,13 +1,16 @@
 @if (!isSuccessPage && !isGenericErrorPage && !isMaintenancePage) {
-  <div class="page-header__container d-flex align-items-center justify-content-between p-3xl">
-    <div class="page-header__page-icon d-flex align-items-center gap-xl">
-      <span class="material-symbols-outlined font-size-5xl mt-xs">{{ pageIcon }}</span>
+  <header class="page-header">
+    <div class="page-header__title">
+      <span class="page-header__icon-tile" aria-hidden="true">
+        <span class="material-symbols-rounded">{{ pageIcon }}</span>
+      </span>
       @if (!isBusy) {
-        <div class="label text-4xl">{{ pageName }}</div>
+        <h1 class="page-header__title-text">{{ pageName }}</h1>
       }
     </div>
-    <div class="page-header__breadcrumb font-size-2xl">
+
+    <div class="page-header__breadcrumb">
       <xng-breadcrumb></xng-breadcrumb>
     </div>
-  </div>
+  </header>
 }

@@ -1,17 +1,17 @@
-<!-- Mobile backdrop overlay -->
 <div
   class="sidenav-backdrop"
   [class.sidenav-backdrop--show]="isMobileView && isSidenavExpanded"
   (click)="handleBackdropClick()"
 ></div>
 
-<div
-  class="sidenav border-right shadow shadow-md"
-  [class.sidenav--collapse]="!isMobileView && !isSidenavExpanded"
-  [class.sidenav--collapse-full]="isMobileView && isSidenavExpanded"
+<aside
+  class="sidenav"
+  [class.sidenav--collapsed]="!isMobileView && !isSidenavExpanded"
+  [class.sidenav--mobile-open]="isMobileView && isSidenavExpanded"
+  [attr.aria-label]="'Primary navigation'"
 >
-  <div class="sidenav__content">
-    <div class="sidenav__content-list" role="list">
+  <nav class="sidenav__nav">
+    <div class="sidenav__list" role="list">
       <blogsphere-sidebar-nav-link
         link="/dashboard"
         icon="dashboard"
@@ -45,5 +45,5 @@
         />
       }
     </div>
-  </div>
-</div>
+  </nav>
+</aside>

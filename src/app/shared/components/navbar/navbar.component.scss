@@ -1,57 +1,128 @@
 @use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
 
-.navbar {
-  padding: 0.5rem 6rem 0.5rem 2.5rem;
-  &__brand {
-    column-gap: 3rem;
-    &--icon {
-      padding: 0.5rem;
-      cursor: pointer;
-      border-radius: 50%;
-      margin-top: 0.5rem;
-    }
-    &--text {
-      flex: 1;
-      color: $color-text-secondary;
-    }
-  }
-  &__nav {
-    column-gap: 3.5rem;
-    &--item {
-      position: relative;
-      cursor: pointer;
-      span:nth-child(2) {
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding-top: 0.3rem;  
-        transform: translate(-50%, -50%);
-        text-align: center;
-        font-size: 1rem;
-        height: 2rem;
-        width: 2rem;
-        color: $color-accent !important;
-        background-color: $color-primary !important;
-        border-radius: 50%;
-      }
-    }
-  }
-}
-
-.avatar {
+.topbar {
   display: flex;
-  column-gap: 5px;
   align-items: center;
-  &--name {
+  justify-content: space-between;
+  height: $topbar-height;
+  padding: 0 $page-margin-mobile;
+  background: var(--md-surface-container-lowest);
+  border-bottom: 1px solid var(--md-outline-variant);
+  position: sticky;
+  top: 0;
+  z-index: $z-index-sticky;
+
+  @include respond-to(md) {
+    padding: 0 $page-margin-desktop;
+  }
+
+  &__brand {
     display: flex;
     align-items: center;
+    gap: $spacing-sm;
+    min-width: 0;
   }
-  &--image {
-    padding: 10px;
+
+  &__brand-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: inherit;
+    text-decoration: none;
+
+    &:hover { text-decoration: none; }
+
+    &--shift {
+      margin-left: $spacing-md;
+    }
+  }
+
+  &__logo {
+    width: 1.75rem;
+    height: 1.75rem;
+    display: block;
+  }
+
+  &__name {
+    @include type(headline-sm);
+    color: var(--md-on-surface);
+    font-family: $font-family-heading;
+
+    @include respond-to(sm) {
+      display: none;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__profile {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-xs $spacing-sm;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: $border-radius-full;
+    cursor: pointer;
+    transition: background-color 200ms ease, border-color 200ms ease;
+    font-family: $font-family-body;
+    color: var(--md-on-surface);
+    margin-left: $spacing-sm;
+
+    &:hover {
+      background: var(--md-surface-container);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+  }
+
+  &__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
+    background: var(--md-primary-fixed);
+    color: var(--md-on-primary-fixed);
+    font-size: $type-label-sm-size;
+    font-weight: $font-weight-bold;
+  }
+
+  &__profile-email {
+    @include type(body-sm);
+    font-weight: $font-weight-medium;
+    color: var(--md-on-surface);
+    max-width: 18ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @include respond-to(md) {
+      display: none;
+    }
+  }
+
+  &__profile-chevron {
+    color: var(--md-on-surface-variant);
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  &__mobile {
+    display: inline-flex;
+  }
+
+  &__mobile-menu {
+    background: var(--md-surface-container-lowest);
+    border-bottom: 1px solid var(--md-outline-variant);
   }
 }

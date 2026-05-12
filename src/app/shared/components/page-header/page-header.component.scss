@@ -1,9 +1,81 @@
 @use 'sass-utils/variables' as *;
-@use 'sass-utils/functions' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: block;
+  margin-bottom: $spacing-xl;
+}
 
 .page-header {
-  &__page-icon {
-    color: get-color(primary, 600);
-    
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-lg;
+  flex-wrap: wrap;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    min-width: 0;
+  }
+
+  &__icon-tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: $border-radius-md;
+    background: var(--md-primary-fixed);
+    color: var(--md-on-primary-fixed);
+
+    .material-symbols-rounded {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+  }
+
+  &__title-text {
+    margin: 0;
+    @include type(headline-lg);
+    color: var(--md-on-surface);
+
+    @include respond-to(sm) {
+      @include type(headline-lg-mobile);
+    }
+  }
+
+  &__breadcrumb {
+    @include type(label-sm);
+    color: var(--md-on-surface-variant);
+
+    ::ng-deep .xng-breadcrumb-root {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+    }
+
+    ::ng-deep .xng-breadcrumb-item {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    ::ng-deep .xng-breadcrumb-link {
+      color: var(--md-on-surface-variant);
+      text-decoration: none;
+
+      &:hover { color: var(--md-secondary); text-decoration: underline; }
+    }
+
+    ::ng-deep .xng-breadcrumb-trail {
+      color: var(--md-on-surface);
+      font-weight: $font-weight-medium;
+    }
+
+    ::ng-deep .xng-breadcrumb-separator {
+      color: var(--md-outline);
+      margin: 0 $spacing-xs;
+    }
   }
 }

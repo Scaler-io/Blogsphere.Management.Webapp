@@ -1,68 +1,86 @@
-@use 'sass:color' as color;
 @use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
 
 :host {
   display: block;
 }
 
-.sidenav__content-list--item {
-  min-height: 5rem;
-  overflow: hidden;
-  padding: 1rem 0 0 0;
-  margin-bottom: 1.5rem;
+.sidebar-expandable {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 
-  &:hover {
-    transition: all 0.1s ease-in-out;
-    .main-content {
-      cursor: pointer;
-      .item-icon,
-      .item-label {
-        color: $color-primary;
-        transition: all 0.1s ease-in-out;
-      }
-    }
-  }
-
-  .main-content {
-    padding-left: 2.5rem;
+  &__header {
     display: flex;
     align-items: center;
-    column-gap: 2.6rem;
-    .item-icon {
-      color: $color-text-secondary;
-      &:last-child {
-        margin-right: 2rem;
-        justify-self: right !important;
+    gap: $spacing-md;
+    width: 100%;
+    padding: $spacing-sm $spacing-md;
+    background: transparent;
+    border: 0;
+    border-radius: $border-radius-full;
+    cursor: pointer;
+    color: var(--md-on-surface-variant);
+    font-family: $font-family-body;
+    text-align: left;
+    transition: background-color 200ms ease, color 200ms ease;
+
+    &:hover {
+      background: var(--md-surface-container);
+      color: var(--md-on-surface);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+
+    &--group-active {
+      color: var(--md-on-surface);
+
+      .sidebar-expandable__icon {
+        color: var(--md-secondary);
       }
     }
-    .item-label {
-      font-size: $font-size-2xl;
-      color: #3b3b3b;
-      flex-grow: 1;
-      white-space: nowrap;
-    }
   }
 
-  .submenu {
-    max-height: 0;
+  &__icon {
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: inherit;
+  }
+
+  &__label {
+    @include type(body-md);
+    font-weight: $font-weight-medium;
+    color: inherit;
+    flex: 1 1 auto;
     white-space: nowrap;
-    margin-top: 1.2rem!important;
-    background-color: color.adjust($color-background-blue, $lightness: 40%);
-    transition: max-height 0.2s ease-in-out;
-    &--active {
-      max-height: 20rem;
-      box-shadow: $color-shadow-inset-light;
-    }
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  &.route-active {
-    background-color: $color-primary;
-    .item-icon,
-    .item-label {
-      color: $color-accent !important;
+  &__chevron {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: var(--md-on-surface-variant);
+  }
+
+  &__submenu {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows 0.25s ease-in-out;
+    padding-left: $spacing-lg;
+
+    &--open {
+      grid-template-rows: 1fr;
     }
-    .mat-ripple-element {
-      display: none !important;
+
+    > * {
+      min-height: 0;
     }
   }
 }

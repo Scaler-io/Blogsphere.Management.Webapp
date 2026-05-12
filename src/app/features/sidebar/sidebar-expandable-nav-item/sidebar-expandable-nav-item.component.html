@@ -1,17 +1,19 @@
-<div
-  class="sidenav__content-list--item sidebar-expandable-nav"
-  [class.route-active]="isGroupActive()"
-  (click)="headerClick.emit()"
-  role="listitem"
->
-  <div class="main-content">
-    <span class="material-symbols-outlined item-icon">{{ headerIcon }}</span>
-    <span class="item-label">{{ label }}</span>
-    <span class="material-symbols-outlined item-icon">
+<div class="sidebar-expandable" role="listitem">
+  <button
+    type="button"
+    class="sidebar-expandable__header"
+    [class.sidebar-expandable__header--group-active]="isGroupActive()"
+    [attr.aria-expanded]="expanded"
+    (click)="headerClick.emit()"
+  >
+    <span class="material-symbols-rounded sidebar-expandable__icon" aria-hidden="true">{{ headerIcon }}</span>
+    <span class="sidebar-expandable__label">{{ label }}</span>
+    <span class="material-symbols-rounded sidebar-expandable__chevron" aria-hidden="true">
       {{ expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
     </span>
-  </div>
-  <div class="submenu" [class.submenu--active]="expanded" role="list">
+  </button>
+
+  <div class="sidebar-expandable__submenu" [class.sidebar-expandable__submenu--open]="expanded" role="list">
     @for (item of submenuItems; track item.routerLink) {
       <blogsphere-sidebar-submenu-link
         [link]="item.routerLink"
