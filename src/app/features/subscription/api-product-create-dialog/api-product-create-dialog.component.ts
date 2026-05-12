@@ -18,7 +18,6 @@ import { AppState } from 'src/app/store/app.state';
 @Component({
     selector: 'blogsphere-api-product-create-dialog',
     templateUrl: './api-product-create-dialog.component.html',
-    styleUrls: ['./api-product-create-dialog.component.scss'],
     standalone: false
 })
 export class ApiProductCreateDialogComponent implements OnInit, OnDestroy {

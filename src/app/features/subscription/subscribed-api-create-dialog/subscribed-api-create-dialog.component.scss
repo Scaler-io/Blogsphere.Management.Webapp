@@ -1,9 +1,0 @@
-@use 'sass-utils/variables' as *;
-
-.close-icon {
-  font-size: 24px;
-  transition: color 0.3s ease;
-  &:hover {
-    color: $color-error;
-  }
-}
