@@ -1,23 +1,19 @@
 <div @fadeSlideInOut class="dashboard">
-  <div class="row dashboard__toolbar mb-lg">
-    <div class="col-12 col-md-6 dashboard__toolbar-actions">
-      @if (dashboardScopeOptions.length > 0) {
-        <mat-form-field appearance="outline" class="dashboard__scope-select" subscriptSizing="dynamic">
-          <mat-label>Scope</mat-label>
-          <mat-select
-            [value]="selectedScope"
-            (selectionChange)="onDashboardScopeChange($event.value)"
-            >
-            @for (option of dashboardScopeOptions; track option.id) {
-              <mat-option [value]="option.id">{{ option.label }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      }
+  @if (dashboardScopeOptions.length > 0) {
+    <div class="dashboard__toolbar">
+      <mat-form-field appearance="outline" class="dashboard__scope-select" subscriptSizing="dynamic">
+        <mat-label>Dashboard scope</mat-label>
+        <mat-select
+          [value]="selectedScope"
+          (selectionChange)="onDashboardScopeChange($event.value)"
+        >
+          @for (option of dashboardScopeOptions; track option.id) {
+            <mat-option [value]="option.id">{{ option.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
     </div>
-  </div>
-
-  @if (dashboardScopeOptions.length === 0) {
+  } @else {
     <p class="dashboard__empty">You do not have permission to view any dashboards.</p>
   }
 

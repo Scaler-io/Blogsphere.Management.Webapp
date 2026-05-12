@@ -1,8 +1,15 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
-import { ButtonType, ButtonSize } from 'src/app/core/model/core';
 import { ApiManagementDashboardResponse } from 'src/app/core/model/dashboard.model';
+import {
+  ChartPalette,
+  getBaseChartOptions,
+  getChartPalette,
+  getStatusColor,
+  withAlpha,
+} from '../chart-theme';
+import { SegmentedOption } from 'src/app/shared/components/segmented-control/segmented-control.component';
 
 @Component({
   selector: 'blogsphere-api-management-dashboard',
@@ -14,84 +21,33 @@ import { ApiManagementDashboardResponse } from 'src/app/core/model/dashboard.mod
 export class ApiManagementDashboardComponent implements OnChanges {
   @Input({ required: true }) summary!: ApiManagementDashboardResponse;
 
-  ButtonType = ButtonType;
-  ButtonSize = ButtonSize;
-
   public chartsDataLoaded = false;
 
   public lineChartType: ChartType = 'line';
   public barChartType: ChartType = 'bar';
   public doughnutChartType: ChartType = 'doughnut';
 
-  public growthChartData: ChartData<'line'> = {
-    labels: [],
-    datasets: [],
-  };
+  public growthChartRangeOptions: SegmentedOption[] = [
+    { id: 'all', label: 'All' },
+    { id: '6m', label: '6m' },
+    { id: '3m', label: '3m' },
+  ];
+  public growthChartRange = 'all';
 
-  public growthChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: true,
-        position: 'top',
-      },
-      title: {
-        display: false,
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
+  public growthChartData: ChartData<'line'> = { labels: [], datasets: [] };
+  public statusChartData: ChartData<'doughnut'> = { labels: [], datasets: [] };
+  public activityChartData: ChartData<'bar'> = { labels: [], datasets: [] };
 
-  public statusChartData: ChartData<'doughnut'> = {
-    labels: [],
-    datasets: [],
-  };
-
-  public statusChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: true,
-        position: 'bottom',
-      },
-      title: {
-        display: false,
-      },
-    },
-  };
-
-  public activityChartData: ChartData<'bar'> = {
-    labels: [],
-    datasets: [],
-  };
-
-  public activityChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      title: {
-        display: false,
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
+  public growthChartOptions: ChartConfiguration<'line'>['options'] = this.buildLineOptions();
+  public statusChartOptions: ChartConfiguration<'doughnut'>['options'] = this.buildDoughnutOptions();
+  public activityChartOptions: ChartConfiguration<'bar'>['options'] = this.buildBarOptions();
 
   public totalClusters = 0;
   public totalRoutes = 0;
   public totalProducts = 0;
+
+  private fullGrowthLabels: string[] = [];
+  private fullGrowthDatasets: ApiManagementDashboardResponse['charts']['growthTrend']['datasets'] = [];
 
   constructor(private router: Router) {}
 
@@ -113,32 +69,48 @@ export class ApiManagementDashboardComponent implements OnChanges {
     this.router.navigate(['/subscription']);
   }
 
+  onGrowthRangeChange(range: string): void {
+    this.growthChartRange = range;
+    this.updateGrowthChartFromCache();
+  }
+
   private applySummary(response: ApiManagementDashboardResponse): void {
     this.totalClusters = response.summary?.clusters ?? 0;
     this.totalRoutes = response.summary?.routes ?? 0;
     this.totalProducts = response.summary?.products ?? 0;
 
-    this.updateGrowthTrendChart(response.charts?.growthTrend);
+    const trend = response.charts?.growthTrend;
+    this.fullGrowthLabels = trend?.labels ?? [];
+    this.fullGrowthDatasets = trend?.datasets ?? [];
+    this.updateGrowthChartFromCache();
+
     this.updateStatusDistributionChart(response.charts?.clusterStatusDistribution);
     this.updateActivityChart(response.charts?.monthlyRouteActivity);
     this.chartsDataLoaded = true;
   }
 
-  private updateGrowthTrendChart(trend?: ApiManagementDashboardResponse['charts']['growthTrend']): void {
-    const labels = trend?.labels ?? [];
-    const datasets = (trend?.datasets ?? []).map((dataset, index) => ({
-      data: dataset.data ?? [],
-      label: dataset.label,
-      borderColor: index === 0 ? '#0033cc' : '#0076ff',
-      backgroundColor: index === 0 ? 'rgba(0, 51, 204, 0.1)' : 'rgba(0, 118, 255, 0.1)',
-      tension: 0.4,
-      fill: true,
-    }));
+  private updateGrowthChartFromCache(): void {
+    const palette = getChartPalette();
+    const sliceSize =
+      this.growthChartRange === '3m' ? 3 : this.growthChartRange === '6m' ? 6 : this.fullGrowthLabels.length;
+    const start = Math.max(0, this.fullGrowthLabels.length - sliceSize);
 
-    this.growthChartData = {
-      labels,
-      datasets,
-    };
+    const labels = this.fullGrowthLabels.slice(start);
+    const datasets = this.fullGrowthDatasets.map((dataset, index) => {
+      const stroke = index === 0 ? palette.primary : palette.secondary;
+      return {
+        data: (dataset.data ?? []).slice(start),
+        label: dataset.label,
+        borderColor: stroke,
+        backgroundColor: withAlpha(stroke, 0.1),
+        pointBackgroundColor: stroke,
+        pointBorderColor: palette.primaryContainer,
+        tension: 0.4,
+        fill: true,
+      };
+    });
+
+    this.growthChartData = { labels, datasets };
   }
 
   private updateStatusDistributionChart(
@@ -146,15 +118,18 @@ export class ApiManagementDashboardComponent implements OnChanges {
   ): void {
     const labels = distribution?.labels ?? [];
     const data = distribution?.counts ?? [];
-    const colors = this.getStatusColors(labels);
+    const palette = getChartPalette();
+    const colors = labels.map((label) => getStatusColor(label, palette));
 
     this.statusChartData = {
       labels,
       datasets: [
         {
           data,
-          backgroundColor: colors.bg,
-          hoverBackgroundColor: colors.hover,
+          backgroundColor: colors.map((c) => c.bg),
+          hoverBackgroundColor: colors.map((c) => c.hover),
+          borderColor: palette.surfaceContainerHigh,
+          borderWidth: 2,
         },
       ],
     };
@@ -165,6 +140,7 @@ export class ApiManagementDashboardComponent implements OnChanges {
   ): void {
     const labels = activity?.labels ?? [];
     const data = activity?.counts ?? [];
+    const palette = getChartPalette();
 
     this.activityChartData = {
       labels,
@@ -172,22 +148,112 @@ export class ApiManagementDashboardComponent implements OnChanges {
         {
           data,
           label: 'Routes',
-          backgroundColor: '#0076ff',
-          hoverBackgroundColor: '#0057b8',
+          backgroundColor: palette.secondary,
+          hoverBackgroundColor: palette.primary,
+          borderRadius: 6,
         },
       ],
     };
   }
 
-  private getStatusColors(statuses: string[]): { bg: string[]; hover: string[] } {
-    const colorMap: Record<string, { bg: string; hover: string }> = {
-      Active: { bg: '#10b981', hover: '#059669' },
-      Inactive: { bg: '#ef4444', hover: '#dc2626' },
+  private buildLineOptions(): ChartConfiguration<'line'>['options'] {
+    const base = getBaseChartOptions();
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+          labels: { color: base.textColor, font: { family: base.family } },
+        },
+        title: { display: false },
+        tooltip: this.tooltipStyle(base),
+      },
+      scales: {
+        x: {
+          grid: { color: base.gridColor },
+          ticks: { color: base.mutedColor, font: { family: base.family } },
+        },
+        y: {
+          beginAtZero: true,
+          grid: { color: base.gridColor },
+          ticks: { color: base.mutedColor, font: { family: base.family } },
+        },
+      },
     };
+  }
 
-    const bg = statuses.map((status) => colorMap[status]?.bg || '#6b7280');
-    const hover = statuses.map((status) => colorMap[status]?.hover || '#4b5563');
+  private buildBarOptions(): ChartConfiguration<'bar'>['options'] {
+    const base = getBaseChartOptions();
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: { display: false },
+        tooltip: this.tooltipStyle(base),
+      },
+      scales: {
+        x: {
+          grid: { color: base.gridColor },
+          ticks: { color: base.mutedColor, font: { family: base.family } },
+        },
+        y: {
+          beginAtZero: true,
+          grid: { color: base.gridColor },
+          ticks: { color: base.mutedColor, font: { family: base.family } },
+        },
+      },
+    };
+  }
 
-    return { bg, hover };
+  private buildDoughnutOptions(): ChartConfiguration<'doughnut'>['options'] {
+    const base = getBaseChartOptions();
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '60%',
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: { color: base.textColor, font: { family: base.family } },
+        },
+        title: { display: false },
+        tooltip: this.tooltipStyle(base),
+      },
+    };
+  }
+
+  private tooltipStyle(
+    base: ReturnType<typeof getBaseChartOptions>
+  ): {
+    backgroundColor: string;
+    titleColor: string;
+    bodyColor: string;
+    borderColor: string;
+    borderWidth: number;
+    cornerRadius: number;
+    padding: number;
+    titleFont: { family: string; weight: 'bold' };
+    bodyFont: { family: string };
+  } {
+    return {
+      backgroundColor: base.tooltipBg,
+      titleColor: base.tooltipText,
+      bodyColor: base.tooltipText,
+      borderColor: base.gridColor,
+      borderWidth: 1,
+      cornerRadius: 8,
+      padding: 12,
+      titleFont: { family: base.family, weight: 'bold' },
+      bodyFont: { family: base.family },
+    };
+  }
+
+  // Exposed for the template — keeps the import surface small.
+  get palette(): ChartPalette {
+    return getChartPalette();
   }
 }
