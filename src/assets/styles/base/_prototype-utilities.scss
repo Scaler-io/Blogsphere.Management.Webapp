@@ -309,6 +309,21 @@
 .text-status-info    { color: var(--md-status-info); }
 
 // ============================================================================
+// DIALOG CLOSE ICON — Material Symbols glyph used in mat-dialog headers
+// ============================================================================
+
+.dialog-close-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--mat-sys-on-surface-variant);
+  transition: color 200ms ease;
+
+  &:hover {
+    color: var(--md-status-error);
+  }
+}
+
+// ============================================================================
 // MISC
 // ============================================================================
 
