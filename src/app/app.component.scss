@@ -3,7 +3,7 @@
 
 .app-shell {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   height: 100vh;
   overflow: hidden;
   background: var(--md-background);
@@ -11,7 +11,9 @@
   &__body {
     flex: 1 1 auto;
     display: flex;
+    flex-direction: row;
     align-items: stretch;
+    min-width: 0;
     min-height: 0;
   }
 
@@ -21,8 +23,7 @@
     min-height: 0;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
 
     &--full {
       width: 100%;
@@ -31,6 +32,9 @@
 
   &__content {
     flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
     @include page-container;
     padding-block: $page-margin-mobile;
 

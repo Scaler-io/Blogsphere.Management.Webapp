@@ -5,6 +5,7 @@
   display: block;
   flex-shrink: 0;
   width: $sidebar-width;
+  height: 100vh;
   transition: width 0.25s ease-in-out;
 }
 
@@ -41,9 +42,9 @@
 
   @include mobile-only {
     position: fixed;
-    top: $topbar-height;
+    top: 0;
     left: 0;
-    height: calc(100% - #{$topbar-height});
+    height: 100%;
     width: $sidebar-width;
     z-index: $z-index-modal;
     transform: translateX(-100%);
