@@ -87,6 +87,18 @@
   --md-error-container: #{$md-error-container};
   --md-on-error-container: #{$md-on-error-container};
 
+  // Status (semantic surfaces for charts, pills, badges)
+  --md-status-success: #{$success-700};
+  --md-status-success-container: #{$success-100};
+  --md-status-warning: #{$warning-800};
+  --md-status-warning-container: #{$warning-100};
+  --md-status-error: #{$md-error};
+  --md-status-error-container: #{$md-error-container};
+  --md-status-info: #{$info-700};
+  --md-status-info-container: #{$info-100};
+  --md-status-neutral: #{$md-on-surface-variant};
+  --md-status-neutral-container: #{$md-surface-container-high};
+
   // Elevation
   --md-elevation-card: #{$md-elevation-card};
   --md-elevation-card-hover: #{$md-elevation-card-hover};
@@ -222,14 +234,19 @@
 }
 
 // ============================================================================
-// GLOBAL BEHAVIOR SETTINGS
+// GLOBAL KEYFRAMES
 // ============================================================================
 
-// Disable text selection globally
-// * {
-//   -webkit-user-select: none; /* Safari */
-//   -moz-user-select: none; /* Firefox */
-//   -ms-user-select: none; /* IE10+/Edge */
-//   user-select: none; /* Standard */
-//   -webkit-touch-callout: none; /* iOS Safari */
-// }
+@keyframes blogsphere-inline-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes blogsphere-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes blogsphere-slide-up {
+  from { opacity: 0; transform: translateY(0.5rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}

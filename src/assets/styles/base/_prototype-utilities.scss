@@ -258,6 +258,57 @@
 .group:hover .group-hover\:opacity-100 { opacity: 1; }
 
 // ============================================================================
+// LAYOUT PRIMITIVES — stack / cluster / row-between / page-container
+// ============================================================================
+
+.stack            { @include stack($spacing-md); }
+.stack-xs         { @include stack($spacing-xs); }
+.stack-sm         { @include stack($spacing-sm); }
+.stack-lg         { @include stack($spacing-lg); }
+.stack-xl         { @include stack($spacing-xl); }
+
+.cluster          { @include cluster($spacing-md); }
+.cluster-xs       { @include cluster($spacing-xs); }
+.cluster-sm       { @include cluster($spacing-sm); }
+.cluster-lg       { @include cluster($spacing-lg); }
+
+.row-between      { @include row-between($spacing-md); }
+
+.page-container   { @include page-container; }
+
+.section-stack    { @include section-stack; }
+
+.grid-auto-fit-sm { @include grid-auto-fit(14rem, $spacing-md); }
+.grid-auto-fit-md { @include grid-auto-fit(18rem, $spacing-md); }
+.grid-auto-fit-lg { @include grid-auto-fit(22rem, $spacing-md); }
+
+.grid-bento       { @include grid-bento; }
+.grid-bento-2x4   { @include grid-bento(1, 2, 4, $spacing-md); }
+
+// ============================================================================
+// INTERACTION + ACCESSIBILITY
+// ============================================================================
+
+.focus-ring:focus-visible { @include focus-ring; }
+.touch-target             { @include touch-target; }
+.hover-surface-bg         { @include hover-surface; }
+.is-disabled              { @include disabled-state; }
+
+// ============================================================================
+// STATUS COLORS
+// ============================================================================
+
+.bg-status-success-container { background-color: var(--md-status-success-container); }
+.bg-status-warning-container { background-color: var(--md-status-warning-container); }
+.bg-status-error-container   { background-color: var(--md-status-error-container); }
+.bg-status-info-container    { background-color: var(--md-status-info-container); }
+
+.text-status-success { color: var(--md-status-success); }
+.text-status-warning { color: var(--md-status-warning); }
+.text-status-error   { color: var(--md-status-error); }
+.text-status-info    { color: var(--md-status-info); }
+
+// ============================================================================
 // MISC
 // ============================================================================
 
