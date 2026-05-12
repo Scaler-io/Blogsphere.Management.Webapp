@@ -32,7 +32,7 @@ h5,
 h6 {
   font-family: $font-family-heading !important;
   font-weight: $font-weight-bold !important;
-  margin-bottom: $spacing-md !important;
+  margin-bottom: $spacing-md;
   line-height: $line-height-tight !important;
   color: $color-text-primary;
 }
