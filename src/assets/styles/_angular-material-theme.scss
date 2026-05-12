@@ -480,6 +480,20 @@ mat-slide-toggle,
   line-height: $type-label-sm-line;
 }
 
+xng-breadcrumb .xng-breadcrumb-list {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: $spacing-xs;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+xng-breadcrumb .xng-breadcrumb-item {
+  white-space: nowrap;
+}
+
 .xng-breadcrumb-item {
   display: inline-flex;
   align-items: center;
