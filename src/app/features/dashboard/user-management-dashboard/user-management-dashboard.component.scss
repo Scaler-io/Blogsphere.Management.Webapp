@@ -6,9 +6,7 @@
 }
 
 .users-dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: $page-gutter;
+  @include section-stack($page-gutter, $page-gutter);
 
   &__grid {
     display: grid;
@@ -16,85 +14,22 @@
     grid-template-columns: 1fr;
 
     &--metrics {
-      @include respond-to(sm) {
+      @include tablet-up {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
-      @include respond-to(lg) {
+      @include wide-up {
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
     }
 
     &--two-up {
-      @include respond-to(lg) {
+      @include wide-up {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
   }
 
-  &__chart {
-    background: var(--md-surface-container-lowest);
-    border: 1px solid var(--md-outline-variant);
-    border-radius: $border-radius-md;
-    box-shadow: var(--md-elevation-card);
-    padding: $spacing-lg;
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-md;
-
-    &--wide {
-      width: 100%;
-    }
-  }
-
-  &__chart-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: $spacing-md;
-    flex-wrap: wrap;
-  }
-
-  &__chart-eyebrow {
-    @include type(label-xs);
-    color: var(--md-secondary);
-    display: block;
-  }
-
-  &__chart-title {
-    margin: 0;
-    @include type(headline-sm);
-    color: var(--md-on-surface);
-  }
-
-  &__chart-body {
-    position: relative;
+  &__chart--wide {
     width: 100%;
-
-    &--line { height: 320px; }
-    &--bar { height: 280px; }
-    &--doughnut {
-      height: 280px;
-      max-width: 360px;
-      margin: 0 auto;
-    }
-    &--horizontal-bar { height: 320px; }
-
-    canvas { max-width: 100%; }
-  }
-
-  &__chart-loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    min-height: 200px;
-    gap: $spacing-md;
-
-    p {
-      @include type(body-sm);
-      color: var(--md-on-surface-variant);
-      margin: 0;
-    }
   }
 }

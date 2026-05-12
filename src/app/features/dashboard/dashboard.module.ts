@@ -27,6 +27,7 @@ import { SegmentedControlModule } from 'src/app/shared/components/segmented-cont
 import { ProgressBarModule } from 'src/app/shared/components/progress-bar/progress-bar.module';
 import { StatTileModule } from 'src/app/shared/components/stat-tile/stat-tile.module';
 import { IconButtonModule } from 'src/app/shared/components/icon-button/icon-button.module';
+import { ChartCardModule } from 'src/app/shared/components/chart-card/chart-card.module';
 import { DASHBOARD_SERVICE_TOKEN } from 'src/app/core/services/interface/dashboard-service.interface';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 
@@ -52,6 +53,7 @@ import { DashboardService } from 'src/app/core/services/dashboard.service';
     ProgressBarModule,
     StatTileModule,
     IconButtonModule,
+    ChartCardModule,
     BaseChartDirective,
   ],
   providers: [

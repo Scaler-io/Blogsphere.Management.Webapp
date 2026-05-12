@@ -6,9 +6,7 @@
 }
 
 .dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: $page-gutter;
+  @include section-stack($page-gutter, $page-gutter);
 
   &__toolbar {
     display: flex;
@@ -27,11 +25,9 @@
   }
 
   &__page-loading {
-    display: flex;
-    flex-direction: column;
+    @include stack($spacing-md);
     align-items: center;
     justify-content: center;
-    gap: $spacing-md;
     min-height: 240px;
 
     p {

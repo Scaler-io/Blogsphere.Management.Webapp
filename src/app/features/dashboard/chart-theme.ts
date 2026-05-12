@@ -1,16 +1,9 @@
-// ============================================================================
-// CHART THEME HELPER — reads `--md-*` CSS custom properties so Chart.js
-// datasets stay in lock-step with the SCSS / Angular Material M3 palette.
-// ============================================================================
-//
-// Why a helper:
-//  - The dashboard charts used to hardcode hex values (`#0033cc`, `#10b981`,
-//    …). After the AGL redesign every brand color lives on `:root` as
-//    `--md-*`, so Chart.js datasets read them at runtime — no recompile
-//    needed if a token changes.
-//  - SSR-safe: every helper guards against `window`/`document` being
-//    undefined (the platform check is implicit in `getComputedStyle` usage).
-//  - Each function is idempotent and cheap to call on every `ngOnChanges`.
+/**
+ * Chart theme helper — reads `--md-*` CSS custom properties so Chart.js
+ * datasets stay in lock-step with the Angular Material M3 palette.
+ * SSR-safe: every helper guards against `window` / `document` being
+ * unavailable, and each function is cheap to call from `ngOnChanges`.
+ */
 
 /**
  * Read a CSS custom property value from `:root`. Returns `fallback` when
@@ -75,8 +68,8 @@ export function getChartPalette(): ChartPalette {
     onSurfaceVariant: readCssVar('--md-on-surface-variant', '#454654'),
     error: readCssVar('--md-error', '#ba1a1a'),
     errorContainer: readCssVar('--md-error-container', '#ffdad6'),
-    success: '#10b981',
-    warning: '#f59e0b',
+    success: readCssVar('--md-status-success', '#0c9167'),
+    warning: readCssVar('--md-status-warning', '#ff8f00'),
     tertiary: readCssVar('--md-tertiary', '#202326'),
   };
 }
@@ -109,15 +102,19 @@ export function getBaseChartOptions(): {
  * color. Falls back to the secondary token for unknown statuses.
  */
 export function getStatusColor(status: string, palette: ChartPalette): { bg: string; hover: string } {
+  const successHover = readCssVar('--md-status-success', palette.success);
+  const errorHover = readCssVar('--md-status-error', palette.error);
+  const warningHover = readCssVar('--md-status-warning', palette.warning);
+
   switch (status?.toLowerCase()) {
     case 'active':
-      return { bg: palette.success, hover: '#047857' };
+      return { bg: palette.success, hover: successHover };
     case 'inactive':
     case 'failed':
-      return { bg: palette.error, hover: '#7e0007' };
+      return { bg: palette.error, hover: errorHover };
     case 'pending':
     case 'paused':
-      return { bg: palette.warning, hover: '#b45309' };
+      return { bg: palette.warning, hover: warningHover };
     case 'archived':
       return { bg: palette.tertiary, hover: palette.onSurface };
     default:
