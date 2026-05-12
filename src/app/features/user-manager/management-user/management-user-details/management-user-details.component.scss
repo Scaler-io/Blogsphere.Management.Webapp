@@ -1,0 +1,311 @@
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
+
+// ============================================================================
+// PAGE SHELL
+// ============================================================================
+.ud {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: $spacing-lg $spacing-xl $spacing-2xl;
+  @include flex-column;
+  gap: $spacing-lg;
+
+  @include respond-to(xs) {
+    padding: $spacing-md $spacing-md $spacing-2xl;
+    gap: $spacing-lg;
+  }
+}
+
+.ud-grid-row {
+  margin-bottom: 0;
+}
+
+// ============================================================================
+// HERO BODY (slotted into blogsphere-page-hero) — user-specific identity
+// content: job title + department, status chips
+// ============================================================================
+.ud-hero-body {
+  &__title {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $spacing-xs $spacing-sm;
+    @include font($font-size-lg, $font-weight-medium);
+    color: rgba($color-text-primary, 0.65);
+    margin: 0 0 $spacing-md;
+
+    @include respond-to(xs) {
+      justify-content: center;
+    }
+  }
+
+  &__title-icon {
+    font-size: 18px;
+    line-height: 1;
+    color: $color-primary;
+  }
+
+  &__title-text {
+    line-height: 1.2;
+  }
+
+  &__title-sep {
+    color: rgba($color-text-primary, 0.3);
+    margin: 0 $spacing-xs;
+  }
+
+  &__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+
+    @include respond-to(xs) {
+      justify-content: center;
+    }
+  }
+}
+
+.ud-hero-btn-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.ud-hero-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  @include font($font-size-sm, $font-weight-regular);
+  color: rgba($color-text-primary, 0.7);
+  min-width: 0;
+
+  &__icon {
+    font-size: 18px;
+    line-height: 1;
+    color: $color-primary;
+  }
+
+  &__text {
+    @include text-truncate;
+    max-width: 260px;
+    @include transition(color);
+  }
+
+  &:hover &__text {
+    color: $color-primary;
+  }
+}
+
+:host ::ng-deep .ud-card-grid {
+  blogsphere-details-card {
+    display: block;
+    height: 100%;
+
+    .details-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .details-card__body {
+      flex: 1;
+    }
+  }
+}
+
+:host ::ng-deep .ud-panel-grid {
+  blogsphere-section-panel {
+    display: block;
+    height: 100%;
+
+    .section-panel {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-panel__body {
+      flex: 1;
+    }
+  }
+}
+
+.ud-role-card {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-lg;
+  border: 1px solid $color-border-light;
+  border-radius: $border-radius-lg;
+  background: $color-background;
+  cursor: default;
+  @include transition(all);
+
+  &:hover {
+    border-color: rgba($color-primary, 0.3);
+    box-shadow: 0 4px 12px $color-shadow-light;
+    transform: translateY(-1px);
+  }
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: $border-radius-md;
+    background: rgba($color-primary, 0.08);
+    @include flex-center;
+    flex-shrink: 0;
+
+    .material-symbols-rounded {
+      font-size: 22px;
+      line-height: 1;
+      color: $color-primary;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    flex-wrap: wrap;
+  }
+
+  &__name {
+    @include font($font-size-lg, $font-weight-medium);
+    color: $color-text-primary;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  &__desc {
+    @include font($font-size-sm, $font-weight-regular);
+    color: rgba($color-text-primary, 0.6);
+    margin: $spacing-xs 0 0;
+    line-height: $line-height-normal;
+  }
+}
+
+// ============================================================================
+// PERMISSION GROUPS & CHIPS
+// ============================================================================
+.ud-perm-groups {
+  @include flex-column;
+  gap: $spacing-md;
+}
+
+.ud-perm-group {
+  &:not(:last-child) {
+    padding-bottom: $spacing-md;
+    border-bottom: 1px dashed $color-border-light;
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__head-icon {
+    font-size: 20px;
+    line-height: 1;
+    color: $color-primary;
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 400;
+  }
+
+  &__head-name {
+    @include font($font-size-lg, $font-weight-medium);
+    color: $color-text-primary;
+    text-transform: capitalize;
+    letter-spacing: 0.2px;
+  }
+
+  &__head-count {
+    @include font($font-size-base, $font-weight-bold);
+    color: rgba($color-text-primary, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-left: $spacing-xs;
+  }
+}
+
+.ud-perm-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.ud-perm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  max-width: 100%;
+  padding: 6px $spacing-md;
+  border-radius: $border-radius-full;
+  border: 1px solid rgba($color-primary, 0.15);
+  background: rgba($color-primary, 0.04);
+  @include font($font-size-lg, $font-weight-medium);
+  color: rgba($color-text-primary, 0.85);
+  letter-spacing: 0.015em;
+  cursor: default;
+  @include transition(all);
+
+  &:hover {
+    background: rgba($color-primary, 0.1);
+    border-color: rgba($color-primary, 0.3);
+    color: $color-primary;
+  }
+
+  &__icon {
+    font-size: 14px;
+    line-height: 1;
+    color: $color-primary;
+    flex-shrink: 0;
+  }
+
+  &__text {
+    @include text-truncate;
+    max-width: 280px;
+  }
+}
+
+// ============================================================================
+// AUTHOR (Activity creators)
+// ============================================================================
+.ud-author {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  cursor: pointer;
+
+  &__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: $border-radius-full;
+    background: $color-primary;
+    color: $color-text-inverse;
+    @include font($font-size-xs, $font-weight-bold);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    @include font($font-size-base, $font-weight-medium);
+    color: $color-text-primary;
+    @include text-truncate;
+
+    &--muted {
+      color: rgba($color-text-primary, 0.4);
+      font-weight: $font-weight-regular;
+    }
+  }
+}

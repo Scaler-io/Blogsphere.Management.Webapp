@@ -1,119 +1,274 @@
 @if (!(isRouteLoading$ | async) && routeDetails$ | async; as r) {
   <div class="rd">
-    <blogsphere-hero-header
-      icon="route"
-      [title]="r.routeId | capitalize"
-      subtitle="Manage routing configuration, headers and path transforms for this API route."
-      [isJsonView]="isJsonView"
-      (edit)="goToEdit()"
-      (toggleView)="toggleJsonView()"
-      (delete)="openDeleteDialog()"
-      [showEditButton]="true"
-      [showDeleteButton]="false"
-    ></blogsphere-hero-header>
-    <section class="rd-stats">
-      <div class="rd-stat">
-        <div class="rd-stat__label">Status</div>
-        <div class="rd-stat__value">
-          <blogsphere-badge [type]="r.isActive ? BadgeType.success : BadgeType.danger" [isRounded]="true">
-            {{ r.isActive ? 'Active' : 'Inactive' }}
-          </blogsphere-badge>
-        </div>
-      </div>
-      <div class="rd-stat">
-        <div class="rd-stat__label">Cluster</div>
-        <div class="rd-stat__value rd-stat__value--primary cursor-pointer"><span [routerLink]="['/api-cluster', 'details', r.clusterDetails.id]"> {{ r.clusterDetails.clusterId }}</span></div>
-      </div>
-      <div class="rd-stat">
-        <div class="rd-stat__label">Methods</div>
-        <div class="rd-stat__value rd-stat__badges">
-          @for (m of r.methods || []; track m) {
-            <span
-              class="method-pill"
-              [class.method-pill--get]="m === 'GET'"
-              [class.method-pill--post]="m === 'POST'"
-              [class.method-pill--put]="m === 'PUT'"
-              [class.method-pill--delete]="m === 'DELETE'"
-              [class.method-pill--patch]="m === 'PATCH'"
-              >
-              {{ m }}
-            </span>
-          }
-        </div>
-      </div>
-      <div class="rd-stat">
-        <div class="rd-stat__label">Rate limiter</div>
-        <div class="rd-stat__value">{{ r.rateLimiterPolicy || 'None' }}</div>
-      </div>
-    </section>
     @if (!isJsonView) {
-      <blogsphere-details-card mode="keyValue" icon="settings" title="Core configuration">
-        <blogsphere-kv-row label="Route id">{{ r.routeId }}</blogsphere-kv-row>
-        <blogsphere-kv-row label="Unique id" variant="mono">{{ r.id }}</blogsphere-kv-row>
-        <blogsphere-kv-row label="Path" variant="mono">{{ r.path }}</blogsphere-kv-row>
-        <blogsphere-kv-row label="Cluster" variant="link"><span [routerLink]="['/api-cluster', 'details', r.clusterDetails.id]">{{ r.clusterDetails.clusterId }}</span></blogsphere-kv-row>
-        <blogsphere-kv-row label="Active">
-          @if (r.isActive) {
-            <span class="material-symbols-rounded text-success">check_circle</span>
-          }
-          @if (!r.isActive) {
-            <span class="material-symbols-rounded text-error">cancel</span>
-          }
-        </blogsphere-kv-row>
-        <blogsphere-kv-row label="Rate limiter policy">{{ r.rateLimiterPolicy || 'N/A' }}</blogsphere-kv-row>
-      </blogsphere-details-card>
-      <blogsphere-details-card mode="keyValue" icon="history" title="Audit">
-        <blogsphere-kv-row label="Created">{{ formatDate(r.metadata?.createdAt) }}</blogsphere-kv-row>
-        <blogsphere-kv-row label="Updated">{{ formatDate(r.metadata?.updatedAt) }}</blogsphere-kv-row>
-        <blogsphere-kv-row label="Created by">
-          <span #triggerRefCreatedBy class="cursor-pointer">{{ r.metadata?.createdBy?.fullName || 'N/A' }}</span>
-          @if (r.metadata?.createdBy) {
-            <blogsphere-tooltip [trigger]="triggerRefCreatedBy" position="below">
-              <p><strong>Email:</strong> {{ r.metadata.createdBy.email }}</p>
-              <p><strong>Role:</strong> {{ r.metadata.createdBy.jobTitle }}</p>
-              <p><strong>Employee Id:</strong> {{ r.metadata.createdBy.employeeId }}</p>
-            </blogsphere-tooltip>
-          }
-        </blogsphere-kv-row>
-        <blogsphere-kv-row label="Updated by">
-          <span #triggerRefUpdatedBy class="cursor-pointer">{{ r.metadata?.updatedBy?.fullName || 'N/A' }}</span>
-          @if (r.metadata?.updatedBy) {
-            <blogsphere-tooltip [trigger]="triggerRefUpdatedBy" position="below">
-              <p><strong>Email:</strong> {{ r.metadata.updatedBy.email }}</p>
-              <p><strong>Role:</strong> {{ r.metadata.updatedBy.jobTitle }}</p>
-              <p><strong>Employee Id:</strong> {{ r.metadata.updatedBy.employeeId }}</p>
-            </blogsphere-tooltip>
-          }
-        </blogsphere-kv-row>
-      </blogsphere-details-card>
-      <div class="row">
+      <!-- ───────── HERO ───────── -->
+      <blogsphere-page-hero [title]="r.routeId" [compact]="true">
+        <blogsphere-page-hero-avatar
+          hero-avatar
+          shape="circle"
+          icon="route"
+          [isActive]="r.isActive"
+          [isInactive]="!r.isActive"
+        ></blogsphere-page-hero-avatar>
+
+        <div hero-body class="rd-hero-body">
+          <p class="rd-hero-body__path" [matTooltip]="r.path">
+            <span class="material-symbols-rounded rd-hero-body__path-icon">link</span>
+            <code class="rd-hero-body__path-code">{{ r.path }}</code>
+          </p>
+          <div class="rd-hero-body__methods">
+            @for (method of r.methods || []; track method) {
+              <span
+                class="method-pill"
+                [class.method-pill--get]="method === 'GET'"
+                [class.method-pill--post]="method === 'POST'"
+                [class.method-pill--put]="method === 'PUT'"
+                [class.method-pill--delete]="method === 'DELETE'"
+                [class.method-pill--patch]="method === 'PATCH'"
+                [class.method-pill--head]="method === 'HEAD'"
+                [class.method-pill--options]="method === 'OPTIONS'"
+              >
+                {{ method }}
+              </span>
+            }
+          </div>
+        </div>
+
+        <div hero-actions class="rd-hero-actions">
+          <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="goToEdit()">
+            <span class="material-symbols-rounded rd-hero-btn-icon">edit</span>
+            Edit
+          </blogsphere-button>
+          <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="toggleJsonView()">
+            <span class="material-symbols-rounded rd-hero-btn-icon">data_object</span>
+            JSON view
+          </blogsphere-button>
+        </div>
+
+        <ng-container hero-contact>
+          <span class="rd-hero-contact-item" [matTooltip]="'Target cluster'">
+            <span class="material-symbols-rounded rd-hero-contact-item__icon">hub</span>
+            <a class="rd-hero-contact-item__link" [routerLink]="['/api-cluster', 'details', r.clusterDetails.id]">
+              {{ r.clusterDetails.clusterId }}
+            </a>
+          </span>
+          <span class="rd-hero-contact-item" [matTooltip]="'Rate limiter policy'">
+            <span class="material-symbols-rounded rd-hero-contact-item__icon">speed</span>
+            <span class="rd-hero-contact-item__text">{{ r.rateLimiterPolicy || 'No rate limiter' }}</span>
+          </span>
+          <span class="rd-hero-contact-item" [matTooltip]="'Unique route id'">
+            <span class="material-symbols-rounded rd-hero-contact-item__icon">tag</span>
+            <span class="rd-hero-contact-item__text rd-hero-contact-item__text--mono">{{ r.id }}</span>
+          </span>
+        </ng-container>
+      </blogsphere-page-hero>
+
+      <!-- ───────── METRIC TILES ───────── -->
+      <section class="row gutter-sm rd-grid-row" aria-label="Route metrics">
+        <div class="col-6 col-md-3">
+          <blogsphere-stat-tile
+            [tone]="r.isActive ? 'success' : 'warning'"
+            [icon]="r.isActive ? 'toggle_on' : 'toggle_off'"
+            [value]="r.isActive ? 'Active' : 'Inactive'"
+            label="Status"
+          ></blogsphere-stat-tile>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <blogsphere-stat-tile
+            tone="info"
+            icon="api"
+            [value]="(r.methods || []).length"
+            label="HTTP methods"
+          ></blogsphere-stat-tile>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <blogsphere-stat-tile
+            tone="primary"
+            icon="view_list"
+            [value]="(r.headers || []).length"
+            label="Headers"
+          ></blogsphere-stat-tile>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <blogsphere-stat-tile
+            tone="primary"
+            icon="swap_horiz"
+            [value]="(r.transforms || []).length"
+            label="Transforms"
+          ></blogsphere-stat-tile>
+        </div>
+      </section>
+
+      <!-- ───────── CORE CONFIG + AUDIT ───────── -->
+      <div class="row rd-grid-row rd-card-grid align-items-stretch">
         <div class="col-12 col-md-6">
-          <blogsphere-details-card
-            mode="table"
+          <blogsphere-details-card mode="keyValue" icon="settings" title="Core configuration">
+            <blogsphere-kv-row label="Route id">{{ r.routeId }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Unique id" variant="mono">{{ r.id }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Path" variant="mono">{{ r.path }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Cluster" variant="link">
+              <span [routerLink]="['/api-cluster', 'details', r.clusterDetails.id]" class="cursor-pointer">
+                {{ r.clusterDetails.clusterId }}
+              </span>
+            </blogsphere-kv-row>
+            <blogsphere-kv-row label="Active">
+              <blogsphere-status-pill
+                [state]="r.isActive ? 'success' : 'danger'"
+                [label]="r.isActive ? 'Active' : 'Inactive'"
+              ></blogsphere-status-pill>
+            </blogsphere-kv-row>
+            <blogsphere-kv-row label="Rate limiter policy">{{ r.rateLimiterPolicy || 'N/A' }}</blogsphere-kv-row>
+          </blogsphere-details-card>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <blogsphere-details-card mode="keyValue" icon="history" title="Audit">
+            <blogsphere-kv-row label="Created">{{ formatDate(r.metadata?.createdAt) }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Updated">{{ formatDate(r.metadata?.updatedAt) }}</blogsphere-kv-row>
+            <blogsphere-kv-row label="Created by">
+              <span #triggerRefCreatedBy class="rd-author">
+                @if (r.metadata?.createdBy?.fullName) {
+                  <span class="rd-author__avatar">{{
+                    (r.metadata.createdBy.fullName?.[0] || '').toUpperCase()
+                  }}</span>
+                  <span class="rd-author__name">{{ r.metadata.createdBy.fullName }}</span>
+                } @else {
+                  <span class="rd-author__name rd-author__name--muted">—</span>
+                }
+              </span>
+              @if (r.metadata?.createdBy?.fullName) {
+                <blogsphere-tooltip [trigger]="triggerRefCreatedBy" position="below">
+                  <p><strong>Email:</strong> {{ r.metadata.createdBy.email }}</p>
+                  <p><strong>Role:</strong> {{ r.metadata.createdBy.jobTitle }}</p>
+                  <p><strong>Employee Id:</strong> {{ r.metadata.createdBy.employeeId }}</p>
+                </blogsphere-tooltip>
+              }
+            </blogsphere-kv-row>
+            <blogsphere-kv-row label="Updated by">
+              <span #triggerRefUpdatedBy class="rd-author">
+                @if (r.metadata?.updatedBy?.fullName) {
+                  <span class="rd-author__avatar">{{
+                    (r.metadata.updatedBy.fullName?.[0] || '').toUpperCase()
+                  }}</span>
+                  <span class="rd-author__name">{{ r.metadata.updatedBy.fullName }}</span>
+                } @else {
+                  <span class="rd-author__name rd-author__name--muted">—</span>
+                }
+              </span>
+              @if (r.metadata?.updatedBy?.fullName) {
+                <blogsphere-tooltip [trigger]="triggerRefUpdatedBy" position="below">
+                  <p><strong>Email:</strong> {{ r.metadata.updatedBy.email }}</p>
+                  <p><strong>Role:</strong> {{ r.metadata.updatedBy.jobTitle }}</p>
+                  <p><strong>Employee Id:</strong> {{ r.metadata.updatedBy.employeeId }}</p>
+                </blogsphere-tooltip>
+              }
+            </blogsphere-kv-row>
+          </blogsphere-details-card>
+        </div>
+      </div>
+
+      <div class="row rd-grid-row rd-panel-grid align-items-stretch">
+        <!-- ───────── HEADERS ───────── -->
+        <div class="col-12 col-lg-6">
+          <blogsphere-section-panel
             icon="view_list"
             title="Headers"
             [count]="(r.headers || []).length"
-            [flushBody]="true"
-            [tableHeaders]="headersTableHeaders"
-            [tableRows]="headersTableRows"
-            [compactTable]="true"
-          ></blogsphere-details-card>
+            description="Request headers matched and forwarded by this route"
+          >
+            @if ((r.headers || []).length) {
+              <div class="rd-header-list">
+                @for (h of r.headers; track h.id) {
+                  <article class="rd-header-card">
+                    <span class="rd-header-card__icon">
+                      <span class="material-symbols-rounded">label</span>
+                    </span>
+                    <div class="rd-header-card__info">
+                      <div class="rd-header-card__head">
+                        <span class="rd-header-card__name">{{ h.name }}</span>
+                        <span class="rd-header-card__mode">{{ h.mode }}</span>
+                      </div>
+                      @if ((h.values || []).length) {
+                        <div class="rd-header-card__values">
+                          @for (v of h.values; track v) {
+                            <code class="rd-header-card__value">{{ v }}</code>
+                          }
+                        </div>
+                      }
+                    </div>
+                    <blogsphere-status-pill
+                      class="rd-header-card__status"
+                      [state]="h.isActive ? 'success' : 'danger'"
+                      [label]="h.isActive ? 'Active' : 'Inactive'"
+                    ></blogsphere-status-pill>
+                  </article>
+                }
+              </div>
+            } @else {
+              <blogsphere-empty-state icon="view_list" text="No headers configured for this route."></blogsphere-empty-state>
+            }
+          </blogsphere-section-panel>
         </div>
-        <div class="col-12 col-md-6">
-          <blogsphere-details-card
-            mode="table"
+
+        <!-- ───────── TRANSFORMS ───────── -->
+        <div class="col-12 col-lg-6">
+          <blogsphere-section-panel
             icon="swap_horiz"
             title="Transforms"
             [count]="(r.transforms || []).length"
-            [flushBody]="true"
-            [tableHeaders]="transformsTableHeaders"
-            [tableRows]="transformsTableRows"
-            [compactTable]="true"
-          ></blogsphere-details-card>
+            description="Path transformations applied before forwarding to the cluster"
+          >
+            @if ((r.transforms || []).length) {
+              <div class="rd-transform-list">
+                @for (t of r.transforms; track t.id) {
+                  <article class="rd-transform-card">
+                    <span class="rd-transform-card__icon">
+                      <span class="material-symbols-rounded">swap_horiz</span>
+                    </span>
+                    <code class="rd-transform-card__pattern" [matTooltip]="t.pathPattern">{{ t.pathPattern }}</code>
+                    <blogsphere-status-pill
+                      class="rd-transform-card__status"
+                      [state]="t.isActive ? 'success' : 'danger'"
+                      [label]="t.isActive ? 'Active' : 'Inactive'"
+                    ></blogsphere-status-pill>
+                  </article>
+                }
+              </div>
+            } @else {
+              <blogsphere-empty-state
+                icon="swap_horiz"
+                text="No path transforms configured for this route."
+              ></blogsphere-empty-state>
+            }
+          </blogsphere-section-panel>
         </div>
       </div>
     }
+
     @if (isJsonView) {
+      <!-- ───────── JSON VIEW ───────── -->
+      <blogsphere-page-hero [title]="r.routeId" [subtitle]="r.path" [compact]="true">
+        <blogsphere-page-hero-avatar
+          hero-avatar
+          shape="square"
+          size="small"
+          icon="route"
+        ></blogsphere-page-hero-avatar>
+
+        <blogsphere-button
+          hero-actions
+          [type]="ButtonType.secondary"
+          [size]="ButtonSize.small"
+          (next)="toggleJsonView()"
+        >
+          <span class="material-symbols-rounded rd-hero-btn-icon">table_chart</span>
+          Table view
+        </blogsphere-button>
+      </blogsphere-page-hero>
+
       <blogsphere-details-card mode="keyValue" icon="data_object" title="Raw JSON" [flushBody]="true">
         <div class="details-json">
           <pre class="details-json__pre">{{ r | json }}</pre>

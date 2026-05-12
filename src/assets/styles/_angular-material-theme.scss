@@ -364,6 +364,20 @@ mat-slide-toggle,
 }
 
 // ============================================================================
+// GLOBAL MAT-SELECT — trigger arrow
+// ============================================================================
+// Material sets .mat-mdc-select-arrow to 10×5px; the 24×24 SVG is centered inside
+// with position:absolute, so it is effectively clipped to a dot. Match the box to the SVG.
+//
+// MatSelect uses emulated encapsulation (e.g. .mat-mdc-select-arrow[_ngcontent-…]), so a
+// single-class global rule loses to component CSS. Use the trigger chain (0,3,0)+ so our
+// styles win without !important.
+.mat-mdc-select-trigger .mat-mdc-select-arrow-wrapper .mat-mdc-select-arrow {
+  width: $font-size-4xl;
+  height: $font-size-4xl;
+}
+
+// ============================================================================
 // GLOBAL MAT-SELECT PANEL STYLES
 // ============================================================================
 

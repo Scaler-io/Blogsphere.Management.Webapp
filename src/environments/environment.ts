@@ -8,14 +8,16 @@ export const environment = {
   oidc: {
     authority: 'http://localhost:5000',
     clientId: 'blogsphere-management',
-    scope: 'openid profile email apigateway:read apigateway:write apigateway:delete offline_access bffapi:manage',
+    scope: 'openid profile email apigateway:read apigateway:write apigateway:delete offline_access bffapi:manage userapi:read userapi:write',
   },
   blogShereApiGatewayBaseUrl: 'http://localhost:8000/api/v1',
   blogsphereSearchApiBaseUrl: 'http://localhost:8000/search',
   blogsphereBffBaseUrl: 'http://localhost:8000/bff',
+  blogsphereUserApiBaseUrl: 'http://localhost:8000/user',
 
   blogsphereSearchApiSubscriptionKey: 'efc2253f-6d87-40bb-9623-88c0e2bbaa4b',
   blogsphereBffSubscriptionKey: '5fd27de1-4fb8-4651-898e-933a35be3b5e',
+  blogsphereUserApiSubscriptionKey: '2cc72fa9-08cc-42af-b072-4cdf8d626612',
 
   // Development feature flags
   useMockService: false, // Set to true to use mock service, false for real service

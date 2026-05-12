@@ -22,6 +22,7 @@ export class SearchLayoutComponent implements OnInit {
   @Input() filterLabel: string = 'FILTER';
   @Input() addButtonLabel: string = 'ADD';
   @Input() isFileterFormValid: boolean;
+  @Input() allowAdd: boolean = true;
 
   ButtonType = ButtonType;
   ButtonSize = ButtonSize;

@@ -74,7 +74,7 @@ export class ClusterSetupComponent implements OnInit, OnDestroy {
       this.store.dispatch(new ApiClusterActions.GetApiClusterById({ id: this.clusterId }));
       this.cluster$.pipe(takeUntil(this.destroy$)).subscribe(res => {
         if (res) {
-          this.breadCrumb.set('@cluster-name', `Edit ${res.clusterId}`);
+          this.breadCrumb.set('@cluster-name', `${res.clusterId}`);
           this.clusterForm.patchValue(res);
 
           this.destinations.clear();

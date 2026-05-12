@@ -2,7 +2,7 @@
   "liveSassCompile.settings.watchOnLaunch": false,
   "liveSassCompile.settings.compileOnWatch": false,
   "liveSassCompile.settings.showOutputWindowOn": "None",
-  "workbench.colorTheme": "dfd05a73-c189-4622-87c7-573fbb3a46b9",
+  "workbench.colorTheme": "06143cbe-2d51-4423-9a93-73a02c828119",
   
   // Prettier Configuration
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -36,5 +36,9 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
-  }
+  },
+  "workbench.preferredHighContrastColorTheme": "Andromeda Colorizer",
+  "material-icon-theme.activeIconPack": "angular",
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.fontWeight": "600"
 }

@@ -61,8 +61,9 @@ export enum ToolTipText {
 export interface MetaData {
   createdAt: Date | string;
   updatedAt: Date | string;
-  createdBy: OperationalUserDetails;
-  updatedBy: OperationalUserDetails;
+  createdBy: OperationalUserDetails | string;
+  updatedBy: OperationalUserDetails | string;
+  lastLoginAt?: Date | string;
 }
 
 export interface OperationalUserDetails {

@@ -1,13 +1,15 @@
 @use 'sass-utils/variables' as *;
 @use 'sass-utils/mixins' as *;
 
+// ============================================================================
+// PAGE SHELL
+// ============================================================================
 .rd {
   max-width: 1280px;
   margin: 0 auto;
-  padding: $spacing-xl $spacing-xl $spacing-3xl;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-xl;
+  padding: $spacing-lg $spacing-xl $spacing-2xl;
+  @include flex-column;
+  gap: $spacing-lg;
 
   @include respond-to(xs) {
     padding: $spacing-md $spacing-md $spacing-2xl;
@@ -15,111 +17,377 @@
   }
 }
 
-.rd-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: $spacing-md;
+.rd-grid-row {
+  margin-bottom: 0;
+}
 
-  @include respond-to(xs) {
-    grid-template-columns: 1fr 1fr;
+// ============================================================================
+// HERO BODY (slotted into blogsphere-page-hero) — route-specific identity
+// content: path code chip + HTTP method pills.
+// ============================================================================
+.rd-hero-body {
+  &__path {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    max-width: 100%;
+    margin: 0 0 $spacing-md;
+    @include font($font-size-base, $font-weight-regular);
+    color: rgba($color-text-primary, 0.7);
+
+    @include respond-to(xs) {
+      justify-content: center;
+    }
+  }
+
+  &__path-icon {
+    font-size: 18px;
+    line-height: 1;
+    color: $color-primary;
+    flex-shrink: 0;
+  }
+
+  &__path-code {
+    font-family: $font-family-secondary;
+    @include font($font-size-xl, $font-weight-medium);
+    color: $color-primary;
+    background: rgba($color-primary, 0.06);
+    border: 1px solid rgba($color-primary, 0.12);
+    border-radius: $border-radius-md;
+    padding: 4px $spacing-sm;
+    @include text-truncate;
+    max-width: 100%;
+  }
+
+  &__methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+
+    @include respond-to(xs) {
+      justify-content: center;
+    }
   }
 }
 
-.rd-stat {
-  @include card;
-  padding: $spacing-lg $spacing-xl;
+.rd-hero-actions {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.rd-hero-btn-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.rd-hero-contact-item {
+  display: inline-flex;
+  align-items: center;
   gap: $spacing-xs;
-  border-left: 3px solid $color-primary;
+  @include font($font-size-sm, $font-weight-regular);
+  color: rgba($color-text-primary, 0.7);
+  min-width: 0;
+
+  &__icon {
+    font-size: 18px;
+    line-height: 1;
+    color: $color-primary;
+    flex-shrink: 0;
+  }
+
+  &__text {
+    @include text-truncate;
+    max-width: 260px;
+    @include transition(color);
+
+    &--mono {
+      font-family: $font-family-secondary;
+      font-size: $font-size-sm;
+      color: rgba($color-text-primary, 0.6);
+      letter-spacing: 0.2px;
+    }
+  }
+
+  &__link {
+    @include text-truncate;
+    max-width: 260px;
+    color: $color-primary;
+    text-decoration: none;
+    @include font($font-size-sm, $font-weight-medium);
+    @include transition(color);
+
+    &:hover {
+      color: $color-primary-dark;
+      text-decoration: underline;
+    }
+  }
+
+  &:hover &__text,
+  &:hover &__link {
+    color: $color-primary;
+  }
+}
+
+:host ::ng-deep .rd-card-grid {
+  blogsphere-details-card {
+    display: block;
+    height: 100%;
+
+    .details-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .details-card__body {
+      flex: 1;
+    }
+  }
+}
+
+:host ::ng-deep .rd-panel-grid {
+  blogsphere-section-panel {
+    display: block;
+    height: 100%;
+
+    .section-panel {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-panel__body {
+      flex: 1;
+    }
+  }
+}
+
+// ============================================================================
+// HEADER ROWS (route-specific compact rows inside the Headers section panel)
+// ============================================================================
+.rd-header-list {
+  @include flex-column;
+  gap: $spacing-sm;
+}
+
+.rd-header-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-lg;
+  border: 1px solid $color-border-light;
+  border-radius: $border-radius-lg;
+  background: $color-background;
   @include transition(all);
 
+  @include respond-to(xs) {
+    grid-template-columns: auto 1fr;
+    gap: $spacing-sm $spacing-md;
+  }
+
   &:hover {
-    box-shadow: 0 4px 12px $color-shadow;
+    border-color: rgba($color-primary, 0.3);
+    box-shadow: 0 4px 12px $color-shadow-light;
     transform: translateY(-1px);
   }
 
-  &__label {
-    @include font($font-size-base, $font-weight-medium);
-    color: rgba($color-text-primary, 0.55);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-  }
+  &__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: $border-radius-md;
+    background: rgba($color-primary, 0.08);
+    @include flex-center;
+    flex-shrink: 0;
+    align-self: flex-start;
 
-  &__value {
-    @include font($font-size-xl, $font-weight-medium);
-    color: $color-text-primary;
-    word-break: break-word;
-
-    &--primary {
+    .material-symbols-rounded {
+      font-size: 20px;
+      line-height: 1;
       color: $color-primary;
     }
   }
 
-  &__badges {
+  &__info {
+    @include flex-column;
+    gap: $spacing-xs;
+    min-width: 0;
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    flex-wrap: wrap;
+  }
+
+  &__name {
+    @include font($font-size-lg, $font-weight-medium);
+    color: $color-text-primary;
+    word-break: break-word;
+    line-height: 1.3;
+  }
+
+  &__mode {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px $spacing-sm;
+    border-radius: $border-radius-base;
+    background: rgba($color-info-dark, 0.1);
+    color: $color-info-dark;
+    @include font($font-size-xs, $font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    line-height: 1.4;
+  }
+
+  &__values {
     display: flex;
     flex-wrap: wrap;
     gap: $spacing-xs;
   }
+
+  &__value {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 3px $spacing-sm;
+    border-radius: $border-radius-base;
+    background: $color-background-secondary;
+    border: 1px solid $color-border-light;
+    font-family: $font-family-secondary;
+    @include font($font-size-sm, $font-weight-regular);
+    color: rgba($color-text-primary, 0.85);
+    word-break: break-all;
+  }
+
+  // On mobile, the status pill wraps to a new full-width row.
+  @include respond-to(xs) {
+    &__status {
+      grid-column: 1 / -1;
+      justify-self: start;
+    }
+  }
 }
 
-// ════════════════════════════════════════════════════════════════════════════
-// DUO GRID (headers + transforms side-by-side)
-// ════════════════════════════════════════════════════════════════════════════
-.rd-duo {
+// ============================================================================
+// TRANSFORM ROWS
+// ============================================================================
+.rd-transform-list {
+  @include flex-column;
+  gap: $spacing-sm;
+}
+
+.rd-transform-card {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: $spacing-xl;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-lg;
+  border: 1px solid $color-border-light;
+  border-radius: $border-radius-lg;
+  background: $color-background;
+  @include transition(all);
 
   @include respond-to(xs) {
-    grid-template-columns: 1fr;
+    grid-template-columns: auto 1fr;
+    gap: $spacing-sm $spacing-md;
   }
 
-  @include respond-between($breakpoint-sm, $breakpoint-lg) {
-    grid-template-columns: 1fr;
+  &:hover {
+    border-color: rgba($color-primary, 0.3);
+    box-shadow: 0 4px 12px $color-shadow-light;
+    transform: translateY(-1px);
   }
-}
-
-// ════════════════════════════════════════════════════════════════════════════
-// EMPTY STATE
-// ════════════════════════════════════════════════════════════════════════════
-.rd-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: $spacing-sm;
-  padding: $spacing-xl $spacing-lg;
-  text-align: center;
 
   &__icon {
-    font-size: 36px;
-    color: rgba($color-text-primary, 0.15);
+    width: 36px;
+    height: 36px;
+    border-radius: $border-radius-md;
+    background: rgba($color-primary, 0.08);
+    @include flex-center;
+    flex-shrink: 0;
+
+    .material-symbols-rounded {
+      font-size: 20px;
+      line-height: 1;
+      color: $color-primary;
+    }
   }
 
-  &__text {
-    @include font($font-size-lg, $font-weight-regular);
-    color: rgba($color-text-primary, 0.45);
-    margin: 0;
-    max-width: 32ch;
+  &__pattern {
+    font-family: $font-family-secondary;
+    @include font($font-size-base, $font-weight-medium);
+    color: $color-text-primary;
+    background: $color-background-secondary;
+    border: 1px solid $color-border-light;
+    border-radius: $border-radius-md;
+    padding: 5px $spacing-sm;
+    word-break: break-all;
+    min-width: 0;
+  }
+
+  // On mobile, the status pill wraps to a new full-width row.
+  @include respond-to(xs) {
+    &__status {
+      grid-column: 1 / -1;
+      justify-self: start;
+    }
   }
 }
 
-// ════════════════════════════════════════════════════════════════════════════
-// METHOD PILLS
-// ════════════════════════════════════════════════════════════════════════════
+// ============================================================================
+// AUTHOR (Audit creators)
+// ============================================================================
+.rd-author {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  cursor: pointer;
+
+  &__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: $border-radius-full;
+    background: $color-primary;
+    color: $color-text-inverse;
+    @include font($font-size-xs, $font-weight-bold);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    @include font($font-size-base, $font-weight-medium);
+    color: $color-text-primary;
+    @include text-truncate;
+
+    &--muted {
+      color: rgba($color-text-primary, 0.4);
+      font-weight: $font-weight-regular;
+    }
+  }
+}
+
+// ============================================================================
+// METHOD PILLS — HTTP method chips
+// ============================================================================
 .method-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 48px;
-  padding: $spacing-xs $spacing-sm;
+  min-width: 56px;
+  padding: 5px $spacing-sm;
   border-radius: $border-radius-base;
   font-family: $font-family-secondary;
-  @include font($font-size-sm, $font-weight-medium);
-  letter-spacing: 0.5px;
-  color: $color-surface;
+  @include font($font-size-sm, $font-weight-bold);
+  letter-spacing: 0.6px;
+  color: $color-text-inverse;
   background: $gray-400;
+  line-height: 1;
 
   &--get {
     background: $color-success;
@@ -137,8 +405,12 @@
   &--patch {
     background: $primary-300;
   }
+  &--head {
+    background: $color-info-light;
+    color: $gray-900;
+  }
+  &--options {
+    background: $primary-200;
+    color: $gray-900;
+  }
 }
-
-// ════════════════════════════════════════════════════════════════════════════
-// MODE CHIP (header mode column)
-// ════════════════════════════════════════════════════════════════════════════

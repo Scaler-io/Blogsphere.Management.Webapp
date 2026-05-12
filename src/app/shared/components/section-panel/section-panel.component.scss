@@ -1,0 +1,77 @@
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: block;
+}
+
+.section-panel {
+  @include card;
+
+  &__head {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+    padding: $spacing-lg $spacing-xl;
+    border-bottom: 1px solid $color-border-light;
+    background: $color-background-secondary;
+
+    @include respond-to(xs) {
+      padding: $spacing-md $spacing-lg;
+    }
+  }
+
+  &__head-icon {
+    flex-shrink: 0;
+    font-size: 24px;
+    line-height: 1;
+    color: $color-primary;
+    margin-top: 4px;
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 400;
+  }
+
+  &__head-text {
+    min-width: 0;
+    flex: 1;
+  }
+
+  &__head-title {
+    @include font($font-size-2xl, $font-weight-medium);
+    color: $color-text-primary;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    line-height: 1.2;
+  }
+
+  &__head-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 26px;
+    height: 24px;
+    padding: 0 $spacing-sm;
+    border-radius: $border-radius-full;
+    background: rgba($color-primary, 0.1);
+    @include font($font-size-base, $font-weight-bold);
+    color: $color-primary;
+    line-height: 1;
+  }
+
+  &__head-sub {
+    @include font($font-size-lg, $font-weight-regular);
+    color: rgba($color-text-primary, 0.55);
+    margin: 4px 0 0;
+  }
+
+  &__body {
+    padding: $spacing-xl;
+
+    @include respond-to(xs) {
+      padding: $spacing-lg;
+    }
+  }
+}

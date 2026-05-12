@@ -1,0 +1,28 @@
+<div
+  class="hero-avatar"
+  [ngClass]="[
+    'hero-avatar--' + shape,
+    'hero-avatar--' + size,
+    isInactive ? 'hero-avatar--muted' : ''
+  ]"
+>
+  @if (icon) {
+    <span
+      class="material-symbols-rounded hero-avatar__icon"
+      [class.hero-avatar__icon--sm]="size === 'small'"
+      aria-hidden="true"
+    >{{ icon }}</span>
+  } @else if (initials) {
+    <span
+      class="hero-avatar__initials"
+      [class.hero-avatar__initials--sm]="size === 'small'"
+    >{{ initials }}</span>
+  }
+
+  @if (isActive !== null) {
+    <span
+      class="hero-avatar__dot"
+      [class.hero-avatar__dot--active]="isActive"
+    ></span>
+  }
+</div>

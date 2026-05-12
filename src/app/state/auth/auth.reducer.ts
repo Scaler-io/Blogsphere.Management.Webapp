@@ -32,7 +32,7 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
         ...state,
         isAuthenticated: action.payload.isAuthenticated,
         user: <AuthUser>{
-          name: userData.name,
+          fullName: userData.given_name + ' ' + userData.family_name,
           email: userData.email,
           role: userData.role,
           permissions:

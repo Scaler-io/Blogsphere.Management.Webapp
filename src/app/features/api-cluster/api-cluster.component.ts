@@ -57,14 +57,12 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
   public columnNameMap: TableColumnMap = {
     clusterName: {
       value: 'clusterId',
-      isDateField: false,
-      isStatusField: false,
       isLinkField: true,
     },
-    loadBalancerName: { value: 'loadBalancerName', isDateField: false, isStatusField: false },
-    status: { value: 'status', isDateField: false, isStatusField: true },
-    routes: { value: 'routeCount', isDateField: false, isStatusField: false },
-    destinations: { value: 'destinationCount', isDateField: false, isStatusField: false },
+    loadBalancerName: { value: 'loadBalancerName' },
+    status: { value: 'status', isStatusField: true },
+    routes: { value: 'routeCount' },
+    destinations: { value: 'destinationCount' },
   };
   public isMobileView$ = this.store.select(selectMobileViewState);
   public isFilterApplied: boolean;

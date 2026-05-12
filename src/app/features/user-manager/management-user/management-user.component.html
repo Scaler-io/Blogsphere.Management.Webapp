@@ -1,0 +1,36 @@
+<div @fadeSlideInOut>
+  @if (!(isManagementUsersLoading$ | async) && !(isManagementUsersCountLoading$ | async)) {
+    @if (!(isMobileView$ | async)) {
+      <div class="row">
+        <div class="col-sm-12">
+          @if ((totalManagementUsers$ | async) > 0) {
+            <blogsphere-table
+              [dataSource]="managementUsersDataSource"
+              [columns]="displayedColumns"
+              [paginationMetadata]="managementUsersPageMetadata$ | async"
+              [dataLength]="totalManagementUsers$ | async"
+              [columnMap]="columnNameMap"
+              [actionEnabled]="true"
+              [allowEdit]="canWriteManagementUsers$ | async"
+              [allowDelete]="canWriteManagementUsers$ | async"
+              (linkClick)="onLinkClick($event)"
+            ></blogsphere-table>
+          }
+          @if ((totalManagementUsers$ | async) === 0) {
+            <blogsphere-no-content-layout
+              [title]="'No Management Users'"
+              [subtitle]="'There are no management users to display.'"
+              [buttonLabel]="'Add Management User'"
+            ></blogsphere-no-content-layout>
+          }
+        </div>
+      </div>
+    }
+  }
+
+  <div class="w-100 h-auto d-flex justify-content-center">
+    @if ((isManagementUsersLoading$ | async) || (isManagementUsersCountLoading$ | async)) {
+      <mat-progress-spinner mode="indeterminate" diameter="50" color="primary"></mat-progress-spinner>
+    }
+  </div>
+</div>

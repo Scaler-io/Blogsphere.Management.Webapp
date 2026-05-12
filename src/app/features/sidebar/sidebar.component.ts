@@ -7,6 +7,7 @@ import { selectHasPermission } from 'src/app/state/auth/auth.selector';
 import { getSidenavToggleState } from 'src/app/state/sidenav/sidenav.selector';
 import { selectMobileViewState } from 'src/app/state/mobile-view/mobile-view.selector';
 import { ToggleSideNav } from 'src/app/state/sidenav/sidenav.action';
+import { SidebarSubmenuItem } from './sidebar-expandable-nav-item/sidebar-expandable-nav-item.component';
 
 @Component({
   selector: 'blogsphere-sidebar',
@@ -20,11 +21,24 @@ export class SidebarComponent implements OnInit, OnDestroy {
   public canAccessSystemSettings$: Observable<boolean> = this.store.select(
     selectHasPermission(AppPermission.SYSTEM_VIEW_SETTINGS)
   );
+  public canAccessUserManagement$: Observable<boolean> = this.store.select(
+    selectHasPermission(AppPermission.USER_VIEW)
+  );
 
   public subMenuList = {
     apiManager: false,
+    userManagement: false,
   };
-    
+
+  public readonly apiManagerSubmenuItems: SidebarSubmenuItem[] = [
+    { routerLink: '/api-cluster', icon: 'hub', label: 'Api clusters' },
+    { routerLink: '/api-route', icon: 'route', label: 'Api routes' },
+  ];
+  public readonly userManagementSubmenuItems: SidebarSubmenuItem[] = [
+    { routerLink: '/user-manager/app-users', icon: 'person', label: 'App users' },
+    { routerLink: '/user-manager/management-users', icon: 'admin_panel_settings', label: 'Management users' },
+  ];
+
   private subscriptions = {
     sidenavToggleState: null,
     mobileViewState: null,
@@ -41,6 +55,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
           this.subMenuList = {
             ...this.subMenuList,
             apiManager: false,
+            userManagement: false,
           };
         }
       });
@@ -66,6 +81,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
     if (this.isMobileView && this.isSidenavExpanded && !menu) {
       this.store.dispatch(new ToggleSideNav());
     }
+    if (!this.isMobileView && !this.isSidenavExpanded) {
+      this.store.dispatch(new ToggleSideNav());
+    }
   }
 
   public hadndleSubmenuClick() {
@@ -86,6 +104,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.subMenuList = {
           ...this.subMenuList,
           apiManager: !this.subMenuList.apiManager,
+          userManagement: false,
+        };
+        break;
+      case 'userManagement':
+        this.subMenuList = {
+          ...this.subMenuList,
+          userManagement: !this.subMenuList.userManagement,
+          apiManager: false,
         };
         break;
       default:
