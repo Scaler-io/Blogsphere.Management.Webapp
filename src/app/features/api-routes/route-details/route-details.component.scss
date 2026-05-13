@@ -4,12 +4,13 @@
 .rd {
   max-width: $container-max;
   margin: 0 auto;
-  padding: $spacing-md $spacing-lg $spacing-xl;
+  padding: $spacing-md $spacing-lg $spacing-2xl;
   @include flex-column;
   gap: $spacing-md;
 
   @include mobile-only {
-    padding: $spacing-sm $spacing-md $spacing-lg;
+    padding: $spacing-sm $spacing-md $spacing-xl;
+    gap: $spacing-sm;
   }
 }
 
