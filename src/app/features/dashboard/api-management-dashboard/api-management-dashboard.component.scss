@@ -5,74 +5,62 @@
   display: block;
 }
 
-.dashboard__section {
-  margin-bottom: $spacing-xl;
-}
+.api-dashboard {
+  @include section-stack($page-gutter, $page-gutter);
 
-.dashboard__section-title {
-  @include font($font-size-xl, $font-weight-bold);
-  color: rgba($color-text-primary, 0.85);
-  letter-spacing: 0.5px;
-  margin-bottom: $spacing-md;
-  padding-bottom: $spacing-sm;
-  border-bottom: 1px solid rgba($color-border, 0.35);
-}
+  &__grid {
+    display: grid;
+    gap: $page-gutter;
+    grid-template-columns: 1fr;
 
-.dashboard__card-body {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
-}
+    @include desktop-up {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 
-.dashboard__stat {
-  @include font($font-size-3xl, $font-weight-bold);
-  color: $color-text-primary;
-  margin: 0;
-  line-height: 1.2;
-}
+    &--actions {
+      @include stack($spacing-md);
+    }
 
-.dashboard__hint {
-  @include font($font-size-base, $font-weight-regular);
-  color: rgba($color-text-primary, 0.75);
-  margin: 0;
-  line-height: 1.4;
-}
+    &--charts {
+      grid-template-columns: 1fr;
 
-.dashboard__chart-container {
-  position: relative;
-  width: 100%;
-
-  &--line {
-    height: 300px;
+      @include wide-up {
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      }
+    }
   }
 
-  &--bar {
-    height: 280px;
+  &__metric {
+    display: block;
+    height: 100%;
   }
 
-  &--doughnut {
-    height: 280px;
-    max-width: 400px;
-    margin: 0 auto;
+  &__metric-link {
+    color: var(--md-secondary);
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+
+    &:hover { text-decoration: underline; }
   }
 
-  canvas {
-    max-width: 100%;
+  &__actions {
+    display: grid;
+    gap: $page-gutter;
+    grid-template-columns: 1fr;
+
+    @include desktop-up {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
-}
 
-.dashboard__chart-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  min-height: 200px;
-  gap: $spacing-md;
-
-  p {
-    @include font($font-size-base, $font-weight-regular);
-    color: rgba($color-text-primary, 0.6);
+  &__section-title {
+    @include type(headline-sm);
+    color: var(--md-on-surface);
     margin: 0;
+  }
+
+  &__chart--wide {
+    width: 100%;
   }
 }

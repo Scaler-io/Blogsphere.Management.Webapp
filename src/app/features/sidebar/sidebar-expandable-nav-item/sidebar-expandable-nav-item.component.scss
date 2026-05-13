@@ -1,68 +1,112 @@
-@use 'sass:color' as color;
 @use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
 
 :host {
   display: block;
 }
 
-.sidenav__content-list--item {
-  min-height: 5rem;
-  overflow: hidden;
-  padding: 1rem 0 0 0;
-  margin-bottom: 1.5rem;
-
-  &:hover {
-    transition: all 0.1s ease-in-out;
-    .main-content {
-      cursor: pointer;
-      .item-icon,
-      .item-label {
-        color: $color-primary;
-        transition: all 0.1s ease-in-out;
-      }
-    }
+:host(.host--collapsed) {
+  .sidebar-expandable__header {
+    justify-content: center;
+    padding: $spacing-sm;
   }
 
-  .main-content {
-    padding-left: 2.5rem;
+  .sidebar-expandable__label,
+  .sidebar-expandable__chevron {
+    display: none;
+  }
+
+  .sidebar-expandable__header--group-active {
+    transform: none;
+  }
+
+  .sidebar-expandable__submenu {
+    padding-left: 0;
+  }
+}
+
+.sidebar-expandable {
+  @include stack($spacing-xs);
+
+  &__header {
     display: flex;
     align-items: center;
-    column-gap: 2.6rem;
-    .item-icon {
-      color: $color-text-secondary;
-      &:last-child {
-        margin-right: 2rem;
-        justify-self: right !important;
+    gap: $spacing-md;
+    width: 100%;
+    padding: $spacing-md $spacing-lg;
+    background: transparent;
+    border: 0;
+    border-radius: $border-radius-lg;
+    cursor: pointer;
+    color: var(--md-on-surface-variant);
+    font-family: $font-family-body;
+    text-align: left;
+    transition: transform 200ms ease, background-color 200ms ease, color 200ms ease, padding 200ms ease;
+
+    @include hover-surface;
+
+    &:hover {
+      color: var(--md-on-surface);
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+
+    &--group-active {
+      color: var(--md-on-surface);
+      transform: translateX(0.25rem);
+
+      .sidebar-expandable__icon {
+        color: var(--md-secondary);
       }
     }
-    .item-label {
-      font-size: $font-size-2xl;
-      color: #3b3b3b;
-      flex-grow: 1;
-      white-space: nowrap;
-    }
   }
 
-  .submenu {
-    max-height: 0;
+  &__icon {
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: inherit;
+  }
+
+  &__label {
+    @include type(body-md);
+    font-weight: $font-weight-medium;
+    color: inherit;
+    flex: 1 1 auto;
     white-space: nowrap;
-    margin-top: 1.2rem!important;
-    background-color: color.adjust($color-background-blue, $lightness: 40%);
-    transition: max-height 0.2s ease-in-out;
-    &--active {
-      max-height: 20rem;
-      box-shadow: $color-shadow-inset-light;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__chevron {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: var(--md-on-surface-variant);
+  }
+
+  &__submenu {
+    @include collapse-rows;
+    padding-left: $spacing-lg;
+
+    &--open {
+      grid-template-rows: 1fr;
     }
   }
 
-  &.route-active {
-    background-color: $color-primary;
-    .item-icon,
-    .item-label {
-      color: $color-accent !important;
-    }
-    .mat-ripple-element {
-      display: none !important;
+  &__submenu-inner {
+    @include stack(2px);
+    min-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding-top: 0;
+    transition: opacity 0.2s ease-in-out, padding-top 0.2s ease-in-out;
+
+    .sidebar-expandable__submenu--open & {
+      opacity: 1;
+      padding-top: $spacing-xs;
     }
   }
 }

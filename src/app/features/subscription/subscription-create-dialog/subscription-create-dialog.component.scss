@@ -1,9 +1,4 @@
 @use 'sass-utils/variables' as *;
 
-.close-icon {
-  font-size: 24px;
-  transition: color 0.3s ease;
-  &:hover {
-    color: $color-error;
-  }
-}
+// Component-scoped styles for the dialog. Common patterns (e.g. .dialog-close-icon)
+// live in src/assets/styles/base/_prototype-utilities.scss.

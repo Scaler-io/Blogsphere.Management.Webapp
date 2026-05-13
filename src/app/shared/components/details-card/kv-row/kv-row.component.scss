@@ -6,8 +6,8 @@
   grid-template-columns: 180px 1fr;
   align-items: center;
   gap: $spacing-lg;
-  padding: $spacing-md 0;
-  border-bottom: 1px solid rgba($color-border, 0.3);
+  padding: $spacing-sm 0;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
 
   &:last-child {
     border-bottom: none;
@@ -20,13 +20,14 @@
 }
 
 .details-kv__key {
-  @include font($font-size-2xl, $font-weight-medium);
-  color: rgba($color-text-primary, 0.6);
+  @include type(body-sm);
+  color: var(--mat-sys-on-surface-variant);
+  font-weight: $font-weight-medium;
 }
 
 .details-kv__val {
-  @include font($font-size-xl, $font-weight-regular);
-  color: $color-text-primary;
+  @include type(body-md);
+  color: var(--mat-sys-on-surface);
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -34,8 +35,8 @@
 
   &--mono {
     font-family: $font-family-secondary;
-    font-size: $font-size-xl;
-    color: rgba($color-text-primary, 0.85);
+    font-size: $type-body-md-size;
+    color: var(--mat-sys-on-surface);
     background: rgba($color-primary, 0.04);
     padding: 2px $spacing-sm;
     border-radius: $border-radius-base;
@@ -46,13 +47,13 @@
   }
 
   &--link {
-    color: $color-primary;
+    color: var(--mat-sys-secondary);
     font-weight: $font-weight-medium;
     cursor: pointer;
   }
 
   .material-symbols-rounded {
-    font-size: 24px;
+    font-size: 1.25rem;
     vertical-align: middle;
   }
 }

@@ -1,21 +1,56 @@
-<!-- Mobile backdrop overlay -->
 <div
   class="sidenav-backdrop"
   [class.sidenav-backdrop--show]="isMobileView && isSidenavExpanded"
   (click)="handleBackdropClick()"
 ></div>
 
-<div
-  class="sidenav border-right shadow shadow-md"
-  [class.sidenav--collapse]="!isMobileView && !isSidenavExpanded"
-  [class.sidenav--collapse-full]="isMobileView && isSidenavExpanded"
+<aside
+  class="sidenav d-flex flex-column"
+  [class.sidenav--collapsed]="!isMobileView && !isSidenavExpanded"
+  [class.sidenav--mobile-open]="isMobileView && isSidenavExpanded"
+  [attr.aria-label]="'Primary navigation'"
 >
-  <div class="sidenav__content">
-    <div class="sidenav__content-list" role="list">
+  <header class="sidenav__header p-lg">
+    <a class="sidenav__brand" routerLink="/dashboard" (click)="handleSidenavItemClick()">
+      <img class="sidenav__logo" src="assets/svgs/blogsphere.logo.svg" alt="logsphere" />
+      <span class="sidenav__brand-name">logsphere</span>
+    </a>
+  </header>
+
+  @if (authUser$ | async; as authUser) {
+    <section class="sidenav__welcome px-lg mb-lg">
+      <a
+        class="sidenav__avatar sidenav__avatar-link"
+        routerLink="/user-profile"
+        aria-label="Account"
+        (click)="handleSidenavItemClick()"
+      >
+        {{ (authUser.fullName || authUser.email || '?') | slice : 0 : 1 | uppercase }}
+      </a>
+      <div class="sidenav__welcome-text">
+        <span class="sidenav__welcome-label">Welcome back</span>
+        <span class="sidenav__welcome-name">{{ authUser.fullName || authUser.email }}</span>
+        @if (authUser.role) {
+          <span class="sidenav__welcome-role">{{ authUser.role }}</span>
+        }
+      </div>
+    </section>
+  }
+
+  <nav class="sidenav__nav">
+    <div class="sidenav__list stack-xs" role="list">
       <blogsphere-sidebar-nav-link
         link="/dashboard"
         icon="dashboard"
         label="Dashboard"
+        [collapsed]="isCollapsedRail"
+        (navigate)="handleSidenavItemClick()"
+      />
+      <blogsphere-sidebar-nav-link
+        link="/user-profile"
+        icon="person"
+        label="Account"
+        [collapsed]="isCollapsedRail"
         (navigate)="handleSidenavItemClick()"
       />
       @if (canAccessSystemSettings$ | async) {
@@ -23,10 +58,12 @@
           link="/subscription"
           icon="subscriptions"
           label="Subscription manager"
+          [collapsed]="isCollapsedRail"
           (navigate)="handleSidenavItemClick()"
         />
         <blogsphere-sidebar-expandable-nav-item
           [expanded]="subMenuList.apiManager"
+          [collapsed]="isCollapsedRail"
           [submenuItems]="apiManagerSubmenuItems"
           [label]="'Api manager'"
           headerIcon="api"
@@ -37,6 +74,7 @@
       @if (canAccessUserManagement$ | async) {
         <blogsphere-sidebar-expandable-nav-item
           [expanded]="subMenuList.userManagement"
+          [collapsed]="isCollapsedRail"
           [submenuItems]="userManagementSubmenuItems"
           [label]="'User manager'"
           headerIcon="people"
@@ -45,5 +83,19 @@
         />
       }
     </div>
-  </div>
-</div>
+  </nav>
+
+  <footer class="sidenav__footer p-lg">
+    <button
+      type="button"
+      class="sidenav__signout"
+      mat-ripple
+      [matRippleDisabled]="isCollapsedRail"
+      (click)="signout()"
+      [attr.aria-label]="'Sign out'"
+    >
+      <span class="material-symbols-outlined sidenav__signout-icon" aria-hidden="true">logout</span>
+      <span class="sidenav__signout-label">Sign out</span>
+    </button>
+  </footer>
+</aside>

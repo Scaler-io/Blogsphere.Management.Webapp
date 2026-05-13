@@ -18,18 +18,7 @@
           </p>
           <div class="rd-hero-body__methods">
             @for (method of r.methods || []; track method) {
-              <span
-                class="method-pill"
-                [class.method-pill--get]="method === 'GET'"
-                [class.method-pill--post]="method === 'POST'"
-                [class.method-pill--put]="method === 'PUT'"
-                [class.method-pill--delete]="method === 'DELETE'"
-                [class.method-pill--patch]="method === 'PATCH'"
-                [class.method-pill--head]="method === 'HEAD'"
-                [class.method-pill--options]="method === 'OPTIONS'"
-              >
-                {{ method }}
-              </span>
+              <blogsphere-method-pill [method]="method"></blogsphere-method-pill>
             }
           </div>
         </div>
@@ -182,8 +171,8 @@
             @if ((r.headers || []).length) {
               <div class="rd-header-list">
                 @for (h of r.headers; track h.id) {
-                  <article class="rd-header-card">
-                    <span class="rd-header-card__icon">
+                  <article class="rd-row-card rd-header-card">
+                    <span class="rd-row-card__icon">
                       <span class="material-symbols-rounded">label</span>
                     </span>
                     <div class="rd-header-card__info">
@@ -200,7 +189,7 @@
                       }
                     </div>
                     <blogsphere-status-pill
-                      class="rd-header-card__status"
+                      class="rd-row-card__status"
                       [state]="h.isActive ? 'success' : 'danger'"
                       [label]="h.isActive ? 'Active' : 'Inactive'"
                     ></blogsphere-status-pill>
@@ -224,13 +213,13 @@
             @if ((r.transforms || []).length) {
               <div class="rd-transform-list">
                 @for (t of r.transforms; track t.id) {
-                  <article class="rd-transform-card">
-                    <span class="rd-transform-card__icon">
+                  <article class="rd-row-card rd-transform-card">
+                    <span class="rd-row-card__icon">
                       <span class="material-symbols-rounded">swap_horiz</span>
                     </span>
                     <code class="rd-transform-card__pattern" [matTooltip]="t.pathPattern">{{ t.pathPattern }}</code>
                     <blogsphere-status-pill
-                      class="rd-transform-card__status"
+                      class="rd-row-card__status"
                       [state]="t.isActive ? 'success' : 'danger'"
                       [label]="t.isActive ? 'Active' : 'Inactive'"
                     ></blogsphere-status-pill>

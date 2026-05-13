@@ -1,0 +1,80 @@
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: block;
+}
+
+.chart-card {
+  @include md-card($border-radius-md, $spacing-lg);
+  @include stack($spacing-md);
+
+  &__header {
+    @include row-between($spacing-md, wrap, flex-start);
+  }
+
+  &__heading {
+    @include stack($spacing-xs);
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  &__eyebrow {
+    @include eyebrow-label;
+    color: var(--md-on-surface-variant);
+    display: block;
+
+    &--primary   { color: var(--md-primary); }
+    &--secondary { color: var(--md-secondary); }
+  }
+
+  &__title {
+    margin: 0;
+    @include type(headline-sm);
+    color: var(--md-on-surface);
+  }
+
+  &__subtitle {
+    margin: 0;
+    @include type(body-sm);
+    color: var(--md-on-surface-variant);
+  }
+
+  &__toolbar:empty {
+    display: none;
+  }
+
+  &__toolbar {
+    flex-shrink: 0;
+  }
+
+  &__body {
+    position: relative;
+    width: 100%;
+
+    canvas {
+      max-width: 100%;
+    }
+  }
+
+  &__loading {
+    @include stack($spacing-md);
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+  }
+
+  &__loading-label {
+    @include type(body-sm);
+    color: var(--md-on-surface-variant);
+    margin: 0;
+  }
+
+  &__spinner {
+    @include inline-spinner(1.5rem, var(--md-primary));
+  }
+
+  &--loading .chart-card__body {
+    min-height: 200px;
+  }
+}

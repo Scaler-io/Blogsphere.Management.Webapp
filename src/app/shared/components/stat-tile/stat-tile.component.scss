@@ -91,4 +91,14 @@
     letter-spacing: 0.6px;
     margin-top: 2px;
   }
+
+  &__meta {
+    @include cluster($spacing-sm);
+    margin-top: $spacing-xs;
+  }
+
+  &__caption {
+    @include type(label-sm);
+    color: var(--md-on-surface-variant);
+  }
 }

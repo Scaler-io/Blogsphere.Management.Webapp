@@ -1,9 +1,61 @@
 @use 'sass-utils/variables' as *;
-@use 'sass-utils/functions' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: block;
+  margin-bottom: $spacing-xl;
+}
 
 .page-header {
-  &__page-icon {
-    color: get-color(primary, 600);
-    
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-lg;
+
+  @include mobile-only {
+    flex-wrap: wrap;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  &__icon-tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    border-radius: $border-radius-sm;
+    background: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+
+    .material-symbols-rounded {
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+  }
+
+  &__title-text {
+    margin: 0;
+    @include type(headline-md);
+    color: var(--md-on-surface);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    @include type(label-sm);
+    color: var(--md-on-surface-variant);
   }
 }

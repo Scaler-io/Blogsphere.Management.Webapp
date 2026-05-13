@@ -9,9 +9,11 @@ export const environment = {
   blogShereApiGatewayBaseUrl: 'http://localhost:8000/api/v1',
   blogsphereSearchApiBaseUrl: 'http://localhost:8000/search',
   blogsphereBffBaseUrl: 'http://localhost:8000/bff',
+  blogsphereUserApiBaseUrl: 'http://localhost:8000/user',
 
   blogsphereSearchApiSubscriptionKey: 'efc2253f-6d87-40bb-9623-88c0e2bbaa4b',
   blogsphereBffSubscriptionKey: '5fd27de1-4fb8-4651-898e-933a35be3b5e',
+  blogsphereUserApiSubscriptionKey: '2cc72fa9-08cc-42af-b072-4cdf8d626612',
   // Production feature flags
   useMockService: false, // Always false in production
   dashboardRefreshIntervalSeconds: 30,

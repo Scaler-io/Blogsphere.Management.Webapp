@@ -1,0 +1,33 @@
+<article class="metric-card" [ngClass]="hostClasses">
+  <div class="metric-card__accent" aria-hidden="true"></div>
+
+  <header class="metric-card__header">
+    <span class="metric-card__label">{{ label }}</span>
+
+    <div class="metric-card__top-slot">
+      <ng-content select="[badge]"></ng-content>
+      <span
+        *ngIf="icon"
+        class="material-symbols-rounded metric-card__icon"
+        aria-hidden="true"
+      >{{ icon }}</span>
+    </div>
+  </header>
+
+  <p class="metric-card__value">{{ formattedValue }}</p>
+
+  <div *ngIf="delta || subtext" class="metric-card__meta">
+    <blogsphere-status-pill
+      *ngIf="delta"
+      [tone]="deltaPillTone"
+      [icon]="deltaIcon"
+      [label]="delta.value"
+      size="sm"
+    ></blogsphere-status-pill>
+    <span *ngIf="subtext" class="metric-card__subtext">{{ subtext }}</span>
+  </div>
+
+  <footer class="metric-card__footer">
+    <ng-content></ng-content>
+  </footer>
+</article>

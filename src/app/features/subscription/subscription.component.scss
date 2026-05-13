@@ -2,7 +2,7 @@
 @use 'sass-utils/mixins' as *;
 
 .subscription-empty {
-  min-height: 240px;
+  min-height: 15rem;
   padding: $spacing-2xl 0;
 
   &__content {
@@ -11,27 +11,25 @@
 }
 
 .loading-state {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-center;
   height: 100%;
 }
 
 .loading-state-content {
   text-align: center;
   padding: $spacing-lg;
-}
 
-.loading-state-content-icon {
-  font-size: $font-size-5xl;
-  color: $color-primary;
-}
+  &-icon {
+    font-size: $font-size-5xl;
+    color: var(--mat-sys-primary);
+  }
 
-.loading-state-content-text {
-  font-size: $font-size-xl;
-  color: $color-text-primary;
-}
+  &-text {
+    font-size: $type-body-lg-size;
+    color: var(--mat-sys-on-surface);
+  }
 
-.loading-state-content-spinner {
-  margin-top: $spacing-lg;
+  &-spinner {
+    margin-top: $spacing-lg;
+  }
 }

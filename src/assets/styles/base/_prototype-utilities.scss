@@ -1,0 +1,408 @@
+// ============================================================================
+// PROTOTYPE UTILITIES — AGL "Energy Intelligence System" parity layer
+// ============================================================================
+// Additive utility classes that mirror the prototype's Tailwind-style class
+// vocabulary on top of the existing Bootstrap-style flex grid in `_grid.scss`.
+// These do NOT collide with `.row`, `.col-md-*`, `.d-flex`, `.gap-md`, etc. —
+// templates can mix both freely.
+//
+// Naming follows the prototype HTML 1:1 so a designer reading the prototype
+// markup can paste class names directly into a Blogsphere template.
+//
+// Conventions:
+//   - Color utilities reference `--md-*` CSS variables (set in `styles.scss`)
+//     so component restyles cascade via the theme without recompile.
+//   - Spacing utilities use $page-margin-mobile/$page-margin-desktop/$page-gutter
+//     SCSS tokens from `_variables.scss` (rem-based, evaluate at 16px base).
+//   - All utilities are `!important`-free so component-scoped SCSS wins.
+
+@use '../sass-utils/variables' as *;
+@use '../sass-utils/mixins' as *;
+
+// ============================================================================
+// SURFACE / BACKGROUND
+// ============================================================================
+
+.bg-surface             { background-color: var(--md-surface); }
+.bg-surface-dim         { background-color: var(--md-surface-dim); }
+.bg-surface-bright      { background-color: var(--md-surface-bright); }
+.bg-surface-container-lowest  { background-color: var(--md-surface-container-lowest); }
+.bg-surface-container-low     { background-color: var(--md-surface-container-low); }
+.bg-surface-container         { background-color: var(--md-surface-container); }
+.bg-surface-container-high    { background-color: var(--md-surface-container-high); }
+.bg-surface-container-highest { background-color: var(--md-surface-container-highest); }
+.bg-surface-variant     { background-color: var(--md-surface-variant); }
+
+.bg-primary             { background-color: var(--md-primary); color: var(--md-on-primary); }
+.bg-primary-container   { background-color: var(--md-primary-container); color: var(--md-on-primary-container); }
+.bg-primary-fixed       { background-color: var(--md-primary-fixed); color: var(--md-on-primary-fixed); }
+.bg-primary-fixed-dim   { background-color: var(--md-primary-fixed-dim); color: var(--md-on-primary-fixed); }
+
+.bg-secondary           { background-color: var(--md-secondary); color: var(--md-on-secondary); }
+.bg-secondary-container { background-color: var(--md-secondary-container); color: var(--md-on-secondary-container); }
+.bg-secondary-fixed     { background-color: var(--md-secondary-fixed); color: var(--md-on-secondary-fixed); }
+.bg-secondary-fixed-dim { background-color: var(--md-secondary-fixed-dim); color: var(--md-on-secondary-fixed); }
+
+.bg-tertiary            { background-color: var(--md-tertiary); color: var(--md-on-tertiary); }
+.bg-tertiary-container  { background-color: var(--md-tertiary-container); color: var(--md-on-tertiary-container); }
+
+.bg-error               { background-color: var(--md-error); color: var(--md-on-error); }
+.bg-error-container     { background-color: var(--md-error-container); color: var(--md-on-error-container); }
+
+.bg-inverse-surface     { background-color: var(--md-inverse-surface); color: var(--md-inverse-on-surface); }
+
+// Soft tints for status-pill backgrounds (alpha overlays on container tokens)
+.bg-secondary-fixed-soft { background-color: rgba($md-secondary-fixed-dim, 0.18); }
+.bg-primary-fixed-soft   { background-color: rgba($md-primary-fixed-dim, 0.18); }
+.bg-secondary-soft       { background-color: rgba($md-secondary, 0.08); }
+.bg-primary-soft         { background-color: rgba($md-primary, 0.06); }
+
+// ============================================================================
+// TEXT COLOR (prototype semantics)
+// ============================================================================
+// `.text-primary`, `.text-secondary`, `.text-error` live in `_typography.scss`
+// already (now repointed to M3 brand colors). These add the missing ones.
+
+.text-on-primary             { color: var(--md-on-primary); }
+.text-on-primary-container   { color: var(--md-on-primary-container); }
+.text-on-secondary           { color: var(--md-on-secondary); }
+.text-on-secondary-container { color: var(--md-on-secondary-container); }
+.text-on-tertiary            { color: var(--md-on-tertiary); }
+.text-on-tertiary-container  { color: var(--md-on-tertiary-container); }
+.text-tertiary               { color: var(--md-tertiary); }
+.text-inverse-primary        { color: var(--md-inverse-primary); }
+.text-inverse-on-surface     { color: var(--md-inverse-on-surface); }
+.text-outline                { color: var(--md-outline); }
+.text-outline-variant        { color: var(--md-outline-variant); }
+
+// ============================================================================
+// BORDERS — color + position + width
+// ============================================================================
+
+.border               { border: 1px solid var(--md-outline-variant); }
+.border-0             { border: 0; }
+.border-outline       { border-color: var(--md-outline); }
+.border-outline-variant { border-color: var(--md-outline-variant); }
+.border-primary       { border-color: var(--md-primary); }
+.border-secondary     { border-color: var(--md-secondary); }
+.border-error         { border-color: var(--md-error); }
+.border-transparent   { border-color: transparent; }
+
+.border-t { border-top:    1px solid var(--md-outline-variant); }
+.border-r { border-right:  1px solid var(--md-outline-variant); }
+.border-b { border-bottom: 1px solid var(--md-outline-variant); }
+.border-l { border-left:   1px solid var(--md-outline-variant); }
+
+// Accent stripe widths used for hero cards (4px left/top border in secondary)
+.border-l-4 { border-left-width:  4px; border-left-style:  solid; }
+.border-r-4 { border-right-width: 4px; border-right-style: solid; }
+.border-t-4 { border-top-width:   4px; border-top-style:   solid; }
+.border-b-4 { border-bottom-width:4px; border-bottom-style:solid; }
+
+.border-2 { border-width: 2px; border-style: solid; }
+.border-dashed { border-style: dashed; }
+
+// ============================================================================
+// BORDER RADIUS — prototype's `rounded-{sm|DEFAULT|md|lg|xl|full}` system
+// ============================================================================
+
+.rounded      { border-radius: $border-radius-base; }
+.rounded-sm   { border-radius: $border-radius-sm; }
+.rounded-md   { border-radius: $border-radius-md; }
+.rounded-lg   { border-radius: $border-radius-lg; }
+.rounded-xl   { border-radius: $border-radius-xl; }
+.rounded-2xl  { border-radius: $border-radius-2xl; }
+.rounded-full { border-radius: $border-radius-full; }
+
+.rounded-t-sm { border-top-left-radius: $border-radius-sm; border-top-right-radius: $border-radius-sm; }
+.rounded-t-md { border-top-left-radius: $border-radius-md; border-top-right-radius: $border-radius-md; }
+.rounded-t-lg { border-top-left-radius: $border-radius-lg; border-top-right-radius: $border-radius-lg; }
+
+// ============================================================================
+// ELEVATION (prototype "soft" card shadow)
+// ============================================================================
+
+.elevation-low   { box-shadow: var(--md-elevation-card); }
+.elevation-mid   { box-shadow: var(--md-elevation-card-hover); }
+.elevation-high  { box-shadow: var(--md-elevation-overlay); }
+.custom-shadow   { box-shadow: var(--md-elevation-card); }
+
+.hover-elevation-mid {
+  transition: box-shadow 200ms ease, transform 200ms ease;
+
+  &:hover {
+    box-shadow: var(--md-elevation-card-hover);
+  }
+}
+
+// ============================================================================
+// SPACING — prototype-named tokens (`p-margin-mobile`, `p-margin-desktop`, `gap-gutter`, `gap-xxl`)
+// ============================================================================
+
+// Padding (page-margin tokens)
+.p-margin-mobile  { padding: $page-margin-mobile; }
+.p-margin-desktop { padding: $page-margin-desktop; }
+.px-margin-mobile { padding-left: $page-margin-mobile;  padding-right: $page-margin-mobile; }
+.px-margin-desktop{ padding-left: $page-margin-desktop; padding-right: $page-margin-desktop; }
+.py-margin-mobile { padding-top: $page-margin-mobile;  padding-bottom: $page-margin-mobile; }
+.py-margin-desktop{ padding-top: $page-margin-desktop; padding-bottom: $page-margin-desktop; }
+
+@include respond-to(md) {
+  .md\:p-margin-desktop  { padding: $page-margin-desktop; }
+  .md\:px-margin-desktop { padding-left: $page-margin-desktop; padding-right: $page-margin-desktop; }
+  .md\:py-margin-desktop { padding-top: $page-margin-desktop;  padding-bottom: $page-margin-desktop; }
+}
+
+// Gap aliases that the prototype uses but `_grid.scss` doesn't define yet
+.gap-gutter { gap: $page-gutter; }
+.gap-xxl    { gap: $spacing-2xl; }
+
+// Vertical rhythm helpers — direct-child margin (prototype "space-y-*")
+@each $key, $value in (
+  'xs': $spacing-xs,
+  'sm': $spacing-sm,
+  'md': $spacing-md,
+  'lg': $spacing-lg,
+  'xl': $spacing-xl,
+  'xxl': $spacing-2xl,
+  'gutter': $page-gutter
+) {
+  .space-y-#{$key} > * + * { margin-top: $value; }
+  .space-x-#{$key} > * + * { margin-left: $value; }
+}
+
+// ============================================================================
+// LAYOUT WIDTH / CONTAINER
+// ============================================================================
+
+.max-w-container {
+  max-width: $container-max;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.max-w-content {
+  max-width: 78ch;
+}
+
+.min-h-screen { min-height: 100vh; }
+.h-screen     { height: 100vh; }
+
+// ============================================================================
+// CSS GRID (the bento layer)
+// ============================================================================
+
+.grid              { display: grid; }
+.inline-grid       { display: inline-grid; }
+.grid-flow-row     { grid-auto-flow: row; }
+.grid-flow-col     { grid-auto-flow: column; }
+
+@each $cols in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12) {
+  .grid-cols-#{$cols} { grid-template-columns: repeat($cols, minmax(0, 1fr)); }
+}
+
+@each $span in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12) {
+  .col-span-#{$span} { grid-column: span $span / span $span; }
+}
+
+.col-span-full { grid-column: 1 / -1; }
+
+// Responsive grid columns (only the breakpoints the prototype uses)
+@include respond-to(sm) {
+  @each $cols in (1, 2, 3, 4, 5, 6) {
+    .sm\:grid-cols-#{$cols} { grid-template-columns: repeat($cols, minmax(0, 1fr)); }
+  }
+  @each $span in (1, 2, 3, 4, 5, 6) {
+    .sm\:col-span-#{$span} { grid-column: span $span / span $span; }
+  }
+}
+
+@include respond-to(md) {
+  @each $cols in (1, 2, 3, 4, 5, 6, 8, 12) {
+    .md\:grid-cols-#{$cols} { grid-template-columns: repeat($cols, minmax(0, 1fr)); }
+  }
+  @each $span in (1, 2, 3, 4, 5, 6, 7, 8, 12) {
+    .md\:col-span-#{$span} { grid-column: span $span / span $span; }
+  }
+}
+
+@include respond-to(lg) {
+  @each $cols in (1, 2, 3, 4, 5, 6, 7, 8, 12) {
+    .lg\:grid-cols-#{$cols} { grid-template-columns: repeat($cols, minmax(0, 1fr)); }
+  }
+  @each $span in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12) {
+    .lg\:col-span-#{$span} { grid-column: span $span / span $span; }
+  }
+}
+
+// ============================================================================
+// TRANSITIONS / TRANSFORM ATOMS (prototype interaction polish)
+// ============================================================================
+
+.transition-all      { transition: all 200ms ease; }
+.transition-colors   { transition: color 200ms ease, background-color 200ms ease, border-color 200ms ease; }
+.transition-transform{ transition: transform 200ms ease; }
+.transition-opacity  { transition: opacity 200ms ease; }
+.duration-150        { transition-duration: 150ms; }
+.duration-200        { transition-duration: 200ms; }
+.duration-300        { transition-duration: 300ms; }
+
+.translate-x-1 { transform: translateX(0.25rem); }
+
+.hover\:opacity-90:hover { opacity: 0.9; }
+.hover\:scale-105:hover  { transform: scale(1.05); }
+.active\:scale-95:active { transform: scale(0.95); }
+
+// Group hover utility (parent has `.group`, child uses `.group-hover:*`)
+.group:hover .group-hover\:scale-110 { transform: scale(1.1); }
+.group:hover .group-hover\:opacity-100 { opacity: 1; }
+
+// ============================================================================
+// LAYOUT PRIMITIVES — stack / cluster / row-between / page-container
+// ============================================================================
+
+.stack            { @include stack($spacing-md); }
+.stack-xs         { @include stack($spacing-xs); }
+.stack-sm         { @include stack($spacing-sm); }
+.stack-md         { @include stack($spacing-md); }
+.stack-lg         { @include stack($spacing-lg); }
+.stack-xl         { @include stack($spacing-xl); }
+
+.cluster          { @include cluster($spacing-md); }
+.cluster-xs       { @include cluster($spacing-xs); }
+.cluster-sm       { @include cluster($spacing-sm); }
+.cluster-lg       { @include cluster($spacing-lg); }
+
+.row-between      { @include row-between($spacing-md); }
+
+.page-container   { @include page-container; }
+
+.section-stack    { @include section-stack; }
+
+.grid-auto-fit-sm { @include grid-auto-fit(14rem, $spacing-md); }
+.grid-auto-fit-md { @include grid-auto-fit(18rem, $spacing-md); }
+.grid-auto-fit-lg { @include grid-auto-fit(22rem, $spacing-md); }
+
+.grid-bento       { @include grid-bento; }
+.grid-bento-2x4   { @include grid-bento(1, 2, 4, $spacing-md); }
+
+// ============================================================================
+// INTERACTION + ACCESSIBILITY
+// ============================================================================
+
+.focus-ring:focus-visible { @include focus-ring; }
+.touch-target             { @include touch-target; }
+.hover-surface-bg         { @include hover-surface; }
+.is-disabled              { @include disabled-state; }
+
+// ============================================================================
+// STATUS COLORS
+// ============================================================================
+
+.bg-status-success-container { background-color: var(--md-status-success-container); }
+.bg-status-warning-container { background-color: var(--md-status-warning-container); }
+.bg-status-error-container   { background-color: var(--md-status-error-container); }
+.bg-status-info-container    { background-color: var(--md-status-info-container); }
+
+.text-status-success { color: var(--md-status-success); }
+.text-status-warning { color: var(--md-status-warning); }
+.text-status-error   { color: var(--md-status-error); }
+.text-status-info    { color: var(--md-status-info); }
+
+// ============================================================================
+// DIALOG CHROME — M3 dialog header/body/actions for mat-dialog surfaces.
+// Pairs with the .mat-mdc-dialog-container .mdc-dialog__surface override in
+// _angular-material-theme.scss.
+// ============================================================================
+
+// Legacy chrome — kept as a fallback for any dialog that hasn't yet adopted
+// the `.dialog-shell` + Material directive pattern. Do NOT delete.
+.dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $spacing-md;
+  padding: $spacing-lg $spacing-lg $spacing-md;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.dialog-body {
+  padding: $spacing-lg;
+}
+
+.dialog-actions {
+  padding: $spacing-md $spacing-lg $spacing-lg;
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-sm;
+}
+
+.dialog-close-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--mat-sys-on-surface-variant);
+  transition: color 200ms ease;
+
+  &:hover {
+    color: var(--md-status-error);
+  }
+}
+
+// New shell — pairs with Material `mat-dialog-title` / `mat-dialog-content`
+// / `mat-dialog-actions` directives. Sized by the `dialog.open()` config
+// (width/height on the panel), the shell fills the surface so the header
+// sits flush at the top, the body scrolls in the middle, and the actions
+// stay pinned at the bottom — no clipping on shorter viewports.
+.dialog-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    flex: 0 0 auto;
+  }
+
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    min-width: 0;
+  }
+}
+
+.dialog-title {
+  margin: 0;
+  @include type(headline-md);
+  color: var(--mat-sys-on-surface);
+}
+
+.dialog-subtitle {
+  margin: 0;
+  @include type(body-md);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+// ============================================================================
+// MISC
+// ============================================================================
+
+.aspect-square { aspect-ratio: 1 / 1; }
+.aspect-video  { aspect-ratio: 16 / 9; }
+
+.tracking-tight  { letter-spacing: -0.01em; }
+.tracking-wide   { letter-spacing: 0.025em; }
+.tracking-wider  { letter-spacing: 0.05em; }
+.tracking-widest { letter-spacing: 0.1em; }
+
+.uppercase   { text-transform: uppercase; }
+.lowercase   { text-transform: lowercase; }
+.capitalize  { text-transform: capitalize; }
+.normal-case { text-transform: none; }

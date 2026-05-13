@@ -1,0 +1,24 @@
+<div
+  class="segmented-control"
+  role="tablist"
+  [attr.aria-label]="ariaLabel || null"
+  [ngClass]="hostClasses"
+>
+  <button
+    *ngFor="let option of options; trackBy: trackById"
+    type="button"
+    role="tab"
+    class="segmented-control__option"
+    [class.segmented-control__option--active]="option.id === value"
+    [attr.aria-selected]="option.id === value"
+    [disabled]="option.disabled"
+    (click)="onSelect(option)"
+  >
+    <span
+      *ngIf="option.icon"
+      class="material-symbols-rounded segmented-control__icon"
+      aria-hidden="true"
+    >{{ option.icon }}</span>
+    <span class="segmented-control__label">{{ option.label }}</span>
+  </button>
+</div>

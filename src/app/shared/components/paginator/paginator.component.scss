@@ -1,226 +1,124 @@
 @use 'sass-utils/variables' as *;
 @use 'sass-utils/mixins' as *;
 
+:host {
+  display: block;
+}
+
 .pagination-wrapper {
-  margin-top: $spacing-2xl;
-  padding: $spacing-lg 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-md $spacing-lg;
+  background: var(--mat-sys-surface-container-low);
+  border-top: 1px solid var(--mat-sys-outline-variant);
 
-  .custom-pagination {
-    display: flex;
-    justify-content: center;
-    margin-bottom: $spacing-lg;
+  @include tablet-up {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: $spacing-md;
+  }
+}
 
-    .pagination-list {
-      display: flex;
-      align-items: center;
-      gap: $spacing-xs;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      flex-wrap: wrap;
-      justify-content: center;
+.custom-pagination {
+  display: flex;
+}
 
-      .pagination-item {
-        margin: 0;
+.pagination-list {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-        .pagination-link {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-width: 40px;
-          height: 40px;
-          padding: $spacing-sm;
-          border: 1px solid $color-border;
-          background-color: $color-background;
-          color: $color-primary;
-          text-decoration: none;
-          border-radius: $border-radius-md;
-          font-weight: $font-weight-medium;
-          font-size: $font-size-base!important;
-          cursor: pointer;
-          transition: all 0.2s ease-in-out;
-          user-select: none;
+.pagination-item {
+  margin: 0;
+}
 
-          &:hover:not(:disabled) {
-            background-color: $color-primary;
-            color: $color-background;
-            border-color: $color-primary;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px $color-shadow;
-          }
+.pagination-link {
+  @include flex-center;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 $spacing-sm;
+  border: 1px solid transparent;
+  background: var(--mat-sys-surface-container-lowest);
+  color: var(--mat-sys-on-surface);
+  text-decoration: none;
+  border-radius: $border-radius-base;
+  font-family: $font-family-body;
+  font-size: $type-label-sm-size;
+  line-height: $type-label-sm-line;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+  user-select: none;
 
-          &:active:not(:disabled) {
-            transform: translateY(0);
-            box-shadow: 0 2px 4px $color-shadow;
-          }
+  &:hover:not(:disabled):not(.active) {
+    background: var(--mat-sys-surface-container);
+    border-color: var(--mat-sys-outline-variant);
+  }
 
-          &.active {
-            background-color: $color-primary;
-            color: $color-background;
-            border-color: $color-primary;
-            box-shadow: 0 2px 8px $color-shadow;
-            font-weight: $font-weight-bold;
-          }
+  &:focus-visible {
+    @include focus-ring(var(--mat-sys-secondary));
+  }
 
-          &:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            background-color: $color-background-secondary;
-            color: $color-text-disabled;
-            border-color: $color-border-light;
+  &.active {
+    background: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
+    border-color: var(--mat-sys-secondary-container);
+    font-weight: $font-weight-bold;
+  }
 
-            &:hover {
-              transform: none;
-              box-shadow: none;
-            }
-          }
+  &:disabled {
+    @include disabled-state;
+    border-color: transparent;
+  }
 
-          &.pagination-control {
-            .material-symbols-outlined {
-              font-size: 20px;
-            }
-          }
+  &.pagination-control .material-symbols-outlined {
+    font-size: 1.25rem;
+  }
+}
 
-          // Focus styles for accessibility
-          &:focus {
-            outline: 2px solid $color-primary;
-            outline-offset: 2px;
-          }
-        }
+.pagination-ellipsis {
+  @include flex-center;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  color: var(--mat-sys-on-surface-variant);
+  font-weight: $font-weight-medium;
+  font-size: $type-label-sm-size;
+  user-select: none;
+}
 
-        .pagination-ellipsis {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-width: 40px;
-          height: 40px;
-          padding: $spacing-sm;
-          color: $color-text-disabled;
-          font-weight: $font-weight-medium;
-          font-size: $font-size-sm;
-          user-select: none;
-        }
-      }
-    }
+.page-info {
+  font-family: $font-family-body;
+  font-size: $type-label-sm-size;
+  line-height: $type-label-sm-line;
+  color: var(--mat-sys-on-surface-variant);
+
+  span {
+    display: inline-block;
+  }
+}
+
+@include mobile-only {
+  .pagination-link,
+  .pagination-ellipsis {
+    min-width: 2rem;
+    height: 2rem;
+    font-size: $type-label-xs-size;
+  }
+
+  .pagination-link.pagination-control .material-symbols-outlined {
+    font-size: 1rem;
   }
 
   .page-info {
+    font-size: $type-label-xs-size;
     text-align: center;
-    color: $color-text-secondary;
-    font-size: $font-size-base!important;
-    font-weight: $font-weight-normal;
-
-    span {
-      background-color: $color-background-secondary;
-      padding: $spacing-sm $spacing-md;
-      border-radius: $border-radius-md;
-      border: 1px solid $color-border-light;
-    }
-  }
-}
-
-// ============================================================================
-// RESPONSIVE PAGINATION STYLES
-// ============================================================================
-
-@include respond-to(md) {
-  .pagination-wrapper {
-    .custom-pagination {
-      .pagination-list {
-        gap: $spacing-sm;
-
-        .pagination-item {
-          .pagination-link {
-            min-width: 36px;
-            height: 36px;
-            font-size: $font-size-xs;
-          }
-
-          .pagination-ellipsis {
-            min-width: 36px;
-            height: 36px;
-            font-size: $font-size-xs;
-          }
-        }
-      }
-    }
-
-    .page-info {
-      font-size: $font-size-xs;
-
-      span {
-        padding: $spacing-xs $spacing-sm;
-      }
-    }
-  }
-}
-
-@include respond-to(sm) {
-  .pagination-wrapper {
-    .custom-pagination {
-      .pagination-list {
-        gap: 2px;
-
-        .pagination-item {
-          .pagination-link {
-            min-width: 32px;
-            height: 32px;
-            padding: $spacing-xs;
-            font-size: $font-size-xs;
-
-            &.pagination-control {
-              .material-symbols-outlined {
-                font-size: 16px;
-              }
-            }
-          }
-
-          .pagination-ellipsis {
-            min-width: 32px;
-            height: 32px;
-            font-size: $font-size-xs;
-          }
-        }
-      }
-    }
-
-    .page-info {
-      margin-top: $spacing-sm;
-
-      span {
-        display: inline-block;
-        word-break: break-word;
-      }
-    }
-  }
-}
-
-// ============================================================================
-// ANIMATION UTILITIES
-// ============================================================================
-
-@keyframes pagination-pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba($color-primary, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba($color-primary, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba($color-primary, 0);
-  }
-}
-
-.pagination-wrapper {
-  .custom-pagination {
-    .pagination-list {
-      .pagination-item {
-        .pagination-link {
-          &.loading {
-            animation: pagination-pulse 1.5s infinite;
-          }
-        }
-      }
-    }
   }
 }

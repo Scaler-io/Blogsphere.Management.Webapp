@@ -14,6 +14,7 @@ import { StatTileModule } from 'src/app/shared/components/stat-tile/stat-tile.mo
 import { SectionPanelModule } from 'src/app/shared/components/section-panel/section-panel.module';
 import { StatusPillModule } from 'src/app/shared/components/status-pill/status-pill.module';
 import { EmptyStateModule } from 'src/app/shared/components/empty-state/empty-state.module';
+import { MethodPillModule } from 'src/app/shared/components/method-pill/method-pill.module';
 
 @NgModule({
   declarations: [RouteDetailsComponent],
@@ -32,6 +33,7 @@ import { EmptyStateModule } from 'src/app/shared/components/empty-state/empty-st
     SectionPanelModule,
     StatusPillModule,
     EmptyStateModule,
+    MethodPillModule,
   ],
   exports: [RouteDetailsComponent],
 })

@@ -60,34 +60,34 @@
 
   @if $color-name == accent {
     @if $tone == 50 {
-      @return $accent-50;
+      @return $accent-yellow-50;
     }
     @if $tone == 100 {
-      @return $accent-100;
+      @return $accent-yellow-100;
     }
     @if $tone == 200 {
-      @return $accent-200;
+      @return $accent-yellow-200;
     }
     @if $tone == 300 {
-      @return $accent-300;
+      @return $accent-yellow-300;
     }
     @if $tone == 400 {
-      @return $accent-400;
+      @return $accent-yellow-400;
     }
     @if $tone == 500 {
-      @return $accent-500;
+      @return $accent-yellow-500;
     }
     @if $tone == 600 {
-      @return $accent-600;
+      @return $accent-yellow-600;
     }
     @if $tone == 700 {
-      @return $accent-700;
+      @return $accent-yellow-700;
     }
     @if $tone == 800 {
-      @return $accent-800;
+      @return $accent-yellow-800;
     }
     @if $tone == 900 {
-      @return $accent-900;
+      @return $accent-yellow-900;
     }
   }
 

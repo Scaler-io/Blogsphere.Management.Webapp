@@ -1,18 +1,48 @@
 @use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
 
-$page-content-padding: 1.5rem 4.5rem 0 4.5rem;
-$page-content-padding-mobile: 1.2rem 1.5rem 0 1.5rem;
-
-.app__main {
+.app-shell {
+  display: flex;
+  flex-direction: row;
   height: 100vh;
-  &__container {
-    flex: 1;
-    .app__main--content {
-      z-index: 1 !important;
-      flex: 1;
-      padding: 16px;
-      // background-color: $gray-100;
-      padding: $page-content-padding;
+  overflow: hidden;
+  background: var(--md-background);
+
+  &__body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  &__main {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &--full {
+      width: 100%;
     }
+  }
+
+  &__content {
+    flex: 1 1 auto;
+    min-height: 0;
+    @include page-container;
+    padding-block: $page-margin-mobile;
+
+    @include desktop-up {
+      padding-block: $page-margin-desktop;
+    }
+  }
+
+  &__outlet {
+    width: 100%;
   }
 }

@@ -1,30 +1,33 @@
 @if (requestPageState$ | async; as requestPageState) {
-  <div class="success-page__layout">
-    <div class="success-page__layout-content">
-      <div class="success-page__layout-content--image">
-        <img src="../../../assets/images/check.png" class="img-fluid" alt="" />
+  <section class="success-page">
+    <article class="success-page__card">
+      <div class="success-page__glyph">
+        <span class="material-symbols-rounded success-page__glyph-icon">check_circle</span>
       </div>
-      <div class="success-page__layout-content--heading">{{ requestPageState.heading }}</div>
-      <div class="success-page__layout-content--subheading">{{ requestPageState.subHeading }}</div>
-    </div>
-    <div class="success-page__layout-action">
-      <!-- button components here -->
-      @if (requestPageState.previousUrl) {
+
+      <div class="success-page__copy stack-sm">
+        <h1 class="success-page__heading">{{ requestPageState.heading }}</h1>
+        <p class="success-page__subheading">{{ requestPageState.subHeading }}</p>
+      </div>
+
+      <div class="success-page__actions">
+        @if (requestPageState.previousUrl) {
+          <blogsphere-button
+            [type]="ButtonType.primary"
+            [size]="ButtonSize.medium"
+            (next)="previousClick(requestPageState.previousUrl)"
+            >
+            Back
+          </blogsphere-button>
+        }
         <blogsphere-button
-          [type]="ButtonType.primary"
+          [type]="ButtonType.secondary"
           [size]="ButtonSize.medium"
-          (next)="previousClick(requestPageState.previousUrl)"
+          (next)="nextClick(requestPageState.nextUrl)"
           >
-          Back
+          {{ requestPageState.nextButtonLabel }}
         </blogsphere-button>
-      }
-      <blogsphere-button
-        [type]="ButtonType.secondary"
-        [size]="ButtonSize.medium"
-        (next)="nextClick(requestPageState.nextUrl)"
-        >
-        {{ requestPageState.nextButtonLabel }}
-      </blogsphere-button>
-    </div>
-  </div>
+      </div>
+    </article>
+  </section>
 }

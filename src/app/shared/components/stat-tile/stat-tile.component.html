@@ -5,5 +5,16 @@
   <div class="stat-tile__body">
     <span class="stat-tile__num">{{ value }}</span>
     <span class="stat-tile__label">{{ label }}</span>
+
+    <div *ngIf="delta || caption" class="stat-tile__meta">
+      <blogsphere-status-pill
+        *ngIf="delta"
+        [tone]="deltaPillTone"
+        [icon]="deltaIcon"
+        [label]="delta.value"
+        size="sm"
+      ></blogsphere-status-pill>
+      <span *ngIf="caption" class="stat-tile__caption">{{ caption }}</span>
+    </div>
   </div>
 </div>

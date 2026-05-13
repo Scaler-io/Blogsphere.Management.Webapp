@@ -1,4 +1,5 @@
 @use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
 
 :host {
   display: block;
@@ -7,13 +8,54 @@
 .sidebar-submenu-link {
   display: flex;
   align-items: center;
-  font-size: $font-size-2xl;
-  column-gap: 1.5rem;
-  padding: 1.2rem 0 1.2rem 3rem;
+  gap: $spacing-sm;
+  padding: $spacing-md $spacing-lg;
+  border-radius: $border-radius-lg;
+  color: var(--md-on-surface-variant);
+  text-decoration: none;
   cursor: pointer;
+  transition: transform 200ms ease, background-color 200ms ease, color 200ms ease;
+  font-family: $font-family-body;
 
-  &.route-active {
-    color: $color-primary;
+  &:hover {
+    background: var(--md-surface-container);
+    color: var(--md-on-surface);
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--md-primary);
+    outline-offset: 2px;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: inherit;
+  }
+
+  &__label {
+    @include type(body-sm);
     font-weight: $font-weight-medium;
+    color: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &--active {
+    background: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+    transform: translateX(0.25rem);
+
+    .sidebar-submenu-link__icon {
+      color: var(--md-on-secondary-container);
+    }
+
+    &:hover {
+      background: var(--md-secondary-container);
+      color: var(--md-on-secondary-container);
+    }
   }
 }

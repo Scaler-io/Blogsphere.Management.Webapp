@@ -1,236 +1,250 @@
 @use 'sass-utils/variables' as *;
 @use 'sass-utils/mixins' as *;
 
-.search-layout__action-box {
-  padding: 1.5rem;
-  .search-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+:host {
+  display: block;
+}
 
-    .input-wrapper {
-      width: 100%;
-      position: relative;
-      display: flex;
-      align-items: center;
+.search-layout {
+  padding: $spacing-md 0;
+  width: 100%;
 
-      .icon {
-        position: absolute;
-        left: 0;
-        font-size: $font-size-3xl;
-        color: #aaa;
-      }
-
-      .search-input {
-        width: 100%;
-        padding: 10px 10px 10px 30px; // Adjust padding to accommodate the icon
-        border: none;
-        border-bottom: 2px solid #ccc;
-        outline: none;
-        font-size: 16px;
-        transition: border-color 0.3s ease-in-out;
-        background-color: transparent;
-        &:focus {
-          border-bottom-color: $color-primary;
-        }
-      }
-    }
-  }
-
-  .sort-container {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 10px;
-    cursor: pointer;
-    .label {
-      @include font($font-size-2xl, $font-weight-regular, $line-height-normal);
-    }
-    .heading,
-    .value {
-      @include font($font-size-2xl, $font-weight-bold, $line-height-normal);
-    }
-  }
-
-  .filter-container {
+  &__search {
+    flex: 1 1 16rem;
+    min-width: 12rem;
     position: relative;
-    height: 100%;
     display: flex;
     align-items: center;
-    column-gap: $spacing-lg;
-    justify-content: space-evenly;
-    .filter-action {
-      cursor: pointer;
-      font-size: $font-size-xl;
-      text-transform: uppercase;
-      &.filter-applied {
-        font-weight: $font-weight-bold;
-      }
-      &.disabled {
-        color: $gray-500;
-      }
-    }
-    .filter-options-panel {
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      z-index: 3;
-      top: 90%;
-      left: -80%;
-      transform: translate(-65%, 2%);
-      transform-origin: top right;
-      width: 650px;
-      height: 450px;
-      background: #fff;
-      //   border: 1px solid $color-blue-gray;
-      border-radius: 3px;
-      box-shadow: -3px -1px 20px 5px rgba(116, 116, 116, 0.15);
-      transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+    height: 36px;
+    padding: 0 $spacing-md 0 calc(#{$spacing-md} + 1.25rem);
+    background: var(--mat-sys-surface-container-low);
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: $border-radius-full;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
 
-      &__header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid $gray-300;
-        padding: $spacing-lg !important;
-        &-heading {
-          font-size: $font-size-2xl;
-          font-weight: $font-weight-bold;
-        }
-        &-closebtn > span {
-          cursor: pointer;
-          font-size: $font-size-2xl;
-        }
-      }
-      &__body {
-        flex-grow: 1;
-      }
-      &__header,
-      &__body,
-      &__footer {
-        padding: 10px;
-      }
-      &--hidden {
-        height: 0;
-        width: 0;
-        opacity: 0;
-        overflow: hidden;
-        white-space: nowrap;
-      }
+    &:focus-within {
+      border-color: var(--mat-sys-secondary);
+      background: var(--mat-sys-surface-container-lowest);
     }
   }
 
-  // Mobile filter panel (full-screen overlay)
-  .filter-options-panel__mobile {
-    position: fixed;
-    top: $spacing-md;
-    left: $spacing-md;
-    right: $spacing-md;
-    bottom: $spacing-md;
-    width: calc(100vw - #{$spacing-md * 2});
-    height: calc(100vh - #{$spacing-md * 2});
-    background-color: $color-surface;
-    border-radius: $border-radius-lg;
-    z-index: $z-index-modal;
-    @include flex-column;
-    @include transition(opacity, transform);
-    @include card;
-    transform: translateY(0);
+  &__search-icon {
+    position: absolute;
+    left: $spacing-sm;
+    font-size: 1.25rem;
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  &__search-input {
+    flex: 1 1 auto;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--mat-sys-on-surface);
+    @include type(body-md);
+
+    &::placeholder {
+      color: var(--mat-sys-on-surface-variant);
+    }
+  }
+
+  &__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    height: 36px;
+    padding: 0 $spacing-md;
+    background: var(--mat-sys-surface-container-low);
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: $border-radius-full;
+    color: var(--mat-sys-on-surface);
+    @include type(label-sm);
+    font-weight: $font-weight-medium;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: var(--mat-sys-secondary-container);
+      border-color: var(--mat-sys-secondary-container);
+      color: var(--mat-sys-on-secondary-container);
+    }
+
+    &:focus-visible {
+      @include focus-ring(var(--mat-sys-secondary));
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &--active {
+      background: var(--mat-sys-secondary-container);
+      border-color: var(--mat-sys-secondary-container);
+      color: var(--mat-sys-on-secondary-container);
+    }
+  }
+
+  &__chip-label {
+    color: inherit;
+  }
+
+  &__chip-value {
+    color: var(--mat-sys-on-surface);
+    font-weight: $font-weight-bold;
+  }
+
+  &__chip-icon {
+    font-size: 1.125rem;
+    line-height: 1;
+  }
+
+  &__filter-cluster {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__cta {
+    margin-left: auto;
+  }
+}
+
+// Filter panel — desktop dropdown anchored under the filter chip by default;
+// the `--mobile` modifier reflows it into a full-screen bottom-sheet overlay.
+// One DOM node, one `<ng-content>` slot — the projected filter form binds
+// reliably regardless of viewport (no dual-slot projection bug).
+.filter-options-panel {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+  top: calc(100% + #{$spacing-sm});
+  right: 0;
+  width: min(40rem, 90vw);
+  max-height: 28rem;
+  background: var(--mat-sys-surface-container-lowest);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: $border-radius-lg;
+  box-shadow: var(--md-elevation-overlay);
+  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease,
+    transform 0.3s ease;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    padding: $spacing-md $spacing-lg;
+
+    &-heading {
+      @include type(headline-sm);
+      color: var(--mat-sys-on-surface);
+    }
+
+    &-closebtn > span {
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: var(--mat-sys-on-surface-variant);
+    }
+  }
+
+  &__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: $spacing-md $spacing-lg;
+    overflow-y: auto;
+  }
+
+  &__footer {
+    padding: $spacing-md $spacing-lg;
+    border-top: 1px solid var(--mat-sys-outline-variant);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &--hidden {
+    height: 0;
+    width: 0;
+    opacity: 0;
     overflow: hidden;
+    white-space: nowrap;
+  }
 
-    &__header {
-      @include flex-between;
+  // Mobile reflow — full-viewport bottom sheet with elevated primary header
+  // and a sticky footer that stretches the apply-filter button across the row.
+  &--mobile {
+    position: fixed;
+    inset: $spacing-md;
+    width: auto;
+    max-height: none;
+    border: none;
+    z-index: $z-index-modal;
+    overflow: hidden;
+    transform: translateY(0);
+
+    .filter-options-panel__header {
       padding: $spacing-lg $spacing-md;
-      background: $color-primary;
-      color: $color-text-inverse;
+      background: var(--mat-sys-primary);
+      color: var(--mat-sys-on-primary);
+      border-bottom: none;
       border-radius: $border-radius-lg $border-radius-lg 0 0;
-      position: sticky;
-      top: 0;
-      z-index: 1;
-      min-height: 64px; // Touch-friendly header
-
-      &-heading {
-        @include font($font-size-2xl, $font-weight-bold, $line-height-normal);
-        color: $color-text-inverse;
-      }
+      min-height: 64px;
 
       &-closebtn {
-        @include button-base;
-        @include button-size(sm);
-        background-color: rgba($color-text-inverse, 0.1);
-        color: $color-text-inverse;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.1);
         border-radius: $border-radius-full;
         width: 40px;
         height: 40px;
 
+        > span {
+          color: var(--mat-sys-on-primary);
+        }
+
         &:hover {
-          background-color: rgba($color-text-inverse, 0.2);
+          background-color: rgba(255, 255, 255, 0.2);
         }
       }
     }
 
-    &__body {
-      flex: 1;
+    .filter-options-panel__body {
       padding: $spacing-lg $spacing-md;
-      overflow-y: auto;
     }
 
-    &__footer {
+    .filter-options-panel__footer {
       padding: $spacing-lg $spacing-md;
-      background-color: $color-background-secondary;
-      border-top: 1px solid $color-border-light;
+      background-color: var(--mat-sys-surface-container-low);
       border-radius: 0 0 $border-radius-lg $border-radius-lg;
-      position: sticky;
-      bottom: 0;
-      text-align: center;
+      justify-content: stretch;
 
-      // Make button full-width on mobile
-      blogsphere-button {
+      blogsphere-button,
+      blogsphere-button button {
         width: 100%;
-
-        button {
-          width: 100%;
-          min-height: 48px; // Touch-friendly
-        }
+        min-height: 48px;
       }
     }
 
-    &--hidden {
-      opacity: 0;
+    &.filter-options-panel--hidden {
+      width: auto;
+      height: auto;
       transform: translateY(100%);
       visibility: hidden;
+      overflow: hidden;
+      white-space: normal;
     }
   }
-
-  .add-button {
-    font-size: $font-size-lg;
-    // use mobile view mixin
-  }
 }
 
-@include respond-to(xs) {
-  .sort-container {
-    padding: $spacing-md !important;
-    .value {
-      margin-top: $spacing-xs !important;
+@include mobile-only {
+  .search-layout {
+    &__cta {
+      margin-left: 0;
+      width: 100%;
     }
-  }
-  .add-button {
-    width: 100%;
-    margin-top: $spacing-md;
-  }
-}
-
-@include respond-to(sm) {
-  .add-button {
-    margin-top: $spacing-md;
-  }
-}
-
-@include respond-to(md) {
-  .add-button {
-    margin: auto;
   }
 }

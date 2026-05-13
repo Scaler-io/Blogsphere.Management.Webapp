@@ -5,7 +5,6 @@ import { selectMobileViewState } from 'src/app/state/mobile-view/mobile-view.sel
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { ToggleSideNav } from 'src/app/state/sidenav/sidenav.action';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { getAuthState } from 'src/app/state/auth/auth.selector';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 
@@ -21,7 +20,6 @@ export class NavbarComponent implements OnInit {
   @Input() public isProfilePage: boolean = false;
 
   public isMobileView$ = this.store.select(selectMobileViewState);
-  public authUser$ = this.store.select(getAuthState);
   public maintenanceMode: boolean = environment.maintenanceMode;
 
   constructor(

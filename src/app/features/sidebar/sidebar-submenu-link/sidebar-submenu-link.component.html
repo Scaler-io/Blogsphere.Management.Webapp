@@ -1,11 +1,11 @@
-<div
+<a
   class="sidebar-submenu-link"
   matRipple
   [routerLink]="link"
-  [routerLinkActive]="'route-active'"
+  [routerLinkActive]="'sidebar-submenu-link--active'"
   (click)="navigate.emit()"
   role="listitem"
 >
-  <span class="material-symbols-outlined text-2xl">{{ icon }}</span>
-  <span class="text-xl">{{ label }}</span>
-</div>
+  <span class="material-symbols-rounded sidebar-submenu-link__icon" aria-hidden="true">{{ icon }}</span>
+  <span class="sidebar-submenu-link__label">{{ label }}</span>
+</a>

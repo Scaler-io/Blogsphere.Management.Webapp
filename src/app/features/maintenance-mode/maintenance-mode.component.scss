@@ -1,13 +1,34 @@
 @use 'sass-utils/variables' as *;
 @use 'sass-utils/mixins' as *;
 
-.maintenance-page {
-  min-height: 100%;
-  @include flex-center;
+:host {
+  display: block;
+  min-height: 100vh;
+}
 
-  &__content {
+.maintenance-page {
+  min-height: 100vh;
+  @include flex-center;
+  padding: $spacing-2xl $spacing-lg;
+
+  @include mobile-only {
+    padding: $spacing-lg $spacing-md;
+  }
+
+  &__card {
+    width: 100%;
+    max-width: 38rem;
+    padding: $spacing-2xl;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-xl;
     text-align: center;
-    max-width: 100%;
+
+    @include mobile-only {
+      padding: $spacing-xl $spacing-lg;
+      gap: $spacing-lg;
+    }
   }
 
   &__illustration {
@@ -16,37 +37,46 @@
 
     &-img {
       width: 100%;
-      max-width: 320px;
+      max-width: 280px;
       height: auto;
+      animation: maintenance-float 3s ease-in-out infinite;
 
-      @include respond-to(xs) {
-        max-width: 260px;
+      @include mobile-only {
+        max-width: 220px;
       }
     }
   }
 
-  &__title {
-    @include heading(1);
-    color: $color-text-primary;
-    margin: 0;
+  &__copy {
+    width: 100%;
+  }
 
-    @include respond-to(md) {
-      font-size: $font-size-4xl;
+  &__title {
+    @include type(headline-lg);
+    color: var(--mat-sys-on-surface);
+
+    @include mobile-only {
+      @include type(headline-lg-mobile);
     }
   }
 
   &__message {
-    color: $color-text-secondary;
-    line-height: $line-height-relaxed;
-    max-width: 500px;
+    @include type(body-lg);
+    color: var(--mat-sys-on-surface-variant);
+    max-width: 32rem;
     margin: 0 auto;
   }
 
-}
+  &__tips {
+    width: 100%;
+    text-align: left;
+  }
 
-// Animation for illustration
-.maintenance-page__illustration-img {
-  animation: maintenance-float 3s ease-in-out infinite;
+  &__footnote {
+    @include type(label-sm);
+    color: var(--mat-sys-on-surface-variant);
+    margin: 0;
+  }
 }
 
 @keyframes maintenance-float {
@@ -56,5 +86,11 @@
   }
   50% {
     transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .maintenance-page__illustration-img {
+    animation: none;
   }
 }

@@ -1,0 +1,109 @@
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.metric-card {
+  @include md-card($border-radius-md, $spacing-lg);
+  @include md-card-hover(1px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  height: 100%;
+  overflow: hidden;
+  transition: box-shadow 200ms ease, transform 200ms ease, border-color 200ms ease;
+
+  &__accent {
+    position: absolute;
+    background: var(--md-secondary);
+    pointer-events: none;
+  }
+
+  &--accent-tone-primary   .metric-card__accent { background: var(--md-primary); }
+  &--accent-tone-secondary .metric-card__accent { background: var(--md-secondary); }
+  &--accent-tone-error     .metric-card__accent { background: var(--md-error); }
+  &--accent-tone-success   .metric-card__accent { background: var(--md-status-success); }
+
+  &--accent-left .metric-card__accent {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 4px;
+  }
+
+  &--accent-top .metric-card__accent {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+  }
+
+  &--accent-none .metric-card__accent {
+    display: none;
+  }
+
+  &--density-compact {
+    padding: $spacing-md;
+    gap: $spacing-sm;
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $spacing-sm;
+  }
+
+  &__label {
+    @include eyebrow-label(var(--md-secondary));
+  }
+
+  &__top-slot {
+    @include cluster($spacing-xs);
+  }
+
+  &__icon {
+    color: var(--md-on-surface-variant);
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  &__value {
+    margin: 0;
+    @include type(headline-lg);
+    color: var(--md-on-surface);
+
+    .metric-card--density-compact & {
+      @include type(headline-md);
+    }
+  }
+
+  &__meta {
+    @include cluster($spacing-sm);
+  }
+
+  &__subtext {
+    @include type(label-sm);
+    color: var(--md-on-surface-variant);
+  }
+
+  &__footer:empty {
+    display: none;
+  }
+
+  &__footer {
+    margin-top: auto;
+    @include type(label-sm);
+    color: var(--md-on-surface-variant);
+
+    a {
+      color: var(--md-secondary);
+
+      &:hover { text-decoration: underline; }
+    }
+  }
+}

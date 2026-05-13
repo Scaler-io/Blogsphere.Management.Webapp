@@ -1,52 +1,38 @@
 @use 'sass-utils/variables' as *;
 @use 'sass-utils/mixins' as *;
 
+:host {
+  display: block;
+}
+
 .dashboard {
+  @include section-stack($page-gutter, $page-gutter);
+
   &__toolbar {
-    align-items: flex-end;
-
-    @include respond-to(md) {
-      align-items: center;
-    }
-  }
-
-  &__toolbar-actions {
     display: flex;
-    justify-content: flex-start;
-
-    @include respond-to(md) {
-      justify-content: flex-end;
-    }
-  }
-
-  &__title {
-    @include font($font-size-2xl, $font-weight-bold);
-    color: rgba($color-text-primary, 0.9);
-    margin: 0 0 $spacing-sm;
+    justify-content: flex-end;
   }
 
   &__scope-select {
     width: 100%;
-    max-width: 320px;
+    max-width: 18rem;
   }
 
   &__empty {
-    @include font($font-size-base, $font-weight-regular);
-    color: rgba($color-text-primary, 0.75);
+    @include type(body-md);
+    color: var(--md-on-surface-variant);
     margin: 0;
   }
 
   &__page-loading {
-    display: flex;
-    flex-direction: column;
+    @include stack($spacing-md);
     align-items: center;
     justify-content: center;
-    gap: $spacing-md;
     min-height: 240px;
 
     p {
-      @include font($font-size-base, $font-weight-regular);
-      color: rgba($color-text-primary, 0.65);
+      @include type(body-sm);
+      color: var(--md-on-surface-variant);
       margin: 0;
     }
   }

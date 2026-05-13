@@ -1,0 +1,96 @@
+@use 'sass-utils/variables' as *;
+@use 'sass-utils/mixins' as *;
+
+:host {
+  display: inline-flex;
+}
+
+.segmented-control {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 0.125rem;
+  padding: 0.25rem;
+  border-radius: $border-radius-full;
+  background: var(--md-surface-container);
+  border: 1px solid var(--md-outline-variant);
+
+  &--full-width {
+    display: flex;
+    width: 100%;
+
+    .segmented-control__option {
+      flex: 1 1 0;
+    }
+  }
+
+  &__option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-xs;
+    border: 0;
+    border-radius: $border-radius-full;
+    background: transparent;
+    color: var(--md-on-surface-variant);
+    font-family: $font-family-body;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: background-color 200ms ease, color 200ms ease;
+    white-space: nowrap;
+
+    &:hover:not(:disabled):not(.segmented-control__option--active) {
+      background: var(--md-surface-container-high);
+      color: var(--md-on-surface);
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+
+    &:disabled {
+      @include disabled-state;
+    }
+  }
+
+  &__icon {
+    line-height: 1;
+    font-size: 1em;
+  }
+
+  &--size-sm .segmented-control__option {
+    padding: 0.25rem $spacing-sm;
+    font-size: $type-label-sm-size;
+    line-height: $type-label-sm-line;
+    min-height: 1.75rem;
+  }
+
+  &--size-md .segmented-control__option {
+    padding: $spacing-xs $spacing-md;
+    font-size: $type-body-sm-size;
+    line-height: $type-body-sm-line;
+    min-height: 2.25rem;
+  }
+
+  &--size-lg .segmented-control__option {
+    padding: $spacing-sm $spacing-lg;
+    font-size: $type-body-md-size;
+    line-height: $type-body-md-line;
+    min-height: 2.75rem;
+  }
+
+  &--tone-neutral .segmented-control__option--active {
+    background: var(--md-surface-container-lowest);
+    color: var(--md-on-surface);
+    box-shadow: var(--md-elevation-card);
+  }
+
+  &--tone-primary .segmented-control__option--active {
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+  }
+
+  &--tone-secondary .segmented-control__option--active {
+    background: var(--md-secondary);
+    color: var(--md-on-secondary);
+  }
+}

@@ -1,0 +1,20 @@
+<button
+  type="button"
+  class="icon-button"
+  [ngClass]="hostClasses"
+  [attr.aria-label]="ariaLabel || icon"
+  [attr.aria-busy]="loading ? 'true' : null"
+  [attr.title]="tooltipText || null"
+  [disabled]="disabled || loading"
+  (click)="onClick($event)"
+>
+  <ng-container *ngIf="!loading; else loadingTemplate">
+    <span class="material-symbols-rounded icon-button__glyph" aria-hidden="true">{{ icon }}</span>
+  </ng-container>
+
+  <ng-template #loadingTemplate>
+    <span class="icon-button__spinner" aria-hidden="true"></span>
+  </ng-template>
+
+  <span *ngIf="badgeDisplay" class="icon-button__badge" aria-hidden="true">{{ badgeDisplay }}</span>
+</button>

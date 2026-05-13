@@ -1,4 +1,18 @@
-<span class="status-pill" [ngClass]="'status-pill--' + state">
-  <span class="material-symbols-rounded status-pill__icon" aria-hidden="true">{{ resolvedIcon }}</span>
+<span
+  class="status-pill"
+  [class.status-pill--success]="resolvedTone === 'success'"
+  [class.status-pill--warning]="resolvedTone === 'warning'"
+  [class.status-pill--error]="resolvedTone === 'error'"
+  [class.status-pill--info]="resolvedTone === 'info'"
+  [class.status-pill--neutral]="resolvedTone === 'neutral'"
+  [class.status-pill--sm]="size === 'sm'"
+  role="status"
+  [attr.aria-label]="label"
+>
+  <span
+    *ngIf="resolvedIcon"
+    class="material-symbols-rounded status-pill__icon"
+    aria-hidden="true"
+  >{{ resolvedIcon }}</span>
   <span class="status-pill__label">{{ label }}</span>
 </span>

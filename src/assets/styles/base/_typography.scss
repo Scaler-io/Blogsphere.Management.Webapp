@@ -3,18 +3,21 @@
 @use '../sass-utils/mixins' as *;
 
 html {
-  font-size: 10px; // Base font size for rem calculations
+  font-size: 16px; // 1rem = 16px (normalized to match AGL prototype tokens)
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: $font-family-primary !important;
+  font-family: $font-family-body !important;
   font-size: $font-size-base !important;
   font-weight: $font-weight-regular !important;
   line-height: $line-height-normal !important;
   background-color: $color-background;
+  color: $color-text-primary;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 // ============================================================================
@@ -27,10 +30,11 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: $font-family-primary !important;
+  font-family: $font-family-heading !important;
   font-weight: $font-weight-bold !important;
-  margin-bottom: $spacing-md !important;
+  margin-bottom: $spacing-md;
   line-height: $line-height-tight !important;
+  color: $color-text-primary;
 }
 
 h1 {
@@ -366,10 +370,19 @@ dd {
   color: $color-text-inverse !important;
 }
 
+// `.text-primary` and `.text-secondary` follow prototype semantics: the M3
+// primary (cobalt) and M3 secondary (teal) brand colors respectively.
+// For muted/de-emphasized body copy, use `.text-muted` or `.text-on-surface-variant`.
 .text-primary {
   color: $color-primary !important;
 }
 .text-secondary {
+  color: $color-accent !important;
+}
+.text-on-surface {
+  color: $color-text-primary !important;
+}
+.text-on-surface-variant {
   color: $color-text-secondary !important;
 }
 .text-success {
@@ -443,4 +456,63 @@ dd {
 }
 .leading-relaxed {
   line-height: $line-height-relaxed !important;
+}
+
+// ============================================================================
+// M3 NAMED TYPE-SCALE UTILITIES — prototype's headline-xl..label-xs
+// ============================================================================
+// Use these whenever a single token captures a complete type role. They
+// overwrite size/line-height/weight/tracking together for predictable output.
+
+.text-headline-xl {
+  @include type(headline-xl);
+}
+
+.text-headline-lg {
+  @include type(headline-lg);
+
+  @include respond-to(sm) {
+    @include type(headline-lg-mobile);
+  }
+}
+
+.text-headline-md {
+  @include type(headline-md);
+}
+
+.text-headline-sm {
+  @include type(headline-sm);
+}
+
+.text-body-lg {
+  @include type(body-lg);
+}
+
+.text-body-md {
+  @include type(body-md);
+}
+
+.text-body-sm {
+  @include type(body-sm);
+}
+
+.text-label-sm {
+  @include type(label-sm);
+}
+
+.text-label-xs {
+  @include type(label-xs);
+}
+
+// Family-only utilities (use sparingly — prefer named tiers above)
+.font-heading {
+  font-family: $font-family-heading !important;
+}
+
+.font-body {
+  font-family: $font-family-body !important;
+}
+
+.font-mono {
+  font-family: $font-family-mono !important;
 }
