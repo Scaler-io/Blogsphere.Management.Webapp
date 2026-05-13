@@ -244,18 +244,12 @@ html {
   box-sizing: border-box;
 }
 
-// Material symbols — font faces from Fontsource (angular.json); keep variation axes in sync with loaded weights.
+// Material symbols — @font-face from Google CDN (index.html); keep variation axes aligned with those URLs.
 .material-symbols-outlined {
-  font-family: 'Material Symbols Outlined', sans-serif;
-  font-weight: 400;
-  font-style: normal;
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
 .material-symbols-rounded {
-  font-family: 'Material Symbols Rounded', sans-serif;
-  font-weight: 500;
-  font-style: normal;
   font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
 }
 
