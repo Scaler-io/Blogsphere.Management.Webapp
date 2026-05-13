@@ -10,7 +10,7 @@ import {
 } from 'src/app/state/api-cluster/api-cluster.selector';
 import { AppState } from 'src/app/store/app.state';
 import { BreadcrumbService } from 'xng-breadcrumb';
-import { ButtonType, ButtonSize, BadgeType, ItemDeleteDialogData } from 'src/app/core/model/core';
+import { ButtonType, ButtonSize, ItemDeleteDialogData } from 'src/app/core/model/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ItemDeleteDialogComponent } from 'src/app/shared/components/item-delete-dialog/item-delete-dialog.component';
 import { DateHelper } from 'src/app/shared/helpers/date.helper';
@@ -46,7 +46,6 @@ export class ClusterDetailsComponent implements OnInit, OnDestroy {
 
   ButtonType = ButtonType;
   ButtonSize = ButtonSize;
-  BadgeType = BadgeType;
 
   constructor(
     private route: ActivatedRoute,

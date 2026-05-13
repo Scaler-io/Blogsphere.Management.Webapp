@@ -6,6 +6,7 @@
         <blogsphere-page-hero-avatar
           hero-avatar
           shape="circle"
+          size="small"
           icon="route"
           [isActive]="r.isActive"
           [isInactive]="!r.isActive"
@@ -55,7 +56,7 @@
       <!-- ───────── METRIC TILES ───────── -->
       <section class="row gutter-sm rd-grid-row" aria-label="Route metrics">
         <div class="col-6 col-md-3">
-          <blogsphere-stat-tile
+          <blogsphere-stat-tile [compact]="true"
             [tone]="r.isActive ? 'success' : 'warning'"
             [icon]="r.isActive ? 'toggle_on' : 'toggle_off'"
             [value]="r.isActive ? 'Active' : 'Inactive'"
@@ -64,7 +65,7 @@
         </div>
 
         <div class="col-6 col-md-3">
-          <blogsphere-stat-tile
+          <blogsphere-stat-tile [compact]="true"
             tone="info"
             icon="api"
             [value]="(r.methods || []).length"
@@ -73,7 +74,7 @@
         </div>
 
         <div class="col-6 col-md-3">
-          <blogsphere-stat-tile
+          <blogsphere-stat-tile [compact]="true"
             tone="primary"
             icon="view_list"
             [value]="(r.headers || []).length"
@@ -82,7 +83,7 @@
         </div>
 
         <div class="col-6 col-md-3">
-          <blogsphere-stat-tile
+          <blogsphere-stat-tile [compact]="true"
             tone="primary"
             icon="swap_horiz"
             [value]="(r.transforms || []).length"
@@ -159,7 +160,7 @@
         </div>
       </div>
 
-      <div class="row rd-grid-row rd-panel-grid align-items-stretch">
+      <div class="row rd-grid-row rd-panel-grid align-items-stretch" role="region" aria-label="Headers and transforms">
         <!-- ───────── HEADERS ───────── -->
         <div class="col-12 col-lg-6">
           <blogsphere-section-panel
