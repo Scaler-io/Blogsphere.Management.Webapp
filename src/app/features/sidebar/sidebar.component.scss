@@ -123,6 +123,22 @@
     text-transform: uppercase;
   }
 
+  &__avatar-link {
+    text-decoration: none;
+    color: inherit;
+    flex-shrink: 0;
+
+    &:hover {
+      text-decoration: none;
+      filter: brightness(0.97);
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+      border-radius: 50%;
+    }
+  }
+
   &__welcome-label {
     @include type(label-xs);
     color: var(--mat-sys-on-surface-variant);
@@ -210,30 +226,59 @@
 }
 
 // Collapsed (desktop rail) — fade text-only chunks so the width transition stays smooth;
-// icon-only welcome avatar + signout glyph remain visible.
+// icon-only welcome avatar + signout glyph remain visible; one vertical axis for glyphs.
 :host(.host--collapsed) {
   .sidenav__brand-name,
-  .sidenav__welcome-text,
-  .sidenav__signout-label {
+  .sidenav__welcome-text {
     opacity: 0;
     transform: translateX(-0.5rem);
     pointer-events: none;
   }
 
-  .sidenav__header,
-  .sidenav__footer {
-    padding-left: $spacing-sm;
-    padding-right: $spacing-sm;
-  }
+  .sidenav.sidenav--collapsed {
+    .sidenav__header,
+    .sidenav__footer {
+      padding: $spacing-sm;
+    }
 
-  .sidenav__welcome {
-    justify-content: center;
-    padding-left: 0;
-    padding-right: 0;
+    .sidenav__welcome {
+      justify-content: center;
+      padding: $spacing-sm;
+      margin-bottom: $spacing-sm;
+    }
+
+    .sidenav__nav {
+      padding: $spacing-sm;
+    }
+
+    .sidenav__brand {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      gap: 0;
+    }
   }
 
   .sidenav__signout {
+    position: relative;
+    justify-content: center;
     padding: $spacing-sm;
+  }
+
+  // Label must not reserve flex width when collapsed (opacity alone still lays out text).
+  .sidenav__signout-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+    opacity: 0;
+    transform: none;
+    pointer-events: none;
   }
 }
 

@@ -15,6 +15,14 @@
   .sidebar-expandable__chevron {
     display: none;
   }
+
+  .sidebar-expandable__header--group-active {
+    transform: none;
+  }
+
+  .sidebar-expandable__submenu {
+    padding-left: 0;
+  }
 }
 
 .sidebar-expandable {
