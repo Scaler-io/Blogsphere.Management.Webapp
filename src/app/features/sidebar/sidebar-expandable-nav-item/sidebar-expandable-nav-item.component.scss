@@ -15,17 +15,13 @@
   .sidebar-expandable__chevron {
     display: none;
   }
-}
 
-:host(.host--collapsed):hover {
-  .sidebar-expandable__header {
-    justify-content: flex-start;
-    padding: $spacing-md $spacing-lg;
+  .sidebar-expandable__header--group-active {
+    transform: none;
   }
 
-  .sidebar-expandable__label,
-  .sidebar-expandable__chevron {
-    display: inline-block;
+  .sidebar-expandable__submenu {
+    padding-left: 0;
   }
 }
 

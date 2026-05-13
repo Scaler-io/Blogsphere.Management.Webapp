@@ -244,7 +244,7 @@ html {
   box-sizing: border-box;
 }
 
-// Material symbols default font-variation-settings (kept from legacy theme)
+// Material symbols — @font-face from Google CDN (index.html); keep variation axes aligned with those URLs.
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
@@ -403,16 +403,54 @@ mat-slide-toggle,
 // ============================================================================
 // Global surface override so every CDK dialog uses the M3 lowest-surface
 // container with the same elevation overlay used by other elevated surfaces.
+// The surface owns the vertical flex layout so a `.dialog-shell` child can
+// stretch to fill it: header pinned at top, body scrolls, actions at bottom.
 
 .mat-mdc-dialog-container .mdc-dialog__surface {
   background: var(--mat-sys-surface-container-lowest);
   border-radius: $border-radius-xl;
   box-shadow: var(--md-elevation-overlay);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .mat-mdc-dialog-container .mat-mdc-form-field {
   display: block;
   margin-bottom: $spacing-sm;
+}
+
+// mat-dialog-content owns the dialog's scroll surface; the surface height
+// (set via `dialog.open({ height })` or natural content) constrains the
+// available space and the body scrolls internally when it overflows.
+.mat-mdc-dialog-container .mat-mdc-dialog-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  padding: $spacing-lg !important;
+  overflow-y: auto;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--mat-sys-outline-variant);
+    border-radius: $border-radius-full;
+  }
+}
+
+// Beat the global heading margin and Material's default title chrome.
+.mat-mdc-dialog-container .mat-mdc-dialog-title {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.mat-mdc-dialog-container .mat-mdc-dialog-actions {
+  padding: $spacing-md $spacing-lg $spacing-lg !important;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  flex: 0 0 auto;
 }
 
 // ============================================================================

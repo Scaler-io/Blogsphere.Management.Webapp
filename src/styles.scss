@@ -6,6 +6,10 @@
 // 1. Titillium Web font faces
 @use './assets/styles/titillium-web';
 
+// 1b. Open Sans + Roboto (self-hosted WOFF2 under src/assets/fonts)
+@use './assets/styles/open-sans-local';
+@use './assets/styles/roboto-local';
+
 // 2. SASS UTILS (variables, functions, mixins, helpers) — loaded first for :root below
 @use './assets/styles/sass-utils/sass-utils-dir' as *;
 

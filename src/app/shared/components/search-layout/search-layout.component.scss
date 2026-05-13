@@ -112,7 +112,10 @@
   }
 }
 
-// Filter dropdown panel (desktop) — surface card anchored under the filter chip
+// Filter panel — desktop dropdown anchored under the filter chip by default;
+// the `--mobile` modifier reflows it into a full-screen bottom-sheet overlay.
+// One DOM node, one `<ng-content>` slot — the projected filter form binds
+// reliably regardless of viewport (no dual-slot projection bug).
 .filter-options-panel {
   position: absolute;
   display: flex;
@@ -126,7 +129,8 @@
   border: 1px solid var(--mat-sys-outline-variant);
   border-radius: $border-radius-lg;
   box-shadow: var(--md-elevation-overlay);
-  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease,
+    transform 0.3s ease;
 
   &__header {
     display: flex;
@@ -148,7 +152,8 @@
   }
 
   &__body {
-    flex-grow: 1;
+    flex: 1 1 auto;
+    min-height: 0;
     padding: $spacing-md $spacing-lg;
     overflow-y: auto;
   }
@@ -167,90 +172,71 @@
     overflow: hidden;
     white-space: nowrap;
   }
-}
 
-// Mobile filter panel (full-screen overlay)
-.filter-options-panel__mobile {
-  position: fixed;
-  top: $spacing-md;
-  left: $spacing-md;
-  right: $spacing-md;
-  bottom: $spacing-md;
-  width: calc(100vw - #{$spacing-md * 2});
-  height: calc(100vh - #{$spacing-md * 2});
-  background-color: var(--mat-sys-surface-container-lowest);
-  border-radius: $border-radius-lg;
-  box-shadow: var(--md-elevation-overlay);
-  z-index: $z-index-modal;
-  display: flex;
-  flex-direction: column;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  transform: translateY(0);
-  overflow: hidden;
+  // Mobile reflow — full-viewport bottom sheet with elevated primary header
+  // and a sticky footer that stretches the apply-filter button across the row.
+  &--mobile {
+    position: fixed;
+    inset: $spacing-md;
+    width: auto;
+    max-height: none;
+    border: none;
+    z-index: $z-index-modal;
+    overflow: hidden;
+    transform: translateY(0);
 
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: $spacing-lg $spacing-md;
-    background: var(--mat-sys-primary);
-    color: var(--mat-sys-on-primary);
-    border-radius: $border-radius-lg $border-radius-lg 0 0;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    min-height: 64px;
-
-    &-heading {
-      @include type(headline-sm);
-    }
-
-    &-closebtn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(255, 255, 255, 0.1);
+    .filter-options-panel__header {
+      padding: $spacing-lg $spacing-md;
+      background: var(--mat-sys-primary);
       color: var(--mat-sys-on-primary);
-      border-radius: $border-radius-full;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
+      border-bottom: none;
+      border-radius: $border-radius-lg $border-radius-lg 0 0;
+      min-height: 64px;
 
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.2);
+      &-closebtn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: $border-radius-full;
+        width: 40px;
+        height: 40px;
+
+        > span {
+          color: var(--mat-sys-on-primary);
+        }
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+        }
       }
     }
-  }
 
-  &__body {
-    flex: 1;
-    padding: $spacing-lg $spacing-md;
-    overflow-y: auto;
-  }
+    .filter-options-panel__body {
+      padding: $spacing-lg $spacing-md;
+    }
 
-  &__footer {
-    padding: $spacing-lg $spacing-md;
-    background-color: var(--mat-sys-surface-container-low);
-    border-top: 1px solid var(--mat-sys-outline-variant);
-    border-radius: 0 0 $border-radius-lg $border-radius-lg;
-    position: sticky;
-    bottom: 0;
-    text-align: center;
+    .filter-options-panel__footer {
+      padding: $spacing-lg $spacing-md;
+      background-color: var(--mat-sys-surface-container-low);
+      border-radius: 0 0 $border-radius-lg $border-radius-lg;
+      justify-content: stretch;
 
-    blogsphere-button {
-      width: 100%;
-
-      button {
+      blogsphere-button,
+      blogsphere-button button {
         width: 100%;
         min-height: 48px;
       }
     }
-  }
 
-  &--hidden {
-    opacity: 0;
-    transform: translateY(100%);
-    visibility: hidden;
+    &.filter-options-panel--hidden {
+      width: auto;
+      height: auto;
+      transform: translateY(100%);
+      visibility: hidden;
+      overflow: hidden;
+      white-space: normal;
+    }
   }
 }
 

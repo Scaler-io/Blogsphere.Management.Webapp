@@ -14,15 +14,10 @@
   .sidebar-nav-link__label {
     display: none;
   }
-}
 
-:host(.host--collapsed):hover .sidebar-nav-link {
-  justify-content: flex-start;
-  padding: $spacing-md $spacing-lg;
-}
-
-:host(.host--collapsed):hover .sidebar-nav-link__label {
-  display: block;
+  .sidebar-nav-link--active {
+    transform: none;
+  }
 }
 
 .sidebar-nav-link {

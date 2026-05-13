@@ -5,7 +5,9 @@
     }
 
     <section class="app-shell__main" [class.app-shell__main--full]="isProfilePage">
-      <blogsphere-navbar [isProfilePage]="isProfilePage"></blogsphere-navbar>
+      @if (!maintenanceMode && !isProfilePage) {
+        <blogsphere-navbar [isProfilePage]="isProfilePage"></blogsphere-navbar>
+      }
 
       <div class="app-shell__content">
         @if (!isProfilePage) {
