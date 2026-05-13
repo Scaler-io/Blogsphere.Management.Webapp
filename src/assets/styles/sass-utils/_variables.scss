@@ -18,29 +18,7 @@ $primary-700: #0029a3;
 $primary-800: #00248f;
 $primary-900: #00205b; // Text Dark Blue
 
-// Background Blue Palette (Based on Light Blue #0076ff for gradients)
-$background-blue-50: #e6f3ff;
-$background-blue-100: #b3ddff;
-$background-blue-200: #80c7ff;
-$background-blue-300: #4db1ff;
-$background-blue-400: #1a9bff;
-$background-blue-500: #0076ff; // Light Blue (gradient start)
-$background-blue-600: #006be6;
-$background-blue-700: #0060cc;
-$background-blue-800: #0055b3;
-$background-blue-900: #004a99;
-
-// Button Blue Palette (Based on Button Blue #0057b8)
-$button-blue-50: #e6efff;
-$button-blue-100: #b3d1ff;
-$button-blue-200: #80b3ff;
-$button-blue-300: #4d95ff;
-$button-blue-400: #1a77ff;
-$button-blue-500: #0057b8; // Button Blue
-$button-blue-600: #004fa6;
-$button-blue-700: #004794;
-$button-blue-800: #003f82;
-$button-blue-900: #003770;
+// Legacy $background-blue-* / $button-blue-* ramps removed (unused); use $md-* / $color-* tokens.
 
 // Accent Yellow Palette (Based on Accent Yellow #ffe600)
 $accent-yellow-50: #fffde6;
