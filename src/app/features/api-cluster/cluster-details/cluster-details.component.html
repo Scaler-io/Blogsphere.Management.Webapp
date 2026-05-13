@@ -9,6 +9,7 @@
         <blogsphere-page-hero-avatar
           hero-avatar
           shape="circle"
+          size="small"
           icon="hub"
           [isActive]="c.isActive"
           [isInactive]="!c.isActive"
@@ -54,7 +55,7 @@
 
       <section class="row gutter-sm cd-grid-row" aria-label="Cluster metrics">
         <div class="col-6 col-md-4">
-          <blogsphere-stat-tile
+          <blogsphere-stat-tile [compact]="true"
             [tone]="c.isActive ? 'success' : 'warning'"
             [icon]="c.isActive ? 'toggle_on' : 'toggle_off'"
             [value]="c.isActive ? 'Active' : 'Inactive'"
@@ -62,7 +63,7 @@
           ></blogsphere-stat-tile>
         </div>
         <div class="col-6 col-md-4">
-          <blogsphere-stat-tile
+          <blogsphere-stat-tile [compact]="true"
             tone="info"
             icon="account_tree"
             [value]="c.loadBalancingPolicy || 'N/A'"
@@ -70,7 +71,7 @@
           ></blogsphere-stat-tile>
         </div>
         <div class="col-6 col-md-4">
-          <blogsphere-stat-tile
+          <blogsphere-stat-tile [compact]="true"
             [tone]="c.healthCheckEnabled ? 'success' : 'danger'"
             [icon]="c.healthCheckEnabled ? 'heart_plus' : 'heart_broken'"
             [value]="c.healthCheckEnabled ? 'Enabled' : 'Disabled'"
@@ -78,7 +79,7 @@
           ></blogsphere-stat-tile>
         </div>
         <div class="col-6 col-md-4">
-          <blogsphere-stat-tile
+          <blogsphere-stat-tile [compact]="true"
             tone="primary"
             icon="directions_run"
             [value]="(c.destinations || []).length"
@@ -86,7 +87,7 @@
           ></blogsphere-stat-tile>
         </div>
         <div class="col-6 col-md-4">
-          <blogsphere-stat-tile
+          <blogsphere-stat-tile [compact]="true"
             tone="primary"
             icon="route"
             [value]="(c.routes || []).length"

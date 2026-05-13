@@ -34,6 +34,11 @@
     transform: translateY(-2px);
   }
 
+  &--compact:hover {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+  }
+
   &--primary {
     --stat-tile-color: #{$color-primary};
     --stat-tile-bg: #{rgba($color-primary, 0.08)};
@@ -100,5 +105,40 @@
   &__caption {
     @include type(label-sm);
     color: var(--md-on-surface-variant);
+  }
+
+  // ── Compact density (detail pages) ─────────────────────────────
+  &--compact {
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+
+    &::before {
+      top: $spacing-sm;
+      bottom: $spacing-sm;
+    }
+
+    .stat-tile__icon-tile {
+      width: 32px;
+      height: 32px;
+      border-radius: $border-radius-base;
+
+      .material-symbols-rounded {
+        font-size: 18px;
+      }
+    }
+
+    .stat-tile__num {
+      @include font($font-size-lg, $font-weight-bold, $line-height-tight);
+    }
+
+    .stat-tile__label {
+      @include font($font-size-xs, $font-weight-medium);
+      letter-spacing: 0.4px;
+      margin-top: 0;
+    }
+
+    .stat-tile__meta {
+      margin-top: 2px;
+    }
   }
 }

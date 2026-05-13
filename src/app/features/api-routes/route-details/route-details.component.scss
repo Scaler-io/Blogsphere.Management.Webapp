@@ -4,12 +4,12 @@
 .rd {
   max-width: $container-max;
   margin: 0 auto;
-  padding: $spacing-md $spacing-lg $spacing-2xl;
+  padding: $spacing-sm $spacing-md $spacing-lg;
   @include flex-column;
-  gap: $spacing-md;
+  gap: $spacing-sm;
 
   @include mobile-only {
-    padding: $spacing-sm $spacing-md $spacing-xl;
+    padding: $spacing-xs $spacing-sm $spacing-md;
     gap: $spacing-sm;
   }
 }
@@ -20,15 +20,15 @@
   &__path {
     @include cluster($spacing-xs);
     max-width: 100%;
-    margin: 0 0 $spacing-md;
-    font-size: $type-body-md-size;
+    margin: 0 0 $spacing-sm;
+    font-size: $type-body-sm-size;
     color: var(--mat-sys-on-surface-variant);
 
     @include mobile-only { justify-content: center; }
   }
 
   &__path-icon {
-    font-size: 1.125rem;
+    font-size: 1rem;
     line-height: 1;
     color: var(--mat-sys-on-surface-variant);
     flex-shrink: 0;
@@ -36,13 +36,13 @@
 
   &__path-code {
     font-family: $font-family-mono;
-    font-size: $type-body-lg-size;
+    font-size: $type-body-sm-size;
     font-weight: $font-weight-medium;
     color: var(--mat-sys-on-surface);
     background: var(--mat-sys-surface-container);
     border: 1px solid var(--mat-sys-outline-variant);
-    border-radius: $border-radius-md;
-    padding: 4px $spacing-sm;
+    border-radius: $border-radius-sm;
+    padding: 2px $spacing-xs;
     @include text-truncate;
     max-width: 100%;
   }
@@ -56,18 +56,18 @@
 .rd-hero-actions { @include cluster($spacing-sm); }
 
 .rd-hero-btn-icon {
-  font-size: 1.125rem;
+  font-size: 1rem;
   line-height: 1;
 }
 
 .rd-hero-contact-item {
   @include cluster($spacing-xs);
-  font-size: $type-body-sm-size;
+  font-size: $font-size-xs;
   color: var(--mat-sys-on-surface-variant);
   min-width: 0;
 
   &__icon {
-    font-size: 1.125rem;
+    font-size: 1rem;
     line-height: 1;
     color: var(--mat-sys-on-surface-variant);
     flex-shrink: 0;
@@ -90,7 +90,7 @@
     color: var(--mat-sys-primary);
     text-decoration: none;
     font-weight: $font-weight-medium;
-    font-size: $type-body-sm-size;
+    font-size: $font-size-xs;
     transition: color 200ms ease;
 
     &:hover {
@@ -120,12 +120,41 @@
   flex: 1;
 }
 
+:host ::ng-deep .rd .page-hero.page-hero--compact {
+  .page-hero__main--compact {
+    padding: $spacing-md $spacing-lg;
+    gap: $spacing-sm;
+
+    @include respond-to(xs) {
+      padding: $spacing-sm $spacing-md;
+    }
+  }
+
+  .page-hero__contact {
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-lg;
+
+    @include respond-to(xs) {
+      padding: $spacing-sm $spacing-md;
+    }
+  }
+
+  .page-hero__name--sm {
+    @include heading(6);
+  }
+
+  .page-hero__subtitle {
+    @include font($font-size-xs, $font-weight-regular);
+    margin-top: 2px;
+  }
+}
+
 .rd-row-card {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: $spacing-md;
-  padding: $spacing-sm $spacing-md;
+  gap: $spacing-sm;
+  padding: $spacing-xs $spacing-sm;
   border: 1px solid var(--mat-sys-outline-variant);
   border-radius: $border-radius-lg;
   background: var(--mat-sys-surface-container-lowest);
@@ -144,15 +173,15 @@
 
   &__icon {
     @include flex-center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: $border-radius-md;
     background: var(--mat-sys-secondary-container);
     flex-shrink: 0;
     align-self: flex-start;
 
     .material-symbols-rounded {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       line-height: 1;
       color: var(--mat-sys-on-secondary-container);
     }
@@ -181,7 +210,7 @@
   &__head { @include cluster($spacing-sm); }
 
   &__name {
-    font-size: $type-body-lg-size;
+    font-size: $type-body-md-size;
     font-weight: $font-weight-medium;
     color: var(--mat-sys-on-surface);
     word-break: break-word;
@@ -222,13 +251,13 @@
 .rd-transform-card {
   &__pattern {
     font-family: $font-family-mono;
-    font-size: $type-body-md-size;
+    font-size: $type-body-sm-size;
     font-weight: $font-weight-medium;
     color: var(--mat-sys-on-surface);
     background: var(--mat-sys-surface-container);
     border: 1px solid var(--mat-sys-outline-variant);
-    border-radius: $border-radius-md;
-    padding: 5px $spacing-sm;
+    border-radius: $border-radius-sm;
+    padding: 3px $spacing-xs;
     word-break: break-all;
     min-width: 0;
   }
