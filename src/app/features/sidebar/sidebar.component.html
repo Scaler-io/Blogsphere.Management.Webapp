@@ -18,7 +18,7 @@
   </header>
 
   @if (authUser$ | async; as authUser) {
-    <section class="sidenav__welcome px-lg mb-lg">
+    <section class="sidenav__welcome px-lg my-lg">
       <a
         class="sidenav__avatar sidenav__avatar-link"
         routerLink="/user-profile"
@@ -28,7 +28,7 @@
         {{ (authUser.fullName || authUser.email || '?') | slice : 0 : 1 | uppercase }}
       </a>
       <div class="sidenav__welcome-text">
-        <span class="sidenav__welcome-label">Welcome back</span>
+        <!-- <span class="sidenav__welcome-label">Welcome back</span> -->
         <span class="sidenav__welcome-name">{{ authUser.fullName || authUser.email }}</span>
         @if (authUser.role) {
           <span class="sidenav__welcome-role">{{ authUser.role }}</span>
@@ -46,13 +46,13 @@
         [collapsed]="isCollapsedRail"
         (navigate)="handleSidenavItemClick()"
       />
-      <blogsphere-sidebar-nav-link
+      <!-- <blogsphere-sidebar-nav-link
         link="/user-profile"
         icon="person"
         label="Account"
         [collapsed]="isCollapsedRail"
         (navigate)="handleSidenavItemClick()"
-      />
+      /> -->
       @if (canAccessSystemSettings$ | async) {
         <blogsphere-sidebar-nav-link
           link="/subscription"

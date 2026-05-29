@@ -4,46 +4,155 @@
 .cd {
   max-width: $container-max;
   margin: 0 auto;
-  padding: $spacing-md $spacing-lg $spacing-2xl;
+  padding: $spacing-sm $spacing-md $spacing-lg;
   @include flex-column;
-  gap: $spacing-md;
+  gap: $spacing-sm;
 
   @include mobile-only {
-    padding: $spacing-sm $spacing-md $spacing-xl;
-    gap: $spacing-md;
+    padding: $spacing-xs $spacing-sm $spacing-md;
+    gap: $spacing-sm;
   }
 }
 
-.cd-stats {
-  @include grid-auto-fit(12.5rem, $spacing-md);
-
-  @include mobile-only {
-    grid-template-columns: 1fr 1fr;
-  }
+.cd-grid-row {
+  margin-bottom: 0;
 }
 
-.cd-stat {
-  @include md-card($padding: $spacing-md $spacing-lg);
-  @include flex-column;
-  gap: $spacing-xs;
-  border-left: 3px solid var(--mat-sys-secondary);
-  transition: box-shadow 200ms ease, transform 200ms ease;
+.cd-hero-body {
+  &__line {
+    @include cluster($spacing-xs);
+    max-width: 100%;
+    margin: 0 0 $spacing-xs;
+    font-size: $type-body-sm-size;
+    color: var(--mat-sys-on-surface-variant);
 
-  &:hover {
-    box-shadow: var(--md-elevation-card-hover);
-    transform: translateY(-1px);
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @include mobile-only {
+      justify-content: center;
+    }
   }
 
-  &__label {
-    @include eyebrow-label(var(--mat-sys-on-surface-variant));
+  &__icon {
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--mat-sys-on-surface-variant);
+    flex-shrink: 0;
   }
 
-  &__value {
-    font-size: $type-headline-sm-size;
-    line-height: $type-headline-sm-line;
+  &__text {
     font-weight: $font-weight-medium;
+    font-size: $type-body-sm-size;
     color: var(--mat-sys-on-surface);
     word-break: break-word;
+    min-width: 0;
+  }
+
+  &__code {
+    font-family: $font-family-mono;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: var(--mat-sys-on-surface);
+    background: var(--mat-sys-surface-container);
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: $border-radius-sm;
+    padding: 2px $spacing-xs;
+    @include text-truncate;
+    max-width: 100%;
+  }
+}
+
+.cd-hero-actions {
+  @include cluster($spacing-sm);
+}
+
+.cd-hero-btn-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.cd-hero-contact-item {
+  @include cluster($spacing-xs);
+  font-size: $font-size-xs;
+  color: var(--mat-sys-on-surface-variant);
+  min-width: 0;
+
+  &__icon {
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--mat-sys-on-surface-variant);
+    flex-shrink: 0;
+  }
+
+  &__text {
+    @include text-truncate;
+    max-width: 16.25rem;
+
+    &--mono {
+      font-family: $font-family-mono;
+      letter-spacing: 0.2px;
+    }
+  }
+
+  &__link {
+    @include cluster($spacing-xs);
+    color: var(--mat-sys-primary);
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-xs;
+    transition: color 200ms ease;
+
+    &:hover {
+      color: var(--md-on-primary-fixed);
+      text-decoration: underline;
+    }
+  }
+}
+
+:host ::ng-deep .cd-card-grid blogsphere-details-card {
+  display: block;
+  height: 100%;
+}
+
+:host ::ng-deep .cd-card-grid .details-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+:host ::ng-deep .cd-card-grid .details-card__body {
+  flex: 1;
+}
+
+// Compact page-hero inside this shell only
+:host ::ng-deep .cd .page-hero.page-hero--compact {
+  .page-hero__main--compact {
+    padding: $spacing-md $spacing-lg;
+    gap: $spacing-sm;
+
+    @include respond-to(xs) {
+      padding: $spacing-sm $spacing-md;
+    }
+  }
+
+  .page-hero__contact {
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-lg;
+
+    @include respond-to(xs) {
+      padding: $spacing-sm $spacing-md;
+    }
+  }
+
+  .page-hero__name--sm {
+    @include heading(6);
+  }
+
+  .page-hero__subtitle {
+    @include font($font-size-xs, $font-weight-regular);
+    margin-top: 2px;
   }
 }
 

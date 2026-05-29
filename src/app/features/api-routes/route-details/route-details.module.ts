@@ -4,7 +4,6 @@ import { RouteDetailsComponent } from './route-details.component';
 import { AppMaterialModule } from 'src/app/app-material.module';
 import { ButtonModule } from 'src/app/shared/components/button/button.module';
 import { LoaderModule } from 'src/app/shared/components/loader/loader.module';
-import { InfoCardModule } from 'src/app/shared/components/info-card';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { DetailsCardModule } from 'src/app/shared/components/details-card/details-card.module';
 import { ApiClusterModule } from '../../api-cluster/api-cluster.module';
@@ -23,7 +22,6 @@ import { MethodPillModule } from 'src/app/shared/components/method-pill/method-p
     AppMaterialModule,
     ButtonModule,
     LoaderModule,
-    InfoCardModule,
     PipesModule,
     DetailsCardModule,
     ApiClusterModule,

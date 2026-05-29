@@ -23,6 +23,8 @@ export class StatTileComponent {
   @Input() value: string | number = '';
   @Input() label = '';
   @Input() tone: StatTileTone = 'primary';
+  /** Smaller padding, icon tile, and type — for dense detail pages. */
+  @Input() compact = false;
   @Input() delta?: StatTileDelta;
   @Input() caption?: string;
 

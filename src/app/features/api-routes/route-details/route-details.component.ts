@@ -10,7 +10,6 @@ import {
 } from 'src/app/state/api-route/api-route.selector';
 import { AppState } from 'src/app/store/app.state';
 import { BreadcrumbService } from 'xng-breadcrumb';
-import { InfoCardSize, InfoCardVariant } from 'src/app/shared/components/info-card';
 import { ButtonSize, ButtonType, ItemDeleteDialogData } from 'src/app/core/model/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ItemDeleteDialogComponent } from 'src/app/shared/components/item-delete-dialog/item-delete-dialog.component';
@@ -36,8 +35,6 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
   private routeName: string;
   private destroy$: Subject<void> = new Subject<void>();
 
-  InfoCardVariant = InfoCardVariant;
-  InfoCardSize = InfoCardSize;
   ButtonType = ButtonType;
   ButtonSize = ButtonSize;
 
