@@ -88,7 +88,7 @@ export class ClusterDetailsComponent implements OnInit, OnDestroy {
   }
 
   public goToRoutes(): void {
-    this.router.navigate(['api-route', 'route-setup']);
+    this.router.navigate(['api-route', 'route-setup'], { queryParams: { clusterId: this.clusterId } });
   }
 
   public openDeleteDialog(): void {
@@ -97,8 +97,7 @@ export class ClusterDetailsComponent implements OnInit, OnDestroy {
       message: 'Are you sure you want to delete this API cluster?',
     };
     const dialogRef = this.dialog.open(ItemDeleteDialogComponent, {
-      width: '500px',
-      height: '250px',
+      width: '440px',
       data: {
         dialogData: dialogData,
       },
@@ -131,7 +130,7 @@ export class ClusterDetailsComponent implements OnInit, OnDestroy {
   private buildRoutesTableRows(
     routes: ClusterRouteDetails[] | null | undefined
   ): DetailsCardTableRow[] {
-    return (routes || []).map(r => {
+    return routes?.map(r => {
       const idCell: DetailsCardTableCell = {
         text: r?.routeId ?? '',
         variant: 'emphasis',

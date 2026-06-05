@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  NgZone,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { fadeSlideInOut } from 'src/app/core/animations/fade-in-out';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
@@ -26,18 +19,21 @@ import { TableColumnMap } from 'src/app/core/model/table-source';
 import { PageEvent } from '@angular/material/paginator';
 import { SearchLayoutService } from 'src/app/shared/components/search-layout/search-layout.service';
 import { Router } from '@angular/router';
-import { IconType } from 'src/app/core/model/core';
-import { AuthService } from 'src/app/core/auth/auth.service';
+import { IconType, ItemDeleteDialogData } from 'src/app/core/model/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ApiClusterFormGroupHelper } from 'src/app/core/form-groups/api-cluster-form-group';
+import { selectHasAllPermissions } from 'src/app/state/auth/auth.selector';
+import { AppPermission } from 'src/app/core/auth/permissions.constants';
+import { MatDialog } from '@angular/material/dialog';
+import { ItemDeleteDialogComponent } from 'src/app/shared/components/item-delete-dialog/item-delete-dialog.component';
 
 @Component({
-    selector: 'blogsphere-api-cluster',
-    templateUrl: './api-cluster.component.html',
-    styleUrls: ['./api-cluster.component.scss'],
-    animations: [fadeSlideInOut],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'blogsphere-api-cluster',
+  templateUrl: './api-cluster.component.html',
+  styleUrls: ['./api-cluster.component.scss'],
+  animations: [fadeSlideInOut],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ApiClusterComponent implements OnInit, OnDestroy {
   public apiClusters$ = this.store.select(selectApiClusters);
@@ -47,13 +43,7 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
   public isApiClusterCountLoading$ = this.store.select(selectApiClusterCountLoading);
   public apiCusterDataSource = new MatTableDataSource<ApiClusterSummary>([]);
   public showEmptyStateButton: boolean;
-  public displayedColumns: string[] = [
-    'clusterName',
-    'loadBalancerName',
-    'status',
-    'routes',
-    'destinations',
-  ];
+  public displayedColumns: string[] = ['clusterName', 'loadBalancerName', 'status', 'routes', 'destinations'];
   public columnNameMap: TableColumnMap = {
     clusterName: {
       value: 'clusterId',
@@ -68,9 +58,12 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
   public isFilterApplied: boolean;
   public isSearchApplied: boolean;
   public searchTerm: string;
-  public clusterFilterForm: UntypedFormGroup = ApiClusterFormGroupHelper.createApiClusterFilterFormGroup(
-    this.fb
+  public clusterFilterForm: UntypedFormGroup = ApiClusterFormGroupHelper.createApiClusterFilterFormGroup(this.fb);
+
+  public canEditorDeleteApiCluster$: Observable<boolean> = this.store.select(
+    selectHasAllPermissions([AppPermission.SYSTEM_VIEW_SETTINGS, AppPermission.SYSTEM_UPDATE_SETTINGS])
   );
+
   private currentSortField: string;
   private filters: { [key: string]: string } = null;
   private formDate: string = null;
@@ -86,8 +79,8 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
     private zone: NgZone,
     private searchLayoutService: SearchLayoutService,
     private router: Router,
-    private auth: AuthService,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -112,13 +105,7 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public onPageChange(event: PageEvent): void {
-    console.log(event);
-  }
-
-  public get allowEditOption$(): Observable<boolean> {
-    return this.auth.isSuperAdmin() || this.auth.isAdmin();
-  }
+  public onPageChange(event: PageEvent): void {}
 
   public onEdit(event: ApiClusterSummary): void {
     this.router.navigate(['api-cluster', 'cluster-setup', event.id]);
@@ -130,6 +117,22 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
 
   public onLinkClick(event: ApiClusterSummary): void {
     this.router.navigate(['api-cluster', 'details', event.id]);
+  }
+
+  public openDeleteDialog(event: ApiClusterSummary): void {
+    const dialogData: ItemDeleteDialogData = {
+      title: 'Delete ' + event.clusterId,
+      message: 'Are you sure you want to delete this API cluster?',
+    };
+    const dialogRef = this.dialog.open(ItemDeleteDialogComponent, {
+      width: '440px',
+      data: { dialogData },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch(new ApiClusterActions.DeleteApiCluster({ id: event.id }));
+      }
+    });
   }
 
   private fetchApiCLusters(
@@ -201,8 +204,7 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
           debounceTime(500),
           tap(text => {
             this.searchTerm = text;
-            this.isSearchApplied =
-              text.length > 3 || (text.length > 0 && text.length <= 3) ? true : false;
+            this.isSearchApplied = text.length > 3 || (text.length > 0 && text.length <= 3) ? true : false;
           })
         )
         .subscribe((text: string) => {
@@ -212,13 +214,7 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
                 this.fetchApiClusterCount();
                 this.fetchApiCLusters(false, 10, 1, 'clusterId', text, this.currentSortField);
               } else {
-                this.fetchApiClusterCount(
-                  this.filters,
-                  text,
-                  'clusterId',
-                  this.formDate,
-                  this.toDate
-                );
+                this.fetchApiClusterCount(this.filters, text, 'clusterId', this.formDate, this.toDate);
                 this.fetchApiCLusters(
                   true,
                   10,
@@ -269,39 +265,16 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
   }
 
   private changeSortMenu(): void {
-    this.searchLayoutService.sortChange$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((sortField: string) => {
-        this.currentSortField = sortField;
-        this.noChangeDetection(() => {
-          if (!this.isFilterApplied) {
-            console.log('no filter applied');
-            this.fetchApiCLusters(
-              !!this.searchTerm,
-              10,
-              1,
-              'clusterId',
-              this.searchTerm,
-              sortField
-            );
-          } else {
-            console.log('filter applied');
-            this.fetchApiCLusters(
-              true,
-              10,
-              1,
-              'clusterId',
-              this.searchTerm,
-              sortField,
-              'desc',
-              this.filters,
-              'createdAt',
-              this.formDate,
-              this.toDate
-            );
-          }
-        });
+    this.searchLayoutService.sortChange$.pipe(takeUntil(this.destroy$)).subscribe((sortField: string) => {
+      this.currentSortField = sortField;
+      this.noChangeDetection(() => {
+        if (!this.isFilterApplied) {
+          this.fetchApiCLusters(!!this.searchTerm, 10, 1, 'clusterId', this.searchTerm, sortField);
+        } else {
+          this.fetchApiCLusters(true, 10, 1, 'clusterId', this.searchTerm, sortField, 'desc', this.filters, 'createdAt', this.formDate, this.toDate);
+        }
       });
+    });
   }
 
   private applyFilter(): void {
@@ -312,7 +285,7 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
       this.filters = this.clusterFilterForm.getRawValue();
       delete this.filters.fromDate;
       delete this.filters.toDate;
-      console.log(this.filters);
+
       this.noChangeDetection(() => {
         this.fetchApiCLusters(
           true,
@@ -327,14 +300,7 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
           this.formDate,
           this.toDate
         );
-        this.fetchApiClusterCount(
-          this.filters,
-          this.searchTerm,
-          'clusterId',
-          this.formDate,
-          this.toDate,
-          'createdAt'
-        );
+        this.fetchApiClusterCount(this.filters, this.searchTerm, 'clusterId', this.formDate, this.toDate, 'createdAt');
       });
     });
   }
@@ -348,14 +314,7 @@ export class ApiClusterComponent implements OnInit, OnDestroy {
       this.filters = null;
 
       this.noChangeDetection(() => {
-        this.fetchApiCLusters(
-          !!this.searchTerm,
-          10,
-          1,
-          'clusterId',
-          this.searchTerm,
-          this.currentSortField
-        );
+        this.fetchApiCLusters(!!this.searchTerm, 10, 1, 'clusterId', this.searchTerm, this.currentSortField);
         this.fetchApiClusterCount(null, this.searchTerm, 'clusterId');
       });
     });
