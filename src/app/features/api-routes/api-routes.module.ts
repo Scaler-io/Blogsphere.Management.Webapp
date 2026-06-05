@@ -20,6 +20,7 @@ import { ApiClusterEffects } from 'src/app/state/api-cluster/api-cluster.effect'
 import { API_CLUSTER_SERVICE_TOKEN } from 'src/app/core/services/interface/api-custer-service.interface';
 import { ApiClusterService } from 'src/app/core/services/api-cluster.service';
 import { RouteDetailsModule } from './route-details/route-details.module';
+import { RouteFilterFormModule } from './route-filter-form/route-filter-form.module';
 
 @NgModule({
   declarations: [ApiRoutesComponent],
@@ -37,6 +38,7 @@ import { RouteDetailsModule } from './route-details/route-details.module';
     NoContentLayoutModule,
     RouteSetupModule,
     RouteDetailsModule,
+    RouteFilterFormModule,
   ],
   providers: [
     {

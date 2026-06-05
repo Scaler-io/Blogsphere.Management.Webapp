@@ -82,8 +82,7 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
       message: 'Are you sure you want to delete this API route?',
     };
     const dialogRef = this.dialog.open(ItemDeleteDialogComponent, {
-      width: '500px',
-      height: '250px',
+      width: '440px',
       data: {
         dialogData: dialogData,
       },

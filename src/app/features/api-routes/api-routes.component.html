@@ -1,8 +1,7 @@
 <div @fadeSlideInOut class="route-list__container">
-  <blogsphere-search-layout addButtonLabel="Create Api Route" filterLabel="API Route" [isFileterFormValid]="true">
+  <blogsphere-search-layout addButtonLabel="Create Api Route" filterLabel="Filter routes" [isFileterFormValid]="true">
     <ng-container>
-      <!-- <blogsphere-route-filter-form [filterForm]="routeFilterForm"></blogsphere-route-filter-form> -->
-      <p>Filter form will be added here</p>
+      <blogsphere-route-filter-form [filterForm]="routeFilterForm"></blogsphere-route-filter-form>
     </ng-container>
   </blogsphere-search-layout>
 
@@ -20,9 +19,10 @@
               [actionEnabled]="true"
               (visit)="onView($event)"
               (edit)="onEdit($event)"
+              (delete)="openDeleteDialog($event)"
               (pageChange)="onPageChange($event)"
-              [allowEdit]="allowEditOption$ | async"
-              [allowDelete]="false"
+              [allowEdit]="canEditOrDeleteApiRoute$ | async"
+              [allowDelete]="canEditOrDeleteApiRoute$ | async"
               (linkClick)="onLinkClick($event)"
             ></blogsphere-table>
           }
