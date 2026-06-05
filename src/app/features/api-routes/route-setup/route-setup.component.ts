@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -29,21 +29,20 @@ import { AppState } from 'src/app/store/app.state';
 import * as ApiRouteActions from 'src/app/state/api-route/api-route.action';
 import * as RequestPageActions from 'src/app/state/request-page/request-page.action';
 import { filter, map, Subject, switchMap, take, takeUntil } from 'rxjs';
-import {
-  selectApiClusters,
-  selectTotalApiClusters,
-} from 'src/app/state/api-cluster/api-cluster.selector';
+import { selectApiClusters, selectTotalApiClusters } from 'src/app/state/api-cluster/api-cluster.selector';
 import * as ApiClusterActions from 'src/app/state/api-cluster/api-custer.action';
+import { ApiGatewayMapping } from 'src/app/core/mappers/apigateway-mapping';
 
 @Component({
-    selector: 'blogsphere-route-setup',
-    templateUrl: './route-setup.component.html',
-    styleUrls: ['./route-setup.component.scss'],
-    animations: [fadeSlideInOut],
-    standalone: false
+  selector: 'blogsphere-route-setup',
+  templateUrl: './route-setup.component.html',
+  styleUrls: ['./route-setup.component.scss'],
+  animations: [fadeSlideInOut],
+  standalone: false,
 })
 export class RouteSetupComponent implements OnInit, OnDestroy {
   public routeForm: UntypedFormGroup;
+  public clusterIdFromQuery: string;
   public routeId: string = this.route.snapshot.params['id'];
   public route$ = this.store.select(selectApiRoute);
   public isAnyHeaderProvided: boolean = true;
@@ -82,8 +81,8 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.setupClusterIdsSubscription();
     this.routeForm = ApiRouteFormGroupHelper.createApiRouteFormGroup(this.fb);
+    this.clusterIdFromQuery = this.route.snapshot.queryParams['clusterId'] ?? '';
 
     if (this.routeId) {
       this.loadRouteForEdit();
@@ -91,6 +90,7 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
       this.resetFormForCreate();
     }
 
+    this.setupClusterIdsSubscription();
     this.subscribeToRouteCommandResponses();
   }
 
@@ -138,9 +138,7 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
   }
 
   public shouldShowTransformFormErrors(): boolean {
-    return this.transforms.controls.some(
-      transform => (transform.touched || transform.dirty) && !transform.valid
-    );
+    return this.transforms.controls.some(transform => (transform.touched || transform.dirty) && !transform.valid);
   }
 
   public getErrorMessages(control: string): string {
@@ -149,13 +147,14 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
 
   public onSubmit(): void {
     if (this.markFormTouchedIfInvalid()) return;
-    console.log(this.buildUpsertRequest());
-    this.dispatchUpsertRequest(this.buildUpsertRequest());
+    const request: ApiRouteUpsertRequest = ApiGatewayMapping.toRouteUpsertRequest(this.routeForm.getRawValue());
+    this.store.dispatch(
+      this.isEditMode ? new ApiRouteActions.UpdateApiRoute({ id: this.routeId, apiRoute: request }) : new ApiRouteActions.CreateApiRoute(request)
+    );
   }
 
   private setupClusterIdsSubscription(): void {
     this.store.dispatch(new ApiClusterActions.GetApiClusterCount({ isFilteredQuery: false }));
-
     this.apiClusterCount
       .pipe(
         filter(count => count > 0),
@@ -173,10 +172,7 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
             })
           );
           return this.store.select(selectApiClusters).pipe(
-            filter(
-              (clusters): clusters is NonNullable<typeof clusters> =>
-                !!clusters && clusters.length === count
-            ),
+            filter((clusters): clusters is NonNullable<typeof clusters> => !!clusters && clusters.length === count),
             take(1),
             map(clusters => clusters.map(cluster => ({ id: cluster.id, name: cluster.clusterId })))
           );
@@ -185,7 +181,18 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
       )
       .subscribe(clusters => {
         this.clusterIds = clusters.map(cluster => ({ id: cluster.id, name: cluster.name }));
+        this.applyClusterIdFromQuery();
       });
+  }
+
+  private applyClusterIdFromQuery(): void {
+    if (this.isEditMode || !this.clusterIdFromQuery) {
+      return;
+    }
+    const clusterExists = this.clusterIds.some(cluster => cluster.id === this.clusterIdFromQuery);
+    if (clusterExists) {
+      this.routeForm.patchValue({ clusterId: this.clusterIdFromQuery });
+    }
   }
 
   private loadRouteForEdit(): void {
@@ -228,9 +235,7 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
   private patchTransformsFromRoute(route: ApiRoute): void {
     this.transforms.clear();
     (route.transforms || []).forEach(() => {
-      this.transforms.push(
-        ApiRouteTransformsFormGroupHelper.createRouteTransformFormGroup(this.fb)
-      );
+      this.transforms.push(ApiRouteTransformsFormGroupHelper.createRouteTransformFormGroup(this.fb));
     });
     this.transforms.patchValue(route.transforms || []);
   }
@@ -266,48 +271,12 @@ export class RouteSetupComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  private buildUpsertRequest(): ApiRouteUpsertRequest {
-    const rawValue = this.routeForm.getRawValue();
-    return {
-      routeId: rawValue.routeId,
-      path: rawValue.path,
-      methods: rawValue.methods,
-      isActive: rawValue.isActive,
-      rateLimiterPolicy: rawValue.rateLimiterPolicy,
-      clusterId: rawValue.clusterId,
-      headers: (rawValue.headers || []).map(
-        (header: { name: string; values: string; mode: string; isActive: boolean }) => ({
-          name: header.name,
-          values: (header.values || '')
-            .split(',')
-            .map((v: string) => v.trim())
-            .filter(Boolean),
-          mode: header.mode,
-          isActive: header.isActive,
-        })
-      ),
-      transforms: rawValue.transforms || [],
-    };
-  }
-
-  private dispatchUpsertRequest(request: ApiRouteUpsertRequest): void {
-    this.store.dispatch(
-      this.isEditMode
-        ? new ApiRouteActions.UpdateApiRoute({ id: this.routeId, apiRoute: request })
-        : new ApiRouteActions.CreateApiRoute(request)
-    );
-  }
-
   private handleRouteResponse(response: ApiRouteCommandResponse): void {
     this.store.dispatch(
       new RequestPageActions.RequestPageSet({
         requestPage: 'apiRoute',
-        heading: `Successfully ${this.isEditMode ? 'updated' : 'created'} route ${
-          response.routeId
-        }`,
-        subHeading: `You can ${
-          this.isEditMode ? 'update' : 'create'
-        } more or get back to the api route page`,
+        heading: `Successfully ${this.isEditMode ? 'updated' : 'created'} route ${response.routeId}`,
+        subHeading: `You can ${this.isEditMode ? 'update' : 'create'} more or get back to the api route page`,
         previousUrl: 'api-route',
         nextUrl: this.isEditMode ? `api-route/route-setup/${response.id}` : 'api-route/route-setup',
         nextButtonLabel: this.isEditMode ? 'Edit again' : 'Add another route',

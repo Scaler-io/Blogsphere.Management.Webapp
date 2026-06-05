@@ -26,6 +26,7 @@ import * as RequestPageActions from 'src/app/state/request-page/request-page.act
 import { Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { ApiGatewayMapping } from 'src/app/core/mappers/apigateway-mapping';
 
 @Component({
     selector: 'blogsphere-cluster-setup',
@@ -91,8 +92,6 @@ export class ClusterSetupComponent implements OnInit, OnDestroy {
               isActive: destination.isActive,
             }))
           );
-
-          console.log(this.clusterForm.getRawValue());
         }
       });
     } else {
@@ -152,7 +151,7 @@ export class ClusterSetupComponent implements OnInit, OnDestroy {
       this.clusterForm.markAllAsTouched();
       this.isAnyDestinationProvided = false;
     } else {
-      const request: ApiClusterUpsertRequest = this.clusterForm.getRawValue();
+      const request: ApiClusterUpsertRequest = ApiGatewayMapping.toClusterUpsertRequest(this.clusterForm.getRawValue());
       this.store.dispatch(
         this.isEditMode
           ? new ApiClusterActions.UpdateApiCluster({ id: this.clusterId, apiCluster: request })

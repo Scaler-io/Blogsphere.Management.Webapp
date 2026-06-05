@@ -174,12 +174,12 @@
               </table>
               @if (headers.length === 0) {
                 <div class="mt-md">
-                  <p class="text-muted font-size-lg">No headers configured. Click add to add header rules.</p>
+                  <p class="text-muted font-size-base">No headers configured. Click add to add header rules.</p>
                 </div>
               }
               @if (shouldShowHeaderFormErrors()) {
                 <div class="mt-md">
-                  <p class="text-error font-size-lg">Please fill all the headers with valid values</p>
+                  <p class="text-error font-size-base">Please fill all the headers with valid values</p>
                 </div>
               }
             </div>
@@ -269,17 +269,17 @@
               </table>
               @if (isAnyTransformProvided && transforms.length === 0) {
                 <div class="mt-md">
-                  <p class="text-muted font-size-lg">No transforms configured. Click add to add transform rules.</p>
+                  <p class="text-muted font-size-base">No transforms configured. Click add to add transform rules.</p>
                 </div>
               }
               @if (!isAnyTransformProvided) {
                 <div class="mt-md">
-                  <p class="text-error font-size-lg">Please select at least one transform</p>
+                  <p class="text-error font-size-base">Please select at least one transform</p>
                 </div>
               }
               @if (shouldShowTransformFormErrors()) {
                 <div class="mt-md">
-                  <p class="text-error font-size-lg">Please fill all the transforms with valid values</p>
+                  <p class="text-error font-size-base">Please fill all the transforms with valid values</p>
                 </div>
               }
             </div>
