@@ -1,17 +1,30 @@
-<div class="dialog-container">
-  <div class="dialog-header">
-    <span class="material-symbols-outlined">info</span>
-    <h2 class="mt-md">{{ dialogData.title }}</h2>
+<div class="dialog-shell item-delete-dialog">
+  <div class="dialog-shell__header">
+    <div class="dialog-shell__heading">
+      <div class="item-delete-dialog__title-row">
+        <span class="material-symbols-outlined item-delete-dialog__icon" aria-hidden="true">warning</span>
+        <h2 class="dialog-title">{{ dialogData.title }}</h2>
+      </div>
+    </div>
   </div>
-  <div class="dialog-content">
-    <p class="dialog-content-message">{{ dialogData.message }}</p>
+
+  <div mat-dialog-content class="dialog-shell__body">
+    <p class="item-delete-dialog__message">{{ dialogData.message }}</p>
   </div>
-  <div class="dialog-actions">
-    <blogsphere-button [type]="ButtonType.warning" [size]="ButtonSize.small" (next)="cancelDelete()">
+
+  <div mat-dialog-actions class="dialog-shell__actions" align="end">
+    <div class="d-flex gap-sm">
+      <blogsphere-button
+      [type]="ButtonType.secondary"
+      [size]="ButtonSize.small"
+      [elevated]="false"
+      (next)="cancelDelete()"
+    >
       Cancel
     </blogsphere-button>
-    <blogsphere-button [type]="ButtonType.danger" (next)="deleteItem()" [size]="ButtonSize.small">
+    <blogsphere-button [type]="ButtonType.danger" [size]="ButtonSize.small" (next)="deleteItem()">
       Delete
     </blogsphere-button>
+    </div>
   </div>
 </div>

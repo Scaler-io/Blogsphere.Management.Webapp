@@ -427,7 +427,7 @@ mat-slide-toggle,
   flex: 1 1 auto;
   min-height: 0;
   max-height: none;
-  padding: $spacing-lg !important;
+  padding: $spacing-sm $spacing-lg !important;
   overflow-y: auto;
   scrollbar-width: thin;
 
@@ -448,8 +448,8 @@ mat-slide-toggle,
 }
 
 .mat-mdc-dialog-container .mat-mdc-dialog-actions {
-  padding: $spacing-md $spacing-lg $spacing-lg !important;
-  border-top: 1px solid var(--mat-sys-outline-variant);
+  padding: $spacing-2xl $spacing-lg $spacing-lg !important;
+  // border-top: 1px solid var(--mat-sys-outline-variant);
   flex: 0 0 auto;
 }
 

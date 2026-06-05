@@ -79,13 +79,13 @@
     min-width: 0;
 
     thead th {
-      padding: $spacing-sm $spacing-lg;
-      font-size: $font-size-lg;
+      padding: $spacing-lg $spacing-lg;
+      font-size: $font-size-sm;
     }
 
     tbody td {
-      padding: $spacing-sm $spacing-lg;
-      font-size: $font-size-lg;
+      padding: $spacing-lg $spacing-lg;
+      font-size: $font-size-sm;
     }
   }
 
@@ -93,7 +93,7 @@
     background: $color-background-tertiary;
 
     th {
-      @include font($font-size-lg, $font-weight-medium);
+      @include font($font-size-sm, $font-weight-medium);
       color: rgba($color-text-primary, 0.6);
       text-transform: uppercase;
       letter-spacing: 0.6px;
@@ -118,7 +118,7 @@
     }
 
     td {
-      @include font($font-size-xl, $font-weight-regular);
+      @include font($font-size-sm, $font-weight-regular);
       color: $color-text-primary;
       padding: $spacing-md $spacing-xl;
       vertical-align: middle;

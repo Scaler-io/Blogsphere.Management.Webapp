@@ -128,7 +128,7 @@
     }
 
     .stat-tile__num {
-      @include font($font-size-lg, $font-weight-bold, $line-height-tight);
+      @include font($font-size-sm, $font-weight-bold, $line-height-tight);
     }
 
     .stat-tile__label {
