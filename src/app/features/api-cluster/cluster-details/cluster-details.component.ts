@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { filter, Subject, takeUntil } from 'rxjs';
+import { filter, Observable, Subject, takeUntil } from 'rxjs';
 import {
   selectApiCluster,
   selectApiClusterCommandResponse,
@@ -21,12 +21,14 @@ import {
   DetailsCardTableCell,
   DetailsCardTableRow,
 } from 'src/app/shared/components/details-card/details-card.model';
+import { selectHasAllPermissions } from 'src/app/state/auth/auth.selector';
+import { AppPermission } from 'src/app/core/auth/permissions.constants';
 
 @Component({
-    selector: 'blogsphere-cluster-details',
-    templateUrl: './cluster-details.component.html',
-    styleUrls: ['./cluster-details.component.scss'],
-    standalone: false
+  selector: 'blogsphere-cluster-details',
+  templateUrl: './cluster-details.component.html',
+  styleUrls: ['./cluster-details.component.scss'],
+  standalone: false,
 })
 export class ClusterDetailsComponent implements OnInit, OnDestroy {
   public clusterId: string = this.route.snapshot.params['id'];
@@ -40,12 +42,14 @@ export class ClusterDetailsComponent implements OnInit, OnDestroy {
   public routesTableHeaders: string[] = ['Route id', 'Status', 'Methods', 'Path'];
   public destinationsTableRows: DetailsCardTableRow[] = [];
   public routesTableRows: DetailsCardTableRow[] = [];
+  public canEditOrDeleteApiCluster$: Observable<boolean> = this.store.select(selectHasAllPermissions([AppPermission.SYSTEM_VIEW_SETTINGS, AppPermission.SYSTEM_UPDATE_SETTINGS]));
 
   private clusterName: string;
   private destroy$: Subject<void> = new Subject<void>();
 
   ButtonType = ButtonType;
   ButtonSize = ButtonSize;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -115,9 +119,7 @@ export class ClusterDetailsComponent implements OnInit, OnDestroy {
     return DateHelper.formatDateToTimeAgo(date);
   }
 
-  private buildDestinationsTableRows(
-    destinations: any[] | null | undefined
-  ): DetailsCardTableRow[] {
+  private buildDestinationsTableRows(destinations: any[] | null | undefined): DetailsCardTableRow[] {
     return (destinations || []).map(d => {
       const idCell: DetailsCardTableCell = { text: d?.destinationId ?? '', variant: 'emphasis' };
       const statusCell: DetailsCardTableCell = { status: !!d?.isActive };
@@ -127,9 +129,7 @@ export class ClusterDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  private buildRoutesTableRows(
-    routes: ClusterRouteDetails[] | null | undefined
-  ): DetailsCardTableRow[] {
+  private buildRoutesTableRows(routes: ClusterRouteDetails[] | null | undefined): DetailsCardTableRow[] {
     return routes?.map(r => {
       const idCell: DetailsCardTableCell = {
         text: r?.routeId ?? '',

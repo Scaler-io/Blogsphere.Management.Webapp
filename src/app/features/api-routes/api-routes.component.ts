@@ -29,6 +29,7 @@ import { ItemDeleteDialogComponent } from 'src/app/shared/components/item-delete
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ApiRouteFormGroupHelper } from 'src/app/core/form-groups/api-route-form-group';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
 
 @Component({
   selector: 'blogsphere-api-routes',
@@ -80,7 +81,8 @@ export class ApiRoutesComponent implements OnInit, OnDestroy {
     private searchLayoutService: SearchLayoutService,
     private router: Router,
     private dialog: MatDialog,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
+    private snackbar: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -294,17 +296,29 @@ export class ApiRoutesComponent implements OnInit, OnDestroy {
   }
 
   private applyFilter(): void {
-    this.searchLayoutService.filter$.pipe(takeUntil(this.destroy$)).subscribe(() =>{
+    this.searchLayoutService.filter$.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.isFilterApplied = true;
       this.formDate = this.routeFilterForm.value.fromDate?.toISOString();
-      this.toDate   = this.routeFilterForm.value.toDate?.toISOString();
-      this.filters  = this.routeFilterForm.getRawValue();
+      this.toDate = this.routeFilterForm.value.toDate?.toISOString();
+      this.filters = this.routeFilterForm.getRawValue();
       delete this.filters.formDate;
       delete this.filters.toDate;
 
       this.noChangeDetection(() => {
-        this.fetchApiRoutes(true, 10, 1, 'routeId,path', this.searchTerm, this.currentSortField, 'desc', this.filters, 'createdAt', this.formDate, this.toDate);
-      })
+        this.fetchApiRoutes(
+          true,
+          10,
+          1,
+          'routeId,path',
+          this.searchTerm,
+          this.currentSortField,
+          'desc',
+          this.filters,
+          'createdAt',
+          this.formDate,
+          this.toDate
+        );
+      });
       this.fetchApiRouteCount(this.filters, this.searchTerm, 'routeId,path', this.formDate, this.toDate, 'createdAt');
     });
   }
@@ -324,17 +338,9 @@ export class ApiRoutesComponent implements OnInit, OnDestroy {
   }
 
   private handleRouteResponse(routeId: string): void {
-    console.log(routeId);
-    this.store.dispatch(
-      new RequestPageActions.RequestPageSet({
-        requestPage: 'apiRoute',
-        heading: `Successfully deleted route ${routeId}`,
-        subHeading: `The route has been successfully deleted. Continue managing your API routes below.`,
-        nextUrl: 'api-route',
-        nextButtonLabel: 'Manage routes',
-      })
-    );
-    this.router.navigate(['success']);
+    this.snackbar.showSuccess(`Route deleted successfully`);
+    this.store.dispatch(new ApiRouteActions.ResetDeleteSuccess());
+    this.useChangeDetection(() => (this.apiRouteDataSource.data = this.apiRouteDataSource.data.filter(route => route.id !== routeId)));
   }
 
   private noChangeDetection(fn: Function): void {
