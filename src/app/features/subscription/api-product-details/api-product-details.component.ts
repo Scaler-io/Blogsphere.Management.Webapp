@@ -190,8 +190,7 @@ export class ApiProductDetailsComponent implements OnInit, OnDestroy {
       message: 'Are you sure you want to delete this subscribed API?',
     };
     const dialogRef = this.dialog.open(ItemDeleteDialogComponent, {
-      width: '500px',
-      height: '250px',
+      width: '440px',
       data: {
         dialogData: dialogData,
       },
@@ -215,8 +214,7 @@ export class ApiProductDetailsComponent implements OnInit, OnDestroy {
       message: 'Are you sure you want to delete this subscription?',
     };
     const dialogRef = this.dialog.open(ItemDeleteDialogComponent, {
-      width: '500px',
-      height: '250px',
+      width: '440px',
       data: {
         dialogData: dialogData,
       },

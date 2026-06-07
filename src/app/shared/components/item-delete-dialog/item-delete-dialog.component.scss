@@ -1,25 +1,23 @@
 @use 'sass-utils/variables' as *;
 @use 'sass-utils/mixins' as *;
 
-.dialog-container {
-    height: 100%;
-    padding: $spacing-lg;
-    & .dialog-header {
-        display: flex;
-        align-items: center;
-        justify-content: start;
-        gap: $spacing-sm;
-        color: $gray-800;
-    }
-    & .dialog-content {
-        padding: $spacing-xl;
-        @include font(16px, $font-weight-regular, $line-height-normal);
-    }
-    & .dialog-actions {
-        margin-top: $spacing-xl;
-        @include flex-start;
-        justify-content: center;
-        column-gap: $spacing-xl;
-        text-transform: uppercase!important;
-    }
+.item-delete-dialog {
+  &__title-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    min-width: 0;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    color: var(--md-status-error);
+  }
+
+  &__message {
+    margin: 0;
+    @include type(body-md);
+    color: var(--mat-sys-on-surface-variant);
+  }
 }

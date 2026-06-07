@@ -25,14 +25,20 @@
         </div>
 
         <div hero-actions class="rd-hero-actions">
-          <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="goToEdit()">
-            <span class="material-symbols-rounded rd-hero-btn-icon">edit</span>
-            Edit
-          </blogsphere-button>
           <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="toggleJsonView()">
             <span class="material-symbols-rounded rd-hero-btn-icon">data_object</span>
             JSON view
           </blogsphere-button>
+          @if (canEditOrDeleteApiRoute$ | async) {
+            <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="goToEdit()">
+              <span class="material-symbols-rounded rd-hero-btn-icon">edit</span>
+              Edit
+            </blogsphere-button>
+            <blogsphere-button [type]="ButtonType.danger" [size]="ButtonSize.small" (next)="openDeleteDialog()">
+              <span class="material-symbols-rounded rd-hero-btn-icon">delete</span>
+              Delete
+            </blogsphere-button>
+          }
         </div>
 
         <ng-container hero-contact>
@@ -54,7 +60,7 @@
       </blogsphere-page-hero>
 
       <!-- ───────── METRIC TILES ───────── -->
-      <section class="row gutter-sm rd-grid-row" aria-label="Route metrics">
+      <section class="row gutter-sm rd-grid-row my-lg" aria-label="Route metrics">
         <div class="col-6 col-md-3">
           <blogsphere-stat-tile [compact]="true"
             [tone]="r.isActive ? 'success' : 'warning'"

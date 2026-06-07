@@ -1,14 +1,4 @@
-import {
-  Component,
-  ContentChild,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  TemplateRef,
-} from '@angular/core';
+import { Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableColumnMap, TableDataSource } from 'src/app/core/model/table-source';
@@ -16,10 +6,10 @@ import { PaginationMetaData } from 'src/app/core/model/pagination';
 import { BadgeType } from 'src/app/core/model/core';
 
 @Component({
-    selector: 'blogsphere-table',
-    templateUrl: './table.component.html',
-    styleUrls: ['./table.component.scss'],
-    standalone: false
+  selector: 'blogsphere-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss'],
+  standalone: false,
 })
 export class TableComponent implements OnInit, OnChanges {
   @Input('dataSource') tableDataSource: MatTableDataSource<TableDataSource>;
@@ -105,9 +95,7 @@ export class TableComponent implements OnInit, OnChanges {
     return this.columnMap[Object.keys(this.columnMap).find(k => k === column)].isLinkField;
   }
 
-  public slideToggle(event) {
-    console.log(event);
-  }
+  public slideToggle(event) {}
 
   public onLinkClick(item: TableDataSource): void {
     this.linkClick.emit(item);

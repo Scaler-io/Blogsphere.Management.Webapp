@@ -72,6 +72,7 @@
             icon="shield_person"
             [value]="(u.roles || []).length"
             label="Assigned roles"
+            [compact]="true"
           ></blogsphere-stat-tile>
         </div>
 
@@ -81,6 +82,7 @@
             icon="vpn_key"
             [value]="(u.permissions || []).length"
             label="Permissions"
+            [compact]="true"
           ></blogsphere-stat-tile>
         </div>
 
@@ -90,6 +92,7 @@
             [icon]="u.isEmailConfirmed ? 'mark_email_read' : 'mark_email_unread'"
             [value]="u.isEmailConfirmed ? 'Verified' : 'Pending'"
             label="Email status"
+            [compact]="true"
           ></blogsphere-stat-tile>
         </div>
 
@@ -99,6 +102,7 @@
             [icon]="u.isPhoneNumberConfirmed ? 'phone_enabled' : 'phone_disabled'"
             [value]="u.isPhoneNumberConfirmed ? 'Verified' : 'Pending'"
             label="Phone status"
+            [compact]="true"
           ></blogsphere-stat-tile>
         </div>
       </section>

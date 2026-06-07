@@ -62,7 +62,7 @@
   }
 
   &__head-sub {
-    @include font($font-size-lg, $font-weight-regular);
+    @include font($font-size-sm, $font-weight-regular);
     color: rgba($color-text-primary, 0.55);
     margin: 4px 0 0;
   }

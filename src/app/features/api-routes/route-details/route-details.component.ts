@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { filter, Subject, takeUntil } from 'rxjs';
+import { filter, Observable, Subject, takeUntil } from 'rxjs';
 import {
   selectApiRoute,
   selectApiRouteCommandResponse,
@@ -17,6 +17,8 @@ import * as ApiRouteActions from 'src/app/state/api-route/api-route.action';
 import * as RequestPageActions from 'src/app/state/request-page/request-page.action';
 import { ApiRouteCommandType } from 'src/app/core/model/api-route.model';
 import { DateHelper } from 'src/app/shared/helpers/date.helper';
+import { AppPermission } from 'src/app/core/auth/permissions.constants';
+import { selectHasAllPermissions } from 'src/app/state/auth/auth.selector';
 
 @Component({
   selector: 'blogsphere-route-details',
@@ -31,7 +33,8 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
   public isRouteDeleting$ = this.store.select(selectApiRouteDeleting);
   public routeCommandResponse$ = this.store.select(selectApiRouteCommandResponse);
   public isJsonView: boolean = false;
-
+  public canEditOrDeleteApiRoute$: Observable<boolean> = this.store.select(selectHasAllPermissions([AppPermission.SYSTEM_VIEW_SETTINGS, AppPermission.SYSTEM_UPDATE_SETTINGS]));
+  
   private routeName: string;
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -82,8 +85,7 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
       message: 'Are you sure you want to delete this API route?',
     };
     const dialogRef = this.dialog.open(ItemDeleteDialogComponent, {
-      width: '500px',
-      height: '250px',
+      width: '440px',
       data: {
         dialogData: dialogData,
       },

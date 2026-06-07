@@ -27,13 +27,17 @@
         </div>
 
         <div hero-actions class="cd-hero-actions">
+          <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="toggleJsonView()">
+            <span class="material-symbols-rounded cd-hero-btn-icon">data_object</span>
+            JSON view
+          </blogsphere-button>
           <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="goToEdit()">
             <span class="material-symbols-rounded cd-hero-btn-icon">edit</span>
             Edit
           </blogsphere-button>
-          <blogsphere-button [type]="ButtonType.secondary" [size]="ButtonSize.small" (next)="toggleJsonView()">
-            <span class="material-symbols-rounded cd-hero-btn-icon">data_object</span>
-            JSON view
+          <blogsphere-button [type]="ButtonType.danger" [size]="ButtonSize.small" (next)="openDeleteDialog()">
+            <span class="material-symbols-rounded cd-hero-btn-icon">delete</span>
+            Delete
           </blogsphere-button>
         </div>
 
@@ -78,7 +82,7 @@
             label="Health check"
           ></blogsphere-stat-tile>
         </div>
-        <div class="col-6 col-md-4">
+        <div class="col-6 col-md-4 mt-lg">
           <blogsphere-stat-tile [compact]="true"
             tone="primary"
             icon="directions_run"
@@ -86,7 +90,7 @@
             label="Destinations"
           ></blogsphere-stat-tile>
         </div>
-        <div class="col-6 col-md-4">
+        <div class="col-6 col-md-4 mt-lg">
           <blogsphere-stat-tile [compact]="true"
             tone="primary"
             icon="route"
@@ -96,7 +100,7 @@
         </div>
       </section>
 
-      <div class="row cd-grid-row cd-card-grid align-items-stretch">
+      <div class="row cd-grid-row cd-card-grid align-items-stretch mt-lg">
         <div class="col-12 col-md-6">
           <blogsphere-details-card mode="keyValue" icon="settings" title="Core configuration">
             <blogsphere-kv-row label="Cluster id">{{ c.clusterId }}</blogsphere-kv-row>
@@ -170,6 +174,7 @@
       </div>
 
       <blogsphere-details-card
+        class="mt-lg"
         mode="table"
         icon="directions_run"
         title="Destinations"
@@ -177,9 +182,10 @@
         [flushBody]="true"
         [tableHeaders]="destinationsTableHeaders"
         [tableRows]="destinationsTableRows"
-        [compactTable]="true"
+        [compactTable]="false"
       ></blogsphere-details-card>
       <blogsphere-details-card
+        class="mt-lg"
         mode="table"
         icon="route"
         title="Routes"
@@ -187,7 +193,7 @@
         [flushBody]="true"
         [tableHeaders]="routesTableHeaders"
         [tableRows]="routesTableRows"
-        [compactTable]="true"
+        [compactTable]="false"
       >
         <div empty class="cd-empty">
           <span class="material-symbols-rounded cd-empty__icon">route</span>

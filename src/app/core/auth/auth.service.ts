@@ -51,13 +51,11 @@ export class AuthService {
       .logoffAndRevokeTokens()
       .pipe(
         catchError(err => {
-          console.error('Token revocation failed; attempting logout without revoke', err);
           return this.oidcSecurityService.logoff();
         })
       )
       .subscribe({
         error: error => {
-          console.error('Error logging out', error);
           this.oidcSecurityService.logoffLocal();
           window.location.href = '/';
         },
@@ -99,12 +97,10 @@ export class AuthService {
    */
   public checkIdServerSession(): Observable<boolean> {
     const checkUrl = new URL('/account/session/check', this.identityBaseUrl);
-    return this.http
-      .get(checkUrl.toString(), { withCredentials: true, observe: 'response' })
-      .pipe(
-        map(() => true),
-        catchError(() => of(false))
-      );
+    return this.http.get(checkUrl.toString(), { withCredentials: true, observe: 'response' }).pipe(
+      map(() => true),
+      catchError(() => of(false))
+    );
   }
 
   /**
@@ -154,8 +150,7 @@ export class AuthService {
   public hasValidRefreshToken(): boolean {
     try {
       const refreshToken =
-        localStorage.getItem('angular-auth-oidc-client_refresh_token') ||
-        sessionStorage.getItem('angular-auth-oidc-client_refresh_token');
+        localStorage.getItem('angular-auth-oidc-client_refresh_token') || sessionStorage.getItem('angular-auth-oidc-client_refresh_token');
       return !!refreshToken;
     } catch (error) {
       return false;

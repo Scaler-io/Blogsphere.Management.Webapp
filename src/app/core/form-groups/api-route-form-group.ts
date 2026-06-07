@@ -21,6 +21,38 @@ export class ApiRouteFormGroupHelper {
       transforms: fb.array([]),
     });
   }
+
+  public static createApiRouteFilterFormGroup(fb: UntypedFormBuilder): UntypedFormGroup {
+   const group = fb.group({
+    cluster: [null],
+    status: [null],
+    rateLimiterPolicy: [null],
+    fromDate: [null],
+    toDate: [null],
+   });
+
+   group.get('fromDate').valueChanges.subscribe(value => {
+     if(value){
+      group.get('toDate').setValidators([Validators.required]);
+     }else{
+      group.get('toDate').setValidators([]);
+     }
+     group.get('toDate').markAsTouched();
+     group.get('toDate').updateValueAndValidity({ emitEvent: false });
+   });
+
+   group.get('toDate').valueChanges.subscribe(value => {
+    if(value){
+      group.get('fromDate').setValidators([Validators.required]);
+    }else{
+      group.get('fromDate').setValidators([]);
+    }
+    group.get('fromDate').markAsTouched();
+    group.get('fromDate').updateValueAndValidity({ emitEvent: false });
+   });
+
+   return group;
+  }
 }
 
 export class ApiRouteHeadersFormGroupHelper {

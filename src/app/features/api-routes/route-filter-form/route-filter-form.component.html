@@ -1,0 +1,51 @@
+<div class="container" [formGroup]="filterForm">
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field class="font-size-xl">
+                <mat-label>Cluster</mat-label>
+                <mat-select formControlName="cluster">
+                    @for(option of clusterOptions; track option.id)
+                    {
+                        <mat-option [value]="option.name">{{ option.name }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="font-size-xl">
+                <mat-label>Route status</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option value="Active">Active</mat-option>
+                    <mat-option value="Inactive">Inactive</mat-option>
+                </mat-select>
+            </mat-form-field>   
+        </div>
+    </div>
+    <div class="row mt-md">
+        <div class="col-12">
+            <h5>Filter by date</h5>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="font-size-xl">
+                <mat-label>From date</mat-label>
+                <input 
+                    matInput
+                    [matDatepicker]="fromPicker"
+                    [min]="fromMinDate"
+                    [max]="fromMaxDate"
+                    formControlName="fromDate"
+                />
+                <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+                <mat-datepicker #fromPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="font-size-xl" appearance="outline">
+                <mat-label>To date</mat-label>
+                <input matInput [matDatepicker]="toPicker" [min]="toMinDate" [max]="toMaxDate" formControlName="toDate"/>
+                <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+                <mat-datepicker #toPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
