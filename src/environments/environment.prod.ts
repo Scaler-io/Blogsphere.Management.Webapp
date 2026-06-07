@@ -17,4 +17,6 @@ export const environment = {
   // Production feature flags
   useMockService: false, // Always false in production
   dashboardRefreshIntervalSeconds: 30,
+  authSpaBaseUrl: 'http://localhost:4201',
+  useAuthSpa: false,
 };

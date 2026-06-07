@@ -73,9 +73,15 @@ export class AuthService {
   }
 
   /**
-   * Build the Identity Server password reset page URL (used after authorize flow establishes session).
+   * Build the password reset page URL (Auth SPA when enabled, otherwise Razor).
    */
   public getPasswordResetUrl(): string {
+    if (environment.useAuthSpa) {
+      const resetUrl = new URL('/self-reset-password', environment.authSpaBaseUrl);
+      resetUrl.searchParams.set('returnUrl', `${window.location.origin}/user-profile`);
+      return resetUrl.toString();
+    }
+
     const resetUrl = new URL('/Account/SelfResetPassword/Index', this.identityBaseUrl);
     resetUrl.searchParams.set('returnUrl', `${window.location.origin}/user-profile`);
     resetUrl.searchParams.set('clientId', this.oidcClientId);
@@ -83,9 +89,15 @@ export class AuthService {
   }
 
   /**
-   * Build the Identity Server account management page URL.
+   * Build the account management page URL (Auth SPA when enabled, otherwise Razor).
    */
   public getIdentityAccountUrl(): string {
+    if (environment.useAuthSpa) {
+      const accountUrl = new URL('/manage', environment.authSpaBaseUrl);
+      accountUrl.searchParams.set('returnUrl', `${window.location.origin}/user-profile`);
+      return accountUrl.toString();
+    }
+
     const accountUrl = new URL('/Account/Manage/Index', this.identityBaseUrl);
     accountUrl.searchParams.set('returnUrl', `${window.location.origin}/user-profile`);
     accountUrl.searchParams.set('clientId', this.oidcClientId);

@@ -22,6 +22,8 @@ export const environment = {
   // Development feature flags
   useMockService: false, // Set to true to use mock service, false for real service
   dashboardRefreshIntervalSeconds: 120,
+  authSpaBaseUrl: 'http://localhost:4201',
+  useAuthSpa: false,
 };
 
 /*
