@@ -5,7 +5,13 @@ import { AppState } from 'src/app/store/app.state';
 
 const authState = createFeatureSelector<AuthState>(AUTH_STATE_NAME);
 
-export const getAuthState = createSelector(authState, (state) => state.user);
+export const getAuthState = createSelector(authState, (state) => {
+  if(!state.user) 
+    return;
+  const rolesArray: string[] = JSON.parse(state.user.role);
+  const user = {...state.user, role: rolesArray[0]};
+  return user;
+});
 export const getAuthStatus = createSelector(
   authState,
   (state) => state.isAuthenticated
