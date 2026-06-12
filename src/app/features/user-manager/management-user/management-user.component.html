@@ -14,6 +14,7 @@
               [actionEnabled]="true"
               [allowEdit]="canWriteManagementUsers$ | async"
               [allowDelete]="canWriteManagementUsers$ | async"
+              [canDeleteRow]="canDeleteUser"
               (linkClick)="onLinkClick($event)"
             ></blogsphere-table>
           }
@@ -36,4 +37,3 @@
     }
   </div>
 </div>
-

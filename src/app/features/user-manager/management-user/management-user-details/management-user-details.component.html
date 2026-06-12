@@ -26,10 +26,7 @@
             <blogsphere-badge [type]="u.isActive ? BadgeType.success : BadgeType.danger" [isRounded]="true">
               {{ u.isActive ? 'Active' : 'Inactive' }}
             </blogsphere-badge>
-            <blogsphere-badge
-              [type]="u.isTwoFactorEnabled ? BadgeType.success : BadgeType.warning"
-              [isRounded]="true"
-            >
+            <blogsphere-badge [type]="u.isTwoFactorEnabled ? BadgeType.success : BadgeType.warning" [isRounded]="true">
               2FA {{ u.isTwoFactorEnabled ? 'On' : 'Off' }}
             </blogsphere-badge>
             <blogsphere-badge [type]="u.isEmailConfirmed ? BadgeType.primary : BadgeType.warning" [isRounded]="true">
@@ -47,6 +44,30 @@
           <span class="material-symbols-rounded ud-hero-btn-icon">data_object</span>
           JSON view
         </blogsphere-button>
+
+        @if((canUpdatemangementUser$ | async) && allowUpdateManagementUser) {
+          <blogsphere-button
+            hero-actions
+            [type]="ButtonType.secondary"
+            [size]="ButtonSize.small"
+            (next)="toggleJsonView()"
+          >
+            <span class="material-symbols-rounded ud-hero-btn-icon">edit</span>
+            Edit user
+          </blogsphere-button>
+        }
+
+        @if (canDeletemanagementUser) {
+          <blogsphere-button
+            hero-actions
+            [type]="ButtonType.danger"
+            [size]="ButtonSize.small"
+            (next)="toggleJsonView()"
+          >
+            <span class="material-symbols-rounded ud-hero-btn-icon">delete</span>
+            Delete user
+          </blogsphere-button>
+        }
 
         <ng-container hero-contact>
           <span class="ud-hero-contact-item" [matTooltip]="'Email'">
@@ -201,7 +222,10 @@
                 }
               </div>
             } @else {
-              <blogsphere-empty-state icon="manage_accounts" text="No roles assigned to this user."></blogsphere-empty-state>
+              <blogsphere-empty-state
+                icon="manage_accounts"
+                text="No roles assigned to this user."
+              ></blogsphere-empty-state>
             }
           </blogsphere-section-panel>
         </div>
@@ -235,12 +259,14 @@
                 }
               </div>
             } @else {
-              <blogsphere-empty-state icon="vpn_key" text="No permissions assigned to this user."></blogsphere-empty-state>
+              <blogsphere-empty-state
+                icon="vpn_key"
+                text="No permissions assigned to this user."
+              ></blogsphere-empty-state>
             }
           </blogsphere-section-panel>
         </div>
       </div>
-
     }
 
     @if (isJsonView) {
