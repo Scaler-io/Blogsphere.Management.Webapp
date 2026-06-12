@@ -6,6 +6,6 @@ export class DateHelper {
   }
 
   public static formatDateToTimeAgo(date: string): string {
-    return moment(date).fromNow();
+    return moment.utc(date).fromNow();
   }
 }
