@@ -145,6 +145,7 @@ export function userManagerReducer(
         ...state,
         managementUser: {
           ...state.managementUser,
+          managementUser: null,
           isManagementUserLoading: true,
         },
       };

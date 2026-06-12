@@ -56,7 +56,7 @@
                   @if (allowEdit) {
                     <button mat-menu-item (click)="onEdit(element)">Edit</button>
                   }
-                  @if (allowDelete) {
+                  @if (isDeleteAllowed(element)) {
                     <button mat-menu-item (click)="onDelete(element)">Delete</button>
                   }
                 </mat-menu>

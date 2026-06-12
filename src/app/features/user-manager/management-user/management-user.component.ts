@@ -15,8 +15,9 @@ import { TableColumnMap } from 'src/app/core/model/table-source';
 import { selectMobileViewState } from 'src/app/state/mobile-view/mobile-view.selector';
 import * as ManagementUserActions from 'src/app/state/user-manager/user-manager.action';
 import { AppPermission } from 'src/app/core/auth/permissions.constants';
-import { selectHasAllPermissions } from 'src/app/state/auth/auth.selector';
+import { getAuthState, selectHasAllPermissions } from 'src/app/state/auth/auth.selector';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthUser } from 'src/app/core/model/auth';
 
 @Component({
   selector: 'blogsphere-management-user',
@@ -33,6 +34,7 @@ export class ManagementUserComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
+  public authenticatedUser: AuthUser;
   public managementUsers$: Observable<ManagementUserSummary[]> = this.store.select(selectManagementUsers);
   public managementUsersPageMetadata$: Observable<any> = this.store.select(selectManagementUserPageMetadata);
   public totalManagementUsers$: Observable<number> = this.store.select(selectTotalManagementUsers);
@@ -42,8 +44,6 @@ export class ManagementUserComponent implements OnInit, OnDestroy {
   public canWriteManagementUsers$: Observable<boolean> = this.store.select(
     selectHasAllPermissions([AppPermission.USER_CREATE, AppPermission.USER_UPDATE])
   );
-  
-  
   public managementUsersDataSource = new MatTableDataSource<ManagementUserSummary>([]);
   public showEmptyStateButton: boolean;
   public displayedColumns: string[] = ['employeeId', 'email', 'fullName', 'roles', 'department', 'status'];
@@ -55,6 +55,7 @@ export class ManagementUserComponent implements OnInit, OnDestroy {
     roles: { value: 'roles' },
     department: { value: 'department' },
     status: { value: 'status', isStatusField: true },
+    actions: { value: 'actions' },
   };
   public isFilterApplied: boolean;
   public isSearchApplied: boolean;
@@ -66,9 +67,14 @@ export class ManagementUserComponent implements OnInit, OnDestroy {
   private formDate: string = null;
   private toDate: string = null;
   private destroy$ = new Subject<void>();
-  
 
   ngOnInit(): void {
+    this.store
+      .select(getAuthState)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(user => {
+        this.authenticatedUser = user;
+      });
     this.fetchManagementUserCount();
     this.fetchManagementUsers(false, 10, 1);
     this.totalManagementUsers$.pipe(takeUntil(this.destroy$)).subscribe();
@@ -87,6 +93,9 @@ export class ManagementUserComponent implements OnInit, OnDestroy {
   public onLinkClick(event: any): void {
     this.router.navigate(['details', event.id], { relativeTo: this.route });
   }
+
+  public canDeleteUser = (row: ManagementUserSummary): boolean =>
+    (this.authenticatedUser?.role === 'SuperAdmin') && (row?.employeeId !== this.authenticatedUser?.employeeId|| !row?.roles?.includes('SuperAdmin'));
 
   private fetchManagementUserCount(
     filters: { [key: string]: string } = null,

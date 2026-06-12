@@ -1,4 +1,4 @@
-<div class="user-manager-container position-relative">
+<div class="user-manager-container" [class.position-relative]="!isUserDetailsRoute">
   <blogsphere-search-layout
     *ngIf="!isUserDetailsRoute"
     [allowAdd]="canWriteUsers$ | async"

@@ -138,7 +138,7 @@
               @if (r.metadata?.createdBy?.fullName) {
                 <blogsphere-tooltip [trigger]="triggerRefCreatedBy" position="below">
                   <p><strong>Email:</strong> {{ r.metadata.createdBy.email }}</p>
-                  <p><strong>Role:</strong> {{ r.metadata.createdBy.jobTitle }}</p>
+                  <p><strong>Job title:</strong> {{ r.metadata.createdBy.jobTitle }}</p>
                   <p><strong>Employee Id:</strong> {{ r.metadata.createdBy.employeeId }}</p>
                 </blogsphere-tooltip>
               }

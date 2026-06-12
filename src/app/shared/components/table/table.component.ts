@@ -21,6 +21,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() allowVisit: boolean = true;
   @Input() allowEdit: boolean = true;
   @Input() allowDelete: boolean = true;
+  @Input() canDeleteRow?: (row: TableDataSource) => boolean;
   @Input() showHeader: boolean = false;
   @Input() showFooter: boolean = false;
   @Input() boldColumns: string[] = [];
@@ -73,6 +74,16 @@ export class TableComponent implements OnInit, OnChanges {
 
   public onDelete(item: TableDataSource): void {
     this.actionEnabled && this.delete.emit(item);
+  }
+
+  public isDeleteAllowed(row: TableDataSource): boolean {
+    if (!this.allowDelete) {
+      return false;
+    }
+    if (this.canDeleteRow) {
+      return this.canDeleteRow(row);
+    }
+    return true;
   }
 
   public getColumnKey(column: string): string {
